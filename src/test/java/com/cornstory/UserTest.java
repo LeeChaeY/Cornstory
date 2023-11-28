@@ -20,6 +20,7 @@ public class UserTest {
     @Test
     public void testAddUser() throws Exception {
         // 사용자 추가 테스트
+    	System.out.println("잘 들어왔나??\n");
         User user = new User();
         user.setUserId("testuser");
         user.setRole(0);
@@ -32,7 +33,8 @@ public class UserTest {
         user.setPhone("01012345678");
         user.setEmail("testuser@example.com");
         user.setUserImage("default.jpg");
-
+        
+        System.out.println("잘들어 왔구만"+user+"\n");
         userService.addUser(user);
 
         // 사용자 추가 후 조회하여 확인

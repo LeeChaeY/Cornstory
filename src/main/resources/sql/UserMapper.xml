@@ -4,7 +4,7 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 		
-<mapper namespace="UserMapper">
+<mapper namespace="com.cornstory.domain.UserDao">
 
 	<resultMap id="userSelectMap" type="user">
 		<result property="userId"		column="user_id"		jdbcType="VARCHAR"/>
@@ -25,7 +25,7 @@
 	<insert		id="addUser"		parameterType="user" >
 		INSERT
 		INTO user( user_id,role,user_name,nickname,password,birthday,addr,address,phone, email,user_image,popcorn_cnt,r_date)
-		VALUES (#{userId},0,#{userName},#{nickName},#{password},STR_TO_DATE(#{birthday}, '%Y-%m-%d'),#{addr:VARCHAR},#{address:VARCHAR},
+		VALUES (#{userId},0,#{userName},#{nickName},#{password},#{birthday},#{addr:VARCHAR},#{address:VARCHAR},
 				#{phone:VARCHAR},#{email:VARCHAR},#{userImage:VARCHAR},0,SYSDATE)
 	</insert>
 	

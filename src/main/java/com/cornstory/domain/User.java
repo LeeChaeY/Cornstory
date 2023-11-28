@@ -130,9 +130,9 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", role=" + role + ", userName=" + userName + ", nickName=" + nickName
+		return "\nUser domain object  \n[userId=" + userId + ", role=" + role + ", userName=" + userName + ", nickName=" + nickName
 				+ ", password=" + password + ", birthday=" + birthday + ", addr=" + addr + ", address=" + address
-				+ ", phone=" + phone + ", email=" + email + ", userImage=" + userImage + ", popcornCnt=" + popcornCnt
+				+ ",\n phone=" + phone + ", email=" + email + ", userImage=" + userImage + ",  popcornCnt=" + popcornCnt
 				+ ", rDate=" + rDate + "]";
 	}
 	

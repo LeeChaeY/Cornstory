@@ -2,6 +2,8 @@ package com.cornstory.service.user.userImpl;
 
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.cornstory.common.Search;
@@ -11,13 +13,16 @@ import com.cornstory.service.user.UserService;
 
 //==> 회원관리 서비스 구현
 @Service
-public class UserServiceImpl implements UserService{
-	
-	
+public class UserServiceImpl implements UserService {
+    
+	@Autowired
+	@Qualifier("userDao")
 	private UserDao userDao;
-	public void setUserDao(UserDao userDao) {
-		this.userDao = userDao;
-	}
+ 
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
 	
 	//Constructor
 	public UserServiceImpl() {
