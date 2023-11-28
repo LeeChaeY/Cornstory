@@ -35,7 +35,13 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		return userDao.getUser(userId);
 	}
-
+	
+	@Override
+	public void updateUser(User user) throws Exception {
+		// TODO Auto-generated method stub
+		userDao.updateUser(user);
+	}
+	
 	@Override
 	public User deleteUser(String userId) throws Exception {
 		// TODO Auto-generated method stub
@@ -46,12 +52,6 @@ public class UserServiceImpl implements UserService{
 	public Map<String, Object> listUser(Search search) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public void updateUser(User user) throws Exception {
-		// TODO Auto-generated method stub
-		userDao.updateUser(user);
 	}
 
 	@Override

@@ -1,8 +1,8 @@
 package com.cornstory.controller.user;
 
-public class A {
+public class UserServiceTest {
 
-	public A() {
+	public UserServiceTest() {
 		// TODO Auto-generated constructor stub
 	}
 

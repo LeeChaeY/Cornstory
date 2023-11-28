@@ -6,30 +6,30 @@ import java.sql.Date;
 public class User {
 	
 	//Field
-	private String user_id; 	// 회원 아이디
+	private String userId; 	// 회원 아이디
 	private int role;			// 회원 구분 0: 회원 1: 관리자
-	private String user_name; 	// 회원 이름
-	private String nickname; 	// 회원 닉네임
+	private String userName; 	// 회원 이름
+	private String nickName; 	// 회원 닉네임
 	private String password; 	// 회원 비밀번호
 	private Date birthday; 		// 회원 생년 월일
 	private String addr;		// 주소
 	private String address;		// 상세 주소
 	private String phone;		// 전화번호
 	private String email;		// 이메일
-	private String user_image;	// 회원 사진
-	private int popcorn_cnt;	// 보유한 팝콘수
-	private Date r_Date;		// 회원 가입일
+	private String userImage;	// 회원 사진
+	private int popcornCnt;	// 보유한 팝콘수
+	private Date rDate;		// 회원 가입일
 	
 	///Constructor
 	public User(){}
-	
+
 	//Method
-	public String getUser_id() {
-		return user_id;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public int getRole() {
@@ -40,20 +40,20 @@ public class User {
 		this.role = role;
 	}
 
-	public String getUser_name() {
-		return user_name;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setUser_name(String user_name) {
-		this.user_name = user_name;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
-	public String getNickname() {
-		return nickname;
+	public String getNickName() {
+		return nickName;
 	}
 
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 
 	public String getPassword() {
@@ -104,37 +104,40 @@ public class User {
 		this.email = email;
 	}
 
-	public String getUser_image() {
-		return user_image;
+	public String getUserImage() {
+		return userImage;
 	}
 
-	public void setUser_image(String user_image) {
-		this.user_image = user_image;
+	public void setUserImage(String userImage) {
+		this.userImage = userImage;
 	}
 
-	public int getPopcorn_cnt() {
-		return popcorn_cnt;
+	public int getPopcornCnt() {
+		return popcornCnt;
 	}
 
-	public void setPopcorn_cnt(int popcorn_cnt) {
-		this.popcorn_cnt = popcorn_cnt;
+	public void setPopcornCnt(int popcornCnt) {
+		this.popcornCnt = popcornCnt;
 	}
 
-	public Date getR_Date() {
-		return r_Date;
+	public Date getrDate() {
+		return rDate;
 	}
 
-	public void setR_Date(Date r_Date) {
-		this.r_Date = r_Date;
+	public void setrDate(Date rDate) {
+		this.rDate = rDate;
 	}
 
 	@Override
 	public String toString() {
-		return "User [user_id=" + user_id + ", role=" + role + ", user_name=" + user_name + ", nickname=" + nickname
+		return "User [userId=" + userId + ", role=" + role + ", userName=" + userName + ", nickName=" + nickName
 				+ ", password=" + password + ", birthday=" + birthday + ", addr=" + addr + ", address=" + address
-				+ ", phone=" + phone + ", email=" + email + ", user_image=" + user_image + ", popcorn_cnt="
-				+ popcorn_cnt + ", r_Date=" + r_Date + "]";
+				+ ", phone=" + phone + ", email=" + email + ", userImage=" + userImage + ", popcornCnt=" + popcornCnt
+				+ ", rDate=" + rDate + "]";
 	}
+	
+	
+	
 	
 	
 }
