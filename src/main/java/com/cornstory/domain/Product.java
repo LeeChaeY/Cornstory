@@ -1,9 +1,13 @@
 package com.cornstory.domain;
 
-public class A {
+public class Product {
+	
+	private int prodNo;
 
-	public A() {
+	public Product() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	
 
 }
