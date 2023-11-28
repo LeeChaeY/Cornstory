@@ -1,8 +1,8 @@
 package com.cornstory.service.work.workImpl;
 
-public class A {
+public class WorkServiceImpl {
 
-	public A() {
+	public WorkServiceImpl() {
 		// TODO Auto-generated constructor stub
 	}
 

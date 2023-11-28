@@ -1,8 +1,8 @@
 package com.cornstory.service.user.userImpl;
 
-public class A {
+public class UserServiceImpl {
 
-	public A() {
+	public UserServiceImpl() {
 		// TODO Auto-generated constructor stub
 	}
 
