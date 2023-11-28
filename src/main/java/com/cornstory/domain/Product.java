@@ -31,6 +31,20 @@ public class Product {
 		this.prodDate = prodDate;
 	}
 
+	public Product(int workNo, int episodeNo, String userId, int prodCategory, String prodName,
+			int prodPrice, int prodCnt, String prodImage, Date prodDate) {
+		super();
+		this.workNo = workNo;
+		this.episodeNo = episodeNo;
+		this.userId = userId;
+		this.prodCategory = prodCategory;
+		this.prodName = prodName;
+		this.prodPrice = prodPrice;
+		this.prodCnt = prodCnt;
+		this.prodImage = prodImage;
+		this.prodDate = prodDate;
+	}
+	
 	public Product(int prodNo, int workNo, int episodeNo, String userId, int prodCategory, String prodName,
 			int prodPrice, int prodCnt, String prodImage, Date prodDate) {
 		super();

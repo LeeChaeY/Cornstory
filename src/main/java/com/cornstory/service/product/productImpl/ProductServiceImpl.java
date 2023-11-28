@@ -2,19 +2,22 @@ package com.cornstory.service.product.productImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.cornstory.domain.Product;
 import com.cornstory.service.product.ProductDao;
 import com.cornstory.service.product.ProductService;
 
-//@Service
+//@Repository
+@Service
 public class ProductServiceImpl implements ProductService{
 
+	private final ProductDao productDao;
+	
 	@Autowired
-	private ProductDao productDao;
-	public void setProductDao(ProductDao productDao) {
-		System.out.println(":: "+getClass()+".setProductDao() Call.....");
+//	@Qualifier("productDao")
+	public ProductServiceImpl(ProductDao productDao) {
 		this.productDao = productDao;
 	}
 	

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE configuration
+		PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ 		"http://mybatis.org/dtd/mybatis-3-config.dtd">
+  						
+<!--	mybatis-config.xml :: MyBatis Framework  MetaData -->
+<configuration>
+	
+	<typeAliases>
+		<typeAlias alias="user" type="com.cornstory.domain.User" />
+		
+		<typeAlias alias="product" type="com.cornstory.domain.Product" />
+	</typeAliases>
+	
+
+  <mappers>
+	<mapper resource="classpath:sql/UserMapper.xml"/> 
+	<mapper resource="classpath:sql/ProductMapper.xml"/>
+  </mappers>
+
+</configuration>
