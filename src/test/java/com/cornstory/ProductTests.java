@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.cornstory.domain.Product;
 
 @SpringBootTest
-class CornstoryApplicationTests {
+class ProductTests {
 
 	@Autowired
 	private ProductService productService;
