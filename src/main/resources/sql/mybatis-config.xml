@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE configuration
+		PUBLIC "//mybatis.org//DTD Config 3.0//EN"
+ 		"http://mybatis.org/dtd/mybatis-3-config.dtd">
+  						
+
+<configuration>
+	
+	<typeAliases>
+		
+		<typeAlias alias="product" type="spring.cornstory.domain.Product" />
+		
+		<typeAlias alias="search" type="spring.cornstory.common.Search" />
+		
+		<typeAlias alias="user" type="spring.cornstory.domain.User" />
+	</typeAliases>
+	
+
+  <mappers>
+	<mapper resource="sql/ProductMapper.xml"/>
+  </mappers>
+
+</configuration>
