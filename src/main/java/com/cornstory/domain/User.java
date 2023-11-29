@@ -1,4 +1,4 @@
-package spring.cornstory.domain;
+package com.cornstory.domain;
 
 import java.sql.Date;
 

@@ -1,4 +1,4 @@
-package spring.cornstory.common;
+package com.cornstory.common;
 
 
 public class Page {

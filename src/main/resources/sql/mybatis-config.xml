@@ -9,11 +9,11 @@
 	
 	<typeAliases>
 		
-		<typeAlias alias="product" type="spring.cornstory.domain.Product" />
+		<typeAlias alias="product" type="com.cornstory.domain.Product" />
 		
-		<typeAlias alias="search" type="spring.cornstory.common.Search" />
+		<typeAlias alias="search" type="com.cornstory.common.Search" />
 		
-		<typeAlias alias="user" type="spring.cornstory.domain.User" />
+		<typeAlias alias="user" type="com.cornstory.domain.User" />
 	</typeAliases>
 	
 

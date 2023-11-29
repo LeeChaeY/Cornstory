@@ -1,13 +1,13 @@
-package spring.cornstory;
+package com.cornstory;
 
 import java.sql.Date;
 
+import com.cornstory.service.product.ProductService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import spring.cornstory.domain.Product;
-import spring.cornstory.service.product.ProductService;
+import com.cornstory.domain.Product;
 
 @SpringBootTest
 class CornstoryApplicationTests {
