@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+ 					
+<mapper namespace="com.cornstory.service.product.ProductDao">
+  	<resultMap type="com.cornstory.domain.Product" id="productSelectMap">
+  		<result property="prodNo" column="prod_no"/>
+  		<result property="workNo" column="work_no"/>
+  		<result property="episodeNo" column="episode_no"/>
+  		<result property="userId" column="user_id"/>
+  		<result property="prodCategory" column="prod_category"/>
+  		<result property="prodName" column="prod_name"/>
+  		<result property="prodPrice" column="prod_price"/>
+  		<result property="prodCnt" column="prod_cnt"/>
+  		<result property="prodImage" column="prod_image"/>
+  		<result property="prodDate" column="prod_date"/>
+  	</resultMap>
+  	
+  	<insert id="addProduct" parameterType="com.cornstory.domain.Product">
+		insert 
+		into product (work_no, episode_no, user_id, prod_category, prod_name, prod_price, prod_cnt, prod_image, prod_date)
+		values (
+					#{workNo},
+					#{episodeNo}, 
+					#{userId},
+					#{prodCategory}, 
+					#{prodName}, 
+					#{prodPrice}, 
+					#{prodCnt}, 
+					#{prodImage}, 
+					'2023-11-29')
+  	</insert>
+  	
+  	
+</mapper>
