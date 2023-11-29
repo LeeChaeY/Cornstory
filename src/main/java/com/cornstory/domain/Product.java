@@ -5,8 +5,8 @@ import java.sql.Date;
 public class Product {
 	
 	private int prodNo;
-	private int workNo;			// 팝콘이면 null
-	private int episodeNo;		// 팝콘, 저작권이면 null
+	private Integer workNo;			// 팝콘이면 null
+	private Integer episodeNo;		// 팝콘, 저작권이면 null
 	private String userId;		// 등록한 회원 아이디, 팝콘은 
 	private int prodCategory;	// 0 : 팝콘, 1: 작품 회차, 2: 저작권
 	private String prodName;	// 작품 회차는 작품 이름, 팝콘은 팝콘 수량+개, 저작권은 작품 이름 + 저작권
@@ -18,9 +18,21 @@ public class Product {
 	public Product() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
+	public Product(int prodNo, int prodPrice) {
+		this.prodNo = prodNo;
+		this.prodPrice = prodPrice;
+	}
+
+	public Product(int prodNo, int prodPrice, int prodCnt, String prodImage) {
+		this.prodNo = prodNo;
+		this.prodPrice = prodPrice;
+		this.prodCnt = prodCnt;
+		this.prodImage = prodImage;
+	}
+
 	public Product(String userId, int prodCategory, String prodName,
-			int prodPrice, int prodCnt, String prodImage, Date prodDate) {
+				   int prodPrice, int prodCnt, String prodImage, Date prodDate) {
 		super();
 		this.userId = userId;
 		this.prodCategory = prodCategory;
@@ -31,7 +43,7 @@ public class Product {
 		this.prodDate = prodDate;
 	}
 
-	public Product(int workNo, int episodeNo, String userId, int prodCategory, String prodName,
+	public Product(Integer workNo, Integer episodeNo, String userId, int prodCategory, String prodName,
 			int prodPrice, int prodCnt, String prodImage, Date prodDate) {
 		super();
 		this.workNo = workNo;
@@ -45,7 +57,7 @@ public class Product {
 		this.prodDate = prodDate;
 	}
 	
-	public Product(int prodNo, int workNo, int episodeNo, String userId, int prodCategory, String prodName,
+	public Product(int prodNo, Integer workNo, Integer episodeNo, String userId, int prodCategory, String prodName,
 			int prodPrice, int prodCnt, String prodImage, Date prodDate) {
 		super();
 		this.prodNo = prodNo;
@@ -68,19 +80,19 @@ public class Product {
 		this.prodNo = prodNo;
 	}
 
-	public int getWorkNo() {
+	public Integer getWorkNo() {
 		return workNo;
 	}
 
-	public void setWorkNo(int workNo) {
+	public void setWorkNo(Integer workNo) {
 		this.workNo = workNo;
 	}
 
-	public int getEpisodeNo() {
+	public Integer getEpisodeNo() {
 		return episodeNo;
 	}
 
-	public void setEpisodeNo(int episodeNo) {
+	public void setEpisodeNo(Integer episodeNo) {
 		this.episodeNo = episodeNo;
 	}
 
