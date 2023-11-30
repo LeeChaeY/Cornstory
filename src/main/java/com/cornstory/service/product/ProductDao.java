@@ -30,7 +30,7 @@ public interface ProductDao {
 
 	public int countProductProdName(String prodName) throws Exception;
 
-//	public int listCompleteWork(String prodName) throws Exception;
+//	public int listCompleteWork(String userId) throws Exception;
 
 	public int countLastEpisode(int workNo) throws Exception;
 

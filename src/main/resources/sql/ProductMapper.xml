@@ -15,7 +15,7 @@
 		<result property="prodCategory" column="prod_category" jdbcType="INTEGER"/>
 		<result property="prodName" column="prod_name" jdbcType="VARCHAR"/>
 		<result property="workName" column="work_name" jdbcType="VARCHAR"/>
-		<result property="episodeOrder" column="episodeOrder" jdbcType="INTEGER"/>
+		<result property="episodeOrder" column="episode_order" jdbcType="INTEGER"/>
 		<result property="prodImage" column="prod_image" jdbcType="VARCHAR"/>
 		<result property="prodPrice" column="prod_price" jdbcType="INTEGER"/>
 		<result property="prodCnt" column="prod_cnt" jdbcType="INTEGER"/>
@@ -61,7 +61,8 @@
 	</update>
 
 	<delete id="deleteProduct" parameterType="int">
-		DELETE FROM product
+		DELETE
+		FROM product
 		WHERE prod_no = #{prodNo}
 	</delete>
 
