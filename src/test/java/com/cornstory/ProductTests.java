@@ -24,10 +24,10 @@ class ProductTests {
 
 	@Test
 	void contextLoads() {
-		
-//		Product productInsertPopcorn = new Product("admin", 0, "팝콘 10개", 1200, 10, "popcorn1.jpg", Date.valueOf("2023-11-23"));
-//		Product productInsertEpisode = new Product(10001, 10000, "test1", 1, "작품1", 3, 1, "episode1.jpg", Date.valueOf("2023-11-24"));
-//		Product productInsertCopyright = new Product(10001, 10000, "test1", 1, "작품1", 3, 1, "episode1.jpg", Date.valueOf("2023-11-24"));
+
+//		Product productInsertPopcorn = new Product("admin", 0, "팝콘 1100개", "popcorn1.jpg", 99000, 1100);
+//		Product productInsertEpisode = new Product(10002, 10002, "test01", 1, "작품2", 1, "episode1.jpg", 2);
+//		Product productInsertCopyright = new Product(10002, "test1", 2, "작품2 저작권", 2, "copyright2.jpg", 121);
 
 
 //		Product productUpdatePopcorn = new Product(10002, 30330, 23, "Popcorn1111.jpg");
@@ -99,6 +99,15 @@ class ProductTests {
 //			System.out.println(map);
 //			System.out.println(((List)map.get("popcornList")).size());
 //			System.out.println(((List)map.get("copyrightList")).size());
+
+
+
+			//////////////////////////////////////////////////////////////////////////////
+//			REST
+			//////////////////////////////////////////////////////////////////////////////
+//			prodNameCheck 테스트
+//			int count = productService.prodNameCheck("팝콘 1100개");
+//			System.out.println(count);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

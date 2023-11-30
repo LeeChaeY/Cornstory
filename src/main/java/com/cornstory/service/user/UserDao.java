@@ -17,7 +17,7 @@ public interface UserDao {
 	public void updateUser(User user) throws Exception ;
 
 	// UPDATE
-	public User deleteUser(String userId) throws Exception ;
+	public int deleteUser(String userId) throws Exception ;
 
 	// SELECT LIST
 	public List<User> listUser(Search search) throws Exception ;

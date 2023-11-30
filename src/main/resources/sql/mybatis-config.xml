@@ -23,9 +23,7 @@
 
 		<typeAlias alias="storyComment" type="com.cornstory.domain.StoryComment" />
 
-		<typeAlias alias="bookmark" type="com.cornstory.domain.Bookmark" />
 
-		<typeAlias alias="work" type="com.cornstory.domain.Work" />
 	</typeAliases>
 
 
@@ -35,8 +33,6 @@
 		<mapper resource="sql/EpisodeCommentMapper.xml"/>
 		<mapper resource="sql/StoryMapper.xml"/>
 		<mapper resource="sql/StoryCommentMapper.xml"/>
-		<mapper resource="sql/WorkMapper.xml"/>
-		<mapper resource="sql/BookmarkMapper.xml"/>
 	</mappers>
 
 </configuration>
