@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cornstory.service.story.StoryCommentDao">
+
+    <!-- Result Map -->
+    <resultMap id="commentResultMap" type="storyComment">
+        <result column="s_comment_no" property="sCommentNo" jdbcType="INTEGER" />
+        <result column="story_no" property="storyNo" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="s_content" property="sContent" jdbcType="VARCHAR" />
+        <result column="s_comment_date" property="sCommentDate" jdbcType="DATE" />
+    </resultMap>
+
+    <!-- Insert a New Comment -->
+    <insert id="addComment" parameterType="storyComment">
+        INSERT INTO story_comment (story_no, user_id, s_content, s_comment_date)
+        VALUES (#{storyNo : INTEGER}, #{userId : VARCHAR}, #{sContent : VARCHAR}, now())
+    </insert>
+
+    <!-- Update Comment -->
+    <update id="updateComment" parameterType="storyComment">
+        UPDATE story_comment
+        SET s_content = #{content : VARCHAR},
+            s_comment_date = now()
+        WHERE s_comment_no = #{sCommentNo}
+    </update>
+
+    <!-- Delete Comment By Comment Number -->
+    <delete id="deleteComment" parameterType="int">
+        DELETE FROM story_comment WHERE s_comment_no = #{sCommentNo}
+    </delete>
+
+    <!-- Select All Comments -->
+    <select id="listStoryComments" parameterType="int" resultMap="commentResultMap">
+        SELECT * FROM story_comment WHERE story_no = #{storyNo} ORDER BY s_comment_date DESC;
+    </select>
+
+    <select id="getCommentByCommentNo" parameterType="int" resultMap="commentResultMap">
+        SELECT * FROM story_comment WHERE s_comment_no = #{sCommentNo}
+    </select>
+
+</mapper>
