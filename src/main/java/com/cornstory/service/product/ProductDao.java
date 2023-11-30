@@ -28,8 +28,10 @@ public interface ProductDao {
 
 	public  List<Product> listProductCopyright(Map map) throws Exception;
 
-	public int countLastEpisode(int workNo) throws Exception;
-
 	public int countProductProdName(String prodName) throws Exception;
+
+//	public int listCompleteWork(String prodName) throws Exception;
+
+	public int countLastEpisode(int workNo) throws Exception;
 
 }

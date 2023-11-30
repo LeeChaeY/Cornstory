@@ -1,0 +1,40 @@
+<!-- com/cornstory/mappers/EpisodeCommentMapper.xml -->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cornstory.service.episode.EpisodeCommentDao">
+
+    <!-- EpisodeComment 클래스를 위한 Result Map -->
+    <resultMap id="episodeCommentResultMap" type="episodeComment">
+        <result property="eCommentNo" column="e_comment_no" />
+        <result property="episodeNo" column="episode_no" />
+        <result property="workNo" column="work_no" />
+        <result property="userId" column="user_id" />
+        <result property="eContent" column="e_content" />
+        <result property="eCommentDate" column="e_comment_date" />
+    </resultMap>
+
+    <!-- e_comment_no를 기준으로 EpisodeComment를 가져오는 Select 문 -->
+    <select id="getEpisodeCommentById" parameterType="int" resultMap="episodeCommentResultMap">
+        SELECT * FROM episode_comment WHERE e_comment_no = #{eCommentNo}
+    </select>
+
+    <!-- 새로운 EpisodeComment를 추가하는 Insert 문 -->
+    <insert id="addEpisodeComment" parameterType="episodeComment">
+        INSERT INTO episode_comment (episode_no, work_no, user_id, e_content, e_comment_date)
+        VALUES (#{episodeNo}, #{workNo}, #{userId}, #{eContent}, now())
+    </insert>
+
+    <!-- 기존 EpisodeComment를 업데이트하는 Update 문 -->
+    <update id="updateEpisodeComment" parameterType="episodeComment">
+        UPDATE episode_comment
+        SET episode_no = #{episodeNo}, work_no = #{workNo}, user_id = #{userId},
+            e_content = #{eContent}, e_comment_date = now()
+        WHERE e_comment_no = #{eCommentNo}
+    </update>
+
+    <!-- e_comment_no를 기준으로 EpisodeComment를 삭제하는 Delete 문 -->
+    <delete id="deleteEpisodeComment" parameterType="int">
+        DELETE FROM episode_comment WHERE e_comment_no = #{eCommentNo}
+    </delete>
+
+</mapper>
