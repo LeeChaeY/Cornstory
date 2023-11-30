@@ -15,21 +15,21 @@
         <result property="directory"    column="directory"      jdbcType="VARCHAR"/>
     </resultMap>
 
-    <!-- SELECT 문 -->
-    <select id="getEpisodeById" parameterType="int" resultMap="episodeResultMap">
+    <!-- 작품 회차 상세보기 -->
+    <select id="getEpisode" parameterType="int" resultMap="episodeResultMap">
         SELECT *
         FROM episode
         WHERE episode_no = #{episodeNo}
     </select>
 
-    <!-- INSERT 문 -->
+    <!-- 작품 회차 생성 -->
     <insert id="addEpisode" parameterType="episode">
         INSERT INTO episode (work_no, episode_name, episode_order, e_thumbnail, episode_date, file_name, directory)
         VALUES (#{workNo : INTEGER}, #{episodeName : VARCHAR}, #{episodeOrder : INTEGER}, #{eThumbnail : VARCHAR},
                 now(), #{fileName : VARCHAR}, #{directory : VARCHAR})
     </insert>
 
-    <!-- UPDATE 문 -->
+    <!-- 작품 회차 수정 -->
     <update id="updateEpisode" parameterType="episode">
         UPDATE episode
         SET work_no       = #{workNo : INTEGER},
@@ -42,22 +42,19 @@
         WHERE episode_no = #{episodeNo : INTEGER}
     </update>
 
-    <!-- DELETE 문 -->
+    <!-- 작품 회차 삭제 -->
     <delete id="deleteEpisode" parameterType="int">
         DELETE
         FROM episode
         WHERE episode_no = #{episodeNo : INTEGER}
     </delete>
 
-    <!-- list 문 -->
-    <select id="listEpisode" resultMap="episodeResultMap">
-        SELECT *
-        FROM episode
-    </select>
-    <select id="getWorkEpisode" parameterType="int" resultMap="episodeResultMap">
+    <!-- 작품회차 목록 최신순 -->
+    <select id="listEpisode" parameterType="int" resultMap="episodeResultMap">
         SELECT *
         FROM episode
         WHERE work_no = #{workNo : INTEGER}
         ORDER BY episode_order
     </select>
+
 </mapper>

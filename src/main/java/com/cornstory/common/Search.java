@@ -4,11 +4,11 @@ package com.cornstory.common;
 public class Search {
 	
 	private int currentPage; 
-	private String searchCondition; // 0�̸� id�� �˻�, 1�̸� �̸����� �˻�
-	private String searchKeyword; //id or name
+	private String searchCondition;
+	private String searchKeyword;
 	private String orderCondition;
 	private String orderKeyword;
-	private int pageSize; //pageSize
+	private int pageSize;
 	
 	public Search(){
 	}

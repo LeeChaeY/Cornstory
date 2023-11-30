@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cornstory.service.work.WorkDao">
+    <resultMap  id="workSelectMap" type="work">
+        <id    property="workNo"     column="work_no"/>
+        <result property="userId"     column="user_id"/>
+        <result property="category"    column="category"/>
+        <result property="genre1"     column="genre1"/>
+        <result property="genre2"     column="genre2"/>
+        <result property="genre3"     column="genre3"/>
+        <result property="fap"           column="fap"/>
+        <result property="workName"    column="work_name"/>
+        <result property="note"       column="note"/>
+        <result property="thumbnail"   column="thumbnail"/>
+        <result property="viewCnt"        column="view_cnt"/>
+        <result property="workDate"    column="work_date"/>
+        <result property="status"     column="status"/>
+        <result property="workDesc"    column="work_desc"/>
+        <result property="complete"    column="complete"/>
+    </resultMap>
+    <insert       id="addWork"      parameterType="work" >
+        INSERT INTO work (
+        user_id, category, genre1, genre2, genre3, fap,
+        work_name, note, thumbnail, view_cnt, work_date,
+        status, work_desc, complete
+        ) VALUES (
+        #{userId}, #{category}, #{genre1}, #{genre2}, #{genre3}, #{fap},
+        #{workName}, #{note}, #{thumbnail}, #{viewCnt}, #{workDate},
+        #{status}, #{workDesc}, #{complete}
+        )
+    </insert>
+    <!-- SQL : SELECT ONE -->
+    <select id="getWork" parameterType="int" resultMap="workSelectMap">
+        SELECT work_no, user_id, category, genre1, genre2, genre3, fap, work_name, note, thumbnail,
+        view_cnt, work_date, status, work_desc, complete
+        FROM work
+        WHERE work_no = #{workNo}
+    </select>
+    <!-- SQL : UPDATE -->
+    <update id="updateWork" parameterType="work">
+        UPDATE work
+        <set>
+            work_name = #{workName}, genre1 = #{genre1}, genre2 = #{genre2}, genre3 = #{genre3},
+            note = #{note}, work_desc = #{workDesc}, thumbnail = #{thumbnail}, fap = #{fap}, complete = #{complete}
+        </set>
+        WHERE work_no = #{workNo}
+    </update>
+    <!-- SQL : DELETE -->
+    <delete       id="deleteWork"       parameterType="work">
+        DELETE FROM work
+        WHERE work_no = #{workNo}
+    </delete>
+    <!--장르와 조회순-->
+    <select id="listWork" parameterType="search" resultMap="workSelectMap">
+        SELECT * FROM work
+        <where>
+            <if test="searchKeyword != null">
+                AND work_name LIKE CONCAT('%',#{searchKeyword},'%') OR user_id LIKE CONCAT('%',#{searchKeyword},'%')
+            </if>
+            <if test="searchKeyword == null">
+                <choose>
+                    <when test="searchCondition == 0">
+                        category = 0
+                    </when>
+                    <when test="searchCondition == 1">
+                        category = 1
+                    </when>
+                    <when test="searchCondition == 2">
+                        category = 2
+                    </when>
+                </choose>
+                <if test="orderKeyword != null">
+                    AND (genre1 = #{orderKeyword} OR genre2 = #{orderKeyword} OR genre3 = #{orderKeyword})
+                </if>
+                ORDER BY view_cnt
+                <if test="orderCondition == 0 or orderCondition == null">
+                    desc
+                </if>
+            </if>
+        </where>
+    </select>
+
+</mapper>

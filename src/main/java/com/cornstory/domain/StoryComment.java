@@ -4,10 +4,15 @@ import java.util.Date;
 
 public class StoryComment {
 
+    //스토리 댓글No
     private int sCommentNo;
+    //스토리 No
     private int storyNo;
+    //회원 아이디
     private String userId;
+    //스토리 댓글 내용
     private String sContent;
+    //스토리 댓글 등록일
     private Date sCommentDate;
     public int getsCommentNo() {
         return sCommentNo;

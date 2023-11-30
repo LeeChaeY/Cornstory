@@ -13,26 +13,25 @@
         <result property="eCommentDate" column="e_comment_date" />
     </resultMap>
 
-    <!-- e_comment_no를 기준으로 EpisodeComment를 가져오는 Select 문 -->
-    <select id="getEpisodeCommentById" parameterType="int" resultMap="episodeCommentResultMap">
-        SELECT * FROM episode_comment WHERE e_comment_no = #{eCommentNo}
+    <!-- 작품 회차에 대한 목록 -->
+    <select id="listEpisodeComment" parameterType="int" resultMap="episodeCommentResultMap">
+        SELECT * FROM episode_comment WHERE episode_no=#{episodeNo} ORDER BY e_comment_no DESC
     </select>
 
-    <!-- 새로운 EpisodeComment를 추가하는 Insert 문 -->
+    <!-- 작품 회차의 댓글 등록-->
     <insert id="addEpisodeComment" parameterType="episodeComment">
         INSERT INTO episode_comment (episode_no, work_no, user_id, e_content, e_comment_date)
         VALUES (#{episodeNo}, #{workNo}, #{userId}, #{eContent}, now())
     </insert>
 
-    <!-- 기존 EpisodeComment를 업데이트하는 Update 문 -->
+    <!-- 작품 회차의 댓글 수정-->
     <update id="updateEpisodeComment" parameterType="episodeComment">
         UPDATE episode_comment
-        SET episode_no = #{episodeNo}, work_no = #{workNo}, user_id = #{userId},
-            e_content = #{eContent}, e_comment_date = now()
+        SET e_content = #{eContent}, e_comment_date = now()
         WHERE e_comment_no = #{eCommentNo}
     </update>
 
-    <!-- e_comment_no를 기준으로 EpisodeComment를 삭제하는 Delete 문 -->
+    <!-- 댓글 회차의 댓글 삭제 -->
     <delete id="deleteEpisodeComment" parameterType="int">
         DELETE FROM episode_comment WHERE e_comment_no = #{eCommentNo}
     </delete>
