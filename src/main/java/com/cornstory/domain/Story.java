@@ -4,11 +4,17 @@ import java.util.Date;
 
 public class Story {
 
+    //스토리 No
     private int storyNo;
+    //회원 아이디
     private String userId;
+    //스토리명
     private String storyName;
+    //스토리 내용
     private String storyContent;
+    //스토리 등록일
     private Date storyDate;
+    //스토리 이미지명
     private String storyImage;
     public int getStoryNo() {
         return storyNo;

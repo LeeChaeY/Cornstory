@@ -5,13 +5,21 @@ import java.util.Date;
 
 public class Episode{
 
+    //작품 회차 No
     private int episodeNo;
+    //작품 No
     private int workNo;
+    //작품 회차명
     private String episodeName;
+    //작품 회차순서
     private int episodeOrder;
+    //작품 회차 대표이미지
     private String eThumbnail;
+    //작품 회차 등록일
     private Date episodeDate;
+    //작품 회차 파일명
     private String fileName;
+    //작품회차 디렉토리
     private String directory;
 
     public int getEpisodeNo() {

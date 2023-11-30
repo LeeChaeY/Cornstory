@@ -14,18 +14,18 @@
         <result property="storyImage" column="story_image" />
     </resultMap>
 
-    <!-- SELECT 문 -->
-    <select id="getStoryById" parameterType="int" resultMap="storyResultMap">
+    <!-- 스토리 수정할 때 자기 글 가져오기 -->
+    <select id="getStory" parameterType="int" resultMap="storyResultMap">
         SELECT * FROM story WHERE story_no = #{storyNo}
     </select>
 
-    <!-- INSERT 문 -->
+    <!-- 스토리 추가 -->
     <insert id="addStory" parameterType="story">
         INSERT INTO story (user_id, story_name, story_content, story_date, story_image)
         VALUES (#{userId}, #{storyName}, #{storyContent}, now(), #{storyImage})
     </insert>
 
-    <!-- UPDATE 문 -->
+    <!-- 스토리 수정-->
     <update id="updateStory" parameterType="story">
         UPDATE story
         SET user_id = #{userId}, story_name = #{storyName}, story_content = #{storyContent},
@@ -33,16 +33,17 @@
         WHERE story_no = #{storyNo}
     </update>
 
-    <!-- DELETE 문 -->
+    <!-- 스토리 삭제 -->
     <delete id="deleteStory" parameterType="int">
         DELETE FROM story WHERE story_no = #{storyNo}
     </delete>
 
-    <!-- list 문 -->
+    <!-- 전체 스토리 목록-->
     <select id="listStory" resultMap="storyResultMap">
         SELECT * FROM story
     </select>
 
+    <!-- 마이 스토리 확인-->
     <select id="getMyStory" parameterType="String" resultMap="storyResultMap">
         SELECT * FROM story WHERE user_id = #{userId}
     </select>
