@@ -25,10 +25,10 @@ class UserTests {
 		// 사용자 추가 테스트
 		System.out.println("잘 들어왔나??\n");
 		User user = new User();
-		user.setUserId("how");
+		user.setUserId("wow");
 		user.setRole(0);
 		user.setUserName("테스트 사용자");
-		user.setNickName("TestUser");
+		user.setNickName("TddUser");
 		user.setPassword("testpassword");
 		user.setBirthday(java.sql.Date.valueOf("1999-01-01"));
 		user.setAddr("서울");
@@ -80,21 +80,18 @@ class UserTests {
 	}
 
 
-	//@Test
+	@Test
 	public void testDeleteUser() throws Exception {
-		// 사용자 삭제 테스트
-		User user = userService.getUser("testuser");
-		assertNotNull(user);
-		System.out.println("get"+user);
+		int result = userService.deleteUser("wow");  // 삭제된 회원 수를 반환
+		assertEquals(1, result);  // 예상하는 값으로 변경
 
-		// 사용자 삭제 후 조회 시 null이 반환되어야 함
-		User deletedUser = userService.deleteUser("testuser");
-		assertNotNull(deletedUser);
-		System.out.println("delete"+user);
-
-		User nonExistentUser = userService.getUser("testuser");
-		assertEquals(null, nonExistentUser);
+		// 삭제 후에는 해당 회원이 존재하지 않아야 함
+		User nonExistent = userService.getUser("wow");  // 삭제한 회원아이디로 변경
+		assertNull(nonExistent);
+		System.out.println("기존 회원 정보: " + nonExistent);
 	}
+
+
 
 	//@Test
 	public void testListUserALL() throws Exception {

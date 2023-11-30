@@ -14,12 +14,15 @@
 		<typeAlias alias="search" type="com.cornstory.common.Search" />
 
 		<typeAlias alias="user" type="com.cornstory.domain.User" />
+
+		<typeAlias alias="work" type="com.cornstory.domain.Work" />
 	</typeAliases>
 
 
 	<mappers>
 		<mapper resource="sql/ProductMapper.xml"/>
 		<mapper resource="sql/UserMapper.xml"/>
+		<mapper resource="sql/WorkMapper.xml"/>
 	</mappers>
 
 </configuration>
