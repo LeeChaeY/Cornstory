@@ -20,6 +20,8 @@ public class ProductServiceImpl implements ProductService {
 	
 	@Override
 	public int addProduct(Product product) throws Exception {
+		if (product.getProdCategory() == 2)
+			product.setEpisodeOrder(productDao.countLastEpisode(product.getWorkNo()));
 		return productDao.addProduct(product);
 	}
 
