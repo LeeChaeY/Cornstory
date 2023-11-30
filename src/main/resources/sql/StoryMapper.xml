@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cornstory.service.story.StoryDao">
+
+    <!-- resultMap 설정 -->
+    <resultMap id="storyResultMap" type="story">
+        <result property="storyNo" column="story_no" />
+        <result property="userId" column="user_id" />
+        <result property="storyName" column="story_name" />
+        <result property="storyContent" column="story_content" />
+        <result property="storyDate" column="story_date" />
+        <result property="storyImage" column="story_image" />
+    </resultMap>
+
+    <!-- SELECT 문 -->
+    <select id="getStoryById" parameterType="int" resultMap="storyResultMap">
+        SELECT * FROM story WHERE story_no = #{storyNo}
+    </select>
+
+    <!-- INSERT 문 -->
+    <insert id="addStory" parameterType="story">
+        INSERT INTO story (user_id, story_name, story_content, story_date, story_image)
+        VALUES (#{userId}, #{storyName}, #{storyContent}, now(), #{storyImage})
+    </insert>
+
+    <!-- UPDATE 문 -->
+    <update id="updateStory" parameterType="story">
+        UPDATE story
+        SET user_id = #{userId}, story_name = #{storyName}, story_content = #{storyContent},
+            story_date = #{storyDate}, story_image = #{storyImage}
+        WHERE story_no = #{storyNo}
+    </update>
+
+    <!-- DELETE 문 -->
+    <delete id="deleteStory" parameterType="int">
+        DELETE FROM story WHERE story_no = #{storyNo}
+    </delete>
+
+    <!-- list 문 -->
+    <select id="listStory" resultMap="storyResultMap">
+        SELECT * FROM story
+    </select>
+
+    <select id="getMyStory" parameterType="String" resultMap="storyResultMap">
+        SELECT * FROM story WHERE user_id = #{userId}
+    </select>
+
+
+</mapper>

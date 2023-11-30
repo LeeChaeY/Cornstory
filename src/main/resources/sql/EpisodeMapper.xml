@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cornstory.service.episode.EpisodeDao">
+    <!-- resultMap 설정 -->
+    <resultMap id="episodeResultMap" type="episode">
+        <result property="episodeNo"    column="episode_no"     jdbcType="INTEGER"/>
+        <result property="workNo"       column="work_no"        jdbcType="INTEGER"/>
+        <result property="episodeName"  column="episode_name"   jdbcType="VARCHAR"/>
+        <result property="episodeOrder" column="episode_order"  jdbcType="INTEGER"/>
+        <result property="eThumbnail"   column="e_thumbnail"    jdbcType="VARCHAR"/>
+        <result property="episodeDate"  column="episode_date"   jdbcType="DATE"/>
+        <result property="fileName"     column="file_name"      jdbcType="VARCHAR"/>
+        <result property="directory"    column="directory"      jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- SELECT 문 -->
+    <select id="getEpisodeById" parameterType="int" resultMap="episodeResultMap">
+        SELECT *
+        FROM episode
+        WHERE episode_no = #{episodeNo}
+    </select>
+
+    <!-- INSERT 문 -->
+    <insert id="addEpisode" parameterType="episode">
+        INSERT INTO episode (work_no, episode_name, episode_order, e_thumbnail, episode_date, file_name, directory)
+        VALUES (#{workNo : INTEGER}, #{episodeName : VARCHAR}, #{episodeOrder : INTEGER}, #{eThumbnail : VARCHAR},
+                now(), #{fileName : VARCHAR}, #{directory : VARCHAR})
+    </insert>
+
+    <!-- UPDATE 문 -->
+    <update id="updateEpisode" parameterType="episode">
+        UPDATE episode
+        SET work_no       = #{workNo : INTEGER},
+            episode_name  = #{episodeName : VARCHAR},
+            episode_order = #{episodeOrder : INTEGER},
+            e_thumbnail   = #{eThumbnail : VARCHAR},
+            episode_date  = now(),
+            file_name     = #{fileName : VARCHAR},
+            directory     = #{directory : VARCHAR}
+        WHERE episode_no = #{episodeNo : INTEGER}
+    </update>
+
+    <!-- DELETE 문 -->
+    <delete id="deleteEpisode" parameterType="int">
+        DELETE
+        FROM episode
+        WHERE episode_no = #{episodeNo : INTEGER}
+    </delete>
+
+    <!-- list 문 -->
+    <select id="listEpisode" resultMap="episodeResultMap">
+        SELECT *
+        FROM episode
+    </select>
+    <select id="getWorkEpisode" parameterType="int" resultMap="episodeResultMap">
+        SELECT *
+        FROM episode
+        WHERE work_no = #{workNo : INTEGER}
+        ORDER BY episode_order
+    </select>
+</mapper>
