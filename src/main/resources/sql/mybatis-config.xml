@@ -2,23 +2,24 @@
 
 <!DOCTYPE configuration
 		PUBLIC "//mybatis.org//DTD Config 3.0//EN"
- 		"http://mybatis.org/dtd/mybatis-3-config.dtd">
-  						
+		"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
 
 <configuration>
-	
+
 	<typeAliases>
-		
+
 		<typeAlias alias="product" type="com.cornstory.domain.Product" />
-		
+
 		<typeAlias alias="search" type="com.cornstory.common.Search" />
-		
+
 		<typeAlias alias="user" type="com.cornstory.domain.User" />
 	</typeAliases>
-	
 
-  <mappers>
-	<mapper resource="sql/ProductMapper.xml"/>
-  </mappers>
+
+	<mappers>
+		<mapper resource="sql/ProductMapper.xml"/>
+		<mapper resource="sql/UserMapper.xml"/>
+	</mappers>
 
 </configuration>

@@ -3,12 +3,12 @@
 <!DOCTYPE mapper
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-		
-<mapper namespace="com.cornstory.domain.UserDao">
 
-	<resultMap id="userSelectMap" type="user">
+<mapper namespace="com.cornstory.service.user.UserDao">
+
+	<resultMap type="user" id="userSelectMap">
 		<result property="userId"		column="user_id"		jdbcType="VARCHAR"/>
-		<result property="role"			column="role"			jdbcType="INT"/>
+		<result property="role"			column="role"			jdbcType="INTEGER"/>
 		<result property="userName"		column="user_name"		jdbcType="VARCHAR"/>
 		<result property="nickName"		column="nickname"		jdbcType="VARCHAR"/>
 		<result property="password"		column="password"		jdbcType="VARCHAR"/>
@@ -18,70 +18,83 @@
 		<result property="phone"		column="phone"			jdbcType="VARCHAR"/>
 		<result property="email"		column="email"			jdbcType="VARCHAR"/>
 		<result property="userImage"	column="user_image"		jdbcType="VARCHAR"/>
-		<result property="popcornCnt"	column="popcorn_cnt"	jdbcType="INT"/>
+		<result property="popcornCnt"	column="popcorn_cnt"	jdbcType="INTEGER"/>
 		<result property="rDate"		column="r_date"			jdbcType="DATE"/>
 	</resultMap>
-	
+
 	<insert		id="addUser"		parameterType="user" >
 		INSERT
 		INTO user( user_id,role,user_name,nickname,password,birthday,addr,address,phone, email,user_image,popcorn_cnt,r_date)
 		VALUES (#{userId},0,#{userName},#{nickName},#{password},#{birthday},#{addr:VARCHAR},#{address:VARCHAR},
-				#{phone:VARCHAR},#{email:VARCHAR},#{userImage:VARCHAR},0,SYSDATE)
+				#{phone:VARCHAR},#{email:VARCHAR},#{userImage:VARCHAR},0,NOW())
 	</insert>
-	
+
 	<!-- SQL : SELECT ONE -->
 	<select		id="getUser"		parameterType="string"		resultMap="userSelectMap">
-		SELECT user_id, user_name,birthday, email, addr, address, user_image, nickname 
+		SELECT user_id, user_name,birthday, email, addr, address, user_image, nickname
 		FROM user
 		WHERE user_id = #{userId}
 	</select>
-	 
+
 	<!-- SQL : UPDATE -->
 	<update		id="updateUser"		parameterType="user" >
-		UPDATE user 
+		UPDATE user
 		<set>
-			password = #{password}, nickname = #{nickName}, email = #{email:VARCHAR},addr = #{addr:VARCHAR}, 
+			password = #{password}, nickname = #{nickName}, email = #{email:VARCHAR},addr = #{addr:VARCHAR},
 			address = #{address:VARCHAR},phone = #{phone:VARCHAR} , user_image=#{userImage:VARCHAR}
 		</set>
 		WHERE user_id = #{userId}
 	</update>
-	 
-	 <!-- SQL : DELETE -->
+
+	<!-- SQL : DELETE -->
 	<delete		id="deleteUser"		parameterType="string">
-		DELETE FROM user 
+		DELETE FROM user
 		WHERE user_id = #{userId}
 	</delete>
-	 
+
 	<!-- SQL : SELECT LIST -->
-	<select		id="listUser"		parameterType="search"		resultMap="userSelectMap">
-		SELECT nickname,user_id , user_name,  phone,  r_date 
-		FROM user 
-		<if test="search != null">	
+	<select id="listUser" parameterType="com.cornstory.common.Search" resultMap="userSelectMap">
+		SELECT nickname, user_id, user_name, phone, r_date
+		FROM user
+		<if test="searchCondition != null">
 			<where>
-				<if test="searchCondition == 0 and searchKeyword !='' ">
-		 			nickname LIKE #{searchKeyword}%
+				<if test="searchCondition == 0 and searchKeyword != ''">
+					AND nickname LIKE CONCAT(#{searchKeyword}, '%')
 				</if>
-				<if test="searchCondition == 1 and searchKeyword !='' ">
-		 		 	user_name LIKE #{searchKeyword}%
+				<if test="searchCondition == 1 and searchKeyword != ''">
+					AND user_name LIKE CONCAT(#{searchKeyword}, '%')
 				</if>
 			</where>
 		</if>
 	</select>
-	
-	<!-- SQL : SELECT ROW Count -->	 
-	<select		id="getTotalCount"		parameterType="search"		resultType="int">	
-		SELECT COUNT (*) 
-		FROM user 
-		<if test="search != null">	
+
+
+	<!-- SQL : SELECT COUNT -->
+	<select id="getTotalCount" parameterType="com.cornstory.common.Search" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM user
+		<if test="searchCondition != null">
 			<where>
-				<if test="searchCondition == 0 and searchKeyword !='' ">
-		 			nickname LIKE #{searchKeyword}%
+				<if test="searchCondition == 0 and searchKeyword != ''">
+					<!-- 닉네임으로 검색하는 경우 -->
+					AND nickname LIKE CONCAT(#{searchKeyword}, '%')
 				</if>
-				<if test="searchCondition == 1 and searchKeyword !='' ">
-		 		 	user_name LIKE #{searchKeyword}%
+				<if test="searchCondition == 1 and searchKeyword != ''">
+					<!-- 이름으로 검색하는 경우 -->
+					AND user_name LIKE CONCAT(#{searchKeyword}, '%')
 				</if>
 			</where>
 		</if>
 	</select>
-	
+
+	<!-- SQL : ID CHECK -->
+	<select		id="idChack"		parameterType="string"		resultMap="userSelectMap">
+		SELECT user_id FROM user WHERE user_id = #{userId}
+	</select>
+
+	<!-- SQL : NICKNAME CHECK -->
+	<select id="nickNameCheck" parameterType="string" resultMap="userSelectMap">
+		SELECT nickname FROM user WHERE nickname = #{nickName}
+	</select>
+
 </mapper>
