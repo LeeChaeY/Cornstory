@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.cornstory.service.product.ProductDao">
+
+	<resultMap type="product" id="productSelectMap">
+		<result property="prodNo" column="prod_no" jdbcType="INTEGER"/>
+		<result property="workNo" column="work_no" jdbcType="INTEGER"/>
+		<result property="episodeNo" column="episode_no" jdbcType="INTEGER"/>
+		<result property="userId" column="user_id" jdbcType="VARCHAR"/>
+		<result property="prodCategory" column="prod_category" jdbcType="INTEGER"/>
+		<result property="prodName" column="prod_name" jdbcType="VARCHAR"/>
+		<result property="workName" column="work_name" jdbcType="VARCHAR"/>
+		<result property="episodeOrder" column="episode_order" jdbcType="INTEGER"/>
+		<result property="prodImage" column="prod_image" jdbcType="VARCHAR"/>
+		<result property="prodPrice" column="prod_price" jdbcType="INTEGER"/>
+		<result property="prodCnt" column="prod_cnt" jdbcType="INTEGER"/>
+		<result property="prodDate" column="prod_date" jdbcType="DATE"/>
+	</resultMap>
+
+	<insert id="addProduct" parameterType="product">
+		INSERT
+		INTO product (work_no, episode_no, user_id, prod_category, prod_name, episode_order, prod_image, prod_price, prod_cnt, prod_date)
+		VALUES (
+				    #{workNo},
+				    #{episodeNo},
+				    #{userId},
+				    #{prodCategory},
+				    #{prodName},
+		        	#{episodeOrder},
+					#{prodImage},
+		        	#{prodPrice},
+				    #{prodCnt},
+				   DATE_FORMAT(NOW(), '%Y-%m-%d'))
+	</insert>
+
+	<select id="getProduct" parameterType="int" resultMap="productSelectMap">
+		SELECT *
+		FROM product
+		WHERE prod_no = #{prodNo}
+	</select>
+
+	<update id="updateProduct" parameterType="product">
+		UPDATE product
+		<trim prefix="set" suffixOverrides=",">
+			<if test="prodPrice != 0">
+				prod_price = #{prodPrice},
+			</if>
+			<if test="prodCnt != 1">
+				prod_cnt = #{prodCnt},
+			</if>
+			<if test="prodImage != null">
+				prod_image = #{prodImage}
+			</if>
+		</trim>
+		WHERE prod_no = #{prodNo}
+	</update>
+
+	<delete id="deleteProduct" parameterType="int">
+		DELETE
+		FROM product
+		WHERE prod_no = #{prodNo}
+	</delete>
+
+	<select id="countProductPopCorn" parameterType="search" resultType="int">
+		SELECT COUNT(*) AS totalCount
+		FROM (SELECT *  FROM  product
+		<where>
+			prod_category = 0
+			<if test='searchCondition != null and !searchCondition.equals("")
+						and searchKeyword != null and !searchKeyword.equals("")'>
+				<if test='searchCondition.equals("0")'>
+					AND LOWER(prod_name) LIKE LOWER(CONCAT('%', #{searchKeyword},'%'))
+				</if>
+			</if>
+		</where>
+		) countTable
+	</select>
+
+	<select id="listProductPopcorn" parameterType="map" resultMap="productSelectMap">
+		SELECT *
+		FROM (SELECT inner_table.*, @rownum := @rownum + 1 AS row_seq
+		FROM (SELECT *
+		FROM product
+		<where>
+			prod_category = 0
+			<if test='search.searchCondition != null and !search.searchCondition.equals("")
+										and search.searchKeyword != null and !search.searchKeyword.equals("")'>
+				<if test='search.searchCondition.equals("0")'>
+					AND LOWER(prod_name) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%'))
+				</if>
+			</if>
+		</where>
+		ORDER BY prod_price
+		) inner_table, (SELECT @rownum := 0) r
+		LIMIT #{endRowNum}
+		) AS result
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+	</select>
+
+	<select id="countProductCopyright" parameterType="map" resultType="int">
+		SELECT COUNT(*) AS totalCount
+		FROM (SELECT *
+		FROM product
+		<where>
+			prod_category = 2
+			<if test='search.searchCondition != null and !search.searchCondition.equals("")
+					and search.searchKeyword != null and !search.searchKeyword.equals("")'>
+				<if test='search.searchCondition.equals("0")'>
+					AND LOWER(prod_name) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%'))
+				</if>
+			</if>
+			<if test='userId != null and !userId.equals("")'>
+				AND user_id = #{userId}
+			</if>
+		</where>
+		) countTable
+	</select>
+
+	<select id="listProductCopyright" parameterType="map" resultMap="productSelectMap">
+		SELECT *
+		FROM ( SELECT inner_table.*, @rownum := @rownum + 1 AS row_seq
+		FROM (SELECT prod_no, prod_category, prod_name, episode_order,
+		prod_price, prod_image, prod_date, work_no,
+		U.user_id, nickname
+		FROM  PRODUCT P JOIN USER U ON U.user_id = P.user_id
+		<where>
+			prod_category = 2
+			<if test='search.searchCondition != null and !search.searchCondition.equals("")
+								and search.searchKeyword != null and !search.searchKeyword.equals("")'>
+				<if test='search.searchCondition.equals("0")'>
+					AND LOWER(prod_name) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%'))
+				</if>
+			</if>
+			<if test='userId != null and !userId.equals("")'>
+				AND P.user_id = #{userId}
+			</if>
+		</where>
+		ORDER BY prod_no
+		) inner_table, (SELECT @rownum := 0) r
+		LIMIT #{endRowNum}
+		) AS result
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+	</select>
+	<!--
+	<select id="listCompleteWork" parameterType="string" resultType="workSelectMap">
+		SELECT work_no, user_id, category, fap,
+			   work_name, thumbnail, work_date, status, complete
+		FROM work
+		WHERE complete = 1 and status = 0 and user_id = #{userId}
+		  	and work_no not in (SELECT work_no
+							  	FROM product
+							  	WHERE prod_category = 2);
+	</select>
+	-->
+	<select id="countProductProdName" parameterType="string" resultType="int">
+		SELECT COUNT(*)
+		FROM product
+		WHERE prod_name = #{prodName}
+	</select>
+
+	<select id="countLastEpisode" parameterType="int" resultType="int">
+		SELECT MAX(E.episode_order)
+		FROM episode E JOIN product P ON E.work_no = P.work_no
+		WHERE P.work_no = #{workNo}
+	</select>
+
+</mapper>
