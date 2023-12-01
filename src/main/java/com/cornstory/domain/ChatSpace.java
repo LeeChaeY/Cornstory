@@ -4,113 +4,71 @@ import java.sql.Date;
 
 public class ChatSpace {
 
-	private int prodNo;
-	private Integer workNo;			// 팝콘이면 null
-	private Integer episodeNo;		// 팝콘, 저작권이면 null
-	private String userId;		// 등록한 회원 아이디, 팝콘은
-	private int prodCategory;	// 0 : 팝콘, 1: 작품 회차, 2: 저작권
-	private String prodName;	// 작품 회차는 작품 이름+작품회차+'회차', 팝콘은 팝콘 수량+'개', 저작권은 작품 이름 + ' 저작권'
-	private String workName;	// 목록에서 작품명 보여줄 때를 위한 필드
-	private Integer episodeOrder;	// 작품 회차는 회차 순서, 저작권은 작품 완결 회차
-	private String prodImage;
-	private int prodPrice;		// 팝콘은 단위가 원, 작품 회차, 저작권 단위는 팝콘
-	private int prodCnt;		// 작품 회차, 저작권의 상품 수량은 1
-	private Date prodDate;		// yyyy-MM-dd
+	private int chatSpaceNo;
+	private String userId;			// 채팅방 개설한 회원 아이디, 팝콘은
+	private String cSpaceName;
+	private String cSpaceImage;		// 채팅방 이미지, 설정 안하면 기본 이미지
+	private int cSpaceUserCnt;	// 채팅방에 입장한 회원수
+	private Date cSpaceDate;		// 채팅방 개설 날짜, yyyy-MM-dd
+	private String genre;			// 채팅방 장르, 1개만 선택
+	private String nickname;
+	private String userImage;
+	private int chatEnterNo;
+	private Date chatEnterDate;		// 입장 시간, yyyy-MM-dd hh:mm:ss
 
 	public ChatSpace() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ChatSpace(int prodNo, int prodPrice) {
-		this.prodNo = prodNo;
-		this.prodPrice = prodPrice;
+	public ChatSpace(int chatSpaceNo) {
+		this.chatSpaceNo = chatSpaceNo;
 	}
 
-	public ChatSpace(int prodNo, String prodImage, int prodPrice, int prodCnt) {
-		this.prodNo = prodNo;
-		this.prodImage = prodImage;
-		this.prodPrice = prodPrice;
-		this.prodCnt = prodCnt;
-	}
-
-	public ChatSpace(String userId, int prodCategory, String prodName,
-                     String prodImage, int prodPrice, int prodCnt) {
-		super();
+	public ChatSpace(String userId, String cSpaceName, String cSpaceImage, String genre) {
 		this.userId = userId;
-		this.prodCategory = prodCategory;
-		this.prodName = prodName;
-		this.prodImage = prodImage;
-		this.prodPrice = prodPrice;
-		this.prodCnt = prodCnt;
-		this.prodDate = prodDate;
+		this.cSpaceName = cSpaceName;
+		this.cSpaceImage = cSpaceImage;
+		this.genre = genre;
 	}
 
-	public ChatSpace(Integer workNo, String userId, int prodCategory, String prodName,
-                     Integer episodeOrder, String prodImage, int prodPrice) {
-		super();
-		this.workNo = workNo;
+	public ChatSpace(int chatSpaceNo, String cSpaceName, String cSpaceImage) {
+		this.chatSpaceNo = chatSpaceNo;
+		this.cSpaceName = cSpaceName;
+		this.cSpaceImage = cSpaceImage;
+	}
+
+	public ChatSpace(int chatSpaceNo, int cSpaceUserCnt) {
+		this.chatSpaceNo = chatSpaceNo;
+		this.cSpaceUserCnt = cSpaceUserCnt;
+	}
+
+	public ChatSpace(int chatSpaceNo, String userId) {
+		this.chatSpaceNo = chatSpaceNo;
 		this.userId = userId;
-		this.prodCategory = prodCategory;
-		this.prodName = prodName;
-		this.episodeOrder = episodeOrder;
-		this.prodImage = prodImage;
-		this.prodPrice = prodPrice;
-		this.prodDate = prodDate;
 	}
 
-	public ChatSpace(Integer workNo, Integer episodeNo, String userId, int prodCategory, String prodName,
-                     Integer episodeOrder, String prodImage, int prodPrice) {
-		super();
-		this.workNo = workNo;
-		this.episodeNo = episodeNo;
+	public ChatSpace(int chatSpaceNo, String userId, String cSpaceName, String cSpaceImage,
+					 int cSpaceUserCnt, Date cSpaceDate, String genre, String nickname,
+					 String userImage, int chatEnterNo, Date chatEnterDate) {
+		this.chatSpaceNo = chatSpaceNo;
 		this.userId = userId;
-		this.prodCategory = prodCategory;
-		this.prodName = prodName;
-		this.episodeOrder = episodeOrder;
-		this.prodImage = prodImage;
-		this.prodPrice = prodPrice;
-		this.prodDate = prodDate;
+		this.cSpaceName = cSpaceName;
+		this.cSpaceImage = cSpaceImage;
+		this.cSpaceUserCnt = cSpaceUserCnt;
+		this.cSpaceDate = cSpaceDate;
+		this.genre = genre;
+		this.nickname = nickname;
+		this.userImage = userImage;
+		this.chatEnterNo = chatEnterNo;
+		this.chatEnterDate = chatEnterDate;
 	}
 
-	public ChatSpace(int prodNo, Integer workNo, Integer episodeNo, String userId, int prodCategory,
-                     String prodName, String workName, Integer episodeOrder, String prodImage,
-                     int prodPrice, int prodCnt, Date prodDate) {
-		this.prodNo = prodNo;
-		this.workNo = workNo;
-		this.episodeNo = episodeNo;
-		this.userId = userId;
-		this.prodCategory = prodCategory;
-		this.prodName = prodName;
-		this.workName = workName;
-		this.episodeOrder = episodeOrder;
-		this.prodImage = prodImage;
-		this.prodPrice = prodPrice;
-		this.prodCnt = prodCnt;
-		this.prodDate = prodDate;
+	public int getChatSpaceNo() {
+		return chatSpaceNo;
 	}
 
-	public int getProdNo() {
-		return prodNo;
-	}
-
-	public void setProdNo(int prodNo) {
-		this.prodNo = prodNo;
-	}
-
-	public Integer getWorkNo() {
-		return workNo;
-	}
-
-	public void setWorkNo(Integer workNo) {
-		this.workNo = workNo;
-	}
-
-	public Integer getEpisodeNo() {
-		return episodeNo;
-	}
-
-	public void setEpisodeNo(Integer episodeNo) {
-		this.episodeNo = episodeNo;
+	public void setChatSpaceNo(int chatSpaceNo) {
+		this.chatSpaceNo = chatSpaceNo;
 	}
 
 	public String getUserId() {
@@ -121,85 +79,93 @@ public class ChatSpace {
 		this.userId = userId;
 	}
 
-	public int getProdCategory() {
-		return prodCategory;
+	public String getcSpaceName() {
+		return cSpaceName;
 	}
 
-	public void setProdCategory(int prodCategory) {
-		this.prodCategory = prodCategory;
+	public void setcSpaceName(String cSpaceName) {
+		this.cSpaceName = cSpaceName;
 	}
 
-	public String getProdName() {
-		return prodName;
+	public String getcSpaceImage() {
+		return cSpaceImage;
 	}
 
-	public void setProdName(String prodName) {
-		this.prodName = prodName;
+	public void setcSpaceImage(String cSpaceImage) {
+		this.cSpaceImage = cSpaceImage;
 	}
 
-	public String getWorkName() {
-		return workName;
+	public int getcSpaceUserCnt() {
+		return cSpaceUserCnt;
 	}
 
-	public void setWorkName(String workName) {
-		this.workName = workName;
+	public void setcSpaceUserCnt(int cSpaceUserCnt) {
+		this.cSpaceUserCnt = cSpaceUserCnt;
 	}
 
-	public Integer getEpisodeOrder() {
-		return episodeOrder;
+	public Date getcSpaceDate() {
+		return cSpaceDate;
 	}
 
-	public void setEpisodeOrder(Integer episodeOrder) {
-		this.episodeOrder = episodeOrder;
+	public void setcSpaceDate(Date cSpaceDate) {
+		this.cSpaceDate = cSpaceDate;
 	}
 
-	public String getProdImage() {
-		return prodImage;
+	public String getGenre() {
+		return genre;
 	}
 
-	public void setProdImage(String prodImage) {
-		this.prodImage = prodImage;
+	public void setGenre(String genre) {
+		this.genre = genre;
 	}
 
-	public int getProdPrice() {
-		return prodPrice;
+	public String getNickname() {
+		return nickname;
 	}
 
-	public void setProdPrice(int prodPrice) {
-		this.prodPrice = prodPrice;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 
-	public int getProdCnt() {
-		return prodCnt;
+	public String getUserImage() {
+		return userImage;
 	}
 
-	public void setProdCnt(int prodCnt) {
-		this.prodCnt = prodCnt;
+	public void setUserImage(String userImage) {
+		this.userImage = userImage;
 	}
 
-	public Date getProdDate() {
-		return prodDate;
+	public int getChatEnterNo() {
+		return chatEnterNo;
 	}
 
-	public void setProdDate(Date prodDate) {
-		this.prodDate = prodDate;
+	public void setChatEnterNo(int chatEnterNo) {
+		this.chatEnterNo = chatEnterNo;
+	}
+
+	public Date getChatEnterDate() {
+		return chatEnterDate;
+	}
+
+	public void setChatEnterDate(Date chatEnterDate) {
+		this.chatEnterDate = chatEnterDate;
 	}
 
 	@Override
 	public String toString() {
-		return "Product{" +
-				"prodNo=" + prodNo +
-				", workNo=" + workNo +
-				", episodeNo=" + episodeNo +
+		return "ChatSpace{" +
+				"chatSpaceNo=" + chatSpaceNo +
 				", userId='" + userId + '\'' +
-				", prodCategory=" + prodCategory +
-				", prodName='" + prodName + '\'' +
-				", workName='" + workName + '\'' +
-				", episodeOrder=" + episodeOrder +
-				", prodImage='" + prodImage + '\'' +
-				", prodPrice=" + prodPrice +
-				", prodCnt=" + prodCnt +
-				", prodDate=" + prodDate +
+				", cSpaceName='" + cSpaceName + '\'' +
+				", cSpaceImage='" + cSpaceImage + '\'' +
+				", cSpaceUserCnt=" + cSpaceUserCnt +
+				", cSpaceDate=" + cSpaceDate +
+				", genre='" + genre + '\'' +
+				", nickname='" + nickname + '\'' +
+				", userImage='" + userImage + '\'' +
+				", chatEnterNo=" + chatEnterNo +
+				", chatEnterDate=" + chatEnterDate +
 				'}';
 	}
+
 }
