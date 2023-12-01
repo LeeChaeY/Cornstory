@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cornstory.service.support.SupportDao">
+
+	<resultMap type="support" id="supportSelectMap">
+		<result property="supNo"		column="sup_no"/>
+		<result property="userId"		column="user_id"/>
+		<result property="supCategory"	column="sup_category"/>
+		<result property="supContent"	column="sup_content"/>
+		<result property="supAnswer"	column="sup_answer"/>
+		<result property="supDate"		column="sup_date"/>
+	</resultMap>
+
+	<insert		id="addSupport"		parameterType="support" >
+		INSERT
+		INTO support( user_id,sup_category,sup_content,sup_answer,sup_date)
+		VALUES (#{userId},#{supCategory},#{supContent},#{supAnswer},NOW())
+	</insert>
+
+	<select		id="getSupport"		parameterType="int"		resultMap="supportSelectMap">
+		SELECT * FROM support WHERE sup_no = #{supNo}
+	</select>
+
+	<update id="updateSupport" parameterType="support">
+		UPDATE support
+		SET user_id=#{userId}, sup_category=#{supCategory}, sup_content=#{supContent}, sup_answer=#{supAnswer}
+		WHERE sup_no = #{supNo}
+	</update>
+
+	<delete		id="deleteSupport"		parameterType="int">
+		DELETE FROM supportx
+		WHERE sup_no = #{supNo}
+	</delete>
+
+	<select id="listSupport" parameterType="com.cornstory.common.Search" resultMap="supportSelectMap">
+		SELECT *
+		FROM support
+		<if test="searchCondition != null">
+			<where>
+				<if test="searchCondition == 0 and searchKeyword != ''">
+					AND sup_answer LIKE CONCAT(#{searchKeyword}, '%')
+				</if>
+			</where>
+		</if>
+	</select>
+
+	<select id="getTotalCount" parameterType="com.cornstory.common.Search" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM support
+		<if test="searchCondition != null">
+			<where>
+				<if test="searchCondition == 0 and searchKeyword != ''">
+					AND sup_answer LIKE CONCAT(#{searchKeyword}, '%')
+				</if>
+			</where>
+		</if>
+	</select>
+
+</mapper>

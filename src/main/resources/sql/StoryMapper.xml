@@ -6,12 +6,12 @@
 
     <!-- resultMap 설정 -->
     <resultMap id="storyResultMap" type="story">
-        <result property="storyNo" column="story_no" />
-        <result property="userId" column="user_id" />
-        <result property="storyName" column="story_name" />
+        <result property="storyNo"      column="story_no" />
+        <result property="userId"       column="user_id" />
+        <result property="storyName"    column="story_name" />
         <result property="storyContent" column="story_content" />
-        <result property="storyDate" column="story_date" />
-        <result property="storyImage" column="story_image" />
+        <result property="storyDate"    column="story_date" />
+        <result property="storyImage"   column="story_image" />
     </resultMap>
 
     <!-- SELECT 문 -->

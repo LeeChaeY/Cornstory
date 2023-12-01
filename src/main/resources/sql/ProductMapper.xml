@@ -8,18 +8,18 @@
 <mapper namespace="com.cornstory.service.product.ProductDao">
 
 	<resultMap type="product" id="productSelectMap">
-		<result property="prodNo" column="prod_no" jdbcType="INTEGER"/>
-		<result property="workNo" column="work_no" jdbcType="INTEGER"/>
-		<result property="episodeNo" column="episode_no" jdbcType="INTEGER"/>
-		<result property="userId" column="user_id" jdbcType="VARCHAR"/>
-		<result property="prodCategory" column="prod_category" jdbcType="INTEGER"/>
-		<result property="prodName" column="prod_name" jdbcType="VARCHAR"/>
-		<result property="workName" column="work_name" jdbcType="VARCHAR"/>
-		<result property="episodeOrder" column="episodeOrder" jdbcType="INTEGER"/>
-		<result property="prodImage" column="prod_image" jdbcType="VARCHAR"/>
-		<result property="prodPrice" column="prod_price" jdbcType="INTEGER"/>
-		<result property="prodCnt" column="prod_cnt" jdbcType="INTEGER"/>
-		<result property="prodDate" column="prod_date" jdbcType="DATE"/>
+		<result property="prodNo" 		column="prod_no" 		jdbcType="INTEGER"/>
+		<result property="workNo" 		column="work_no" 		jdbcType="INTEGER"/>
+		<result property="episodeNo" 	column="episode_no" 	jdbcType="INTEGER"/>
+		<result property="userId" 		column="user_id" 		jdbcType="VARCHAR"/>
+		<result property="prodCategory" column="prod_category" 	jdbcType="INTEGER"/>
+		<result property="prodName" 	column="prod_name" 		jdbcType="VARCHAR"/>
+		<result property="workName" 	column="work_name" 		jdbcType="VARCHAR"/>
+		<result property="episodeOrder" column="episodeOrder" 	jdbcType="INTEGER"/>
+		<result property="prodImage" 	column="prod_image" 	jdbcType="VARCHAR"/>
+		<result property="prodPrice" 	column="prod_price" 	jdbcType="INTEGER"/>
+		<result property="prodCnt" 		column="prod_cnt" 		jdbcType="INTEGER"/>
+		<result property="prodDate" 	column="prod_date" 		jdbcType="DATE"/>
 	</resultMap>
 
 	<insert id="addProduct" parameterType="product">

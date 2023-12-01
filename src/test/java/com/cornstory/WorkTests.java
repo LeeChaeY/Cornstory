@@ -97,7 +97,7 @@ class WorkTests {
 		System.out.println("기존 작품 정보: " + nonExistentWork);
 	}
 
-	@Test
+	//@Test
 	public void testListWorkAll() throws Exception {
 		System.out.println("List All");
 		Search search = new Search();

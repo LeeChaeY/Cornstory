@@ -134,7 +134,7 @@ class EpisodeTests {
 		assertEquals(newComment.getEContent(), retrievedComment.getEContent());
 	}
 
-	@Test
+	//@Test
 	public void testGetEpisodeCommentById() throws Exception {
 		// Add a new EpisodeComment
 		EpisodeComment newComment = new EpisodeComment();

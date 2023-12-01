@@ -75,7 +75,23 @@
 		</where>
 	</select>
 
-
+	<select id="getTotalCount" parameterType="com.cornstory.common.Search" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM user
+		<if test="searchCondition != null">
+			<where>
+				<if test="category != null">
+					AND category = #{category}
+				</if>
+				<if test="genre != null and genre != ''">
+					AND (genre1 = #{genre} OR genre2 = #{genre} OR genre3 = #{genre})
+				</if>
+				<if test="searchKeyword != null and searchKeyword != ''">
+					AND (workName LIKE CONCAT('%', #{searchKeyword}, '%') OR author LIKE CONCAT('%', #{searchKeyword}, '%'))
+				</if>
+			</where>
+		</if>
+	</select>
 
 
 
