@@ -1,8 +1,10 @@
 package com.cornstory.service.work;
 
 import com.cornstory.common.Search;
+import com.cornstory.domain.Bookmark;
 import com.cornstory.domain.Work;
 
+import java.util.List;
 import java.util.Map;
 
 public interface WorkService {
@@ -20,6 +22,14 @@ public interface WorkService {
     public int deleteWork(int workNo) throws Exception;
 
     // 작품 목록
-    public Map<String,Object> listWork(Search search) throws Exception;
+    public Map<String, Object> listWork(Search search) throws Exception;
+
+    public void addBookmark(Bookmark bookmark);
+
+    public void removeBookmark(int bookmarkNo);
+
+    public Bookmark getBookmarkByNo(int bookmarkNo);
+
+    public List<Bookmark> getBookmarksByUserId(String userId);
 
 }

@@ -12,13 +12,13 @@
         <result column="s_comment_date" property="sCommentDate" jdbcType="DATE" />
     </resultMap>
 
-    <!-- Insert a New Comment -->
+    <!-- 스토리 댓글 생성 -->
     <insert id="addComment" parameterType="storyComment">
         INSERT INTO story_comment (story_no, user_id, s_content, s_comment_date)
         VALUES (#{storyNo : INTEGER}, #{userId : VARCHAR}, #{sContent : VARCHAR}, now())
     </insert>
 
-    <!-- Update Comment -->
+    <!-- 스토리 댓글 수정 -->
     <update id="updateComment" parameterType="storyComment">
         UPDATE story_comment
         SET s_content = #{content : VARCHAR},
@@ -26,12 +26,12 @@
         WHERE s_comment_no = #{sCommentNo}
     </update>
 
-    <!-- Delete Comment By Comment Number -->
+    <!-- 스토리 댓글 삭제 -->
     <delete id="deleteComment" parameterType="int">
         DELETE FROM story_comment WHERE s_comment_no = #{sCommentNo}
     </delete>
 
-    <!-- Select All Comments -->
+    <!-- 스토리 댓글 목록 -->
     <select id="listStoryComments" parameterType="int" resultMap="commentResultMap">
         SELECT * FROM story_comment WHERE story_no = #{storyNo} ORDER BY s_comment_date DESC;
     </select>

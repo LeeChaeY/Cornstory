@@ -60,37 +60,63 @@
 		WHERE work_no = #{workNo}
 	</delete>
 
-	<select id="listWork" parameterType="com.cornstory.common.Search" resultMap="workSelectMap">
+	<select id="listWork" parameterType="search" resultMap="workSelectMap">
 		SELECT * FROM work
 		<where>
-			<if test="category != null">
-				AND category = #{category}
+			<if test="searchKeyword != null">
+				AND work_name LIKE CONCAT('%',#{searchKeyword},'%') OR user_id LIKE CONCAT('%',#{searchKeyword},'%')
 			</if>
-			<if test="genre != null and genre != ''">
-				AND (genre1 = #{genre} OR genre2 = #{genre} OR genre3 = #{genre})
-			</if>
-			<if test="searchKeyword != null and searchKeyword != ''">
-				AND (workName LIKE CONCAT('%', #{searchKeyword}, '%') OR author LIKE CONCAT('%', #{searchKeyword}, '%'))
+			<if test="searchKeyword == null">
+				<choose>
+					<when test="searchCondition == 0">
+						category = 0
+					</when>
+					<when test="searchCondition == 1">
+						category = 1
+					</when>
+					<when test="searchCondition == 2">
+						category = 2
+					</when>
+				</choose>
+				<if test="orderKeyword != null">
+					AND (genre1 = #{orderKeyword} OR genre2 = #{orderKeyword} OR genre3 = #{orderKeyword})
+				</if>
+				ORDER BY view_cnt
+				<if test="orderCondition == 0 or orderCondition == null">
+					desc
+				</if>
 			</if>
 		</where>
 	</select>
 
 	<select id="getTotalCount" parameterType="com.cornstory.common.Search" resultType="java.lang.Integer">
 		SELECT COUNT(*)
-		FROM user
-		<if test="searchCondition != null">
-            <where>
-                <if test="category != null">
-                    AND category = #{category}
-                </if>
-                <if test="genre != null and genre != ''">
-                    AND (genre1 = #{genre} OR genre2 = #{genre} OR genre3 = #{genre})
-                </if>
-                <if test="searchKeyword != null and searchKeyword != ''">
-                    AND (workName LIKE CONCAT('%', #{searchKeyword}, '%') OR author LIKE CONCAT('%', #{searchKeyword}, '%'))
-                </if>
-            </where>
-		</if>
+		FROM work
+		<where>
+			<if test="searchKeyword != null">
+				AND work_name LIKE CONCAT('%',#{searchKeyword},'%') OR user_id LIKE CONCAT('%',#{searchKeyword},'%')
+			</if>
+			<if test="searchKeyword == null">
+				<choose>
+					<when test="searchCondition == 0">
+						category = 0
+					</when>
+					<when test="searchCondition == 1">
+						category = 1
+					</when>
+					<when test="searchCondition == 2">
+						category = 2
+					</when>
+				</choose>
+				<if test="orderKeyword != null">
+					AND (genre1 = #{orderKeyword} OR genre2 = #{orderKeyword} OR genre3 = #{orderKeyword})
+				</if>
+				ORDER BY view_cnt
+				<if test="orderCondition == 0 or orderCondition == null">
+					desc
+				</if>
+			</if>
+		</where>
 	</select>
 
 

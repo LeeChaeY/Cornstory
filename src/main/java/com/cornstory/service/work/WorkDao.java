@@ -5,6 +5,7 @@ import com.cornstory.domain.Work;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface WorkDao {

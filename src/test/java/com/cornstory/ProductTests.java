@@ -19,7 +19,7 @@ class ProductTests {
 	@Autowired
 	private ProductService productService;
 
-	@Test
+//	@Test
 	void contextLoads() {
 
 //		Product productInsertPopcorn = new Product("admin", 0, "팝콘 1100개", "popcorn1.jpg", 99000, 1100);

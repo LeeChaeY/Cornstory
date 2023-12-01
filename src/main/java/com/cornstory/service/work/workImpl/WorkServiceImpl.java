@@ -1,7 +1,9 @@
 package com.cornstory.service.work.workImpl;
 
 import com.cornstory.common.Search;
+import com.cornstory.domain.Bookmark;
 import com.cornstory.domain.Work;
+import com.cornstory.service.work.BookmarkDao;
 import com.cornstory.service.work.WorkDao;
 import com.cornstory.service.work.WorkService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +19,8 @@ public class WorkServiceImpl implements WorkService {
     @Autowired
     private WorkDao workDao;
 
-    //Constructor
-    public WorkServiceImpl(){
-    }
+    @Autowired
+    private BookmarkDao bookmarkDao;
 
     //Method
     @Override
@@ -52,5 +53,24 @@ public class WorkServiceImpl implements WorkService {
         map.put("totalCount", totalCount);
 
         return map;
+    }
+    @Override
+    public void addBookmark(Bookmark bookmark) {
+        bookmarkDao.addBookmark(bookmark);
+    }
+
+    @Override
+    public void removeBookmark(int bookmarkNo) {
+        bookmarkDao.deleteBookmark(bookmarkNo);
+    }
+
+    @Override
+    public Bookmark getBookmarkByNo(int bookmarkNo) {
+        return bookmarkDao.getBookmarkByNo(bookmarkNo);
+    }
+
+    @Override
+    public List<Bookmark> getBookmarksByUserId(String userId) {
+        return bookmarkDao.getBookmarksByUserId(userId);
     }
 }
