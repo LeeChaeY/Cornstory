@@ -20,7 +20,7 @@ class SupportTests {
 	private SupportService supportService;
 
 	int num =10000;
-	//@Test
+	@Test
 	public void testAddSupport() throws Exception {
 		System.out.println("Add Support");
 		/*
@@ -34,17 +34,7 @@ class SupportTests {
 		support.setSupContent("등록 내용");
 
 
-		/*support.setUserId("admin");
-		support.setSupCategory(0);
-		support.setSupContent("등록 내용");
-		//support.setSupAnswer("답변");
-		support.setSupRole("A");
 
-		support.setUserId("admin");
-		support.setSupCategory(1);
-		support.setSupContent("등록 내용");
-		//support.setSupAnswer("답변");
-		support.setSupRole("G");*/
 		// Support 추가
 		supportService.addSupport(support);
 
@@ -111,38 +101,13 @@ class SupportTests {
 
 		assertTrue(totalCount >= 1 && list.size() >= 1);
 
-		search.setSearchCondition("0");
+		search.setSearchCondition("1");
 		map = supportService.listSupport(search);
 
 		System.out.println(map);
 		list = (List<Object>) map.get("list");
 		totalCount = (Integer) map.get("totalCount");
 		System.out.println("list"+list);
-		System.out.println(totalCount);
-		assertTrue(totalCount >= 1);
-	}
-
-	@Test
-	public void testListSupportGong() throws Exception {
-		Search search = new Search();
-		search.setCurrentPage(1);
-		search.setPageSize(3);
-
-		Map<String, Object> map = supportService.listSupport(search);
-		//System.out.println(map);
-		List<Object> list = (List<Object>) map.get("list");
-		Integer totalCount = (Integer) map.get("totalCount");
-
-		assertTrue(totalCount >= 1 && list.size() >= 1);
-
-		search.setSearchCondition("1");
-		map = supportService.listSupport(search);
-
-		//System.out.println(map);
-		list = (List<Object>) map.get("list");
-		totalCount = (Integer) map.get("totalCount");
-		//System.out.println("list"+list);
-		System.out.println("========"+map);
 		System.out.println(totalCount);
 		assertTrue(totalCount >= 1);
 	}
