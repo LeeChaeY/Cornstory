@@ -2,7 +2,6 @@ package com.cornstory;
 
 import com.cornstory.common.Search;
 import com.cornstory.domain.Support;
-import com.cornstory.domain.Work;
 import com.cornstory.service.support.SupportService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,18 +19,33 @@ class SupportTests {
 	@Autowired
 	private SupportService supportService;
 
-	int num =10002;
+	int num =10000;
 	//@Test
 	public void testAddSupport() throws Exception {
 		System.out.println("Add Support");
-
+		/*
+		*  category = 0 : Q&A 1: 공지사항
+		* ROLE = Q 질문 A 답변 G 공지사항
+		* */
 		// 테스트용 Support 객체 생성
 		Support support = new Support();
-		support.setUserId("admin");
+		support.setUserId("user");
+		support.setSupCategory(1);
+		support.setSupContent("등록 내용");
+		support.setSupAnswer("");
+		support.setSupRole("G");
+
+		/*support.setUserId("admin");
 		support.setSupCategory(0);
 		support.setSupContent("등록 내용");
-		support.setSupAnswer("답변");
+		//support.setSupAnswer("답변");
+		support.setSupRole("A");
 
+		support.setUserId("admin");
+		support.setSupCategory(1);
+		support.setSupContent("등록 내용");
+		//support.setSupAnswer("답변");
+		support.setSupRole("G");*/
 		// Support 추가
 		supportService.addSupport(support);
 
@@ -84,45 +98,54 @@ class SupportTests {
 		System.out.println("기존 작품 정보: " + nonExistentWork);
 	}
 
-	@Test
-	public void testListSupportAll() throws Exception {
-		// 검색 조건 설정
-		Search search = new Search();
-		search.setCurrentPage(1);
-		search.setPageSize(3);
-		Map<String, Object> map = supportService.listSupport(search);
-		System.out.println(map);
-
-		List<Object> list = (List<Object>) map.get("list");
-		Integer totalCount = (Integer) map.get("totalCount");
-		System.out.println(totalCount);
-		// 전체 사용자 수가 1 이상이면서 결과 리스트 크기가 1과 같거나 크다면 성공
-		assertFalse(totalCount >= 1 && list.size() >= 3);
-	}
-
 	//@Test
-	public void testListSupportWithAnswer() throws Exception {
+	public void testListSupportQnA() throws Exception {
 		Search search = new Search();
 		search.setCurrentPage(1);
 		search.setPageSize(3);
 
 		Map<String, Object> map = supportService.listSupport(search);
-		System.out.println(map);
+		//System.out.println(map);
 		List<Object> list = (List<Object>) map.get("list");
 		Integer totalCount = (Integer) map.get("totalCount");
 
 		assertTrue(totalCount >= 1 && list.size() >= 1);
 
 		search.setSearchCondition("0");
-		search.setSearchKeyword("등록");
 		map = supportService.listSupport(search);
 
-		System.out.println(map);
+		//System.out.println(map);
 		list = (List<Object>) map.get("list");
 		totalCount = (Integer) map.get("totalCount");
-		System.out.println("list"+list);
+		//System.out.println("list"+list);
+		System.out.println("========"+map);
 		System.out.println(totalCount);
-		assertFalse(totalCount >= 1 && list.size() >= 1);
+		assertTrue(totalCount >= 1);
+	}
+
+	@Test
+	public void testListSupportGong() throws Exception {
+		Search search = new Search();
+		search.setCurrentPage(1);
+		search.setPageSize(3);
+
+		Map<String, Object> map = supportService.listSupport(search);
+		//System.out.println(map);
+		List<Object> list = (List<Object>) map.get("list");
+		Integer totalCount = (Integer) map.get("totalCount");
+
+		assertTrue(totalCount >= 1 && list.size() >= 1);
+
+		search.setSearchCondition("1");
+		map = supportService.listSupport(search);
+
+		//System.out.println(map);
+		list = (List<Object>) map.get("list");
+		totalCount = (Integer) map.get("totalCount");
+		//System.out.println("list"+list);
+		System.out.println("========"+map);
+		System.out.println(totalCount);
+		assertTrue(totalCount >= 1);
 	}
 
 }

@@ -130,7 +130,7 @@ class UserTests {
 
 		list = (List<Object>) map.get("list");
 		totalCount = (Integer) map.get("totalCount");
-		System.out.println("\n\n"map);
+		System.out.println("\n\n"+map);
 		System.out.println(totalCount);
 		// 전체 사용자 수가 1 이상이면서 결과 리스트 크기가 1과 같거나 크다면 성공
 		assertTrue(totalCount >= 1 && list.size() >= 1);

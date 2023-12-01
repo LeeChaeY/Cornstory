@@ -9,6 +9,7 @@ public class Support {
     private String supContent;
     private String supAnswer;
     private Date supDate;
+    private String supRole;
 
     public int getSupNo() {
         return supNo;
@@ -42,7 +43,7 @@ public class Support {
         this.supContent = supContent;
     }
 
-    public String getSupAnswer(String s) {
+    public String getSupAnswer() {
         return supAnswer;
     }
 
@@ -58,6 +59,14 @@ public class Support {
         this.supDate = supDate;
     }
 
+    public String getSupRole() {
+        return supRole;
+    }
+
+    public void setSupRole(String supRole) {
+        this.supRole = supRole;
+    }
+
     @Override
     public String toString() {
         return "Support{" +
@@ -67,6 +76,7 @@ public class Support {
                 ", supContent='" + supContent + '\'' +
                 ", supAnswer='" + supAnswer + '\'' +
                 ", supDate=" + supDate +
+                ", supRole='" + supRole + '\'' +
                 '}';
     }
 }
