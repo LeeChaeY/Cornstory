@@ -5,11 +5,11 @@
 
     <!-- EpisodeComment 클래스를 위한 Result Map -->
     <resultMap id="episodeCommentResultMap" type="episodeComment">
-        <result property="eCommentNo" column="e_comment_no" />
-        <result property="episodeNo" column="episode_no" />
-        <result property="workNo" column="work_no" />
-        <result property="userId" column="user_id" />
-        <result property="eContent" column="e_content" />
+        <result property="eCommentNo"   column="e_comment_no" />
+        <result property="episodeNo"    column="episode_no" />
+        <result property="workNo"       column="work_no" />
+        <result property="userId"       column="user_id" />
+        <result property="eContent"     column="e_content" />
         <result property="eCommentDate" column="e_comment_date" />
     </resultMap>
 

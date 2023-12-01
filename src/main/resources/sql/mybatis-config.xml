@@ -31,9 +31,7 @@
 
         <typeAlias alias="chatSpace" type="com.cornstory.domain.ChatSpace" />
 
-        <!--
         <typeAlias alias="support" type="com.cornstory.domain.Support" />
-        -->
         <!--
         <typeAlias alias="ban" type="com.cornstory.domain.Ban" />
         -->
@@ -60,10 +58,9 @@
 
         <mapper resource="sql/StoryCommentMapper.xml"/>
 
-		<mapper resource="sql/ChatMapper.xml"/>
-        <!--
+		<mapper resource="sql/ChatSpaceMapper.xml"/>
+
 		<mapper resource="sql/SupportMapper.xml"/>
-		-->
         <!--
 		<mapper resource="sql/BanMapper.xml"/>
 		-->
