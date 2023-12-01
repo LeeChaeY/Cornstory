@@ -100,12 +100,13 @@ class SupportTests {
 
 	//@Test
 	public void testListSupportQnA() throws Exception {
+		// 검색 조건 설정
 		Search search = new Search();
 		search.setCurrentPage(1);
 		search.setPageSize(3);
 
 		Map<String, Object> map = supportService.listSupport(search);
-		//System.out.println(map);
+		System.out.println(map);
 		List<Object> list = (List<Object>) map.get("list");
 		Integer totalCount = (Integer) map.get("totalCount");
 
@@ -114,11 +115,10 @@ class SupportTests {
 		search.setSearchCondition("0");
 		map = supportService.listSupport(search);
 
-		//System.out.println(map);
+		System.out.println(map);
 		list = (List<Object>) map.get("list");
 		totalCount = (Integer) map.get("totalCount");
-		//System.out.println("list"+list);
-		System.out.println("========"+map);
+		System.out.println("list"+list);
 		System.out.println(totalCount);
 		assertTrue(totalCount >= 1);
 	}
