@@ -16,9 +16,6 @@ class EpisodeTests {
 	@Autowired
 	private EpisodeService episodeService;
 
-	@Autowired
-	private EpisodeCommentService episodeCommentService;
-
 	//@Test
 	public void testGetEpisodeById() {
 		int episodeNo = 10002; // 존재하는 에피소드 번호로 변경
