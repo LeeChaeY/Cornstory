@@ -20,4 +20,6 @@ public interface ProductService {
 
 	public int prodNameCheck(String prodName) throws Exception;
 
+//	public int listCompleteWork(String userId) throws Exception;
+
 }

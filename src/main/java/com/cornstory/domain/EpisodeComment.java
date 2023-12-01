@@ -4,11 +4,17 @@ import java.util.Date;
 
 public class EpisodeComment {
 
+    //작품 회차 댓글No
     private int eCommentNo;
+    //작품 회차 No
     private int episodeNo;
+    //작품 No
     private int workNo;
+    //회원아이디
     private String userId;
+    //댓글 내용
     private String eContent;
+    //댓글 등록일
     private Date eCommentDate;
     public int getECommentNo() {
         return eCommentNo;

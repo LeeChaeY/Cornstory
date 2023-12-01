@@ -4,50 +4,55 @@
         PUBLIC "//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
+
 <configuration>
 
     <typeAliases>
 
-        <typeAlias alias="search"           type="com.cornstory.common.Search" />
+        <typeAlias alias="search" type="com.cornstory.common.Search" />
 
-        <typeAlias alias="user"             type="com.cornstory.domain.User" />
+        <typeAlias alias="user" type="com.cornstory.domain.User" />
 
-		<typeAlias alias="work"             type="com.cornstory.domain.Work" />
+		<typeAlias alias="work" type="com.cornstory.domain.Work" />
 		<!--
-        <typeAlias alias="bookmark"         type="com.cornstory.domain.Bookmark" />
+        <typeAlias alias="bookmark" type="com.cornstory.domain.Bookmark" />
         -->
-        <typeAlias alias="episode"          type="com.cornstory.domain.Episode" />
+        <typeAlias alias="episode" type="com.cornstory.domain.Episode" />
 
-        <typeAlias alias="episodeComment"   type="com.cornstory.domain.EpisodeComment" />
+        <typeAlias alias="episodeComment" type="com.cornstory.domain.EpisodeComment" />
 
-        <typeAlias alias="product"          type="com.cornstory.domain.Product" />
-        <!--
-        <typeAlias alias="purchase"         type="com.cornstory.domain.Purchase" />
-        -->
-        <typeAlias alias="story"            type="com.cornstory.domain.Story" />
+        <typeAlias alias="product" type="com.cornstory.domain.Product" />
 
-        <typeAlias alias="storyComment"     type="com.cornstory.domain.StoryComment" />
+        <typeAlias alias="purchase" type="com.cornstory.domain.Purchase" />
+
+        <typeAlias alias="story" type="com.cornstory.domain.Story" />
+
+        <typeAlias alias="storyComment" type="com.cornstory.domain.StoryComment" />
         <!--
-        <typeAlias alias="chatSpace"        type="com.cornstory.domain.ChatSpace" />
-        -->
-        <!--
-        <typeAlias alias="chat"             type="com.cornstory.domain.Chat" />
+        <typeAlias alias="chatSpace" type="com.cornstory.domain.ChatSpace" />
         -->
         <!--
-        <typeAlias alias="ChatEnter"        type="com.cornstory.domain.ChatEnter" />
+        <typeAlias alias="chat" type="com.cornstory.domain.Chat" />
         -->
-
-        <typeAlias alias="support"          type="com.cornstory.domain.Support" />
-
         <!--
-        <typeAlias alias="ban"              type="com.cornstory.domain.Ban" />
+        <typeAlias alias="ChatEnter" type="com.cornstory.domain.ChatEnter" />
+        -->
+        <!--
+        <typeAlias alias="support" type="com.cornstory.domain.Support" />
+        -->
+        <!--
+        <typeAlias alias="ban" type="com.cornstory.domain.Ban" />
         -->
     </typeAliases>
 
 
     <mappers>
+        <!--
         <mapper resource="sql/UserMapper.xml"/>
+        -->
+        <!--
         <mapper resource="sql/WorkMapper.xml"/>
+        -->
         <!--
         <mapper resource="sql/BookmarkMapper.xml"/>
         -->
@@ -68,9 +73,9 @@
         <!--
 		<mapper resource="sql/ChatEnterMapper.xml"/>
 		-->
-
+        <!--
 		<mapper resource="sql/SupportMapper.xml"/>
-
+		-->
         <!--
 		<mapper resource="sql/BanMapper.xml"/>
 		-->

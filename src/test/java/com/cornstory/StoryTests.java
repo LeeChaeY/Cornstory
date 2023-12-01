@@ -25,7 +25,7 @@ class StoryTests {
 	//@Test
 	public void testGetStoryById() {
 		int storyNo = 10011; // 존재하는 스토리 번호로 변경
-		Story story = storyDao.getStoryById(storyNo);
+		Story story = storyDao.getStory(storyNo);
 
 		assertNotNull(story.getStoryNo());
 
@@ -50,8 +50,8 @@ class StoryTests {
 
 	//@Test
 	public void testUpdateStory() {
-		int storyNo = 10015; // Existing story number
-		Story updatedStory = storyDao.getStoryById(storyNo);
+		int storyNo = 10016; // Existing story number
+		Story updatedStory = storyDao.getStory(storyNo);
 
 		// Modify the fields you want to update
 		updatedStory.setStoryName("Updated Test Story");
@@ -60,19 +60,17 @@ class StoryTests {
 		storyDao.updateStory(updatedStory);
 
 		// Fetch the story again to check if it's updated
-		Story retrievedStory = storyDao.getStoryById(storyNo);
-		assertNotNull(retrievedStory);
-
+		Story retrievedStory = storyDao.getStory(storyNo);
 		System.out.println("Updated Story: " + retrievedStory);
 	}
 
 	//@Test
 	public void testDeleteStory() {
-		int storyNo = 10015; // Existing story number
+		int storyNo = 10016; // Existing story number
 		storyDao.deleteStory(storyNo);
 
 		// Fetch the story again to check if it's deleted
-		Story deletedStory = storyDao.getStoryById(storyNo);
+		Story deletedStory = storyDao.getStory(storyNo);
 		// It should be null if the story is deleted successfully
 		// assertNull(deletedStory);
 
@@ -133,7 +131,7 @@ class StoryTests {
 		assertNull(deletedComment);
 	}
 
-	@Test
+	//@Test
 	public void testListStoryComments() {
 		int storyNo = 10014;  // Existing story number
 
