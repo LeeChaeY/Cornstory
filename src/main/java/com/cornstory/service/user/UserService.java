@@ -23,7 +23,7 @@ public interface UserService {
     // 회원정보수정
     public void updateUser(User user) throws Exception;
 
-    public void updateBan(String userId) throws Exception;
+    public void updateBan(User user) throws Exception;
 
     // 회원 ID 중복 확인
     public boolean idCheck(String userId) throws Exception;
