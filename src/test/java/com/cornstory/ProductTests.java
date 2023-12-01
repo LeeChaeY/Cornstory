@@ -19,9 +19,6 @@ class ProductTests {
 	@Autowired
 	private ProductService productService;
 
-	@Autowired
-	private ProductDao productDao;
-
 	@Test
 	void contextLoads() {
 

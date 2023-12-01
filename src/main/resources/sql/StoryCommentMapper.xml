@@ -5,10 +5,10 @@
 
     <!-- Result Map -->
     <resultMap id="commentResultMap" type="storyComment">
-        <result column="s_comment_no" property="sCommentNo" jdbcType="INTEGER" />
-        <result column="story_no" property="storyNo" jdbcType="INTEGER" />
-        <result column="user_id" property="userId" jdbcType="VARCHAR" />
-        <result column="s_content" property="sContent" jdbcType="VARCHAR" />
+        <result column="s_comment_no"   property="sCommentNo"   jdbcType="INTEGER" />
+        <result column="story_no"       property="storyNo"      jdbcType="INTEGER" />
+        <result column="user_id"        property="userId"       jdbcType="VARCHAR" />
+        <result column="s_content"      property="sContent"     jdbcType="VARCHAR" />
         <result column="s_comment_date" property="sCommentDate" jdbcType="DATE" />
     </resultMap>
 

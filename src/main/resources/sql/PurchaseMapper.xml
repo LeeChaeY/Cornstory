@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+ 					
+<mapper namespace="com.cornstory.service.purchase.PurchaseDao">
+
+	<resultMap type="purchase" id="purchaseSelectMap">
+		<result property="tranNo" column="tran_no" jdbcType="INTEGER"/>
+		<result property="prodNo" column="prod_no" jdbcType="INTEGER"/>
+		<result property="sellerId" column="seller_id" jdbcType="VARCHAR"/>
+		<result property="buyerId" column="buyer_id" jdbcType="VARCHAR"/>
+		<result property="tranCategory" column="tran_category" jdbcType="INTEGER"/>
+		<result property="tranMethod" column="tran_method" jdbcType="INTEGER"/>
+		<result property="tranCnt" column="tran_cnt" jdbcType="INTEGER"/>
+		<result property="bfPopcornCnt" column="bf_popcorn_cnt" jdbcType="INTEGER"/>
+		<result property="afPopcornCnt" column="af_popcorn_cnt" jdbcType="INTEGER"/>
+		<result property="episodeOrder" column="episode_order" jdbcType="INTEGER"/>
+		<result property="prodPrice" column="prod_price" jdbcType="INTEGER"/>
+		<result property="prodDate" column="prod_date" jdbcType="DATE"/>
+		<result property="category" column="category" jdbcType="INTEGER"/>
+		<result property="workName" column="work_name" jdbcType="VARCHAR"/>
+		<result property="nickname" column="nickname" jdbcType="VARCHAR"/>
+	</resultMap>
+  	
+  	<insert id="addPurchase" parameterType="purchase">
+		INSERT
+		INTO purchase (prod_no, seller_id, buyer_id, tran_category, tran_method, tran_cnt, episode_order, bf_popcorn_cnt, af_popcorn_cnt, prod_price, tran_date)
+		VALUES (
+					#{prodNo},
+					#{sellerId},
+					#{buyerId},
+					#{tranCategory},
+					#{tranMethod},
+					#{tranCnt},
+		        	#{episodeOrder},
+		        	#{bfPopcornCnt},
+					#{afPopcornCnt},
+					#{prodPrice},
+					DATE_FORMAT(NOW(), '%Y-%m-%d'))
+  	</insert>
+
+	<select id="getPurchase" parameterType="int" resultMap="purchaseSelectMap">
+		SELECT *
+		FROM purchase
+		WHERE tran_no = #{tranNo}
+	</select>
+
+	<delete id="deletePurchase" parameterType="int">
+		DELETE
+		FROM purchase
+		WHERE tran_no = #{tranNo}
+	</delete>
+
+	<select id="countPurchase" parameterType="map" resultType="int">
+		SELECT COUNT(*) AS totalCount
+		FROM (SELECT tran_no, Pu.prod_no, seller_id, buyer_id, tran_category, tran_method, tran_cnt,
+					bf_popcorn_cnt, af_popcorn_cnt, Pu.episode_order, Pu.prod_price, tran_date,
+					W.work_no, work_name, category
+				FROM purchase Pu JOIN product P ON Pu.prod_no = P.prod_no JOIN work W ON P.work_no = W.work_no
+		<where>
+			buyer_id = #{userId}
+			<if test='search.searchCondition != null and !search.searchCondition.equals("0")'>
+				AND LOWER(work_name) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%'))
+			</if>
+		</where>
+		) countTable
+	</select>
+
+	<select id="listPurchase" parameterType="map" resultMap="purchaseSelectMap">
+		SELECT *
+		FROM ( SELECT inner_table.*, @rownum := @rownum + 1 AS row_seq
+		FROM (SELECT tran_no, Pu.prod_no, seller_id, buyer_id, tran_category, tran_method, tran_cnt,
+					bf_popcorn_cnt, af_popcorn_cnt, Pu.episode_order, Pu.prod_price, tran_date,
+					W.work_no, work_name, category
+				FROM purchase Pu JOIN product P ON Pu.prod_no = P.prod_no JOIN work W ON P.work_no = W.work_no
+		<where>
+			buyer_id = #{userId}
+			<if test='search.searchCondition != null and !search.searchCondition.equals("0")'>
+				AND LOWER(work_name) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%'))
+			</if>
+		</where>
+		) inner_table, (SELECT @rownum := 0) r
+		LIMIT #{endRowNum}
+		) AS result
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+	</select>
+
+	<select id="countWorkTotalPopcorn" parameterType="map" resultType="hashmap">
+		SELECT work_no, SUM(P.prod_price) as total_price, ROUND(AVG(P.prod_price), 0) as prod_price
+		FROM purchase Pu JOIN product P ON Pu.prod_no = P.prod_no
+		WHERE tran_category = #{tranCategory} and P.user_id = #{userId}
+		GROUP BY work_no;
+	</select>
+
+	<select id="countPurchasePopcorn" parameterType="string" resultType="int">
+		SELECT COUNT(*) AS totalCount
+		FROM (SELECT *
+				FROM purchase
+				WHERE tran_category = 0 AND buyer_id = #{userId}
+		) countTable
+	</select>
+
+	<select id="listPurchasePopcorn" parameterType="map" resultMap="purchaseSelectMap">
+		SELECT *
+		FROM ( SELECT inner_table.*, @rownum := @rownum + 1 AS row_seq
+				FROM (SELECT *
+						FROM purchase
+						WHERE tran_category = 0 AND buyer_id = #{userId}
+				) inner_table, (SELECT @rownum := 0) r
+				LIMIT #{endRowNum}
+		) AS result
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+	</select>
+
+	<select id="countTotalPurchase" parameterType="map" resultType="map">
+		SELECT SUM(af_popcorn_cnt - bf_popcorn_cnt) as popcorn_cnt, SUM(prod_price) as prod_price_sum
+		FROM purchase
+		<where>
+			tran_date BETWEEN #{startDate} AND #{endDate}
+			<if test="tranCategory == 0">
+				AND tran_category = 0;
+			</if>
+			<if test="tranCategory == 1">
+				AND (tran_category = 1 or tran_category = 2)
+			</if>
+		</where>
+	</select>
+
+</mapper>

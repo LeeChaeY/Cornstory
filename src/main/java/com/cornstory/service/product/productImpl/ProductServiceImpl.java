@@ -71,4 +71,9 @@ public class ProductServiceImpl implements ProductService {
 		return (productDao.countProductProdName(prodName) == 0) ? 0 : 1;
 	}
 
+//	@Override
+//	public int listCompleteWork(String userId) throws Exception {
+//		return (productDao.listCompleteWork(userId) == 0) ? 0 : 1;
+//	}
+
 }

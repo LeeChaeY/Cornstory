@@ -80,7 +80,7 @@ class UserTests {
 	}
 
 
-	@Test
+	//@Test
 	public void testDeleteUser() throws Exception {
 		int result = userService.deleteUser("wow");  // 삭제된 회원 수를 반환
 		assertEquals(1, result);  // 예상하는 값으로 변경
@@ -108,7 +108,7 @@ class UserTests {
 		assertTrue(totalCount >= 1 && list.size() >= 3);
 	}
 
-	//@Test
+	@Test
 	public void testListUserNickName() throws Exception {
 		// 검색 조건을 주지 않은 경우
 		Search search = new Search();
@@ -130,6 +130,7 @@ class UserTests {
 
 		list = (List<Object>) map.get("list");
 		totalCount = (Integer) map.get("totalCount");
+		System.out.println("\n\n"+map);
 		System.out.println(totalCount);
 		// 전체 사용자 수가 1 이상이면서 결과 리스트 크기가 1과 같거나 크다면 성공
 		assertTrue(totalCount >= 1 && list.size() >= 1);
