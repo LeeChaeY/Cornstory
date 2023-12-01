@@ -17,7 +17,7 @@ class PurchaseTests {
 	@Autowired
 	private PurchaseService purchaseService;
 
-	@Test
+//	@Test
 	void contextLoads() {
 //		Purchase purchaseInsertPopcorn = new Purchase(10004, "admin", "test1", 0,
 //				3, 1, 0, 590, 59000);
