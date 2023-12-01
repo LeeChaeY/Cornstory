@@ -37,9 +37,9 @@
         <!--
         <typeAlias alias="ChatEnter" type="com.cornstory.domain.ChatEnter" />
         -->
-        <!--
+
         <typeAlias alias="support" type="com.cornstory.domain.Support" />
-        -->
+        =
         <!--
         <typeAlias alias="ban" type="com.cornstory.domain.Ban" />
         -->
@@ -47,12 +47,12 @@
 
 
     <mappers>
-        <!--
+
         <mapper resource="sql/UserMapper.xml"/>
-        -->
-        <!--
+
+
         <mapper resource="sql/WorkMapper.xml"/>
-        -->
+
         <!--
         <mapper resource="sql/BookmarkMapper.xml"/>
         -->
@@ -73,9 +73,9 @@
         <!--
 		<mapper resource="sql/ChatEnterMapper.xml"/>
 		-->
-        <!--
+
 		<mapper resource="sql/SupportMapper.xml"/>
-		-->
+
         <!--
 		<mapper resource="sql/BanMapper.xml"/>
 		-->
