@@ -44,8 +44,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void updateBan(String userId) throws Exception {
-		userDao.updateBan(userId);
+	public void updateBan(User user) throws Exception {
+		userDao.updateBan(user);
 	}
 
 	@Override

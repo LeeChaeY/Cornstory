@@ -51,7 +51,7 @@
 	<!-- SQL : UPDATE -->
 	<update		id="updateBan"		parameterType="user" >
 		UPDATE user
-		SET ban_date = #{banDate, jdbcType=DATE}
+		SET ban_date = #{banDate : DATE}
 		WHERE user_id = #{userId}
 	</update>
 
