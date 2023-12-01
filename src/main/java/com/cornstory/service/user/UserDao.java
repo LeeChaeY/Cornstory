@@ -16,6 +16,8 @@ public interface UserDao {
 	// UPDATE
 	public void updateUser(User user) throws Exception ;
 
+	public void updateBan(String userId) throws Exception;
+
 	// UPDATE
 	public int deleteUser(String userId) throws Exception ;
 

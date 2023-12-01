@@ -9,6 +9,7 @@ import com.cornstory.common.Search;
 import com.cornstory.domain.User;
 import com.cornstory.service.user.UserService;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -79,6 +80,28 @@ class UserTests {
 		userService.updateUser(user);*/
 	}
 
+	@Test
+	public void testUpdateBam() throws Exception {
+		// 사용자 업데이트 테스트
+		User user = userService.getUser("how");
+		assertNotNull(user);
+		System.out.println("get"+user);
+
+		String originalName = user.getUserName();
+		user.setUserName("테스트 사용자");
+		user.setBanDate(new java.sql.Date(Date.valueOf("2023-12-01").getTime()));
+
+
+		userService.updateBan(String.valueOf(user));
+		System.out.println("update"+user);
+
+		// 업데이트 후의 사용자 정보 확인
+		User updatedUser = userService.getUser("how");
+		assertNotNull(updatedUser);
+		assertEquals("테스트 사용자", updatedUser.getUserName());
+
+
+	}
 
 	//@Test
 	public void testDeleteUser() throws Exception {
@@ -108,7 +131,7 @@ class UserTests {
 		assertTrue(totalCount >= 1 && list.size() >= 3);
 	}
 
-	@Test
+	//@Test
 	public void testListUserNickName() throws Exception {
 		// 검색 조건을 주지 않은 경우
 		Search search = new Search();

@@ -44,6 +44,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public void updateBan(String userId) throws Exception {
+		userDao.updateBan(userId);
+	}
+
+	@Override
 	public int deleteUser(String userId) throws Exception {
 		// TODO Auto-generated method stub
 		return userDao.deleteUser(userId);

@@ -39,7 +39,7 @@
         -->
 
         <typeAlias alias="support" type="com.cornstory.domain.Support" />
-        =
+
         <!--
         <typeAlias alias="ban" type="com.cornstory.domain.Ban" />
         -->

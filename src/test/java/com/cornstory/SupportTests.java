@@ -32,8 +32,7 @@ class SupportTests {
 		support.setUserId("user");
 		support.setSupCategory(1);
 		support.setSupContent("등록 내용");
-		support.setSupAnswer("");
-		support.setSupRole("G");
+
 
 		/*support.setUserId("admin");
 		support.setSupCategory(0);
@@ -74,7 +73,7 @@ class SupportTests {
 		support.setUserId("testUser");
 		support.setSupCategory(0);
 		support.setSupContent("등록 질문 내용 ");
-		support.setSupAnswer("답변");
+
 
 		// 작품 정보 업데이트
 		supportService.updateSupport(support);

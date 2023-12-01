@@ -19,11 +19,14 @@ public class User {
 	private String userImage;	// 회원 사진
 	private int popcornCnt;	// 보유한 팝콘수
 	private Date rDate;		// 회원 가입일
+	private Date banDate;		// 회원 가입일
 	
 	///Constructor
 	public User(){}
 
 	//Method
+
+
 	public String getUserId() {
 		return userId;
 	}
@@ -128,16 +131,31 @@ public class User {
 		this.rDate = rDate;
 	}
 
+	public Date getBanDate() {
+		return banDate;
+	}
+
+	public void setBanDate(Date banDate) {
+		this.banDate = banDate;
+	}
+
 	@Override
 	public String toString() {
-		return "\nUser domain object  \n[userId=" + userId + ", role=" + role + ", userName=" + userName + ", nickName=" + nickName
-				+ ", password=" + password + ", birthday=" + birthday + ", addr=" + addr + ", address=" + address
-				+ ",\n phone=" + phone + ", email=" + email + ", userImage=" + userImage + ",  popcornCnt=" + popcornCnt
-				+ ", rDate=" + rDate + "]";
+		return "User{" +
+				"userId='" + userId + '\'' +
+				", role=" + role +
+				", userName='" + userName + '\'' +
+				", nickName='" + nickName + '\'' +
+				", password='" + password + '\'' +
+				", birthday=" + birthday +
+				", addr='" + addr + '\'' +
+				", address='" + address + '\'' +
+				", phone='" + phone + '\'' +
+				", email='" + email + '\'' +
+				", userImage='" + userImage + '\'' +
+				", popcornCnt=" + popcornCnt +
+				", rDate=" + rDate +
+				", banDate=" + banDate +
+				'}';
 	}
-	
-	
-	
-	
-	
 }

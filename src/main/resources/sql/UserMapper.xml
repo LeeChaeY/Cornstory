@@ -20,6 +20,8 @@
 		<result property="userImage"	column="user_image"		jdbcType="VARCHAR"/>
 		<result property="popcornCnt"	column="popcorn_cnt"	jdbcType="INTEGER"/>
 		<result property="rDate"		column="r_date"			jdbcType="DATE"/>
+		<result property="banDate"		column="ban_date"		jdbcType="DATE"/>
+
 	</resultMap>
 
 	<insert		id="addUser"		parameterType="user" >
@@ -31,7 +33,7 @@
 
 	<!-- SQL : SELECT ONE -->
 	<select		id="getUser"		parameterType="string"		resultMap="userSelectMap">
-		SELECT user_id, user_name,birthday, email, addr, address, user_image, nickname
+		SELECT *
 		FROM user
 		WHERE user_id = #{userId}
 	</select>
@@ -41,8 +43,15 @@
 		UPDATE user
 		<set>
 			password = #{password}, nickname = #{nickName}, email = #{email:VARCHAR},addr = #{addr:VARCHAR},
-			address = #{address:VARCHAR},phone = #{phone:VARCHAR} , user_image=#{userImage:VARCHAR}
+			address = #{address:VARCHAR},phone = #{phone:VARCHAR} , user_image=#{userImage:VARCHAR}, ban_date = #{banDate, jdbcType=DATE}
 		</set>
+		WHERE user_id = #{userId}
+	</update>
+
+	<!-- SQL : UPDATE -->
+	<update		id="updateBan"		parameterType="user" >
+		UPDATE user
+		SET ban_date = #{banDate, jdbcType=DATE}
 		WHERE user_id = #{userId}
 	</update>
 

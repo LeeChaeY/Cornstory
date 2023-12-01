@@ -8,11 +8,13 @@
 	<resultMap type="support" id="supportSelectMap">
 		<id property="supNo" column="sup_no" />
 		<result property="userId" column="user_id" />
+		<result property="supId" column="sup_id" />
 		<result property="supCategory" column="sup_category" />
 		<result property="supContent" column="sup_content" />
-		<result property="supAnswer" column="sup_answer" />
-		<result property="supDate" column="sup_date" />
-		<result property="supRole" column="sup_role" />
+		<result property="supPluscon" column="sup_pluscon" />
+		<result property="supImage" column="sup_image" />
+		<result property="supDate" column="sup_date" jdbcType="DATE" />
+		<result property="supBan" column="sup_ban" />
 	</resultMap>
 
 	<insert id="addSupport" parameterType="support">
@@ -45,6 +47,9 @@
 				</if>
 				<if test="searchCondition == 1 and searchKeyword != ''">
 					AND sup_category = 1
+				</if>
+				<if test="searchCondition == 2 and searchKeyword != ''">
+					AND sup_category = 2
 				</if>
 			</where>
 		</if>

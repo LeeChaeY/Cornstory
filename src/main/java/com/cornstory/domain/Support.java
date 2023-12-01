@@ -5,11 +5,13 @@ import java.sql.Date;
 public class Support {
     private int supNo;
     private String userId;
+    private String supId;
     private int supCategory;
     private String supContent;
-    private String supAnswer;
+    private String supPluscon;
+    private String supImage;
     private Date supDate;
-    private String supRole;
+    private int supBan;
 
     public int getSupNo() {
         return supNo;
@@ -25,6 +27,14 @@ public class Support {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getSupId() {
+        return supId;
+    }
+
+    public void setSupId(String supId) {
+        this.supId = supId;
     }
 
     public int getSupCategory() {
@@ -43,12 +53,20 @@ public class Support {
         this.supContent = supContent;
     }
 
-    public String getSupAnswer() {
-        return supAnswer;
+    public String getSupPluscon() {
+        return supPluscon;
     }
 
-    public void setSupAnswer(String supAnswer) {
-        this.supAnswer = supAnswer;
+    public void setSupPluscon(String supPluscon) {
+        this.supPluscon = supPluscon;
+    }
+
+    public String getSupImage() {
+        return supImage;
+    }
+
+    public void setSupImage(String supImage) {
+        this.supImage = supImage;
     }
 
     public Date getSupDate() {
@@ -59,12 +77,12 @@ public class Support {
         this.supDate = supDate;
     }
 
-    public String getSupRole() {
-        return supRole;
+    public int getSupBan() {
+        return supBan;
     }
 
-    public void setSupRole(String supRole) {
-        this.supRole = supRole;
+    public void setSupBan(int supBan) {
+        this.supBan = supBan;
     }
 
     @Override
@@ -72,11 +90,13 @@ public class Support {
         return "Support{" +
                 "supNo=" + supNo +
                 ", userId='" + userId + '\'' +
+                ", supId='" + supId + '\'' +
                 ", supCategory=" + supCategory +
                 ", supContent='" + supContent + '\'' +
-                ", supAnswer='" + supAnswer + '\'' +
+                ", supPluscon='" + supPluscon + '\'' +
+                ", supImage='" + supImage + '\'' +
                 ", supDate=" + supDate +
-                ", supRole='" + supRole + '\'' +
+                ", supBan=" + supBan +
                 '}';
     }
 }
