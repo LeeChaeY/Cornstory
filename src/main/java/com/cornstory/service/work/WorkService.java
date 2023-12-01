@@ -22,7 +22,7 @@ public interface WorkService {
     public int deleteWork(int workNo) throws Exception;
 
     // 작품 목록
-    public Map<String,Object> listWork(Search search) throws Exception;
+    public Map<String, Object> listWork(Search search) throws Exception;
 
     public void addBookmark(Bookmark bookmark);
 

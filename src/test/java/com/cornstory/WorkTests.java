@@ -1,6 +1,7 @@
 package com.cornstory;
 
 import com.cornstory.common.Search;
+import com.cornstory.domain.Episode;
 import com.cornstory.domain.Product;
 import com.cornstory.domain.Work;
 import com.cornstory.service.product.ProductService;
@@ -22,8 +23,9 @@ class WorkTests {
 	private WorkService workService;
 
 	int num = 10011;
+
 	//@Test
-	public void testAddWork()throws Exception {
+	public void testAddWork() throws Exception {
 		//작품 추가 test
 		System.out.println("Add");
 		Work work = new Work();
@@ -43,12 +45,12 @@ class WorkTests {
 		work.setComplete(0);
 
 		workService.addWork(work);
-		System.out.println("성공적으로 생성 되었습니다."+work+"\n");
+		System.out.println("성공적으로 생성 되었습니다." + work + "\n");
 
 	}
 
 	//@Test
-	public void testGetWork()throws Exception{
+	public void testGetWork() throws Exception {
 		System.out.println("GET");
 		Work work = workService.getWork(num);
 		// 조회된 작품이 null이 아니면 성공
@@ -97,23 +99,30 @@ class WorkTests {
 		System.out.println("기존 작품 정보: " + nonExistentWork);
 	}
 
-	//@Test
+	@Test
 	public void testListWorkAll() throws Exception {
 		System.out.println("List All");
 		Search search = new Search();
 
+		search.setSearchCondition("0");
+		//search.setSearchKeyword("user001");
+		search.setOrderKeyword("일상");
+		search.setOrderCondition("1");
+
+
 		Map<String, Object> result = workService.listWork(search);
 		assertNotNull(result);
-
-		List<Work> list = (List<Work>) result.get("list");
 		int totalCount = (int) result.get("totalCount");
-
 		System.out.println("전체 작품 개수: " + totalCount);
-		System.out.println("전체 작품 목록: " + list);
+		List<Work> list = (List<Work>) result.get("list");
+		for (Work work : list) {
+			System.out.println("전체 작품 목록: " + work);
+		}
+
+
+
 
 		assertTrue(totalCount >= 0);
 		assertTrue(list.size() >= 0);
 	}
-
-
 }
