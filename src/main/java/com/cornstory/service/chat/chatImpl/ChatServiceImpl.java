@@ -1,13 +1,17 @@
 package com.cornstory.service.chat.chatImpl;
 
 import com.cornstory.common.Search;
+import com.cornstory.domain.Chat;
 import com.cornstory.domain.ChatSpace;
-import com.cornstory.domain.Product;
 import com.cornstory.service.chat.ChatDao;
+import com.cornstory.service.chat.ChatRepository;
 import com.cornstory.service.chat.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +21,9 @@ public class ChatServiceImpl implements ChatService {
 
     @Autowired
     private ChatDao chatDao;
+
+    @Autowired
+    private ChatRepository chatRepository;
 
     @Override
     public int addChatSpace(ChatSpace chatSpace) throws Exception {
@@ -83,6 +90,42 @@ public class ChatServiceImpl implements ChatService {
 
         List<ChatSpace> list = chatDao.listChatEnterUser(map);
 
+        map.put("totalCount", totalCount);
+        map.put("list", list);
+
+        return map;
+    }
+
+    @Override
+    public Chat addChat(Chat chat) throws Exception {
+        return chatRepository.save(chat);
+
+    }
+
+    @Override
+    public void deleteChat(Long chatNo) throws Exception {
+        chatRepository.deleteByChatNo(chatNo);
+    }
+
+    @Override
+    public Map<String, Object> listChat(Search search, int chatSpaceNo, String startDate, String endDate) throws Exception {
+        Map<String,Object> map = new HashMap<String,Object>();
+
+//        map.put("search", search);
+//        map.put("chatSpaceNo", chatSpaceNo);
+
+        int totalCount = chatRepository.countByChatSpaceNo(chatSpaceNo);
+        System.out.println("ChatServiceImpl :: countByChatSpaceNo :: "+totalCount);
+
+//        map.put("startRowNum", (search.getCurrentPage()-1) * search.getPageSize() + 1);
+//        map.put("endRowNum", search.getCurrentPage() * search.getPageSize());
+
+        List<Chat> list = new ArrayList<Chat>();
+        if (startDate != null && !startDate.equals("") && endDate != null && !endDate.equals("")) {
+            list = chatRepository.findByChatSpaceNoAndChatDateBetween(chatSpaceNo, startDate, endDate);
+        } else {
+            list = chatRepository.findByChatSpaceNo(chatSpaceNo);
+        }
         map.put("totalCount", totalCount);
         map.put("list", list);
 

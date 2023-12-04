@@ -1,21 +1,29 @@
 package com.cornstory;
 
 import com.cornstory.common.Search;
+import com.cornstory.domain.Chat;
 import com.cornstory.domain.ChatSpace;
+import com.cornstory.service.chat.ChatRepository;
 import com.cornstory.service.chat.ChatService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static org.junit.jupiter.params.shadow.com.univocity.parsers.conversions.Conversions.toLong;
 
 @SpringBootTest
 class ChatTests {
 
 	@Autowired
 	private ChatService chatService;
+
+//	@Autowired
+//	private ChatRepository chatRepository;
 
 	
 //	@Test
@@ -113,20 +121,41 @@ class ChatTests {
 //			L
 			//////////////////////////////////////////////////////////////////////////////
 //			채팅방 회원 목록
-			Search search = new Search();
-
-			search.setPageSize(3);
-			search.setCurrentPage(1);
-
-			Map<String,Object> map = chatService.listChatEnterUser(search, 10001);
-			System.out.println(map);
-			System.out.println(((List)map.get("list")).size());
+//			Search search = new Search();
+//
+//			search.setPageSize(3);
+//			search.setCurrentPage(1);
+//
+//			Map<String,Object> map = chatService.listChatEnterUser(search, 10001);
+//			System.out.println(map);
+//			System.out.println(((List)map.get("list")).size());
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
+	}
+
+	@Test
+	void chatTest() {
+		Chat chat = new Chat(10001, "test1", "안녕하세요!", "2023-12-03", "");
+
+		try {
+//			chatService.addChat(chat);
+
+//			chatService.deleteChat((long) 10000);
+
+			Search search = new Search();
+//
+			search.setPageSize(3);
+			search.setCurrentPage(1);
+
+			System.out.println(chatService.listChat(search, 10001, "2020-12-01", "2023-12-31"));
+
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }

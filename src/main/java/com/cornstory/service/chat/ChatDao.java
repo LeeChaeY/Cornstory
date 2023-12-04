@@ -9,6 +9,7 @@ import java.util.Map;
 
 @Mapper
 public interface ChatDao {
+
     public int addChatSpace(ChatSpace chatSpace) throws Exception;
 
     public ChatSpace getChatSpace(int chatSpaceNo) throws Exception;

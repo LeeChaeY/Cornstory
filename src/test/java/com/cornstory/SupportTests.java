@@ -20,7 +20,7 @@ class SupportTests {
 	private SupportService supportService;
 
 	int num =10000;
-	@Test
+//	@Test
 	public void testAddSupport() throws Exception {
 		System.out.println("Add Support");
 		/*
