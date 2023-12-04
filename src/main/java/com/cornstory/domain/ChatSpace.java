@@ -4,6 +4,8 @@ import java.sql.Date;
 
 public class ChatSpace {
 
+	// 채팅방, 채팅 입장에 대한 정보를 담는 VO 클래스
+
 	private int chatSpaceNo;
 	private String userId;			// 채팅방 개설한 회원 아이디, 팝콘은
 	private String cSpaceName;
