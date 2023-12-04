@@ -68,7 +68,7 @@
 					AND LOWER(work_name) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%'))
 				</if>
 				<if test='search.searchCondition.equals("1")'>
-					AND tran_categort = 2
+					AND tran_category = 2
 				</if>
 			</if>
 		</where>
