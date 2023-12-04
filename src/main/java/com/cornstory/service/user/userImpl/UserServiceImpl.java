@@ -14,7 +14,7 @@ import com.cornstory.service.user.UserDao;
 import com.cornstory.service.user.UserService;
 
 //==> 회원관리 서비스 구현
-@Service
+@Service("userServiceImpl")
 public class UserServiceImpl implements UserService {
 
 	@Autowired
