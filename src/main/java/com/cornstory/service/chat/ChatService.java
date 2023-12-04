@@ -40,5 +40,5 @@ public interface ChatService {
     public void deleteChat(Long chatNo) throws Exception;       //delete
 
     //selectList, controller 단에서 endDate 현재 시간, 특정 시간으로 지정
-    public Map<String, Object> listChat(Search search, int chatSpaceNo, String startDate, String endDate) throws Exception;
+    public Map<String, Object> listChat(int chatSpaceNo, String startDate, String endDate) throws Exception;
 }

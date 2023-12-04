@@ -151,7 +151,7 @@ class ChatTests {
 			search.setPageSize(3);
 			search.setCurrentPage(1);
 
-			System.out.println(chatService.listChat(search, 10001, "2020-12-01", "2023-12-31"));
+			System.out.println(chatService.listChat(10001, "2020-12-01", "2023-12-31"));
 
 		} catch (Exception e) {
 			throw new RuntimeException(e);

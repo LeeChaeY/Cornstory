@@ -108,7 +108,7 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public Map<String, Object> listChat(Search search, int chatSpaceNo, String startDate, String endDate) throws Exception {
+    public Map<String, Object> listChat(int chatSpaceNo, String startDate, String endDate) throws Exception {
         Map<String,Object> map = new HashMap<String,Object>();
 
 //        map.put("search", search);
