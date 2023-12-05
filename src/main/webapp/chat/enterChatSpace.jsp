@@ -19,7 +19,7 @@
             <div>${chatSpace.genre}</div><br>
 
             <label>썸네일:</label>
-            <div>${chatSpace.cSpaceImage}</div>
+            <div><img src="/src/main/resources/images/${chatSpace.cSpaceImage}"></div>
 
     </body>
 </html>

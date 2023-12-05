@@ -81,35 +81,35 @@ public class ChatSpace {
 		this.userId = userId;
 	}
 
-	public String getcSpaceName() {
+	public String getCSpaceName() {
 		return cSpaceName;
 	}
 
-	public void setcSpaceName(String cSpaceName) {
+	public void setCSpaceName(String cSpaceName) {
 		this.cSpaceName = cSpaceName;
 	}
 
-	public String getcSpaceImage() {
+	public String getCSpaceImage() {
 		return cSpaceImage;
 	}
 
-	public void setcSpaceImage(String cSpaceImage) {
+	public void setCSpaceImage(String cSpaceImage) {
 		this.cSpaceImage = cSpaceImage;
 	}
 
-	public int getcSpaceUserCnt() {
+	public int getCSpaceUserCnt() {
 		return cSpaceUserCnt;
 	}
 
-	public void setcSpaceUserCnt(int cSpaceUserCnt) {
+	public void setCSpaceUserCnt(int cSpaceUserCnt) {
 		this.cSpaceUserCnt = cSpaceUserCnt;
 	}
 
-	public Date getcSpaceDate() {
+	public Date getCSpaceDate() {
 		return cSpaceDate;
 	}
 
-	public void setcSpaceDate(Date cSpaceDate) {
+	public void setCSpaceDate(Date cSpaceDate) {
 		this.cSpaceDate = cSpaceDate;
 	}
 

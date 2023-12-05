@@ -10,7 +10,7 @@
 
         <h2>채팅방 만들기</h2>
         <form action="/chat/addChatSpace" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="userId" value="test1">
+            <input type="hidden" name="userId" value="user001">
 
             <label>제목:</label>
             <input type="text" name="cSpaceName" required><br>
@@ -32,7 +32,7 @@
             </select><br>
 
             <label>썸네일:</label>
-            <input type="file" name="file" id="cSpaceImage"><br>
+            <input type="file" name="file"><br>
 
             <input type="submit" value="채팅방 만들기">
         </form>
