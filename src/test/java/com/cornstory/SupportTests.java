@@ -28,7 +28,7 @@ class SupportTests {
 		* */
 		// 테스트용 Support 객체 생성
 		Support support = new Support();
-		support.setUserId("file/user");
+		support.setUserId("static/file/user");
 		support.setSupCategory(1);
 		support.setSupContent("등록 내용");
 

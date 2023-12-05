@@ -1,10 +1,8 @@
 package com.cornstory.controller.work;
 
 import com.cornstory.common.Search;
-import com.cornstory.domain.Purchase;
 import com.cornstory.domain.Work;
 import com.cornstory.service.product.ProductService;
-import com.cornstory.service.purchase.PurchaseService;
 import com.cornstory.service.work.WorkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

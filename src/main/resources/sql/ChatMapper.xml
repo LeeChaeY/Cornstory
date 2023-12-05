@@ -48,9 +48,10 @@
 			<if test='cSpaceImage != null and !cSpaceImage.equals("")'>
 				c_space_image = #{cSpaceImage},
 			</if>
-			<if test="cSpaceUserCnt != 0">
-				c_space_user_cnt = c_space_user_cnt + 1
+		    <if test='cSpaceUserCnt != 0'>
+				c_space_user_cnt = c_space_user_cnt + #{cSpaceUserCnt},
 			</if>
+
 		</trim>
 		WHERE chat_space_no = #{chatSpaceNo}
 	</update>
@@ -69,15 +70,15 @@
 				<where>
 					<if test='search.searchCondition != null and !search.searchCondition.equals("")
 							and search.searchKeyword != null and !search.searchKeyword.equals("")'>
-						<if test='search.searchCondition.equals("0")'>
-							AND genre = #{search.searchKeyword}
-						</if>
 						<if test='search.searchCondition.equals("1")'>
 							AND LOWER(c_space_name) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%'))
 						</if>
 					</if>
 					<if test='userId != null and !userId.equals("")'>
 						AND U.user_id = #{userId}
+					</if>
+					<if test='genre != null and !genre.equals("")'>
+						AND genre = #{search.searchKeyword}
 					</if>
 				</where>
 		) countTable
@@ -92,15 +93,15 @@
 						<where>
 							<if test='search.searchCondition != null and !search.searchCondition.equals("")
 									and search.searchKeyword != null and !search.searchKeyword.equals("")'>
-								<if test='search.searchCondition.equals("0")'>
-									AND genre = #{search.searchKeyword}
-								</if>
 								<if test='search.searchCondition.equals("1")'>
 									AND LOWER(c_space_name) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%'))
 								</if>
 							</if>
 							<if test='userId != null and !userId.equals("")'>
 								AND U.user_id = #{userId}
+							</if>
+							<if test='genre != null and !genre.equals("")'>
+								AND genre = #{genre}
 							</if>
 						</where>
 				) inner_table, (SELECT @rownum := 0) r

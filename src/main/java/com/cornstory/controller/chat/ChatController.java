@@ -3,26 +3,29 @@ package com.cornstory.controller.chat;
 import com.cornstory.common.Page;
 import com.cornstory.common.Search;
 import com.cornstory.domain.ChatSpace;
+import com.cornstory.domain.User;
 import com.cornstory.service.chat.ChatService;
+import com.cornstory.service.user.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/chat/*")
+@RequestMapping("/chat")
 public class ChatController {
 
     @Autowired
     private ChatService chatService;
+
+    @Autowired
+    private UserService userService;
 
 //    @Value("${pageUnit}")
     int pageUnit = 5;
@@ -41,13 +44,15 @@ public class ChatController {
     }
 
     @PostMapping(value="addChatSpace")
-    public String addChatSpace(@ModelAttribute("chatSpace") ChatSpace chatSpace,
-                               @RequestParam("file") MultipartFile file, HttpServletRequest request) throws Exception {
+    public String addChatSpace(Model model, @ModelAttribute("chatSpace") ChatSpace chatSpace,
+                               @RequestParam("static/file") MultipartFile file, HttpServletRequest request) throws Exception {
+
+        System.out.println("/chat/addChatSpace : POST");
+        System.out.println("/chat/addChatSpace : " + chatSpace);
 
         // https://action713.tistory.com/entry/%EC%8A%A4%ED%94%84%EB%A7%81-%ED%8C%8C%EC%9D%BC-%EA%B2%BD%EB%A1%9C
-        String uploadDir = request.getServletContext().getRealPath("")+"\\..\\resources\\images\\";
+        String uploadDir = request.getServletContext().getRealPath("")+"\\..\\resources\\staic\\file\\chat\\";
         // request.getServletContext().getRealPath(""): webapp 상대 경로
-        System.out.println("uploadDir :: "+uploadDir);
 
         if (!file.isEmpty()) {
             try {
@@ -59,13 +64,7 @@ public class ChatController {
                 String savedName = uuid + "_" + file.getOriginalFilename();
                 File uploadFile = new File(uploadDir, savedName);
                 file.transferTo(uploadFile);
-                chatSpace.setCSpaceImage(savedName);
-
-                System.out.println("/chat/addChatSpace : POST");
-                System.out.println("/chat/addChatSpace : " + chatSpace);
-
-                //Business Logic
-                chatService.addChatSpace(chatSpace);
+                chatSpace.setcSpaceImage(savedName);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -74,8 +73,13 @@ public class ChatController {
             }
         } else {
             // 업로드된 파일이 없는 경우 처리
-            System.out.println("인코딩 타입이 multipart/form-data가 아닙니다..");
+            chatSpace.setcSpaceImage("chat.jpg");
         }
+
+        //Business Logic
+        chatService.addChatSpace(chatSpace);
+        model.addAttribute("chatSpace", chatSpace);
+        model.addAttribute("user", userService.getUser(chatSpace.getUserId()));
 
         return "chat/enterChatSpace";
     }
@@ -93,15 +97,17 @@ public class ChatController {
     @PostMapping(value="updateChatSpace")
     public String updateChatSpace(Model model, @ModelAttribute("chatSpace") ChatSpace chatSpace,
                                   @RequestParam("file") MultipartFile file, HttpServletRequest request) throws Exception {
+        System.out.println("/chat/updateChatSpace : POST");
+        System.out.println("/chat/updateChatSpace : " + chatSpace);
+
         // https://action713.tistory.com/entry/%EC%8A%A4%ED%94%84%EB%A7%81-%ED%8C%8C%EC%9D%BC-%EA%B2%BD%EB%A1%9C
-        String uploadDir = request.getServletContext().getRealPath("")+"\\..\\resources\\images\\";
+        String uploadDir = request.getServletContext().getRealPath("")+"\\..\\resources\\static\\file\\chat\\";
         // request.getServletContext().getRealPath(""): webapp 상대 경로
-        System.out.println("uploadDir :: "+uploadDir);
 
         if (!file.isEmpty()) {
             try {
                 // 기존 파일 삭제
-                String deleteImg = chatService.getChatSpace(chatSpace.getChatSpaceNo()).getCSpaceImage();
+                String deleteImg = chatService.getChatSpace(chatSpace.getChatSpaceNo()).getcSpaceImage();
                 String deleteDir = uploadDir + File.separator + deleteImg;
                 File fileToDelete = new File(deleteDir);
 
@@ -122,13 +128,7 @@ public class ChatController {
                 String savedName = uuid + "_" + file.getOriginalFilename();
                 File uploadFile = new File(uploadDir, savedName);
                 file.transferTo(uploadFile);
-                chatSpace.setCSpaceImage(savedName);
-
-                System.out.println("/chat/addChatSpace : POST");
-                System.out.println("/chat/addChatSpace : " + chatSpace);
-
-                //Business Logic
-                chatService.updateChatSpace(chatSpace);
+                chatSpace.setcSpaceImage(savedName);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -137,29 +137,28 @@ public class ChatController {
             }
         } else {
             // 업로드된 파일이 없는 경우 처리
-            System.out.println("인코딩 타입이 multipart/form-data가 아닙니다..");
+            chatSpace.setcSpaceImage("");
         }
+
+        //Business Logic
+        chatService.updateChatSpace(chatSpace);
+        model.addAttribute("chatSpace", chatSpace);
+        model.addAttribute("user", userService.getUser(chatSpace.getUserId()));
 
         return "chat/enterChatSpace";
     }
 
-//    rest
-    @GetMapping(value="deleteChatSpace")
-        public String deleteChatSpace(@RequestParam("chatSpaceNo") int chatSpaceNo) throws Exception {
-        System.out.println("/chat/deleteChatSpace : GET :: " + chatSpaceNo);
-        chatService.deleteChatSpace(chatSpaceNo);
-
-        return "chat/listChatSpace";
-    }
-
     @RequestMapping(value="listChatSpace")
-    public String listChatSpace(Model model, @ModelAttribute("search") Search search, @RequestParam("userId") String userId) throws Exception {
+    public String listChatSpace(Model model, @ModelAttribute("search") Search search, HttpServletRequest request) throws Exception {
+        String userId = "";
+        String genre = "";
+        if (request.getParameter("userId") != null) userId = request.getParameter("userId");
+        if (request.getParameter("genre") != null) genre = request.getParameter("genre");
+
         System.out.println("/chat/listChatSpace : GET/POST :: search : " + search);
         System.out.println("/chat/listChatSpace : GET/POST :: userId : " + userId);
+        System.out.println("/chat/listChatSpace : GET/POST :: genre : " + genre);
 
-        if (userId == null) {
-            userId = "";
-        }
         if (search.getSearchCondition() == null) {
             search.setSearchCondition("");
         }
@@ -169,7 +168,7 @@ public class ChatController {
         }
         search.setPageSize(pageSize);
 
-        Map<String, Object> map = chatService.listChatSpace(search, userId);
+        Map<String, Object> map = chatService.listChatSpace(search, userId, genre);
         Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
         System.out.println("/chat/listChatSpace ::"+resultPage);
 
@@ -186,16 +185,58 @@ public class ChatController {
 
 
     @GetMapping(value="enterChatSpace")
-    public String enterChatSpace(Model model, @ModelAttribute("chatSpace") ChatSpace chatSpace) throws Exception {
-        System.out.println("/chat/enterChatSpace : GET :: " + chatSpace);
-        ChatSpace chatSpace2 = chatService.getChatSpace(chatSpace.getChatSpaceNo());
-        System.out.println("/chat/enterChatSpace : GET :: " + chatSpace2);
-        model.addAttribute("chatSpace", chatSpace2);
+    public String enterChatSpace(Model model, @RequestParam("chatSpaceNo") int chatSpaceNo) throws Exception {
+        System.out.println("/chat/enterChatSpace : GET :: " + chatSpaceNo);
+        ChatSpace chatSpace = chatService.getChatSpace(chatSpaceNo);
 
-        chatService.addChatEnter(chatSpace);
-        Map <String, Object> map = chatService.listChat(chatSpace.getChatSpaceNo(), "", "");
+        User user = userService.getUser(chatSpace.getUserId());
+        chatSpace.setNickname(user.getNickName());
+        chatSpace.setUserImage(user.getUserImage());
+
+        System.out.println("/chat/enterChatSpace : GET :: " + chatSpace);
+        model.addAttribute("chatSpace", chatSpace);
+
+//        Map <String, Object> map = chatService.listChat(chatSpace.getChatSpaceNo(), "", "");
+//        System.out.println("/chat/enterChatSpace : GET :: " + map.get("list"));
+//        model.addAttribute("list", map.get("list"));
 
         return "chat/enterChatSpace";
     }
+
+    @PostMapping(value="enterChatSpace")
+    public String enterChatSpace(@ModelAttribute("chatSpace") ChatSpace chatSpace) throws Exception {
+        System.out.println("/chat/enterChatSpace : POST :: " + chatSpace);
+        chatService.addChatEnter(chatSpace);
+
+        return "redirect:/chat/enterChatSpace?chatSpaceNo="+chatSpace.getChatSpaceNo();
+    }
+
+    @RequestMapping(value="listChatEnterUser")
+    public String listChatEnterUser(Model model, @ModelAttribute("search") Search search, @RequestParam("chatSpaceNo") int chatSpaceNo) throws Exception {
+//        System.out.println("/chat/listChatEnterUser : GET/POST :: search : " + search);
+        System.out.println("/chat/listChatEnterUser : GET/POST :: chatSpaceNo : " + chatSpaceNo);
+
+        if (search.getSearchCondition() == null) {
+            search.setSearchCondition("");
+        }
+
+        if(search.getCurrentPage() == 0 ){
+            search.setCurrentPage(1);
+        }
+        search.setPageSize(pageSize);
+
+        Map<String, Object> map = chatService.listChatEnterUser(search, chatSpaceNo);
+        Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+        System.out.println("/chat/listChatEnterUser ::"+resultPage);
+
+        model.addAttribute("list", map.get("list"));
+        model.addAttribute("resultPage", resultPage);
+        model.addAttribute("search", search);
+
+        System.out.println(map.get("list"));
+
+        return "chat/listChatEnterUser";
+    }
+
 
 }

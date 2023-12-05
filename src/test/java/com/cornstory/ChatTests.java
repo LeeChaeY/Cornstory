@@ -3,6 +3,7 @@ package com.cornstory;
 import com.cornstory.common.Search;
 import com.cornstory.domain.Chat;
 import com.cornstory.domain.ChatSpace;
+import com.cornstory.service.chat.ChatDao;
 import com.cornstory.service.chat.ChatRepository;
 import com.cornstory.service.chat.ChatService;
 import org.junit.jupiter.api.Test;
@@ -21,6 +22,9 @@ class ChatTests {
 
 	@Autowired
 	private ChatService chatService;
+
+	@Autowired
+	private ChatDao chatDao;
 
 //	@Autowired
 //	private ChatRepository chatRepository;
@@ -137,7 +141,7 @@ class ChatTests {
 
 	}
 
-	@Test
+//	@Test
 	void chatTest() {
 		Chat chat = new Chat(10001, "test1", "안녕하세요!", "2023-12-03", "");
 
@@ -153,6 +157,18 @@ class ChatTests {
 
 			System.out.println(chatService.listChat(10001, "2020-12-01", "2023-12-31"));
 
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Test
+	void cc() {
+		ChatSpace chatSpace = new ChatSpace();
+		chatSpace.setcSpaceUserCnt(-1);
+		System.out.println(chatSpace);
+		try {
+			chatDao.updateChatSpace(chatSpace);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
