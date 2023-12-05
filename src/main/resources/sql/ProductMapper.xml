@@ -122,7 +122,7 @@
 	</select>
 
 	<select id="listProductCopyright" parameterType="map" resultMap="productSelectMap">
-		SELECT *
+	SELECT *
 		FROM ( SELECT inner_table.*, @rownum := @rownum + 1 AS row_seq
 		FROM (SELECT prod_no, prod_category, prod_name, episode_order,
 		prod_price, prod_image, prod_date, work_no,
@@ -167,6 +167,10 @@
 		SELECT MAX(E.episode_order)
 		FROM episode E JOIN product P ON E.work_no = P.work_no
 		WHERE P.work_no = #{workNo}
+	</select>
+	<!--저작권의 이름들 가져오가-->
+	<select id="getCopylight" parameterType="String" resultMap="productSelectMap">
+		SELECT prod_name from product P, purchase Pu where P.prod_no=Pu.prod_no And Pu.buyer_id=#{userId}
 	</select>
 
 </mapper>
