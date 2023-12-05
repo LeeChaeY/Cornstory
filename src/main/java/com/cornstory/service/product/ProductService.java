@@ -22,4 +22,5 @@ public interface ProductService {
 
 //	public int listCompleteWork(String userId) throws Exception;
 
+	public List<Product> getCopylight(String userId) throws Exception;
 }

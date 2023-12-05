@@ -34,4 +34,5 @@ public interface ProductDao {
 
 	public int countLastEpisode(int workNo) throws Exception;
 
+	public List<Product> getCopylight(String userId) throws Exception;
 }

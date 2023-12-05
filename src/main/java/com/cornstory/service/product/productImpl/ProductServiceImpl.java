@@ -1,6 +1,7 @@
 package com.cornstory.service.product.productImpl;
 
 import com.cornstory.common.Search;
+import com.cornstory.domain.Work;
 import com.cornstory.service.product.ProductDao;
 import com.cornstory.service.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,6 +70,12 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public int prodNameCheck(String prodName) throws Exception {
 		return (productDao.countProductProdName(prodName) == 0) ? 0 : 1;
+	}
+
+	@Override
+	public List<Product> getCopylight(String userId) throws Exception {
+		return productDao.getCopylight(userId);
+
 	}
 
 //	@Override

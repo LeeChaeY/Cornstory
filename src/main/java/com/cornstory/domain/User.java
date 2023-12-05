@@ -20,12 +20,33 @@ public class User {
 	private int popcornCnt;	// 보유한 팝콘수
 	private Date rDate;		// 회원 가입일
 	private Date banDate;		// 회원 가입일
-	
+	private int social;		//소셜 연동 여부
 	///Constructor
 	public User(){}
 
 	//Method
 
+
+	@Override
+	public String toString() {
+		return "User{" +
+				"userId='" + userId + '\'' +
+				", role=" + role +
+				", userName='" + userName + '\'' +
+				", nickName='" + nickName + '\'' +
+				", password='" + password + '\'' +
+				", birthday=" + birthday +
+				", addr='" + addr + '\'' +
+				", address='" + address + '\'' +
+				", phone='" + phone + '\'' +
+				", email='" + email + '\'' +
+				", userImage='" + userImage + '\'' +
+				", popcornCnt=" + popcornCnt +
+				", rDate=" + rDate +
+				", banDate=" + banDate +
+				", social=" + social +
+				'}';
+	}
 
 	public String getUserId() {
 		return userId;
@@ -139,23 +160,11 @@ public class User {
 		this.banDate = banDate;
 	}
 
-	@Override
-	public String toString() {
-		return "User{" +
-				"userId='" + userId + '\'' +
-				", role=" + role +
-				", userName='" + userName + '\'' +
-				", nickName='" + nickName + '\'' +
-				", password='" + password + '\'' +
-				", birthday=" + birthday +
-				", addr='" + addr + '\'' +
-				", address='" + address + '\'' +
-				", phone='" + phone + '\'' +
-				", email='" + email + '\'' +
-				", userImage='" + userImage + '\'' +
-				", popcornCnt=" + popcornCnt +
-				", rDate=" + rDate +
-				", banDate=" + banDate +
-				'}';
+	public int getSocial() {
+		return social;
+	}
+
+	public void setSocial(int social) {
+		this.social = social;
 	}
 }
