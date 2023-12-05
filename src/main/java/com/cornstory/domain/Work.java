@@ -19,9 +19,6 @@ public class Work {
     private String workDesc;
     private int complete;
 
-    // 생성자, getter 및 setter 메서드는 생략하였습니다.
-
-
     public int getWorkNo() {
         return workNo;
     }
