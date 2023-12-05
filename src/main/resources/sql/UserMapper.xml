@@ -21,7 +21,7 @@
 		<result property="popcornCnt"	column="popcorn_cnt"	jdbcType="INTEGER"/>
 		<result property="rDate"		column="r_date"			jdbcType="DATE"/>
 		<result property="banDate"		column="ban_date"		jdbcType="DATE"/>
-
+		<result property="social"		column="social"			jdbcType="INTEGER"/>
 	</resultMap>
 
 	<insert		id="addUser"		parameterType="user" >
