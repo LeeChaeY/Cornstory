@@ -67,12 +67,14 @@ public class WorkController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
         }
 
 
 
 
         // 여기서 workService를 이용하여 작품 추가 로직을 호출해야 함
+        //프론트좀더해야됨
          workService.addWork(work);
 
         return "index";
