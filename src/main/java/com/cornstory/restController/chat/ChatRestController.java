@@ -1,10 +1,13 @@
 package com.cornstory.restController.chat;
 
+import com.cornstory.domain.Chat;
 import com.cornstory.service.chat.ChatService;
 import com.cornstory.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,6 +48,18 @@ public class ChatRestController {
         chatService.deleteChatEnter(map);
 
         return "삭제가 완료되었습니다.";
+    }
+
+
+
+    @PostMapping(value="json/addChat")
+    public String addChat(@RequestBody Chat chat) throws Exception {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        chat.setChatDate(dateFormat.format(new Timestamp(System.currentTimeMillis())));
+
+        System.out.println("/chat/json/addChat : POST :: chat : " + chat);
+        chatService.addChat(chat);
+        return "채팅 전송완료했습니다.";
     }
 
 }

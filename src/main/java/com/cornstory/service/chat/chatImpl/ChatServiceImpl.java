@@ -43,6 +43,12 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public int deleteChatSpace(int chatSpaceNo) throws Exception {
+        Map<String,Object> map = new HashMap<String,Object>();
+
+        map.put("chatSpaceNo", chatSpaceNo);
+        map.put("userId", "");
+        chatDao.deleteChatEnter(map);
+
         return chatDao.deleteChatSpace(chatSpaceNo);
     }
 
@@ -82,6 +88,7 @@ public class ChatServiceImpl implements ChatService {
         chatDao.deleteChatEnter(map);
 
         ChatSpace chatSpace = new ChatSpace();
+        chatSpace.setChatSpaceNo((int)map.get("chatSpaceNo"));
         chatSpace.setcSpaceUserCnt(-1);
         System.out.println(chatSpace);
         return chatDao.updateChatSpace(chatSpace);
@@ -109,7 +116,6 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public Chat addChat(Chat chat) throws Exception {
         return chatRepository.save(chat);
-
     }
 
     @Override

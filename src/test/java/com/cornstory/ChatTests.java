@@ -9,8 +9,10 @@ import com.cornstory.service.chat.ChatService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import java.text.SimpleDateFormat;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -164,14 +166,16 @@ class ChatTests {
 
 	@Test
 	void cc() {
-		ChatSpace chatSpace = new ChatSpace();
-		chatSpace.setcSpaceUserCnt(-1);
-		System.out.println(chatSpace);
+//		ChatSpace chatSpace = new ChatSpace();
+//		chatSpace.setChatSpaceNo(10009);
+//		chatSpace.setcSpaceUserCnt(-1);
+//		System.out.println(chatSpace);
 		try {
-			chatDao.updateChatSpace(chatSpace);
+//			chatDao.updateChatSpace(chatSpace);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+
 	}
 
 }

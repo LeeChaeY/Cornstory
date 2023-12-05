@@ -49,7 +49,7 @@
 				c_space_image = #{cSpaceImage},
 			</if>
 		    <if test='cSpaceUserCnt != 0'>
-				c_space_user_cnt = c_space_user_cnt + #{cSpaceUserCnt},
+				c_space_user_cnt = c_space_user_cnt + #{cSpaceUserCnt}
 			</if>
 
 		</trim>
@@ -122,7 +122,14 @@
 	<delete id="deleteChatEnter" parameterType="map">
 		DELETE
 		FROM chat_enter
-		WHERE chat_space_no = #{chatSpaceNo} AND user_id = #{userId}
+		<where>
+			<if test='chatSpaceNo != 0 and userId != null and !userId.equals("")'>
+				chat_space_no = #{chatSpaceNo} AND user_id = #{userId}
+			</if>
+			<if test='chatSpaceNo != 0 and (userId == null or userId.equals(""))'>
+				chat_space_no = #{chatSpaceNo}
+			</if>
+		</where>
 	</delete>
 
 	<select id="countChatEnterUser" parameterType="int" resultType="int">

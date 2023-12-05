@@ -45,7 +45,6 @@
                     {
                         url : "/chat/json/deleteChatSpace/"+chatSpaceNo+"",
                         method : "GET",
-                        dataType : "text" ,
                         success : function(JSONData , status) {
                             alert(JSONData);
                         },
@@ -65,6 +64,7 @@
                         url : "/chat/json/deleteChatEnter?userId=user002&chatSpaceNo="+chatSpaceNo,
                         method : "GET",
                         dataType : "text" ,
+                        data : {},
                         success : function(returnMessage, status) {
                             alert(returnMessage);
                         },

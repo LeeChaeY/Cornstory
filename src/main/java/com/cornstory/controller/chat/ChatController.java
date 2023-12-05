@@ -93,7 +93,7 @@ public class ChatController {
 
         return "chat/updateChatSpace";
     }
-
+    
     @PostMapping(value="updateChatSpace")
     public String updateChatSpace(Model model, @ModelAttribute("chatSpace") ChatSpace chatSpace,
                                   @RequestParam("file") MultipartFile file, HttpServletRequest request) throws Exception {
