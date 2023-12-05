@@ -41,8 +41,8 @@
     <input type="text" id="addr" name="addr" required>
     <button type="button" onclick="findAddress()">주소 찾기</button><br>
 
-    <label for="detailAddr">상세주소:</label>
-    <input type="text" id="detailAddr" name="detailAddr"><br>
+    <label for="address">상세주소:</label>
+    <input type="text" id="address" name="address" required><br>
 
     <label for="phone">연락처:</label>
     <input type="text" id="phone" name="phone" required><br>
@@ -53,7 +53,7 @@
     <label for="userImage">회원 사진:</label>
     <input type="file" id="userImage" name="userImage"><br>
 
-    <button type="submit">Register</button>
+    <button type="submit">가입하기</button>
 </form>
 
 </body>
