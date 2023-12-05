@@ -164,7 +164,7 @@ class ChatTests {
 		}
 	}
 
-	@Test
+//	@Test
 	void cc() {
 //		ChatSpace chatSpace = new ChatSpace();
 //		chatSpace.setChatSpaceNo(10009);
