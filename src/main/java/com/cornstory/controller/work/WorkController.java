@@ -4,15 +4,25 @@ import com.cornstory.common.Search;
 import com.cornstory.domain.Work;
 import com.cornstory.service.product.ProductService;
 import com.cornstory.service.work.WorkService;
+import jakarta.servlet.http.HttpServletRequest;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.util.ResourceUtils;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.Map;
 
 @Controller
@@ -28,7 +38,7 @@ public class WorkController {
     private ProductService productService;
 
     public WorkController(){
-        System.out.println("WorkController 집합");
+        System.out.println("WorkController 진입");
     }
 
     @GetMapping("/addWork")
@@ -40,16 +50,34 @@ public class WorkController {
 
     }
     @PostMapping("/addWork")
-    public String addWorks(@ModelAttribute("work") Work work) throws Exception{
-        System.out.println("[ WorkController.addWork() start........]");
-        //user은 세션으로 가져오고
+    public String addWork(@ModelAttribute("work") Work work, @RequestParam("thumbnailFile") MultipartFile file) throws Exception {
+        String fileName = work.getUserId() + "_" + work.getWorkName();
+        fileName.replaceAll("[^a-zA-Z0-9_]", "_");
+        fileName+=".jpg";
+        if (!file.isEmpty()) {
+            try {
+                String uploadDir = "C:\\CornStory\\src\\main\\resources\\file\\work";
+                String filePath = uploadDir + File.separator + fileName;
+
+                Files.write(Path.of(filePath), file.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+
+                // 파일 경로를 Work 객체에 저장
+
+                work.setThumbnail(filePath);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
 
 
-        System.out.print(work.toString());
-        //workService.addWork(work);
+
+
+        // 여기서 workService를 이용하여 작품 추가 로직을 호출해야 함
+        //프론트좀더해야됨
+         workService.addWork(work);
 
         return "index";
-
     }
 
     @GetMapping("/updateWork")
