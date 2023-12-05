@@ -3,7 +3,6 @@ package com.cornstory;
 import com.cornstory.common.Search;
 import com.cornstory.domain.Support;
 import com.cornstory.service.support.SupportService;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -29,7 +28,7 @@ class SupportTests {
 		* */
 		// 테스트용 Support 객체 생성
 		Support support = new Support();
-		support.setUserId("user");
+		support.setUserId("file/user");
 		support.setSupCategory(1);
 		support.setSupContent("등록 내용");
 

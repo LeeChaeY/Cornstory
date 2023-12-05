@@ -36,13 +36,13 @@ public class UserController {
 
     @RequestMapping( value="login", method=RequestMethod.GET )
     public String login() throws Exception{
-        System.out.println("/user/logon : GET");
+        System.out.println("/file/user/logon : GET");
         return "user/login";
     }
 
     @RequestMapping( value="login", method=RequestMethod.POST )
     public String login(@ModelAttribute("user") User user , HttpSession session ) throws Exception{
-        System.out.println("/user/login : POST");
+        System.out.println("/file/user/login : POST");
         User dbUser=userService.getUser(user.getUserId());
 
         if( user.getPassword().equals(dbUser.getPassword())){
@@ -54,7 +54,7 @@ public class UserController {
     @RequestMapping( value="logout", method=RequestMethod.GET )
     public String logout(HttpSession session ) throws Exception{
 
-        System.out.println("/user/logout : POST");
+        System.out.println("/file/user/logout : POST");
 
         session.invalidate();
 
@@ -63,14 +63,14 @@ public class UserController {
 
     @RequestMapping(value="addUser", method= RequestMethod.GET)
     public String addUser() throws Exception{
-        System.out.println("/user/addUser : GET");
+        System.out.println("/file/user/addUser : GET");
         return "user/addUser";
     }
 
     @RequestMapping(value = "addUser", method = RequestMethod.POST)
     public String addUser(@ModelAttribute("user") @Validated User user, BindingResult result,
-                          @RequestParam(name = "userImage", required = false) MultipartFile userImage) throws Exception {
-        System.out.println("/user/addUser : POST");
+                          @RequestParam(name = "file/user", required = false) MultipartFile userImage) throws Exception {
+        System.out.println("/file/user/addUser : POST");
 
         // 파일 업로드 처리 (파일이 있을 때만 수행)
         if (userImage != null && !userImage.isEmpty()) {
@@ -96,7 +96,7 @@ public class UserController {
     @RequestMapping( value="getUser", method=RequestMethod.GET )
     public String getUser(@RequestParam("userId") String userId , Model model ) throws Exception {
 
-        System.out.println("/user/getUser : GET");
+        System.out.println("/file/user/getUser : GET");
         //Business Logic
         User user = userService.getUser(userId);
         // Model 과 View 연결
@@ -108,7 +108,7 @@ public class UserController {
     @RequestMapping( value="updateUser", method=RequestMethod.GET )
     public String updateUser( @RequestParam("userId") String userId , Model model ) throws Exception{
 
-        System.out.println("/user/updateUser : GET");
+        System.out.println("/file/user/updateUser : GET");
         //Business Logic
         User user = userService.getUser(userId);
         // Model 과 View 연결
@@ -120,7 +120,7 @@ public class UserController {
     @RequestMapping( value="updateUser", method=RequestMethod.POST )
     public String updateUser( @ModelAttribute("user") User user , Model model , HttpSession session) throws Exception{
 
-        System.out.println("/user/updateUser : POST");
+        System.out.println("/file/user/updateUser : POST");
         //Business Logic
         userService.updateUser(user);
 
@@ -135,7 +135,7 @@ public class UserController {
     @RequestMapping( value="listUser" )
     public String listUser( @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
 
-        System.out.println("/user/listUser : GET / POST");
+        System.out.println("/file/user/listUser : GET / POST");
 
         if(search.getCurrentPage() ==0 ){
             search.setCurrentPage(1);
