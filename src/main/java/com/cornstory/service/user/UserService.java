@@ -15,7 +15,7 @@ public interface UserService {
     public User getUser(String userId) throws Exception;
 
     // 내정보확인 탈퇴
-    public int deleteUser(String userId) throws Exception;
+    public void deleteUser(String userId) throws Exception;
 
     // 회원정보리스트
     public Map<String , Object> listUser(Search search) throws Exception;

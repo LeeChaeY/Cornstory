@@ -63,7 +63,7 @@
 
 	<!-- SQL : SELECT LIST -->
 	<select id="listUser" parameterType="com.cornstory.common.Search" resultMap="userSelectMap">
-		SELECT nickname, user_id, user_name, phone, r_date
+		SELECT *
 		FROM user
 		<if test="searchCondition != null">
 			<where>

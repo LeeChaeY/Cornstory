@@ -19,7 +19,7 @@ public interface UserDao {
 	public void updateBan(User user) throws Exception;
 
 	// UPDATE
-	public int deleteUser(String userId) throws Exception ;
+	public void deleteUser(String userId) throws Exception ;
 
 	// SELECT LIST
 	public List<User> listUser(Search search) throws Exception ;

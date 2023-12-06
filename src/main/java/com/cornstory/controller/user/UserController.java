@@ -75,27 +75,41 @@ public class UserController {
 
     @RequestMapping(value = "addUser", method = RequestMethod.POST)
     public String addUser(@ModelAttribute("user") @Validated User user, BindingResult result,
-                          @RequestParam(name = "file/user", required = false) MultipartFile userImage) throws Exception {
+                          @RequestParam(name = "file/user", required = false) MultipartFile userImage, Model model) throws Exception {
         System.out.println("user/addUser : POST");
 
-        // 파일 업로드 처리 (파일이 있을 때만 수행)
-        if (userImage != null && !userImage.isEmpty()) {
-            String originalFilename = userImage.getOriginalFilename();
-            // 파일을 업로드할 상대 경로 설정
-            String uploadDir = "C:\\workspaceIntellij\\Team\\src\\main\\resources\\userImage";
-            String filePath = uploadDir + originalFilename;
-            File dest = new File(filePath);
+        // 유효성 검사 실패 시
+        if (result.hasErrors()) {
+            // 에러 메시지를 모델에 추가
+            model.addAttribute("errorMessage", "회원가입 정보를 확인해주세요.");
+            System.out.println("회원가입이 실패 되었습니다.");
 
-            // 파일을 저장
-            userImage.transferTo(dest);
-            user.setUserImage(originalFilename);
+            // 회원가입 화면으로 다시 이동
+            return "user/addUser";
+        }
+
+        // 파일 업로드 처리 (파일이 있을 때만 수행)
+        if (result.hasErrors()) {
+            // 에러 메시지를 모델에 추가
+            model.addAttribute("errorMessage", "회원가입 정보를 확인해주세요.");
+            System.out.println("회원가입이 실패 되었습니다.");
+
+            // 콘솔에 유효성 검사 에러 메시지 출력
+            result.getAllErrors().forEach(error -> System.out.println(error.getDefaultMessage()));
+
+            // 회원가입 화면으로 다시 이동
+            return "user/addUser";
         }
 
         // 나머지 비즈니스 로직 처리
         userService.addUser(user);
         System.out.println(user + "님의 회원가입 성공");
-        return "user/login";
+
+        // 회원가입이 성공하면 회원 정보 페이지로 이동
+        model.addAttribute("user", user);
+        return "user/getUser";
     }
+
 
 
 
@@ -109,6 +123,8 @@ public class UserController {
         // Model 과 View 연결
         model.addAttribute("user", user);
 
+        System.out.println("getUser"+user);
+
         return "user/getUser";
     }
 
@@ -120,6 +136,8 @@ public class UserController {
         User user = userService.getUser(userId);
         // Model 과 View 연결
         model.addAttribute("user", user);
+
+        System.out.println("updateUser 들어가기"+user);
 
         return "forward:/user/updateUser.jsp";
     }
@@ -137,27 +155,29 @@ public class UserController {
         }
 
         //return "user/getUser?userId="+user.getUserId();
-        return "user/getUser?userId=user333";
+        return "user/getUser";
     }
 
-    @RequestMapping( value="listUser" )
-    public String listUser( @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
-
+    @RequestMapping(value = "listUser")
+    public String listUser(@ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
         System.out.println("user/listUser : GET / POST");
 
-        if(search.getCurrentPage() ==0 ){
+        if (search.getCurrentPage() == 0) {
             search.setCurrentPage(1);
         }
 
         // Business logic 수행
-        Map<String , Object> map=userService.listUser(search);
-
-
-
+        Map<String, Object> map = userService.listUser(search);
+        System.out.println("리스트 map를 출력해보자 :::::"+map);
         // Model 과 View 연결
         model.addAttribute("list", map.get("list"));
+        model.addAttribute("totalCount",map.get("totalCount"));
         model.addAttribute("search", search);
 
-        return "forward:/user/listUser.jsp";
+        // 현재 페이지 번호를 Attribute로 추가
+        model.addAttribute("currentPage", search.getCurrentPage());
+
+        return "user/listUser";
     }
+
 }
