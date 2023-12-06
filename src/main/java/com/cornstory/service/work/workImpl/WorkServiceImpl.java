@@ -54,6 +54,23 @@ public class WorkServiceImpl implements WorkService {
 
         return map;
     }
+
+    @Override
+    public Work getDuplication(Work work) throws Exception {
+        return workDao.getDuplication(work);
+    }
+    @Override
+    public Map<String, Object> getMyWork(String userId) throws Exception {
+        List<Work> mylist = workDao.getMyWork(userId);
+        int myCount = workDao.getMyWorkCount(userId);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("list", mylist);
+        map.put("myCount", myCount);
+
+        return map;
+    }
+
     @Override
     public void addBookmark(Bookmark bookmark) {
         bookmarkDao.addBookmark(bookmark);
@@ -73,4 +90,6 @@ public class WorkServiceImpl implements WorkService {
     public List<Bookmark> getBookmarksByUserId(String userId) {
         return bookmarkDao.getBookmarksByUserId(userId);
     }
+
+
 }

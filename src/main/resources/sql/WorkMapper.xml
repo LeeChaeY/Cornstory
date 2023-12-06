@@ -31,7 +31,7 @@
 			status, work_desc, complete
 		) VALUES (
 					 #{userId}, #{category}, #{genre1}, #{genre2}, #{genre3}, #{fap},
-					 #{workName}, #{note}, #{thumbnail}, #{viewCnt}, #{workDate},
+					 #{workName}, #{note}, #{thumbnail}, #{viewCnt}, now(),
 					 #{status}, #{workDesc}, #{complete}
 				 )
 	</insert>
@@ -81,12 +81,12 @@
 				<if test="orderKeyword != null">
 					AND (genre1 = #{orderKeyword} OR genre2 = #{orderKeyword} OR genre3 = #{orderKeyword})
 				</if>
-				ORDER BY view_cnt
-				<if test="orderCondition == 0 or orderCondition == null">
-					desc
-				</if>
 			</if>
 		</where>
+		ORDER BY view_cnt
+		<if test="orderCondition == 0 or orderCondition == null">
+			desc
+		</if>
 	</select>
 
 	<select id="getTotalCount" parameterType="com.cornstory.common.Search" resultType="java.lang.Integer">
@@ -111,14 +111,32 @@
 				<if test="orderKeyword != null">
 					AND (genre1 = #{orderKeyword} OR genre2 = #{orderKeyword} OR genre3 = #{orderKeyword})
 				</if>
-				ORDER BY view_cnt
-				<if test="orderCondition == 0 or orderCondition == null">
-					desc
-				</if>
 			</if>
 		</where>
+		ORDER BY view_cnt
+		<if test="orderCondition == 0 or orderCondition == null">
+			desc
+		</if>
 	</select>
 
+	<select id="getDuplication" parameterType="work" resultMap="workSelectMap">
+		SELECT work_no, user_id, category, genre1, genre2, genre3, fap, work_name, note, thumbnail,
+			   view_cnt, work_date, status, work_desc, complete
+		FROM work
+		WHERE user_id=#{userId} AND work_name=#{workName}
+	</select>
 
+	<select id="getMyWork" parameterType="string" resultMap="workSelectMap">
+		SELECT work_no, user_id, category, genre1, genre2, genre3, fap, work_name, note, thumbnail,
+			   view_cnt, work_date, status, work_desc, complete
+		FROM work
+		WHERE user_id=#{userId}
+	</select>
+
+	<select id="getMyWorkCount" parameterType="string" resultMap="int">
+		SELECT Count(*)
+		FROM work
+		WHERE user_id=#{userId}
+	</select>
 
 </mapper>

@@ -32,4 +32,7 @@ public interface WorkService {
 
     public List<Bookmark> getBookmarksByUserId(String userId);
 
+    public Work getDuplication(Work work) throws Exception;
+
+    public Map<String, Object> getMyWork(String userId) throws Exception;
 }
