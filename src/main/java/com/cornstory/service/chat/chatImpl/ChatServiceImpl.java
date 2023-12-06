@@ -43,15 +43,22 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public int deleteChatSpace(int chatSpaceNo) throws Exception {
+        Map<String,Object> map = new HashMap<String,Object>();
+
+        map.put("chatSpaceNo", chatSpaceNo);
+        map.put("userId", "");
+        chatDao.deleteChatEnter(map);
+
         return chatDao.deleteChatSpace(chatSpaceNo);
     }
 
     @Override
-    public Map<String, Object> listChatSpace(Search search, String userId) throws Exception {
+    public Map<String, Object> listChatSpace(Search search, String userId, String genre) throws Exception {
         Map<String,Object> map = new HashMap<String,Object>();
 
         map.put("search", search);
         map.put("userId", userId);
+        map.put("genre", genre);
 
         int totalCount = chatDao.countChatSpace(map);
         System.out.println("ChatServiceImpl :: countChatSpace :: "+totalCount);
@@ -69,12 +76,22 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public int addChatEnter(ChatSpace chatSpace) throws Exception {
-        return chatDao.addChatEnter(chatSpace);
+        chatDao.addChatEnter(chatSpace);
+        chatSpace.setcSpaceImage("");
+        chatSpace.setcSpaceName("");
+        chatSpace.setcSpaceUserCnt(1);
+        return chatDao.updateChatSpace(chatSpace);
     }
 
     @Override
     public int deleteChatEnter(Map map) throws Exception {
-        return chatDao.deleteChatEnter(map);
+        chatDao.deleteChatEnter(map);
+
+        ChatSpace chatSpace = new ChatSpace();
+        chatSpace.setChatSpaceNo((int)map.get("chatSpaceNo"));
+        chatSpace.setcSpaceUserCnt(-1);
+        System.out.println(chatSpace);
+        return chatDao.updateChatSpace(chatSpace);
     }
 
     @Override
@@ -99,7 +116,6 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public Chat addChat(Chat chat) throws Exception {
         return chatRepository.save(chat);
-
     }
 
     @Override

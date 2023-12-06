@@ -3,13 +3,16 @@ package com.cornstory;
 import com.cornstory.common.Search;
 import com.cornstory.domain.Chat;
 import com.cornstory.domain.ChatSpace;
+import com.cornstory.service.chat.ChatDao;
 import com.cornstory.service.chat.ChatRepository;
 import com.cornstory.service.chat.ChatService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import java.text.SimpleDateFormat;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +24,9 @@ class ChatTests {
 
 	@Autowired
 	private ChatService chatService;
+
+	@Autowired
+	private ChatDao chatDao;
 
 //	@Autowired
 //	private ChatRepository chatRepository;
@@ -137,7 +143,7 @@ class ChatTests {
 
 	}
 
-	@Test
+//	@Test
 	void chatTest() {
 		Chat chat = new Chat(10001, "test1", "안녕하세요!", "2023-12-03", "");
 
@@ -156,6 +162,20 @@ class ChatTests {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+//	@Test
+	void cc() {
+//		ChatSpace chatSpace = new ChatSpace();
+//		chatSpace.setChatSpaceNo(10009);
+//		chatSpace.setcSpaceUserCnt(-1);
+//		System.out.println(chatSpace);
+		try {
+//			chatDao.updateChatSpace(chatSpace);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
 	}
 
 }

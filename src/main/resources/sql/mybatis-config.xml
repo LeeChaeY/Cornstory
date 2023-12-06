@@ -25,18 +25,11 @@
 
         <typeAlias alias="purchase" type="com.cornstory.domain.Purchase" />
 
+        <typeAlias alias="chatSpace" type="com.cornstory.domain.ChatSpace" />
+
         <typeAlias alias="story" type="com.cornstory.domain.Story" />
 
         <typeAlias alias="storyComment" type="com.cornstory.domain.StoryComment" />
-        <!--
-        <typeAlias alias="chatSpace" type="com.cornstory.domain.ChatSpace" />
-        -->
-        <!--
-        <typeAlias alias="chat" type="com.cornstory.domain.Chat" />
-        -->
-        <!--
-        <typeAlias alias="ChatEnter" type="com.cornstory.domain.ChatEnter" />
-        -->
 
         <typeAlias alias="support" type="com.cornstory.domain.Support" />
 
@@ -50,29 +43,23 @@
 
         <mapper resource="sql/UserMapper.xml"/>
 
-
         <mapper resource="sql/WorkMapper.xml"/>
-
         <!--
         <mapper resource="sql/BookmarkMapper.xml"/>
         -->
         <mapper resource="sql/EpisodeMapper.xml"/>
+
         <mapper resource="sql/EpisodeCommentMapper.xml"/>
+
         <mapper resource="sql/ProductMapper.xml"/>
-        <!--
+
 		<mapper resource="sql/PurchaseMapper.xml"/>
-		-->
+
         <mapper resource="sql/StoryMapper.xml"/>
+
         <mapper resource="sql/StoryCommentMapper.xml"/>
-        <!--
-		<mapper resource="sql/ChatSpaceMapper.xml"/>
-		-->
-        <!--
+
 		<mapper resource="sql/ChatMapper.xml"/>
-		-->
-        <!--
-		<mapper resource="sql/ChatEnterMapper.xml"/>
-		-->
 
 		<mapper resource="sql/SupportMapper.xml"/>
 

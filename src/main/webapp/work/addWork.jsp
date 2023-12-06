@@ -22,22 +22,26 @@
 
 <h2>작업 추가</h2>
 
-<form action="../work/addWork" method="post" onsubmit="return validateForm()">
+<form action="../work/addWork" method="post" onsubmit="return validateForm()" enctype="multipart/form-data">
 
     <label for="userId">작성자:</label>
     <input type="text" id="userId" name="userId" required />
 
     <label>창작 여부:</label>
     <label>
-        <input type="radio" name="status" value="0" checked /> 원작
+        <input type="radio" name="status" value="0" checked onclick="toggleSelectBox();"/> 원작
     </label>
     <label>
-        <input type="radio" name="status" value="1" /> 창작
+        <input type="radio" name="status" value="1" onclick="toggleSelectBox();"/> 창작
     </label>
-
+    <select id="copylight" name="copylight">
+        <c:forEach var="product" items="${list}">
+            <option value="<c:out value='${product.prodName}' />"><c:out value='${product.prodName}' /></option>
+        </c:forEach>
+    </select>
     <label for="workName">작품명:</label>
-    <input type="text" id="workName" name="workName" maxlength="30" required />
-
+    <input type="text" id="workName" name="workName" maxlength="30" required oninput="updateCharCount('workName', 'workNameCount')"/>
+    <div id="workNameCount">글자 수: 0/30</div>
     <label>카테고리:</label>
     <label>
         <input type="radio" name="category" value="0" checked /> 웹소설
@@ -88,14 +92,22 @@
     </label>
 
     <label for="note">작가 노트:</label>
-    <textarea id="note" name="note" maxlength="100"></textarea>
+    <textarea id="note" name="note" maxlength="100" oninput="updateCharCount('note', 'noteCount')"></textarea>
+    <div id="noteCount">글자 수: 0/100</div>
 
-    <label for="workDesc">작업 소개:</label>
-    <textarea id="workDesc" name="workDesc" maxlength="400" oninput="updateCharCount(this)"></textarea>
+    <label for="workDesc">작품 소개:</label>
+    <textarea id="workDesc" name="workDesc" maxlength="400" oninput="updateCharCount('workDesc', 'charCount')"></textarea>
     <div id="charCount">글자 수: 0/400</div>
 
-    <label for="thumbnail">썸네일:</label>
-    <input type="text" id="thumbnail" name="thumbnail" />
+
+
+    <label for="thumbnailFile">썸네일 (이미지 파일만):</label>
+    <div class="form-group">
+        <input class="form-control form-control-user" type="file"
+               name="thumbnailFile" id="thumbnailFile" onchange="setThumbnail(event);" accept=".jpg">
+    </div>
+    <div id="image_container"></div>
+
 
     <label>유료 / 무료 선택:</label>
     <label>
@@ -115,6 +127,8 @@
 
 </body>
 <script>
+    window.onload = toggleSelectBox;
+
     function validateForm() {
         var checkboxes = document.getElementsByName("genre");
         var checkedCount = 0;
@@ -136,17 +150,61 @@
             }
         }
 
-        if (checkedCount < 1 || checkedCount > 3) {
+        if (checkedCount <= 1 && checkedCount >= 3) {
             alert("장르는 최소 1개 이상, 최대 3개까지 선택해야 합니다.");
             return false;
         }
 
         // 선택된 장르 값을 각각의 input에 할당
         document.getElementsByName("genre1")[0].value = genre1;
-        document.getElementsByName("genre2")[1].value = genre2;
-        document.getElementsByName("genre3")[2].value = genre3;
+        document.getElementsByName("genre2")[0].value = genre2;
+        document.getElementsByName("genre3")[0].value = genre3;
 
         return true;
     }
+    function setThumbnail(event){
+        var reader = new FileReader();
+
+        reader.onload = function(event){
+            var img = document.createElement("img");
+            img.setAttribute("src", event.target.result);
+            img.setAttribute("class", "col-lg-6");
+
+            img.style.maxWidth = "300px";
+            img.style.maxHeight = "300px";
+            img.style.display = "block";
+
+            document.querySelector("div#image_container").appendChild(img);
+        };
+
+        reader.readAsDataURL(event.target.files[0]);
+    }
+    function updateCharCount(inputId, countId) {
+        var input = document.getElementById(inputId);
+        var count = document.getElementById(countId);
+
+        count.textContent = '글자 수: ' + input.value.length + '/' + input.maxLength;
+    }
+    function toggleSelectBox() {
+        var status = document.querySelector('input[name="status"]:checked').value;
+        var selectBox = document.getElementById('copylight');
+
+        // 창작이 선택되면 셀렉트 박스를 보이게 함
+        if (status === '1') {
+
+
+            // 셀렉트 박스의 옵션 개수가 0이면 창작 선택을 막음
+            if (selectBox.options.length === 0) {
+                document.querySelector('input[name="status"][value="0"]').checked = true;
+                alert('창작을 선택할 수 없습니다. 저작권을 먼저 등록해주세요.');
+            }else{
+                selectBox.style.display = 'block';
+            }
+        } else {
+            selectBox.style.display = 'none';
+        }
+    }
+
+
 </script>
 </html>
