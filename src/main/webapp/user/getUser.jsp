@@ -19,7 +19,7 @@
     <strong>주소:</strong> <c:out value="${user.addr}"/><br>
     <strong>상세주소:</strong> <c:out value="${user.address}"/><br>
     <strong>전화번호:</strong> <c:out value="${user.phone}"/><br>
-    <strong>소셜 연동:</strong> <c:out value="${user.socialLink}"/><br>
+    <strong>소셜 연동:</strong> <c:out value="${user.social}"/><br>
 </c:if>
 
 </body>

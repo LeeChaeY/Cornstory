@@ -1,0 +1,66 @@
+04-Dec-2023 14:02:06.671 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 서버 버전 이름:    Apache Tomcat/10.1.16
+04-Dec-2023 14:02:06.677 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log Server 빌드 시각:  Nov 10 2023 16:17:33 UTC
+04-Dec-2023 14:02:06.678 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log Server 버전 번호:  10.1.16.0
+04-Dec-2023 14:02:06.678 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 운영체제 이름:     Windows 11
+04-Dec-2023 14:02:06.678 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 운영체제 버전:     10.0
+04-Dec-2023 14:02:06.678 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 아키텍처:          amd64
+04-Dec-2023 14:02:06.678 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 자바 홈:           C:\Users\bohmn\.jdks\corretto-17.0.9
+04-Dec-2023 14:02:06.678 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM 버전:          17.0.9+8-LTS
+04-Dec-2023 14:02:06.679 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log JVM 벤더:          Amazon.com Inc.
+04-Dec-2023 14:02:06.679 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:     C:\workspaceIntellij\Team\src\main\resources\sql
+04-Dec-2023 14:02:06.679 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:     C:\apache-tomcat-10.1.16-windows-x64\apache-tomcat-10.1.16
+04-Dec-2023 14:02:06.696 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.lang=ALL-UNNAMED
+04-Dec-2023 14:02:06.696 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.io=ALL-UNNAMED
+04-Dec-2023 14:02:06.697 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.util=ALL-UNNAMED
+04-Dec-2023 14:02:06.697 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+04-Dec-2023 14:02:06.697 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+04-Dec-2023 14:02:06.697 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dcatalina.home=C:\apache-tomcat-10.1.16-windows-x64\apache-tomcat-10.1.16
+04-Dec-2023 14:02:06.697 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dcatalina.base=C:\workspaceIntellij\Team\src\main\resources\sql
+04-Dec-2023 14:02:06.698 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.io.tmpdir=C:\workspaceIntellij\Team\src\main\resources\sql\temp
+04-Dec-2023 14:02:06.699 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.util.logging.config.file=C:\workspaceIntellij\Team\src\main\resources\sql\conf\logging.properties
+04-Dec-2023 14:02:06.699 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+04-Dec-2023 14:02:06.699 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2023.2.3\lib\idea_rt.jar=49849:C:\Program Files\JetBrains\IntelliJ IDEA 2023.2.3\bin
+04-Dec-2023 14:02:06.699 정보 [main] org.apache.catalina.startup.VersionLoggerListener.log 명령 행 아규먼트:  -Dfile.encoding=UTF-8
+04-Dec-2023 14:02:06.704 정보 [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR 버전 [1.7.4]을(를) 사용한, APR 기반 Apache Tomcat Native 라이브러리 [2.0.6]을(를) 로드했습니다.
+04-Dec-2023 14:02:06.710 정보 [main] org.apache.catalina.core.AprLifecycleListener.initializeSSL OpenSSL이 성공적으로 초기화되었습니다: [OpenSSL 3.0.11 19 Sep 2023]
+04-Dec-2023 14:02:06.943 정보 [main] org.apache.coyote.AbstractProtocol.init 프로토콜 핸들러 ["http-nio-8080"]을(를) 초기화합니다.
+04-Dec-2023 14:02:06.960 심각 [main] org.apache.catalina.util.LifecycleBase.handleSubClassException 구성요소 [Connector["http-nio-8080"]]을(를) 초기화하지 못했습니다.
+	org.apache.catalina.LifecycleException: 프로토콜 핸들러 초기화가 실패했습니다.
+		at org.apache.catalina.connector.Connector.initInternal(Connector.java:1015)
+		at org.apache.catalina.util.LifecycleBase.init(LifecycleBase.java:127)
+		at org.apache.catalina.core.StandardService.initInternal(StandardService.java:554)
+		at org.apache.catalina.util.LifecycleBase.init(LifecycleBase.java:127)
+		at org.apache.catalina.core.StandardServer.initInternal(StandardServer.java:1010)
+		at org.apache.catalina.util.LifecycleBase.init(LifecycleBase.java:127)
+		at org.apache.catalina.startup.Catalina.load(Catalina.java:747)
+		at org.apache.catalina.startup.Catalina.load(Catalina.java:769)
+		at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+		at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+		at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+		at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+		at org.apache.catalina.startup.Bootstrap.load(Bootstrap.java:307)
+		at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:477)
+	Caused by: java.net.BindException: Address already in use: bind
+		at java.base/sun.nio.ch.Net.bind0(Native Method)
+		at java.base/sun.nio.ch.Net.bind(Net.java:555)
+		at java.base/sun.nio.ch.ServerSocketChannelImpl.netBind(ServerSocketChannelImpl.java:337)
+		at java.base/sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:294)
+		at org.apache.tomcat.util.net.NioEndpoint.initServerSocket(NioEndpoint.java:247)
+		at org.apache.tomcat.util.net.NioEndpoint.bind(NioEndpoint.java:202)
+		at org.apache.tomcat.util.net.AbstractEndpoint.bindWithCleanup(AbstractEndpoint.java:1280)
+		at org.apache.tomcat.util.net.AbstractEndpoint.init(AbstractEndpoint.java:1293)
+		at org.apache.coyote.AbstractProtocol.init(AbstractProtocol.java:624)
+		at org.apache.coyote.http11.AbstractHttp11Protocol.init(AbstractHttp11Protocol.java:77)
+		at org.apache.catalina.connector.Connector.initInternal(Connector.java:1013)
+		... 13 more
+04-Dec-2023 14:02:06.961 정보 [main] org.apache.catalina.startup.Catalina.load [481] 밀리초 내에 서버가 초기화되었습니다.
+04-Dec-2023 14:02:07.047 정보 [main] org.apache.catalina.core.StandardService.startInternal 서비스 [Catalina]을(를) 시작합니다.
+04-Dec-2023 14:02:07.048 정보 [main] org.apache.catalina.core.StandardEngine.startInternal 서버 엔진을 시작합니다: [Apache Tomcat/10.1.16]
+04-Dec-2023 14:02:07.075 정보 [main] org.apache.catalina.startup.HostConfig.deployDescriptor 배치 descriptor [C:\workspaceIntellij\Team\src\main\resources\sql\conf\Catalina\localhost\Cornstory.xml]을(를) 배치합니다.
+04-Dec-2023 14:02:11.402 정보 [main] org.apache.jasper.servlet.TldScanner.scanJars 적어도 하나의 JAR가 TLD들을 찾기 위해 스캔되었으나 아무 것도 찾지 못했습니다. 스캔했으나 TLD가 없는 JAR들의 전체 목록을 보시려면, 로그 레벨을 디버그 레벨로 설정하십시오. 스캔 과정에서 불필요한 JAR들을 건너뛰면, 시스템 시작 시간과 JSP 컴파일 시간을 단축시킬 수 있습니다.
+04-Dec-2023 14:02:11.686 정보 [main] org.apache.catalina.startup.HostConfig.deployDescriptor 배치 descriptor [C:\workspaceIntellij\Team\src\main\resources\sql\conf\Catalina\localhost\Cornstory.xml]의 배치가 [4,609] 밀리초 내에 완료되었습니다.
+04-Dec-2023 14:02:11.689 정보 [main] org.apache.catalina.startup.Catalina.start 서버가 [4727] 밀리초 내에 시작되었습니다.
+04-Dec-2023 14:02:44.947 정보 [Thread-1] org.apache.coyote.AbstractProtocol.pause 프로토콜 핸들러 ["http-nio-8080"]을(를) 일시 정지 중
+04-Dec-2023 14:02:44.947 정보 [Thread-1] org.apache.catalina.core.StandardService.stopInternal 서비스 [Catalina]을(를) 중지시킵니다.
+04-Dec-2023 14:02:44.975 정보 [Thread-1] org.apache.coyote.AbstractProtocol.stop 프로토콜 핸들러 ["http-nio-8080"]을(를) 중지시킵니다.
+04-Dec-2023 14:02:44.976 정보 [Thread-1] org.apache.coyote.AbstractProtocol.destroy 프로토콜 핸들러 ["http-nio-8080"]을(를) 소멸시킵니다.

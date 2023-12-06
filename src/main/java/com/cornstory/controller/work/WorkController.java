@@ -30,7 +30,7 @@ public class WorkController {
     private ProductService productService;
 
     public WorkController(){
-        System.out.println("WorkController 집합");
+        System.out.println("WorkController 진입");
     }
 
     @GetMapping("/addWork")

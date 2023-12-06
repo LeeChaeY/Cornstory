@@ -43,7 +43,7 @@
 		UPDATE user
 		<set>
 			password = #{password}, nickname = #{nickName}, email = #{email:VARCHAR},addr = #{addr:VARCHAR},
-			address = #{address:VARCHAR},phone = #{phone:VARCHAR} , user_image=#{userImage:VARCHAR}, ban_date = #{banDate, jdbcType=DATE}
+			address = #{address:VARCHAR},phone = #{phone:VARCHAR} , user_image=#{userImage:VARCHAR}, social = #{social}
 		</set>
 		WHERE user_id = #{userId}
 	</update>

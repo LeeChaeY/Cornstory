@@ -25,29 +25,6 @@ public class User {
 	public User(){}
 
 	//Method
-
-
-	@Override
-	public String toString() {
-		return "User{" +
-				"userId='" + userId + '\'' +
-				", role=" + role +
-				", userName='" + userName + '\'' +
-				", nickName='" + nickName + '\'' +
-				", password='" + password + '\'' +
-				", birthday=" + birthday +
-				", addr='" + addr + '\'' +
-				", address='" + address + '\'' +
-				", phone='" + phone + '\'' +
-				", email='" + email + '\'' +
-				", userImage='" + userImage + '\'' +
-				", popcornCnt=" + popcornCnt +
-				", rDate=" + rDate +
-				", banDate=" + banDate +
-				", social=" + social +
-				'}';
-	}
-
 	public String getUserId() {
 		return userId;
 	}
@@ -166,5 +143,26 @@ public class User {
 
 	public void setSocial(int social) {
 		this.social = social;
+	}
+
+	@Override
+	public String toString() {
+		return "User{" +
+				"userId='" + userId + '\'' +
+				", role=" + role +
+				", userName='" + userName + '\'' +
+				", nickName='" + nickName + '\'' +
+				", password='" + password + '\'' +
+				", birthday=" + birthday +
+				", addr='" + addr + '\'' +
+				", address='" + address + '\'' +
+				", phone='" + phone + '\'' +
+				", email='" + email + '\'' +
+				", userImage='" + userImage + '\'' +
+				", popcornCnt=" + popcornCnt +
+				", rDate=" + rDate +
+				", banDate=" + banDate +
+				", social=" + social +
+				'}';
 	}
 }
