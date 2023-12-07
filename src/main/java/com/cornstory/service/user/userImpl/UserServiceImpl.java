@@ -20,11 +20,6 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserDao userDao;
 
-	//Constructor
-	public UserServiceImpl() {
-		// TODO Auto-generated constructor stub
-	}
-
 	@Override
 	public void addUser(User user) throws Exception {
 		// TODO Auto-generated method stub
