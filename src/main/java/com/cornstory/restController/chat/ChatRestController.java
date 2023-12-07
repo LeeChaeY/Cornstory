@@ -57,7 +57,7 @@ public class ChatRestController {
                     System.out.println("파일이 성공적으로 삭제되었습니다.");
                 } else {
                     System.out.println("파일을 삭제하는 데 문제가 발생했습니다.");
-                }
+                }     
             }
         } catch (Exception e) {
             e.printStackTrace();
