@@ -25,5 +25,13 @@ public interface WorkDao {
     public List<Work> listWork(Search search) throws Exception;
 
     // 게시판 Page 처리를 위한 전체Row(totalCount)  return
-    public int getTotalCount(Search search) throws Exception ;
+    public int getTotalCount(Search search) throws Exception;
+
+    public Work getDuplication(Work work) throws Exception;
+
+    //작가 작품의 리스트
+    public List<Work> getMyWork(String userId) throws Exception;
+
+    //작가 작품의 리스트 갯수
+    public int getMyWorkCount(String userId) throws Exception;
 }

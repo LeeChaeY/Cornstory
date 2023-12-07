@@ -12,6 +12,7 @@
         // 카카오 초기화
         Kakao.init('${kakao.api.js-key}');
 
+
         // 카카오 로그인 버튼 생성
         function createKakaoLoginButton() {
             Kakao.Auth.createLoginButton({

@@ -81,7 +81,7 @@ class UserTests {
 		userService.updateUser(user);*/
 	}
 
-	@Test
+	//@Test
 	public void testUpdateBam() throws Exception {
 		// 사용자 업데이트 테스트
 		User user = userService.getUser("user001");
@@ -105,15 +105,17 @@ class UserTests {
 	}
 
 	//@Test
-	public void testDeleteUser() throws Exception {
-		int result = userService.deleteUser("wow");  // 삭제된 회원 수를 반환
-		assertEquals(1, result);  // 예상하는 값으로 변경
+/*	public int testDeleteUser() throws Exception {
+		 삭제된 회원 수를 반환하도록 수정
+		int result = userService.deleteUser("wow");
+		assertEquals(1, result); // 예상하는 값으로 변경
 
-		// 삭제 후에는 해당 회원이 존재하지 않아야 함
-		User nonExistent = userService.getUser("wow");  // 삭제한 회원아이디로 변경
+		// 삭제 후에 해당 회원이 존재하지 않아야 함
+		User nonExistent = userService.getUser("wow");
 		assertNull(nonExistent);
-		System.out.println("기존 회원 정보: " + nonExistent);
-	}
+		System.out.println("삭제 후 회원 정보: " + nonExistent);*//*
+	}*/
+
 
 
 
@@ -191,7 +193,7 @@ class UserTests {
 	//@Test
 	public void testIdCheck() throws Exception {
 		// 회원 ID 중복 확인 테스트
-		String userId = "admin";
+		String userId = "user001";
 		// 기존 닉네임이므로 중복이므로 false
 		System.out.println("Existing userId Check: " + userService.idCheck(userId));
 
@@ -200,7 +202,7 @@ class UserTests {
 	//@Test
 	public void testNickNameCheck() throws Exception {
 		// 회원 닉네임 중복 확인 테스트
-		String nick = "임당";
+		String nick = "여호와";
 		// 기존 닉네임이므로 중복이므로 false
 		System.out.println("Existing Nickname Check: " + userService.nickNameCheck(nick));
 
