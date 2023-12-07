@@ -3,11 +3,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
-<html lang="ko">
-
 <head>
     <meta charset="UTF-8">
     <title>회원 목록 조회</title>
+    <script>
+        // JavaScript에서 JSP 변수를 사용하기 위한 설정
+        var list = ${list};
+        var search = ${search};
+    </script>
 </head>
 
 <body>
@@ -15,53 +18,26 @@
     <h2>회원 목록 조회</h2>
     <div id="totalUsers">전체 회원 수: ${totalCount} 명</div>
 </div>
+<form action="../user/listUser">
+    <div class="search-container">
+            <td>
+                <select name="searchCondition" class="ct_input_g">
+                    <option value="0" ${!empty search.searchCondition && search.searchCondition == 0 ? "selected" : ""}>닉네임</option>
+                    <option value="1" ${!empty search.searchCondition && search.searchCondition == 1 ? "selected" : ""}>회원명</option>
+                </select>
+                <input type="text" id="searchKeyword" name="searchKeyword"
+                       value="${! empty search.searchKeyword ? search.searchKeyword : ''}"
+                       placeholder="검색어를 입력하세요">
+                <button type="submit">검색</button>
+            </td>
+    </div>
+</form>
 
-<div class="search-container">
-    <tr>
-        <td>
-            <select name="searchCondition" class="ct_input_g">
-                <option value="0" ${!empty search.searchCondition && search.searchCondition == 0 ? "selected" : ""}>닉네임</option>
-                <option value="1" ${!empty search.searchCondition && search.searchCondition == 1 ? "selected" : ""}>회원명</option>
-            </select>
-            <input type="text" id="searchInput"
-                   value="${! empty search.searchKeyword ? search.searchKeyword : ""}"
-                   placeholder="검색어를 입력하세요">
-        </td>
-            <button id="searchBtn">검색</button>
-    </tr>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<script>
+    // JavaScript를 사용하여 브라우저 콘솔에 로그 출력
+    console.log("리스트 list&count map를 출력해보자 :::::", list);
+    console.log("리스트 search 출력해보자 :::::", search);
+</script>
 <div style="width: 98%; margin-left: 10px;">
     <table>
         <thead>
@@ -94,7 +70,9 @@
         </tbody>
     </table>
 </div>
-<a href="../index.jsp">main 바로가기</a>&nbsp;<br>
+<a href="../index.jsp">main 바로가기</a>&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="javascript:history.back()">뒤로가기</a>
+
 </body>
 
 </html>

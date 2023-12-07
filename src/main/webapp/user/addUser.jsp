@@ -5,79 +5,8 @@
     <meta charset="UTF-8">
     <title>회원가입</title>
 
-    <script>
-        function validateForm() {
-            // 여러 필드에 대한 유효성 검사 호출
-            var isNameValid = validateName();
-            var isBirthdayValid = validateBirthday();
-            var isPhoneValid = validatePhone();
-            var isAddressValid = validateAddress();
-            var isEmailValid = validateEmail();
-            var isUserIdValid = validateUserId();
-            var isPasswordValid = validatePassword();
-            var isNickNameValid = validateNickName();
 
-            // 모든 필드가 유효하면 폼 제출
-            if (isNameValid && isBirthdayValid && isPhoneValid && isAddressValid && isEmailValid && isUserIdValid && isPasswordValid && isNickNameValid) {
-                return true;
-            } else {
-                // 하나라도 유효하지 않은 필드가 있으면 제출 취소
-                // 가입 실패 알림 추가
-                alert("회원가입에 실패했습니다. 입력 정보를 다시 확인해주세요.");
-                return false;
-            }
-        }
 
-        // 생년월일 유효성 검사 예시
-        function validateBirthday() {
-            var birthday = $("#birthday").val();
-            // 생년월일 유효성 검사 로직을 추가 (필요에 따라 수정)
-            if (birthday) {
-                return true;
-            } else {
-                alert("생년월일을 입력하세요.");
-                return false;
-            }
-        }
-
-        // 전화번호 유효성 검사 예시
-        function validatePhone() {
-            var phone = $("#phone").val();
-            // 전화번호 유효성 검사 로직을 추가 (필요에 따라 수정)
-            if (phone) {
-                return true;
-            } else {
-                alert("전화번호를 입력하세요.");
-                return false;
-            }
-        }
-
-        // 주소 유효성 검사 예시
-        function validateAddress() {
-            var address = $("#addr").val();
-            // 주소 유효성 검사 로직을 추가 (필요에 따라 수정)
-            if (address) {
-                return true;
-            } else {
-                alert("주소를 입력하세요.");
-                return false;
-            }
-        }
-
-        // 이메일 유효성 검사 예시
-        function validateEmail() {
-            var email = $("#email").val();
-            // 이메일 유효성 검사 로직을 추가 (필요에 따라 수정)
-            if (email) {
-                return true;
-            } else {
-                alert("이메일을 입력하세요.");
-                return false;
-            }
-        }
-
-        // 생략된 코드 ...
-    </script>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
@@ -89,7 +18,8 @@
                 }
             }).open();
         }
-
+        </script>
+        <script>
         //아이디 중복 체크 및 체크 길이
         $(document).ready(function () {
             $("#userId").on("input", function () {
@@ -228,7 +158,7 @@
 
 <h2>회원가입</h2>
 
-<form action="/user/addUser" method="post" enctype="multipart/form-data" onsubmit="return validateForm();">
+<form action="/user/addUser" method="post" enctype="multipart/form-data" >
 
     <label for="userName">성명:</label><br>
     <input type="text" id="userName" name="userName" required><br><br>

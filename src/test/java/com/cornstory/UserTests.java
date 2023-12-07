@@ -151,7 +151,7 @@ class UserTests {
 
 		// 특정 상황에서 1개 이상의 사용자를 닉네임으로 검색할 수 있도록 검색 조건을 추가한 경우
 		search.setSearchCondition("0");  // 0은 닉네임 검색을 의미
-		search.setSearchKeyword("TestUser");  // 검색할 닉네임 설정
+		search.setSearchKeyword("테스트");  // 검색할 닉네임 설정
 		map = userService.listUser(search);
 
 		list = (List<Object>) map.get("list");
