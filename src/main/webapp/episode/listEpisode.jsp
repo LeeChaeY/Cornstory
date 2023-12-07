@@ -47,6 +47,7 @@
         <th>에피소드 등록일</th>
         <th>에피소드 파일명</th>
         <th>에피소드 디렉토리</th>
+        <th>에피소드 수정</th>
     </tr>
     </thead>
     <tbody>
@@ -59,6 +60,7 @@
             <td><fmt:formatDate value="${episode.episodeDate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
             <td>${episode.fileName}</td>
             <td>${episode.directory}</td>
+            <td><a href="../episode/updateEpisode?episodeNo=${episode.episodeNo}">수정</a></td>
         </tr>
     </c:forEach>
     </tbody>

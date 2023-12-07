@@ -25,7 +25,7 @@
     <!-- 작품 회차 생성 -->
     <insert id="addEpisode" parameterType="episode">
         INSERT INTO episode (work_no, episode_name, episode_order, e_thumbnail, episode_date, file_name, directory)
-        VALUES (#{workNo : INTEGER}, #{episodeName : VARCHAR}, #{episodeOrder : INTEGER}, #{eThumbnail : VARCHAR},
+        VALUES (#{workNo : INTEGER}, #{episodeName : VARCHAR}, #{episodeOrder : INTEGER}, #{thumbnail : VARCHAR},
                 now(), #{fileName : VARCHAR}, #{directory : VARCHAR})
     </insert>
 
@@ -35,7 +35,7 @@
         SET work_no       = #{workNo : INTEGER},
             episode_name  = #{episodeName : VARCHAR},
             episode_order = #{episodeOrder : INTEGER},
-            e_thumbnail   = #{eThumbnail : VARCHAR},
+            e_thumbnail   = #{thumbnail : VARCHAR},
             episode_date  = now(),
             file_name     = #{fileName : VARCHAR},
             directory     = #{directory : VARCHAR}

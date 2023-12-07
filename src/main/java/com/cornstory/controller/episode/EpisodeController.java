@@ -55,31 +55,34 @@ public class EpisodeController {
                 fileName = work.getUserId() + "_" + episode.getWorkNo() +"_" +episode.getEpisodeOrder();
                 fileName = fileName.replaceAll("[^a-zA-Z0-9가-힣_]", "_");
                 fileName += ".jpg";
-                uploadDir = "C:\\CornStory\\src\\main\\resources\\static\\file\\episode\\";
+                uploadDir = "C:\\CornStory\\src\\main\\resources\\static\\file\\episode";
                 filePath = uploadDir + File.separator + fileName;
 
 
                 Files.write(Path.of(filePath), thumbnailFile.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 
                 // 파일 경로를 Work 객체에 저장
-                episode.setFileName(fileName);
+                episode.setThumbnail(fileName);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
         if (!episodeFile.isEmpty()) {
             try {
-//                uploadDir = "C:\\CornStory\\src\\main\\resources\\static\\file\\episode\\";
-//                if(work.getCategory()==0){
-//                    uploadDir = "C:\\CornStory\\src\\main\\resources\\static\\file\\episode\\webnovel";
-//                }else if(work.getCategory()==1){
-//                    uploadDir = "C:\\CornStory\\src\\main\\resources\\static\\file\\episode\\webtoon";
-//                }else if(work.getCategory()==2){
-//                    uploadDir = "C:\\CornStory\\src\\main\\resources\\static\\file\\episode\\webdrama";
-//                }
+                fileName = work.getUserId() + "_" + episode.getWorkNo() +"_" +episode.getEpisodeOrder();
+                fileName = fileName.replaceAll("[^a-zA-Z0-9가-힣_]", "_");
+                if(work.getCategory()==0){
+                    uploadDir = "C:\\CornStory\\src\\main\\resources\\static\\file\\episode\\webnovel";
+                    fileName += ".txt";
+                }else if(work.getCategory()==1){
+                    uploadDir = "C:\\CornStory\\src\\main\\resources\\static\\file\\episode\\webtoon";
+                    fileName += ".jpg";
+                }else if(work.getCategory()==2){
+                    uploadDir = "C:\\CornStory\\src\\main\\resources\\static\\file\\episode\\webdrama";
+                    fileName += ".mp4";
+                }
 
                 filePath = uploadDir + File.separator + fileName;
-
 
                 Files.write(Path.of(filePath), episodeFile.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 
@@ -92,8 +95,75 @@ public class EpisodeController {
         }
         System.out.println(episode.toString());
 
-       //episodeService.addEpisode(episode);
+       episodeService.addEpisode(episode);
 
         return "index";
     }
+
+    @GetMapping("updateEpisode")
+    public String updateEpisode(@ModelAttribute("episodeNo") int episodeNo, Model model, @SessionAttribute(name="user", required = false) User user) throws Exception {
+        System.out.println("[ EpisodeController.addWork() start........]");
+
+
+        model.addAttribute("user",user);
+        model.addAttribute("episode",episodeService.getEpisode(episodeNo));
+        return "episode/updateEpisode";
+
+    }
+//    @PostMapping("updateEpisode")
+//    public String updateEpisode(@ModelAttribute("episode")Episode episode, @ModelAttribute("workNo")int workNo, @RequestParam("thumbnailFile") MultipartFile thumbnailFile,  @RequestParam("episodeFile") MultipartFile episodeFile, HttpServletRequest request, HttpServletResponse response) throws Exception {
+//        System.out.println("[ EpisodeController.addWork() start........]");
+//        Work work = workService.getWork(workNo);
+//        String fileName="";
+//        String uploadDir="";
+//        String filePath="";
+//        if (!thumbnailFile.isEmpty()) {
+//            try {
+//                fileName = work.getUserId() + "_" + episode.getWorkNo() +"_" +episode.getEpisodeOrder();
+//                fileName = fileName.replaceAll("[^a-zA-Z0-9가-힣_]", "_");
+//                fileName += ".jpg";
+//                uploadDir = "C:\\CornStory\\src\\main\\resources\\static\\file\\episode";
+//                filePath = uploadDir + File.separator + fileName;
+//
+//
+//                Files.write(Path.of(filePath), thumbnailFile.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+//
+//                // 파일 경로를 Work 객체에 저장
+//                episode.setThumbnail(fileName);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        if (!episodeFile.isEmpty()) {
+//            try {
+//                fileName = work.getUserId() + "_" + episode.getWorkNo() +"_" +episode.getEpisodeOrder();
+//                fileName = fileName.replaceAll("[^a-zA-Z0-9가-힣_]", "_");
+//                if(work.getCategory()==0){
+//                    uploadDir = "C:\\CornStory\\src\\main\\resources\\static\\file\\episode\\webnovel";
+//                    fileName += ".txt";
+//                }else if(work.getCategory()==1){
+//                    uploadDir = "C:\\CornStory\\src\\main\\resources\\static\\file\\episode\\webtoon";
+//                    fileName += ".jpg";
+//                }else if(work.getCategory()==2){
+//                    uploadDir = "C:\\CornStory\\src\\main\\resources\\static\\file\\episode\\webdrama";
+//                    fileName += ".mp4";
+//                }
+//
+//                filePath = uploadDir + File.separator + fileName;
+//
+//                Files.write(Path.of(filePath), episodeFile.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+//
+//                // 파일 경로를 Work 객체에 저장
+//                episode.setDirectory(uploadDir);
+//                episode.setFileName(fileName);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        System.out.println(episode.toString());
+//
+//        //episodeService.addEpisode(episode);
+//
+//        return "index";
+//    }
 }

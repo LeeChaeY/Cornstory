@@ -257,7 +257,7 @@
             if (status === '1' && selectBox.options.length === 0) {
                 document.querySelector('input[name="status"][value="0"]').checked = true;
                 selectBox.style.display = 'none';
-                alert(':창작을 선택할 수 없습니다. 저작권을 먼저 등록해주세요.');
+                alert('창작을 선택할 수 없습니다. 저작권을 먼저 등록해주세요.');
             }else{
                 selectBox.style.display = 'block';
             }

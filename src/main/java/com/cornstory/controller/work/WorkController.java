@@ -174,7 +174,6 @@ public class WorkController {
         model.addAttribute("list",map.get("list"));
         model.addAttribute("totalCount",map.get("totalCount"));
         return "episode/listEpisode";
-
     }
 
 }
