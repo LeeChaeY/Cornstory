@@ -20,7 +20,7 @@ public interface ProductService {
 
 	public int prodNameCheck(String prodName) throws Exception;
 
-//	public int listCompleteWork(String userId) throws Exception;
+	public int listCompleteWork(String userId) throws Exception;
 
 	public List<Product> getCopylight(String userId) throws Exception;
 }

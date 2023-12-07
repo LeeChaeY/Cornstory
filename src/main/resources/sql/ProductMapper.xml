@@ -68,36 +68,17 @@
 
 	<select id="countProductPopCorn" parameterType="search" resultType="int">
 		SELECT COUNT(*) AS totalCount
-		FROM (SELECT *  FROM  product
-		<where>
-			prod_category = 0
-			<if test='searchCondition != null and !searchCondition.equals("")
-						and searchKeyword != null and !searchKeyword.equals("")'>
-				<if test='searchCondition.equals("0")'>
-					AND LOWER(prod_name) LIKE LOWER(CONCAT('%', #{searchKeyword},'%'))
-				</if>
-			</if>
-		</where>
-		) countTable
+		FROM product
 	</select>
 
-	<select id="listProductPopcorn" parameterType="map" resultMap="productSelectMap">
+	<select id="listProductPopcorn" parameteType="map" resultMap="productSelectMap">
 		SELECT *
 		FROM (SELECT inner_table.*, @rownum := @rownum + 1 AS row_seq
-		FROM (SELECT *
-		FROM product
-		<where>
-			prod_category = 0
-			<if test='search.searchCondition != null and !search.searchCondition.equals("")
-										and search.searchKeyword != null and !search.searchKeyword.equals("")'>
-				<if test='search.searchCondition.equals("0")'>
-					AND LOWER(prod_name) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%'))
-				</if>
-			</if>
-		</where>
-		ORDER BY prod_price
-		) inner_table, (SELECT @rownum := 0) r
-		LIMIT #{endRowNum}
+				FROM (SELECT *
+						FROM product
+						ORDER BY prod_price
+						) inner_table, (SELECT @rownum := 0) r
+				LIMIT #{endRowNum}
 		) AS result
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
 	</select>
@@ -146,7 +127,7 @@
 		) AS result
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
 	</select>
-	<!--
+
 	<select id="listCompleteWork" parameterType="string" resultType="workSelectMap">
 		SELECT work_no, user_id, category, fap,
 			   work_name, thumbnail, work_date, status, complete
@@ -156,7 +137,7 @@
 							  	FROM product
 							  	WHERE prod_category = 2);
 	</select>
-	-->
+
 	<select id="countProductProdName" parameterType="string" resultType="int">
 		SELECT COUNT(*)
 		FROM product

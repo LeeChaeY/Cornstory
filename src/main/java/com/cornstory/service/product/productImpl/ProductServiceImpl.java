@@ -48,15 +48,17 @@ public class ProductServiceImpl implements ProductService {
 		int totalCountPopcorn = productDao.countProductPopCorn(search);
 		System.out.println("ProductServiceImpl :: totalCountPopcorn :: "+totalCountPopcorn);
 
-		map.put("search", search);
-		map.put("userId", userId);
-		int totalCountCopyright = productDao.countProductCopyright(map);
-		System.out.println("ProductServiceImpl :: totalCountCopyright :: "+totalCountCopyright);
-
 		map.put("startRowNum", (search.getCurrentPage()-1) * search.getPageSize() + 1);
 		map.put("endRowNum", search.getCurrentPage() * search.getPageSize());
 
 		List<Product> popcornList = productDao.listProductPopcorn(map);
+
+		map.put("search", search);
+		map.put("userId", userId);
+
+		int totalCountCopyright = productDao.countProductCopyright(map);
+		System.out.println("ProductServiceImpl :: totalCountCopyright :: "+totalCountCopyright);
+
 		List<Product> copyrightList = productDao.listProductCopyright(map);
 
 		map.put("totalCountPopcorn", totalCountPopcorn);
@@ -78,9 +80,9 @@ public class ProductServiceImpl implements ProductService {
 
 	}
 
-//	@Override
-//	public int listCompleteWork(String userId) throws Exception {
-//		return (productDao.listCompleteWork(userId) == 0) ? 0 : 1;
-//	}
+	@Override
+	public int listCompleteWork(String userId) throws Exception {
+		return (productDao.listCompleteWork(userId) == 0) ? 0 : 1;
+	}
 
 }
