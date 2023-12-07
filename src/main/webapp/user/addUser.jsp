@@ -22,13 +22,32 @@
         <script>
         //아이디 중복 체크 및 체크 길이
         $(document).ready(function () {
+            //아이디 체크
             $("#userId").on("input", function () {
                 var userId = $(this).val();
                 checkUserId(userId);
                 updateUserIdLength(userId.length); // 길이 업데이트 함수 호출
             });
+
+            // 비밀번호 조건 충족 및 길이
+            $("#password").on("input", function () {
+                var password = $(this).val();
+                checkPasswordPattern(password);
+            });
+            // 닉네임 체크
+            $("#nickName").on("input", function () {
+                var nickName = $(this).val();
+                checkNickName(nickName);
+                updateNickNameLength(nickName.length);
+            });
+            //전화번호 체크
+            $("#phone").on("input", function () {
+                var phoneNumber = $(this).val();
+                checkPhoneNumberFormat(phoneNumber);
+            });
         });
 
+        //아이디 중복체크
         function checkUserId(userId) {
             // 입력값이 없는 경우 메시지를 초기화합니다.
             var userIdMessage = $("#userIdMessage");
@@ -55,19 +74,15 @@
             }
 
         }
+
+        //아이디 길이체크
         function updateUserIdLength(length) {
             // 아이디 길이를 표시하는 영역에 길이를 업데이트합니다.
             $("#userIdLength").text(length + "/8");
         }
 
-        // 비밀번호 조건 충족 및 길이
-        $(document).ready(function () {
-            $("#password").on("input", function () {
-                var password = $(this).val();
-                checkPasswordPattern(password);
-            });
-        });
 
+        //패스워드 길이 및 패턴 체크
         function checkPasswordPattern(password) {
             var passwordMessage = $("#passwordMessage");
             var passwordLength = $("#passwordLength");
@@ -88,16 +103,6 @@
             }
         }
 
-        //닉네임 중복체크 및 길이
-        $(document).ready(function () {
-            // ... (기존 코드 생략)
-
-            $("#nickName").on("input", function () {
-                var nickName = $(this).val();
-                checkNickName(nickName);
-                updateNickNameLength(nickName.length);
-            });
-        });
 
         function checkNickName(nickName) {
             var nickNameMessage = $("#nickNameMessage");
@@ -129,19 +134,12 @@
             }
         }
 
+        //닉네임 길이체크
         function updateNickNameLength(length) {
             $("#nickNameLength").text(length + "/8");
         }
 
-
-        //전화번호 조건 충족 확인
-        $(document).ready(function () {
-            $("#phone").on("input", function () {
-                var phoneNumber = $(this).val();
-                checkPhoneNumberFormat(phoneNumber);
-            });
-        });
-
+        //전화번호 패턴 체크
         function checkPhoneNumberFormat(phoneNumber) {
             var phoneMessage = $("#phoneMessage");
             var phonePattern = /^\d{3}-\d{4}-\d{4}$/;
@@ -158,7 +156,7 @@
 
 <h2>회원가입</h2>
 
-<form action="/user/addUser" method="post" enctype="multipart/form-data" >
+<form action="../user/addUser" method="post" enctype="multipart/form-data" >
 
     <label for="userName">성명:</label><br>
     <input type="text" id="userName" name="userName" required><br><br>
@@ -197,7 +195,7 @@
     영문, 숫자, 특수문자를 혼합하여 작성 해야 합니다.<br><br>
 
     <label for="nickName">닉네임:</label><br>
-    <input type="text" id="nickName" name="nickName" required>
+    <input type="text" id="nickName" name="nickName" required min="8">
     <span id="nickNameMessage"></span><br>
     <span id="nickNameLength">0/8</span><br>
     최소 2글자 최대 8글자 작성가능합니다.<br>
@@ -205,7 +203,7 @@
 
 
     <label for="userImage">회원 사진:</label><br>
-    <input type="file" id="userImage" name="userImage"><br>
+    <input type="file" id="userImage" name="filename" accept=".jpg"/><br>
     파일 용량 1MB 이하<br>
     JPG만 업로드 가능<br>
     회원 프로필에 들어갈 사진 입니다.<br>

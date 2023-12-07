@@ -64,4 +64,11 @@
         WHERE work_no = #{workNo : INTEGER}
     </select>
 
+    <!--작품회차 최고 목록-->
+    <select id="episodeMax" parameterType="int" resultType="int">
+        SELECT ifnull(max(episode_order),0)
+        FROM episode
+        WHERE work_no = #{workNo : INTEGER}
+    </select>
+
 </mapper>

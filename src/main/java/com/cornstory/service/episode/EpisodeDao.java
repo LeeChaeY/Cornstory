@@ -26,4 +26,6 @@ public interface EpisodeDao {
     public List<Episode> listEpisode(int workNo);
 
     public int listEpisodeCount(int workNo);
+
+    public int episodeMax(int workNo) throws Exception;
 }

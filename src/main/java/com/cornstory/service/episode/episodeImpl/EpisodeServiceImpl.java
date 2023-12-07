@@ -66,6 +66,11 @@ public class EpisodeServiceImpl implements EpisodeService{
     }
 
     @Override
+    public int episodeMax(int workNo) throws Exception {
+        return episodeDao.episodeMax(workNo);
+    }
+
+    @Override
     public List<EpisodeComment> listEpisodeComment(int episodeNo) throws Exception{
         return episodeCommentDao.listEpisodeComment(episodeNo);
     }
