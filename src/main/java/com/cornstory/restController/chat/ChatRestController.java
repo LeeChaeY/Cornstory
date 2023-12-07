@@ -73,7 +73,7 @@ public class ChatRestController {
     @GetMapping(value="json/deleteChatEnter")
     public String deleteChatEnter(@RequestParam("chatSpaceNo") int chatSpaceNo, HttpSession session) throws Exception {
         String userId = ((User) session.getAttribute("user")).getUserId();
-        System.out.println("/chat/json/deleteChatEnter : GET :: userId : " + userId + "chatSpaceNo : " + chatSpaceNo);
+        System.out.println("/chat/json/deleteChatEnter : GET ::: userId : " + userId + "chatSpaceNo : " + chatSpaceNo);
         Map<String, Object> map = new HashMap<String, Object>();
 
         map.put("userId", userId);
