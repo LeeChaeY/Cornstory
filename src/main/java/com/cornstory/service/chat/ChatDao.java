@@ -1,5 +1,6 @@
 package com.cornstory.service.chat;
 
+import com.cornstory.domain.Chat;
 import com.cornstory.domain.ChatSpace;
 import com.cornstory.domain.Product;
 import org.apache.ibatis.annotations.Mapper;
@@ -23,6 +24,8 @@ public interface ChatDao {
     public List<ChatSpace> listChatSpace(Map map) throws Exception;
 
     public int addChatEnter(ChatSpace chatSpace) throws Exception;
+
+    public ChatSpace getChatEnter(Map map) throws Exception;
 
     public int deleteChatEnter(Map map) throws Exception;
 

@@ -123,6 +123,12 @@
 				   DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i'))
 	</insert>
 
+	<select id="getChatEnter" parameterType="map" resultMap="chatSelectMap">
+		SELECT chat_enter_no, chat_space_no, user_id, chat_enter_date
+		FROM chat_enter
+		WHERE chat_space_no = #{chatSpaceNo} AND user_id = #{userId}
+	</select>
+
 	<delete id="deleteChatEnter" parameterType="map">
 		DELETE
 		FROM chat_enter

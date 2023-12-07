@@ -27,6 +27,9 @@ public interface ChatService {
     //채팅방 입장
     public int addChatEnter(String userId, int chatSpaceNo) throws Exception;
 
+    //채팅방 입장 여부 확인
+    public ChatSpace getChatEnter(String userId, int chatSpaceNo) throws Exception;
+
     //채팅방 나가기, 회원 내보내기
     public int deleteChatEnter(Map map) throws Exception;
 

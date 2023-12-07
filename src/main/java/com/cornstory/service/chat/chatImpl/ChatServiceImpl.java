@@ -89,6 +89,15 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
+    public ChatSpace getChatEnter(String userId, int chatSpaceNo) throws Exception {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("userId", userId);
+        map.put("chatSpaceNo", chatSpaceNo);
+
+        return chatDao.getChatEnter(map);
+    }
+
+    @Override
     public int deleteChatEnter(Map map) throws Exception {
         chatDao.deleteChatEnter(map);
 

@@ -221,12 +221,9 @@ public class ChatController {
         System.out.println("/chat/enterChatSpace : GET :: " + chatSpace);
         model.addAttribute("chatSpace", chatSpace);
 
-        Map <String, Object> map = chatService.listChat(chatSpace.getChatSpaceNo(), "", "");
-        for (Chat chat : (List<Chat>)map.get("list")) {
-            User user = userService.getUser(userId);
-            chat.setNickname(user.getNickName());
-            chat.setUserImage(user.getUserImage());
-        }
+        String startDate = chatService.getChatEnter(userId, chatSpaceNo).getChatEnterDate().toString();
+
+        Map <String, Object> map = chatService.listChat(chatSpace.getChatSpaceNo(), startDate, "");
         System.out.println("/chat/enterChatSpace : GET :: " + map.get("list"));
         model.addAttribute("list", map.get("list"));
 
