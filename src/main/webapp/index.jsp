@@ -44,7 +44,7 @@
   </form>
 
   User-회원<br>
-  <a href="getUser?userId=${sessionScope.user.userId}">회원정보 조회</a>&nbsp&nbsp&nbsp
+  <a href="/user/getUser?userId=${sessionScope.user.userId}">회원정보 조회</a>&nbsp&nbsp&nbsp
   <!-- 관리자인 경우에만 특정 기능 표시 -->
   <c:if test="${sessionScope.user.role eq 1}">
     <a href="/user/listUser">목록 조회</a>
