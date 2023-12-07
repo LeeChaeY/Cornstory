@@ -1,132 +1,100 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 
 <head>
-    <meta charset="EUC-KR">
-    <title>È¸¿ø ¸ñ·Ï Á¶È¸</title>
-
-    <link rel="stylesheet" href="/css/admin.css" type="text/css">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
-    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-
-    <script type="text/javascript">
-        $(function () {
-            $("#searchInput").autocomplete({
-                source: function (request, response) {
-                    $.ajax({
-                        url: "/user/json/listUser",
-                        method: "POST",
-                        dataType: "json",
-                        data: { value: request.term },
-                        headers: {
-                            "Accept": "application/json",
-                            "Content-Type": "application/json"
-                        },
-                        success: function (data) {
-                            var userList = data;
-                            var result = userList.map(function (user) {
-                                return {
-                                    label: user,
-                                    value: user
-                                };
-                            });
-                            response(results);
-                        }
-                    });
-                },
-                minLength: 2,
-            });
-
-            function updateTotalCount() {
-                $.ajax({
-                    url: "/user/json/getTotalCount",
-                    method: "GET",
-                    dataType: "json",
-                    success: function (data) {
-                        $("#totalUsers").text("ÀüÃ¼ È¸¿ø ¼ö: " + data.totalCount + " ¸í");
-                    }
-                });
-            }
-
-            $(document).ready(function () {
-                updateTotalCount();
-            });
-
-            $("td.ct_btn01:contains('°Ë»ö')").on("click", function () {
-                fncGetUserList(1);
-                updateTotalCount();
-            });
-
-            $(".ct_list_pop:nth-child(4n+6)").css("background-color", "whitesmoke");
-        });
-    </script>
-
+    <meta charset="UTF-8">
+    <title>íšŒì› ëª©ë¡ ì¡°íšŒ</title>
 </head>
 
-<body bgcolor="#ffffff" text="#000000">
-<h2>È¸¿ø ¸ñ·Ï Á¶È¸</h2>
-<div style="width:98%; margin-left:10px;">
-    <table width="100%" border="0" cellspacing="0" cellpadding="0"   style="margin-top:10px;">
-        <tr>
-            <td align="right" id="totalUsers">
-                ÀüÃ¼ È¸¿ø ¼ö: ${totalCount } ¸í
-            </td>
-        </tr>
-    </table>
-    <form name="detailForm">
-        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
-            <tr>
-                <td class="ct_list_b" width="100">No</td>
-                <td class="ct_line02"></td>
-                <td class="ct_list_b" width="150">¾ÆÀÌµğ</td>
-                <td class="ct_line02"></td>
-                <td class="ct_list_b" width="150">´Ğ³×ÀÓ</td>
-                <td class="ct_line02"></td>
-                <td class="ct_list_b" width="150">¼º¸í</td>
-                <td class="ct_line02"></td>
-                <td class="ct_list_b" width="150">ÈŞ´ëÀüÈ­</td>
-                <td class="ct_line02"></td>
-                <td class="ct_list_b">ÀÌ¸ŞÀÏ</td>
-                <td class="ct_line02"></td>
-                <td class="ct_list_b">È¸¿ø °¡ÀÔÀÏ</td>
-                <td class="ct_line02"></td>
-                <td class="ct_list_b">Á¤Áö ÀÏÀÚ</td>
-            </tr>
-            <tr>
-                <td colspan="7" bgcolor="808285" height="1"></td>
-            </tr>
-
-            <c:set var="i" value="0" />
-            <c:forEach var="user" items="${list}">
-                <c:set var="i" value="${ i+1 }" />
-                <tr class="ct_list_pop">
-                    <td align="center">${ i }</td>
-                    <td></td>
-                    <td align="left">${user.userId}</td>
-                    <td></td>
-                    <td align="left">${user.nickName}</td>
-                    <td></td>
-                    <td align="left">${user.userName}</td>
-                    <td></td>
-                    <td align="left">${user.phone}</td>
-                    <td></td>
-                    <td align="left">${user.email}</td>
-                    <td></td>
-                    <td align="left">${user.rDate}</td>
-                    <td></td>
-                    <td align="left">${user.banDate}</td>
-                </tr>
-            </c:forEach>
-        </table>
-    </form>
+<body>
+<div class="header">
+    <h2>íšŒì› ëª©ë¡ ì¡°íšŒ</h2>
+    <div id="totalUsers">ì „ì²´ íšŒì› ìˆ˜: ${totalCount} ëª…</div>
 </div>
+
+<div class="search-container">
+    <tr>
+        <td>
+            <select name="searchCondition" class="ct_input_g">
+                <option value="0" ${!empty search.searchCondition && search.searchCondition == 0 ? "selected" : ""}>ë‹‰ë„¤ì„</option>
+                <option value="1" ${!empty search.searchCondition && search.searchCondition == 1 ? "selected" : ""}>íšŒì›ëª…</option>
+            </select>
+            <input type="text" id="searchInput"
+                   value="${! empty search.searchKeyword ? search.searchKeyword : ""}"
+                   placeholder="ê²€ìƒ‰ì–´ë¥¼ ì…ë ¥í•˜ì„¸ìš”">
+        </td>
+            <button id="searchBtn">ê²€ìƒ‰</button>
+    </tr>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div style="width: 98%; margin-left: 10px;">
+    <table>
+        <thead>
+        <tr>
+            <th>No</th>
+            <th>ì•„ì´ë””</th>
+            <th>ë‹‰ë„¤ì„</th>
+            <th>ì„±ëª…</th>
+            <th>íœ´ëŒ€ì „í™”</th>
+            <th>ì´ë©”ì¼</th>
+            <th>íšŒì› ê°€ì…ì¼</th>
+            <th>ì •ì§€ ì¢…ë£Œ ì¼ì</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:set var="i" value="0"/>
+        <c:forEach var="user" items="${list}">
+            <c:set var="i" value="${i + 1}"/>
+            <tr class="ct_list_pop">
+                <td>${i}</td>
+                <td>${user.userId}</td>
+                <td>${user.nickName}</td>
+                <td>${user.userName}</td>
+                <td>${user.phone}</td>
+                <td>${user.email}</td>
+                <td>${user.rDate}</td>
+                <td>${user.banDate}</td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+</div>
+<a href="../index.jsp">main ë°”ë¡œê°€ê¸°</a>&nbsp;<br>
 </body>
 
 </html>

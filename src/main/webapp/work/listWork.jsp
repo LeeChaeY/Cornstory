@@ -1,76 +1,65 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <!DOCTYPE html>
-<html lang="ko">
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>회원 목록 조회</title>
-
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-    <script>
-        var page = 1; // 현재 페이지 초기화
-
-        // 스크롤이 맨 아래로 갔을 때 다음 페이지의 데이터를 로드하는 함수
-        function loadNextPage() {
-            $.ajax({
-                url: "/user/listUser", // 데이터를 로드할 서버의 URL
-                type: "GET",
-                data: {
-                    page: page, // 현재 페이지 번호 전달
-                    searchCondition: "${search.searchCondition}",
-                    searchKeyword: "${search.searchKeyword}"
-                },
-                success: function (data) {
-                    if (data.trim() !== "") {
-                        // 서버에서 받은 데이터를 테이블에 추가
-                        $("#userTable tbody").append(data);
-                        page++; // 페이지 번호 증가
-                    }
-                },
-                error: function (error) {
-                    console.error("Error loading next page: ", error);
-                }
-            });
-        }
-
-        // 스크롤 이벤트 리스너
-        $(window).scroll(function () {
-            if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
-                loadNextPage(); // 스크롤이 맨 아래로 갔을 때 다음 페이지 로드
-            }
-        });
-
-        // 페이지 로드 시 초기 데이터 로딩
-        $(document).ready(function () {
-            loadNextPage();
-        });
-    </script>
+    <title>작업 목록</title>
 </head>
+<body>
 
-<body bgcolor="#ffffff" text="#000000">
+<h2>작업 목록</h2>
 
-<div style="width:98%; margin-left:10px;">
+<form action="${pageContext.request.contextPath}/work/listWork" method="get">
+    <label for="searchKeyword">검색 키워드:</label>
+    <input type="text" id="searchKeyword" name="searchKeyword" value="${search.searchKeyword}" />
 
-    <table id="userTable" width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
-        <!-- 테이블 헤더 및 기타 부분은 동일하게 유지 -->
+    <!-- 검색과 관련된 다른 입력 필드를 Search 클래스 속성을 기반으로 추가하세요 -->
 
-        <c:set var="i" value="0" />
-        <c:forEach var="user" items="${resultPage.list}">
-            <tr>
-                <!-- 테이블 데이터 부분도 동일하게 유지 -->
-            </tr>
-            <tr>
-                <!-- 각 사용자 정보 출력 부분도 동일하게 유지 -->
-            </tr>
-            <c:set var="i" value="${i + 1}" />
-        </c:forEach>
+    <button type="submit">검색</button>
+</form>
 
-    </table>
+<table border="1">
+    <thead>
+    <tr>
+        <th>작업 번호</th>
+        <th>작성자</th>
+        <th>카테고리</th>
+        <th>장르</th>
+        <th>FAP</th>
+        <th>작업 이름</th>
+        <th>메모</th>
+        <th>썸네일</th>
+        <th>조회 수</th>
+        <th>작업 일자</th>
+        <th>상태</th>
+        <th>작업 설명</th>
+        <th>완료 여부</th>
+    </tr>
+    </thead>
+    <tbody>
+    <c:forEach var="work" items="${list}">
+        <tr>
+            <td>${work.workNo}</td>
+            <td>${work.userId}</td>
+            <td>${work.category}</td>
+            <td>${work.genre1}, ${work.genre2}, ${work.genre3}</td>
+            <td>${work.fap}</td>
+            <td>${work.workName}</td>
+            <td>${work.note}</td>
+            <td>${work.thumbnail}</td>
+            <td><fmt:formatNumber value="${work.viewCnt}" pattern="#,##0" /></td>
+            <td>${work.workDate}</td>
+            <td>${work.status}</td>
+            <td>${work.workDesc}</td>
+            <td>${work.complete}</td>
+        </tr>
+    </c:forEach>
+    </tbody>
+</table>
 
-</div>
+<p>전체 개수: ${totalCount}</p>
 
 </body>
 </html>
