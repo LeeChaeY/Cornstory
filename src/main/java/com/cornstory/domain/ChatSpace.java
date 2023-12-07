@@ -18,6 +18,8 @@ public class ChatSpace {
 	private int chatEnterNo;
 	private Date chatEnterDate;		// 입장 시간, yyyy-MM-dd hh:mm:ss
 
+	private int chatEnterCheck;		// 채팅방 입장 여부, 0: 입장 안함, 1: 입장함
+
 	public ChatSpace() {
 		// TODO Auto-generated constructor stub
 	}
@@ -153,6 +155,14 @@ public class ChatSpace {
 		this.chatEnterDate = chatEnterDate;
 	}
 
+	public int getChatEnterCheck() {
+		return chatEnterCheck;
+	}
+
+	public void setChatEnterCheck(int chatEnterCheck) {
+		this.chatEnterCheck = chatEnterCheck;
+	}
+
 	@Override
 	public String toString() {
 		return "ChatSpace{" +
@@ -167,6 +177,7 @@ public class ChatSpace {
 				", userImage='" + userImage + '\'' +
 				", chatEnterNo=" + chatEnterNo +
 				", chatEnterDate=" + chatEnterDate +
+				", chatEnterCheck=" + chatEnterCheck +
 				'}';
 	}
 

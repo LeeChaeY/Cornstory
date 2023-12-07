@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -7,6 +8,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>대시보드</title>
+
+  <script type="text/javascript">
+
+    $( function() {
+      //==> 추가된부분 : "addUser"  Event 연결
+      $("a[href='#' ]:contains('채팅')").on("click" , function() {
+        if ( "${!empty sessionScope.user}") {
+          $(self.location).attr("href", "/chat/listChatSpace");
+        }
+      });
+
+    });
+
+  </script>
 </head>
 
 <body>
@@ -25,6 +40,11 @@
   <!-- 로그인 페이지로 이동하는 링크 또는 다른 작업 추가 -->
   <a href="/user/login">로그인</a>
 </c:if>
+
+
+
+  <br><br>
+  <a href="/chat/listChatSpace">채팅</a>
 </body>
 
 </html>

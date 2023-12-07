@@ -18,7 +18,9 @@ public interface ChatRepository extends MongoRepository<Chat, Long> {
     public Chat save(Chat chat);
 
     // 채팅 삭제
-    public void deleteByChatNo(Long id);
+    public void deleteByChatNo(Long chatNo);
+
+    public void deleteChatsByChatSpaceNo(int chatSpaceNo);
 
     // 채팅방 번호로 채팅 내역 개수 조회
     public int countByChatSpaceNo(int chatSpaceNo);

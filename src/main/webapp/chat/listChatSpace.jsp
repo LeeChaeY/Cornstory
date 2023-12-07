@@ -10,15 +10,35 @@
         <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
         <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
+        <style type="text/css">
+            a {
+                text-decoration: none;
+                color: #111111;
+                cursor: default;
+            }
+        </style>
+
         <script type="text/javascript">
 
             $(function() {
                 $("span").click(function(){
+                    if (event.target.innerText === '채팅방 추가하기') {
+                        $(self.location).attr("href", "/chat/addChatSpace");
+                        return false;
+                    }
                     fncGetChatList('1');
                 });
 
-                $("input[type='button'][value='입장하기']").on("click", function () {
-                    $("form[name='enterChatSpace']").attr("method", "post").attr("action", "/chat/enterChatSpace").submit();
+                $("input[type='button'][value='입장하기']").on("click", function (${chatSpace.chatSpcaeNo}) {
+                    //enterChatSpace(${chatSpace.chatSpaceNo});
+                });
+
+                $("input[type='button'][value='삭제하기']").on("click", function (${chatSpace.chatSpaceNo}) {
+                    // deleteChatSpace(chatSpaceNo);
+                });
+
+                $("input[type='button'][value='나가기']").on("click", function (chatSpaceNo) {
+                    // deleteChatEnter(chatSpaceNo);
                 });
             });
 
@@ -29,24 +49,48 @@
 
                 $("input[name='currentPage']").val(currentPage);
 
-                if (genreList.indexOf(event.target.innerText) !== -1) $("input[name='genre']").val(event.target.innerText);
-                else if (event.target.innerText === "전체") {
+                let spanText = event.target.innerText;
+
+                if (genreList.indexOf(spanText) !== -1) $("input[name='genre']").val(spanText);
+                else if (spanText === "전체" || spanText === "채팅방 목록") {
                     $("input[name='genre']").val("");
                     $("input[name='searchKeyword']").val("");
                 }
                 else $("input[name='genre']").val("");
 
-                $("form[name='form']").attr("method", "post").attr("action", "/chat/listChatSpace").submit();
+
+                if (spanText === "개설한 채팅방") {
+                    $("input[name='userId']").val("${sessionScope.user.userId}");
+                    $("form[name='form']").attr("method", "post").attr("action", "/chat/listChatSpace").submit();
+                }
+                else if (spanText === "입장한 채팅방") {
+                    $("input[name='enterUserId']").val("${sessionScope.user.userId}");
+                    $("form[name='form']").attr("method", "post").attr("action", "/chat/listChatSpace").submit();
+                }
+                else {
+                    $("input[name='userId']").val("");
+                    $("input[name='enterUserId']").val("");
+                    $("form[name='form']").attr("method", "post").attr("action", "/chat/listChatSpace").submit();
+                }
+            }
+
+            function enterChatSpace(chatSpaceNo) {
+                // $(self.location).attr("href", "/chat/enterChatSpace?chatSpaceNo="+chatSpaceNo);
+                popWin = window.open("/chat/enterChatSpace?chatSpaceNo="+chatSpaceNo,"popWin","scrollbars=yes");
+            }
+
+            function updateChatSpace(chatSpaceNo) {
+
+                $(self.location).attr("href", "/chat/updateChatSpace?chatSpaceNo="+chatSpaceNo);
             }
 
             function deleteChatSpace(chatSpaceNo) {
-                alert(chatSpaceNo);
                 $.ajax(
                     {
                         url : "/chat/json/deleteChatSpace/"+chatSpaceNo+"",
                         method : "GET",
                         success : function(JSONData , status) {
-                            alert(JSONData);
+                            $("input[value='"+chatSpaceNo+"']").parents("tr").children("td").remove();
                         },
                         error : function(status) {
 
@@ -57,16 +101,17 @@
             }
 
             function deleteChatEnter(chatSpaceNo) {
-                alert(chatSpaceNo);
-                <%--"${user.userId}"--%>
                 $.ajax(
                     {
-                        url : "/chat/json/deleteChatEnter?userId=user002&chatSpaceNo="+chatSpaceNo,
+                        url : "/chat/json/deleteChatEnter?chatSpaceNo="+chatSpaceNo,
                         method : "GET",
-                        dataType : "text" ,
+                        dataType : "text",
                         data : {},
                         success : function(returnMessage, status) {
-                            alert(returnMessage);
+                            // alert(returnMessage);
+                            let cnt = $("input[value='"+chatSpaceNo+"']").parents("tr").children("td").eq(10).text() - 1;
+                            $("input[value='"+chatSpaceNo+"']").parents("tr").children("td").eq(10).text(cnt);
+                            $("input[value='"+chatSpaceNo+"']").parents("tr").children("td").eq(14).children("input").eq(1).remove();
                         },
                         error : function(status) {
 
@@ -79,22 +124,22 @@
     </head>
     <body>
         <form action="/chat/listChatSpace" name="form">
-        <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
+        <table height="37" >
             <tr>
-                <td width="15" height="37">
-                    <img src="/images/ct_ttl_img01.gif" width="15" height="37"/>
+                <td height="37">
+                    <img width="15" height="37"/>
                 </td>
-                <td background="/images/ct_ttl_img02.gif" width="100%" style="padding-left:10px;">
-                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <td style="padding-left:10px;">
+                    <table >
                         <tr>
-                            <td width="93%" class="ct_ttl01">
+                            <td class="ct_ttl01">
                                 채팅방 목록
                             </td>
                         </tr>
                     </table>
                 </td>
-                <td width="12" height="37">
-                    <img src="/images/ct_ttl_img03.gif" width="12" height="37"/>
+                <td height="37">
+                    <img src="" width="12" height="37"/>
                 </td>
             </tr>
         </table>
@@ -102,7 +147,23 @@
 
         <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
             <input type="hidden" name="genre" value="">
-            <tr><td><div>
+            <input type="hidden" name="userId" value="">
+            <input type="hidden" name="enterUserId" value="">
+            <tr>
+                <td>
+                    <div align="center">
+                        <strong><span>채팅방 목록</span></strong> |
+                        <span><strong>개설한 채팅방</strong></span> |
+                        <span><strong>입장한 채팅방</strong></span> |
+                        <a href="#"><span><strong>채팅방 추가하기</strong></span></a>
+                    </div>
+                    <br>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="11" height="1"></td>
+            </tr>
+            <tr><td><div class="genre"><br>
                 <span>전체</span> |
                 <span>학원</span> |
                 <span>액션</span> |
@@ -134,14 +195,12 @@
                     <table border="0" cellspacing="0" cellpadding="0">
                         <tr>
                             <td width="17" height="23">
-                                <img src="/images/ct_btnbg01.gif" width="17" height="23">
                             </td>
-                            <td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;"
+                            <td class="ct_btn01" style="padding-top:3px;"
                                 onClick="fncGetChatList('1');">
                                 검색
                             </td>
                             <td width="14" height="23">
-                                <img src="/images/ct_btnbg03.gif" width="14" height="23">
                             </td>
                         </tr>
                     </table>
@@ -181,7 +240,7 @@
             <c:forEach var="chatSpace" items="${ list }">
                 <c:set var="i" value="${i+1}"/>
                 <tr class="ct_list_pop">
-                    <td align="center">${ i }</td>
+                    <td align="center"><input type="hidden" name="chatSpaceNo" value="${chatSpace.chatSpaceNo}">${ i }</td>
                     <td></td>
                     <td align="center"><img width="300px" height="300px" src="/file/chat/${chatSpace.cSpaceImage}"></td>
                     <td></td>
@@ -195,16 +254,19 @@
                     <td></td>
                     <td align="center">${chatSpace.genre}</td>
                     <td></td>
-                    <td align="center"><input type="button" value="삭제하기" onClick="deleteChatSpace(${chatSpace.chatSpaceNo});"><br>
-                                        <input type="button" value="입장하기"><br>
-                                        <input type="button" value="나가기" onClick="deleteChatEnter(${chatSpace.chatSpaceNo});"></td>
-                    <form name="enterChatSpace">
-                        <input type="hidden" name="userId" value="user002">
-                        <input type="hidden" name="chatSpaceNo" value="${chatSpace.chatSpaceNo}">
-                    </form>
+                    <td align="center">
+                        <input type="button" value="입장하기" onclick="enterChatSpace(${chatSpace.chatSpaceNo});"><br>
+                        <c:if test="${chatSpace.userId != sessionScope.user.userId && chatSpace.chatEnterCheck == 1}">
+                            <input type="button" value="나가기" onClick="deleteChatEnter(${chatSpace.chatSpaceNo});">
+                        </c:if>
+                        <c:if test="${chatSpace.userId == sessionScope.user.userId}">
+                            <input type="button" value="수정하기" onclick="updateChatSpace(${chatSpace.chatSpaceNo});"><br>
+                            <input type="button" value="삭제하기" onclick="deleteChatSpace(${chatSpace.chatSpaceNo});"><br>
+                        </c:if>
+                    </td>
                 </tr>
                 <tr>
-                    <td colspan="11" bgcolor="D6D7D6" height="1"></td>
+                    <td colspan="11" height="1"></td>
                 </tr>
             </c:forEach>
         </table>

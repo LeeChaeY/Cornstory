@@ -11,10 +11,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.File;
+import java.util.*;
 
 @Service
 public class ChatServiceImpl implements ChatService {
@@ -49,16 +47,19 @@ public class ChatServiceImpl implements ChatService {
         map.put("userId", "");
         chatDao.deleteChatEnter(map);
 
+        chatRepository.deleteChatsByChatSpaceNo(chatSpaceNo);
+
         return chatDao.deleteChatSpace(chatSpaceNo);
     }
 
     @Override
-    public Map<String, Object> listChatSpace(Search search, String userId, String genre) throws Exception {
+    public Map<String, Object> listChatSpace(Search search, String userId, String genre, String enterUserId) throws Exception {
         Map<String,Object> map = new HashMap<String,Object>();
 
         map.put("search", search);
         map.put("userId", userId);
         map.put("genre", genre);
+        map.put("enterUserId", enterUserId);
 
         int totalCount = chatDao.countChatSpace(map);
         System.out.println("ChatServiceImpl :: countChatSpace :: "+totalCount);
@@ -75,7 +76,11 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public int addChatEnter(ChatSpace chatSpace) throws Exception {
+    public int addChatEnter(String userId, int chatSpaceNo) throws Exception {
+        ChatSpace chatSpace = new ChatSpace();
+        chatSpace.setUserId(userId);
+        chatSpace.setChatSpaceNo(chatSpaceNo);
+
         chatDao.addChatEnter(chatSpace);
         chatSpace.setcSpaceImage("");
         chatSpace.setcSpaceName("");
@@ -95,22 +100,27 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public Map<String, Object> listChatEnterUser(Search search, int chatSpaceNo) throws Exception {
+    public Map<String, Object> listChatEnterUser(int chatSpaceNo) throws Exception {
         Map<String,Object> map = new HashMap<String,Object>();
 
         int totalCount = chatDao.countChatEnterUser(chatSpaceNo);
         System.out.println("ChatServiceImpl :: countChatEnterUser :: "+totalCount);
 
         map.put("chatSpaceNo", chatSpaceNo);
-        map.put("startRowNum", (search.getCurrentPage()-1) * search.getPageSize() + 1);
-        map.put("endRowNum", search.getCurrentPage() * search.getPageSize());
+//        map.put("startRowNum", (search.getCurrentPage()-1) * search.getPageSize() + 1);
+//        map.put("endRowNum", search.getCurrentPage() * search.getPageSize());
 
-        List<ChatSpace> list = chatDao.listChatEnterUser(map);
+        List<ChatSpace> list = chatDao.listChatEnterUser(chatSpaceNo);
 
         map.put("totalCount", totalCount);
         map.put("list", list);
 
         return map;
+    }
+
+    @Override
+    public int countChatEnterCheck(Map map) throws Exception {
+        return chatDao.countChatEnterCheck(map);
     }
 
     @Override
@@ -127,14 +137,8 @@ public class ChatServiceImpl implements ChatService {
     public Map<String, Object> listChat(int chatSpaceNo, String startDate, String endDate) throws Exception {
         Map<String,Object> map = new HashMap<String,Object>();
 
-//        map.put("search", search);
-//        map.put("chatSpaceNo", chatSpaceNo);
-
         int totalCount = chatRepository.countByChatSpaceNo(chatSpaceNo);
         System.out.println("ChatServiceImpl :: countByChatSpaceNo :: "+totalCount);
-
-//        map.put("startRowNum", (search.getCurrentPage()-1) * search.getPageSize() + 1);
-//        map.put("endRowNum", search.getCurrentPage() * search.getPageSize());
 
         List<Chat> list = new ArrayList<Chat>();
         if (startDate != null && !startDate.equals("") && endDate != null && !endDate.equals("")) {

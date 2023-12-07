@@ -30,6 +30,9 @@ public class Chat {
                                             // 한국 시간으로 저장하는 것이 까다로움, find시에 타입 변환오류도 있었음
     private String chatImage;
 
+    private String nickname;
+    private String userImage;
+
     public Chat() {
     }
 
@@ -96,6 +99,22 @@ public class Chat {
         this.chatImage = chatImage;
     }
 
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getUserImage() {
+        return userImage;
+    }
+
+    public void setUserImage(String userImage) {
+        this.userImage = userImage;
+    }
+
     @Override
     public String toString() {
         return "Chat{" +
@@ -105,6 +124,8 @@ public class Chat {
                 ", chatContent='" + chatContent + '\'' +
                 ", chatDate='" + chatDate + '\'' +
                 ", chatImage='" + chatImage + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", userImage='" + userImage + '\'' +
                 '}';
     }
 }

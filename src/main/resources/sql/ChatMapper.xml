@@ -87,9 +87,10 @@
 	<select id="listChatSpace" parameterType="map" resultMap="chatSelectMap">
 		SELECT *
 		FROM (SELECT inner_table.*, @rownum := @rownum + 1 AS row_seq
-				FROM (SELECT chat_space_no, U.user_id, c_space_name, c_space_image,
+				FROM (SELECT DISTINCT CS.chat_space_no, CS.user_id, c_space_name, c_space_image,
 						c_space_user_cnt, c_space_date, genre, nickname, user_image
 						FROM chat_space CS JOIN user U ON CS.user_id = U.user_id
+											JOIN chat_enter CE ON CE.chat_space_no = CS.chat_space_no
 						<where>
 							<if test='search.searchCondition != null and !search.searchCondition.equals("")
 									and search.searchKeyword != null and !search.searchKeyword.equals("")'>
@@ -102,6 +103,9 @@
 							</if>
 							<if test='genre != null and !genre.equals("")'>
 								AND genre = #{genre}
+							</if>
+							<if test='enterUserId != null and !enterUserId.equals("")'>
+								AND CE.user_id = #{enterUserId}
 							</if>
 						</where>
 				) inner_table, (SELECT @rownum := 0) r
@@ -116,7 +120,7 @@
 		VALUES (
 				   #{chatSpaceNo},
 				   #{userId},
-				   DATE_FORMAT(NOW(), '%Y-%m-%d'))
+				   DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i'))
 	</insert>
 
 	<delete id="deleteChatEnter" parameterType="map">
@@ -141,17 +145,18 @@
 		) countTable
 	</select>
 
-	<select id="listChatEnterUser" parameterType="map" resultMap="chatSelectMap">
-		SELECT *
-		FROM (SELECT inner_table.*, @rownum := @rownum + 1 AS row_seq
-				FROM (SELECT chat_enter_no, chat_space_no, U.user_id,
-								user_image, chat_enter_date, nickname
-						FROM chat_enter CE JOIN user U ON CE.user_id = U.user_id
-						WHERE chat_space_no = #{chatSpaceNo}
-				) inner_table, (SELECT @rownum := 0) r
-				LIMIT #{endRowNum}
-		) AS result
-		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+	<select id="listChatEnterUser" parameterType="int" resultMap="chatSelectMap">
+		SELECT chat_enter_no, chat_space_no, U.user_id,
+				user_image, chat_enter_date, nickname
+		FROM chat_enter CE JOIN user U ON CE.user_id = U.user_id
+		WHERE chat_space_no = #{chatSpaceNo}
+	</select>
+
+
+	<select id="countChatEnterCheck" parameterType="map" resultType="int">
+		SELECT count(*)
+		FROM chat_enter
+		WHERE chat_space_no = #{chatSpaceNo} AND user_id = #{userId}
 	</select>
 
 </mapper>

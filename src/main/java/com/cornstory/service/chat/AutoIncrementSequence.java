@@ -11,23 +11,23 @@ public class AutoIncrementSequence {
     // 초기값을 인텔리제이에서 설정하는 방법을 못찾아서 일단은 직접 넣어줌
 
     @Id
-    private String id;      // seq_name
+    private String _id;      // seq_name
     private Long seq;       // auto_increment되는 값, 1씩 증가되는 값
 
     public AutoIncrementSequence() {
     }
 
-    public AutoIncrementSequence(String id, Long seq) {
-        this.id = id;
+    public AutoIncrementSequence(String _id, Long seq) {
+        this._id = _id;
         this.seq = seq;
     }
 
     public String getId() {
-        return id;
+        return _id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setId(String _id) {
+        this._id = _id;
     }
 
     public Long getSeq() {

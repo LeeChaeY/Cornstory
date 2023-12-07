@@ -28,6 +28,8 @@ public interface ChatDao {
 
     public int countChatEnterUser(int chatSpaceNo) throws Exception;
 
-    public List<ChatSpace> listChatEnterUser(Map map) throws Exception;
+    public List<ChatSpace> listChatEnterUser(int chatSpaceNo) throws Exception;
+
+    public int countChatEnterCheck(Map map) throws Exception;
 
 }
