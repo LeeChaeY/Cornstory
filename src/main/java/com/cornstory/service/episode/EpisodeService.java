@@ -23,6 +23,9 @@ public interface EpisodeService {
     //작품회차 목록 최신순
     public Map<String, Object> listEpisode(int workNo);
 
+    //작품회차 최고 목록
+    public int episodeMax(int workNo) throws Exception;
+
     public List<EpisodeComment> listEpisodeComment(int episodeNo) throws Exception;
 
     //작품 회차의 댓글 등록

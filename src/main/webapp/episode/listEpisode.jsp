@@ -34,7 +34,7 @@
     <div class="info-item">작업 일자: ${work.workDate}</div>
     <div class="info-item">창작여부: ${work.status == 0 ? '원작' : '창작'}</div>
     <div class="info-item">작업 설명: ${work.workDesc}</div>
-    <div class="info-item"><a href="">작품 회차추가</a></div>
+    <div class="info-item"><a href="../episode/addEpisode?workNo=${work.workNo}">작품 회차 추가</a></div>
 </div>
 
 <table border="1">

@@ -75,22 +75,22 @@ public class UserController {
 
     @RequestMapping(value = "addUser", method = RequestMethod.POST)
     public String addUser(@ModelAttribute("user") @Validated User user,
-                          @RequestParam(name = "file/user", required = false) MultipartFile userImage, Model model) throws Exception {
+                          @RequestParam(name = "filename", required = false) MultipartFile filename, Model model) throws Exception {
         System.out.println("user/addUser : POST");
 
         // 유효성 검사 실패 시
 
 
         // 파일 업로드 처리 (파일이 있을 때만 수행)
-        if (userImage != null && !userImage.isEmpty()) {
-            String originalFilename = userImage.getOriginalFilename();
+        if (filename != null && !filename.isEmpty()) {
+            String originalFilename = filename.getOriginalFilename();
             // 파일을 업로드할 상대 경로 설정
-            String uploadDir = "C:\\workspaceIntellij\\Team\\src\\main\\resources\\userImage";
-            String filePath = uploadDir + originalFilename;
+            String uploadDir = "C:\\CornStory\\src\\main\\resources\\static\\file\\user";
+            String filePath = uploadDir + File.separator +originalFilename;
             File dest = new File(filePath);
 
             // 파일을 저장
-            userImage.transferTo(dest);
+            filename.transferTo(dest);
             user.setUserImage(originalFilename);
         }
 
