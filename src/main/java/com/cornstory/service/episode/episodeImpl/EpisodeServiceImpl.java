@@ -1,8 +1,11 @@
 package com.cornstory.service.episode.episodeImpl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.cornstory.domain.EpisodeComment;
+import com.cornstory.domain.Work;
 import com.cornstory.service.episode.EpisodeCommentDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -52,8 +55,14 @@ public class EpisodeServiceImpl implements EpisodeService{
 
     //작품회차 목록 최신순
     @Override
-    public List<Episode> listEpisode(int workNo) {
-        return episodeDao.listEpisode(workNo);
+    public Map<String, Object> listEpisode(int workNo) {
+        List<Episode> list = episodeDao.listEpisode(workNo);
+        int totalCount = episodeDao.listEpisodeCount(workNo);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("list", list);
+        map.put("totalCount", totalCount);
+        return map;
     }
 
     @Override

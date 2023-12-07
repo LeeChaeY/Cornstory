@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 
 import java.util.List;
+import java.util.Map;
 
 import com.cornstory.domain.Episode;
 
@@ -31,7 +32,7 @@ class EpisodeTests {
 		newEpisode.setWorkNo(10003);
 		newEpisode.setEpisodeName("New Episode");
 		newEpisode.setEpisodeOrder(3);
-		newEpisode.setEThumbnail("new_thumbnail.jpg");
+		newEpisode.setThumbnail("new_thumbnail.jpg");
 		newEpisode.setFileName("new_file.mp4");
 		newEpisode.setDirectory("/path/to/new/episode");
 
@@ -48,7 +49,7 @@ class EpisodeTests {
 
 		updatedEpisode.setEpisodeName("Updated Episode Name");
 		updatedEpisode.setEpisodeOrder(777);
-		updatedEpisode.setEThumbnail("updated_thumbnail.jpg");
+		updatedEpisode.setThumbnail("updated_thumbnail.jpg");
 
 		episodeService.updateEpisode(updatedEpisode);
 
@@ -65,10 +66,10 @@ class EpisodeTests {
 	public void testListEpisodes() {
 
 		int workNo=10002;
-		List<Episode> episodeList = episodeService.listEpisode(workNo);
-		for (Episode episode : episodeList) {
-			System.out.println(episode);
-		}
+//		Map<String, Object> episodeList = episodeService.listEpisode(workNo);
+//		for (Episode episode : episodeList) {
+//			System.out.println(episode);
+//		}
 	}
 
 

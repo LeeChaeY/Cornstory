@@ -3,6 +3,7 @@ package com.cornstory.controller.work;
 import com.cornstory.common.Search;
 import com.cornstory.domain.User;
 import com.cornstory.domain.Work;
+import com.cornstory.service.episode.EpisodeService;
 import com.cornstory.service.product.ProductService;
 import com.cornstory.service.work.WorkService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -35,6 +36,10 @@ public class WorkController {
     @Autowired
     @Qualifier("workServiceImpl")
     private WorkService workService;
+
+    @Autowired
+    @Qualifier("episodeServiceImpl")
+    private EpisodeService episodeService;
 
     @Autowired
     @Qualifier("productServiceImpl")
@@ -90,7 +95,7 @@ public class WorkController {
         model.addAttribute("work",workService.getWork(workNo));
         model.addAttribute("list",productService.getCopylight(user.getUserId()));
 
-        return "redirect:/work/updateWork";
+        return "work/updateWork";
 
     }
 
@@ -117,17 +122,17 @@ public class WorkController {
 
         }
 
-        //workService.updateWork(work);
-        return "redirect:/work/listWork";
+        workService.updateWork(work);
+        return "index";
 
     }
 
 
     @GetMapping("deleteWork")
-    public String deleteWork() throws Exception{
+    public String deleteWork(@RequestParam("workNo") int workNo) throws Exception{
         System.out.println("[ WorkController.index() start........]");
-
-        return "redirect:/work/deleteWork";
+            workService.deleteWork(workNo);
+        return "index";
 
     }
     @RequestMapping ("listWork")
@@ -156,6 +161,19 @@ public class WorkController {
         model.addAttribute("list",map.get("list"));
         model.addAttribute("myCount",map.get("myCount"));
         return "work/getWork";
+
+    }
+
+    @RequestMapping ("getDetailWork")
+    public String getDetailWork( @RequestParam("workNo") int workNo, Model model, @SessionAttribute(name="user", required = false)User user) throws Exception {
+        System.out.println("[ WorkController.getWork() start........]");
+        Work work = workService.getWork(workNo);
+
+        Map<String, Object> map=episodeService.listEpisode(workNo);
+        model.addAttribute("work",work);
+        model.addAttribute("list",map.get("list"));
+        model.addAttribute("totalCount",map.get("totalCount"));
+        return "episode/listEpisode";
 
     }
 

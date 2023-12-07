@@ -9,7 +9,7 @@
         <result property="workNo"       column="work_no"        jdbcType="INTEGER"/>
         <result property="episodeName"  column="episode_name"   jdbcType="VARCHAR"/>
         <result property="episodeOrder" column="episode_order"  jdbcType="INTEGER"/>
-        <result property="eThumbnail"   column="e_thumbnail"    jdbcType="VARCHAR"/>
+        <result property="thumbnail"   column="e_thumbnail"    jdbcType="VARCHAR"/>
         <result property="episodeDate"  column="episode_date"   jdbcType="DATE"/>
         <result property="fileName"     column="file_name"      jdbcType="VARCHAR"/>
         <result property="directory"    column="directory"      jdbcType="VARCHAR"/>
@@ -55,6 +55,13 @@
         FROM episode
         WHERE work_no = #{workNo : INTEGER}
         ORDER BY episode_order
+    </select>
+
+    <!-- 작품회차 목록 갯수 -->
+    <select id="listEpisodeCount" parameterType="int" resultType="int">
+        SELECT Count(*)
+        FROM episode
+        WHERE work_no = #{workNo : INTEGER}
     </select>
 
 </mapper>

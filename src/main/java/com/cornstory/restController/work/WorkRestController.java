@@ -36,7 +36,7 @@ public class WorkRestController {
         return (workNameCheck == null) ? 0 : 1;
     }
 
-    @GetMapping("/json/listWork")
+    @GetMapping("json/listWork")
     public Map<String, Object> listWorks(@RequestParam(required = false) String searchCondition,
                                          @RequestParam(required = false) String orderKeyword,
                                          @RequestParam(required = false) String orderCondition) throws Exception {

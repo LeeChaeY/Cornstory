@@ -14,7 +14,7 @@ public class Episode{
     //작품 회차순서
     private int episodeOrder;
     //작품 회차 대표이미지
-    private String eThumbnail;
+    private String thumbnail;
     //작품 회차 등록일
     private Date episodeDate;
     //작품 회차 파일명
@@ -64,12 +64,19 @@ public class Episode{
     public void setDirectory(String directory) {
         this.directory = directory;
     }
-    public String getEThumbnail() {return eThumbnail;}
-    public void setEThumbnail(String eThumbnail) {this.eThumbnail = eThumbnail;}
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
     @Override
     public String toString() {
         return "Episode [episodeNo=" + episodeNo + ", workNo=" + workNo + ", episodeName=" + episodeName
-                + ", episodeOrder=" + episodeOrder + ", thumbnail=" + eThumbnail + ", episodeDate=" + episodeDate
+                + ", episodeOrder=" + episodeOrder + ", thumbnail=" + thumbnail + ", episodeDate=" + episodeDate
                 + ", fileName=" + fileName + ", directory=" + directory + "]";
     }
 

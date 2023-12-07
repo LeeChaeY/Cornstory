@@ -133,7 +133,7 @@
 		WHERE user_id=#{userId}
 	</select>
 
-	<select id="getMyWorkCount" parameterType="string" resultMap="int">
+	<select id="getMyWorkCount" parameterType="string" resultType="int">
 		SELECT Count(*)
 		FROM work
 		WHERE user_id=#{userId}

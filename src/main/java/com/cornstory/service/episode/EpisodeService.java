@@ -1,6 +1,7 @@
 package com.cornstory.service.episode;
 
 import java.util.List;
+import java.util.Map;
 
 import com.cornstory.domain.Episode;
 import com.cornstory.domain.EpisodeComment;
@@ -20,7 +21,7 @@ public interface EpisodeService {
     public void deleteEpisode(int episodeNo);
 
     //작품회차 목록 최신순
-    public List<Episode> listEpisode(int workNo);
+    public Map<String, Object> listEpisode(int workNo);
 
     public List<EpisodeComment> listEpisodeComment(int episodeNo) throws Exception;
 
