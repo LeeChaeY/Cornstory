@@ -5,7 +5,7 @@ import java.util.Date;
 public class EpisodeComment {
 
     //작품 회차 댓글No
-    private int eCommentNo;
+    private int commentNo;
     //작품 회차 No
     private int episodeNo;
     //작품 No
@@ -13,15 +13,10 @@ public class EpisodeComment {
     //회원아이디
     private String userId;
     //댓글 내용
-    private String eContent;
+    private String content;
     //댓글 등록일
-    private Date eCommentDate;
-    public int getECommentNo() {
-        return eCommentNo;
-    }
-    public void setECommentNo(int eCommentNo) {
-        this.eCommentNo = eCommentNo;
-    }
+    private Date commentDate;
+
     public int getEpisodeNo() {
         return episodeNo;
     }
@@ -40,22 +35,35 @@ public class EpisodeComment {
     public void setUserId(String userId) {
         this.userId = userId;
     }
-    public String getEContent() {
-        return eContent;
+
+    public int getCommentNo() {
+        return commentNo;
     }
-    public void setEContent(String eContent) {
-        this.eContent = eContent;
+
+    public void setCommentNo(int commentNo) {
+        this.commentNo = commentNo;
     }
-    public Date getECommentDate() {
-        return eCommentDate;
+
+    public String getContent() {
+        return content;
     }
-    public void setECommentDate(Date eCommentDate) {
-        this.eCommentDate = eCommentDate;
+
+    public void setContent(String content) {
+        this.content = content;
     }
+
+    public Date getCommentDate() {
+        return commentDate;
+    }
+
+    public void setCommentDate(Date commentDate) {
+        this.commentDate = commentDate;
+    }
+
     @Override
     public String toString() {
-        return "EpisodeComment [eCommentNo=" + eCommentNo + ", episodeNo=" + episodeNo + ", workNo=" + workNo
-                + ", userId=" + userId + ", eContent=" + eContent + ", eCommentDate=" + eCommentDate + "]";
+        return "EpisodeComment [commentNo=" + commentNo + ", episodeNo=" + episodeNo + ", workNo=" + workNo
+                + ", userId=" + userId + ", content=" + content + ", commentDate=" + commentDate + "]";
     }
 
 

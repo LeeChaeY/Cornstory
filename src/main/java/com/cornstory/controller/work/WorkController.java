@@ -1,6 +1,7 @@
 package com.cornstory.controller.work;
 
 import com.cornstory.common.Search;
+import com.cornstory.domain.Bookmark;
 import com.cornstory.domain.User;
 import com.cornstory.domain.Work;
 import com.cornstory.service.episode.EpisodeService;
@@ -128,12 +129,15 @@ public class WorkController {
     }
 
 
-    @GetMapping("deleteWork")
+    @PostMapping("deleteWork")
     public String deleteWork(@RequestParam("workNo") int workNo) throws Exception{
         System.out.println("[ WorkController.index() start........]");
+        try {
             workService.deleteWork(workNo);
+        } catch (Exception e) {
+            e.printStackTrace(); // 에러 로깅 또는 예외 처리
+        }
         return "index";
-
     }
     @RequestMapping ("listWork")
     public String listWork(@ModelAttribute("search") Search search, Model model) throws Exception {
@@ -175,5 +179,42 @@ public class WorkController {
         model.addAttribute("totalCount",map.get("totalCount"));
         return "episode/listEpisode";
     }
+
+    @RequestMapping ("listBookmark")
+    public String listBookmark( @SessionAttribute(name="user", required = false)User user,Model model) throws Exception {
+        System.out.println("[ WorkController.listBookmark() start........]");
+
+
+        model.addAttribute("list",workService.listBookmark(user.getUserId()));
+        //model.addAttribute("list",map.get("list"));
+        //model.addAttribute("totalCount",map.get("totalCount"));
+        return "work/bookmark";
+    }
+    @RequestMapping ("addBookmark")
+    public String addBookmark( @RequestParam("workNo") int workNo, @SessionAttribute(name="user", required = false)User user,Model model) throws Exception {
+        System.out.println("[ WorkController.addBookmark() start........]");
+        Bookmark bookmark = new Bookmark();
+        bookmark.setUserId(user.getUserId());
+        bookmark.setWorkNo(workNo);
+        workService.addBookmark(bookmark);
+        model.addAttribute("list",workService.listBookmark(user.getUserId()));
+        //model.addAttribute("list",map.get("list"));
+        //model.addAttribute("totalCount",map.get("totalCount"));
+        return "work/bookmark";
+    }
+
+    @RequestMapping ("deleteBookmark")
+    public String deleteBookmark( @RequestParam("workNo") int workNo, @SessionAttribute(name="user", required = false)User user,Model model) throws Exception {
+        System.out.println("[ WorkController.deleteBookmark() start........]");
+        Bookmark bookmark = new Bookmark();
+        bookmark.setUserId(user.getUserId());
+        bookmark.setWorkNo(workNo);
+        workService.deleteBookmark(bookmark);;
+        model.addAttribute("list",workService.listBookmark(user.getUserId()));
+        //model.addAttribute("list",map.get("list"));
+        //model.addAttribute("totalCount",map.get("totalCount"));
+        return "work/bookmark";
+    }
+
 
 }

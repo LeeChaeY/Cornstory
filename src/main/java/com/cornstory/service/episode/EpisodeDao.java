@@ -28,4 +28,6 @@ public interface EpisodeDao {
     public int listEpisodeCount(int workNo);
 
     public int episodeMax(int workNo) throws Exception;
+
+    public Episode getLatestEpisode(int workNo);
 }

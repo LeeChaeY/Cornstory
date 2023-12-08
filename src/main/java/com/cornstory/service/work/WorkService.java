@@ -26,7 +26,7 @@ public interface WorkService {
 
     public void addBookmark(Bookmark bookmark);
 
-    public void removeBookmark(int bookmarkNo);
+    public void deleteBookmark(Bookmark bookmark);
 
     public Bookmark getBookmarkByNo(int bookmarkNo);
 
@@ -35,4 +35,7 @@ public interface WorkService {
     public Work getDuplication(Work work) throws Exception;
 
     public Map<String, Object> getMyWork(String userId) throws Exception;
+
+    public List<Work> listBookmark(String userId) throws Exception;
+
 }

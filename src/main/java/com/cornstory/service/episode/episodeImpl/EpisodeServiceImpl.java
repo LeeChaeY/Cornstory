@@ -71,6 +71,11 @@ public class EpisodeServiceImpl implements EpisodeService{
     }
 
     @Override
+    public Episode getLatestEpisode(int workNo) {
+        return episodeDao.getLatestEpisode(workNo);
+    }
+
+    @Override
     public List<EpisodeComment> listEpisodeComment(int episodeNo) throws Exception{
         return episodeCommentDao.listEpisodeComment(episodeNo);
     }
@@ -89,7 +94,7 @@ public class EpisodeServiceImpl implements EpisodeService{
 
     //댓글 회차의 댓글 삭제
     @Override
-    public void deleteEpisodeComment(int eCommentNo) throws Exception{
-        episodeCommentDao.deleteEpisodeComment(eCommentNo);
+    public void deleteEpisodeComment(int commentNo) throws Exception{
+        episodeCommentDao.deleteEpisodeComment(commentNo);
     }
 }
