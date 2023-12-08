@@ -24,6 +24,12 @@
                 $("span").click(function(){
                     fncGetProductList('1');
                 });
+
+                $("input[name='tranCnt']").on("change", function(){
+                    if ($(this).val() < 1) {
+                        $(this).val(1);
+                    }
+                });
             });
 
 
@@ -66,7 +72,8 @@
             }
 
             function addPurchase(prodNo) {
-                $(self.location).attr("href", "/purchase/addPurchase?prodNo=" + prodNo);
+                let tranCnt = $("input[name='tranCnt']").val();
+                $(self.location).attr("href", "/purchase/addPurchase?prodNo=" + prodNo + "&tranCnt=" + tranCnt);
             }
 
             function viewWork(workNo) {
@@ -205,7 +212,7 @@
                 <td class="ct_line02"></td>
                 <td class="ct_list_b" align="center" width="50">팝콘 등록일</td>
                 <td class="ct_line02"></td>
-                <td class="ct_list_b" align="center" width="100"></td>
+                <td class="ct_list_b" align="center" width="250"></td>
             </tr>
             <tr>
                 <td colspan="11" bgcolor="808285" height="1" width="90%"></td>
@@ -229,6 +236,7 @@
                     <td></td>
                     <td align="center">
                         <c:if test="${sessionScope.user.role == 0}">
+                            <input type="number" min="1" value="1" name="tranCnt" style="width: 50px;"> 개
                             <input type="button" value="충전하기" onClick="addPurchase(${popcorn.prodNo});">
                         </c:if>
                         <c:if test="${sessionScope.user.role == 1}">
@@ -265,15 +273,15 @@
                 <td class="ct_line02"></td>
                 <td class="ct_list_b" align="center" width="100">저작권 이름</td>
                 <td class="ct_line02"></td>
-                <td class="ct_list_b" align="center" width="50">작품명</td>
+                <td class="ct_list_b" align="center" width="100">작품명</td>
                 <td class="ct_line02"></td>
                 <td class="ct_list_b" align="center" width="50">저작권 가격</td>
                 <td class="ct_line02"></td>
                 <td class="ct_list_b" align="center" width="50">완결 회차</td>
                 <td class="ct_line02"></td>
-                <td class="ct_list_b" align="center" width="50">저작권 등록일</td>
+                <td class="ct_list_b" align="center" width="200">등록일</td>
                 <td class="ct_line02"></td>
-                <td class="ct_list_b" align="center" width="50">작가명</td>
+                <td class="ct_list_b" align="center" width="200">작가명</td>
                 <td class="ct_line02"></td>
                 <td class="ct_list_b" align="center" width="100"></td>
                 <td class="ct_line02"></td>
