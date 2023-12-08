@@ -119,6 +119,9 @@
                 <td background="/images/ct_ttl_img02.gif" width="100%" style="padding-left:10px;">
                     <table width="100%" border="0" cellspacing="0" cellpadding="0">
                         <tr>
+                            <td class="ct_ttl01">
+                                <a href="/"><h2>메인</h2></a>
+                            </td>
                             <td width="93%" class="ct_ttl01">
                                 채팅방
                             </td>

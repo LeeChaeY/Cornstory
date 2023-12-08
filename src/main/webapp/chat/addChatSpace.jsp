@@ -62,6 +62,9 @@
                     <table >
                         <tr>
                             <td class="ct_ttl01">
+                                <a href="/"><h2>메인</h2></a>
+                            </td>
+                            <td class="ct_ttl01">
                                 채팅방 목록
                             </td>
                         </tr>

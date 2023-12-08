@@ -19,7 +19,7 @@ public interface ProductService {
 
 	public Map<String,Object> listProduct(Search search, String userId) throws Exception;
 
-	public int prodNameCheck(String prodName) throws Exception;
+	public int prodNameCheck(int prodCnt) throws Exception;
 
 	public List<Work> listCompleteWork(String userId) throws Exception;
 

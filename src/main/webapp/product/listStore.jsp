@@ -59,7 +59,43 @@
                     <%--$("input[name='userId']").val("${sessionScope.user.userId}");--%>
                     $("form[name='form']").attr("method", "post").attr("action", "/product/listProduct").submit();
                 }
+                else if (spanText === "검색") {
+                    <%--$("input[name='userId']").val("${sessionScope.user.userId}");--%>
+                    $("form[name='form']").attr("method", "post").attr("action", "/product/listProduct").submit();
+                }
             }
+
+            function addPurchase(prodNo) {
+                $(self.location).attr("href", "/purchase/addPurchase?prodNo=" + prodNo);
+            }
+
+            function viewWork(workNo) {
+                $(self.location).attr("href", "/work/getDetailWork?workNo=" + workNo);
+            }
+
+            function updateProduct(prodNo) {
+                $(self.location).attr("href", "/product/updateProduct?prodNo=" + prodNo);
+            }
+
+            function deleteProduct(prodNo) {
+                $.ajax(
+                    {
+                        url : "/product/json/deleteProduct?prodNo="+prodNo,
+                        method : "GET",
+                        dataType : "text",
+                        data : {},
+                        success : function(returnMessage, status) {
+                            // alert(returnMessage);
+                            $("input[value='"+prodNo+"']").parents("tr").children("td").remove();
+                        },
+                        error : function(status) {
+
+                            //Debug...
+                            alert("error");
+                        }
+                    });
+            }
+
         </script>
     </head>
     <body>
@@ -72,6 +108,9 @@
                 <td style="padding-left:10px;">
                     <table >
                         <tr>
+                            <td class="ct_ttl01">
+                                <a href="/"><h2>메인</h2></a>
+                            </td>
                             <td class="ct_ttl01">
                                 스토어
                             </td>
@@ -168,13 +207,17 @@
                 <td class="ct_line02"></td>
                 <td class="ct_list_b" align="center" width="100"></td>
             </tr>
+            <tr>
+                <td colspan="11" bgcolor="808285" height="1" width="90%"></td>
+            </tr>
+
             <c:set var="i" value="0"/>
             <c:forEach var="popcorn" items="${ popcornList }">
                 <c:set var="i" value="${i+1}"/>
-                <tr class="ct_list_pop">
-                    <td align="center">${ i }</td>
+                <tr class="ct_list_pop" style="height: 30px;">
+                    <td align="center"><input type="hidden" name="prodNo" value="${popcorn.prodNo}">${ i }</td>
                     <td></td>
-                    <td align="center"><img width="300px" height="300px" src="/file/product/${popcorn.prodImage}"></td>
+                    <td align="center"><img width="30px" height="30px" src="/file/product/${popcorn.prodImage}"></td>
                     <td></td>
                     <td align="center">${popcorn.prodName}</td>
                     <td></td>
@@ -236,11 +279,15 @@
                 <td class="ct_line02"></td>
                 <td class="ct_list_b" align="center" width="100"></td>
             </tr>
+            <tr>
+                <td colspan="11" bgcolor="808285" height="1" width="90%"></td>
+            </tr>
+            
             <c:set var="i" value="0"/>
             <c:forEach var="copyright" items="${ copyrightList }">
                 <c:set var="i" value="${i+1}"/>
                 <tr class="ct_list_pop">
-                    <td align="center">${ i }</td>
+                    <td align="center"><input type="hidden" name="prodNo" value="${copyright.prodNo}">${ i }</td>
                     <td></td>
                     <td align="center"><img width="300px" height="300px" src="/file/work/${copyright.prodImage}"></td>
                     <td></td>

@@ -75,13 +75,27 @@
     </c:if><br><br>
 
     Chat-채팅<br>
-    <!-- 관리자인 경우에만 특정 기능 표시 -->
-    <c:if test="${sessionScope.user.role eq 1}">
-    </c:if><br><br>
+    <c:if test="${!empty sessionScope.user}">
+      <a href="/chat/listChatSpace">채팅</a>
+    </c:if><br><br><br>
+
+    <c:if test="${!empty sessionScope.user}">
+      <a href="/chat/listChatSpace">채팅방 목록 조회</a>
+    </c:if> |
+    <c:if test="${!empty sessionScope.user}">
+      <a href="/chat/addChatSpace">채팅방 개설</a>
+    </c:if> |
+    <c:if test="${!empty sessionScope.user}">
+      <a href="/chat/updateChatSpace?chatSpaceNo=10020">채팅방 수정(10020)</a>
+    </c:if> |
+    <c:if test="${!empty sessionScope.user}">
+      <a href="/chat/enterChatSpace?chatSpaceNo=10020">채팅방 입장(10020)</a>
+    </c:if><br><br><br>
 
     <p>Product-상품</p>
-    미등록
-    <br><br>
+    <c:if test="${!empty sessionScope.user}">
+      <a href="/product/listProduct">스토어(상품+구매)</a>
+    </c:if><br><br><br>
 
     <p>Purchase-판매&구매</p>
     미등록

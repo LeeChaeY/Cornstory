@@ -6,7 +6,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>addProduct</title>
+        <title>updateProduct</title>
 
         <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
         <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -20,88 +20,19 @@
         <script type="text/javascript">
 
             $(function() {
-                $("input[name='prodCnt']").on("input", function(){
-                    fncProdNameCheck();
-                });
 
-                $("input[value='등록']").on("click", function(){
-                    addProduct();
+                $("input[value='수정']").on("click", function(){
+                    updateProduct();
                 });
 
                 $("span").on("click", function(){
                     fncGetProductList('1');
                 });
-
-                $("select[name='workSelect']").on("change", function(){
-                    $("input[name='prodPrice']").val(100);
-                    $("input[name='prodPrice']").attr("type", "number");
-                    $(".free").css("display", "none");
-                    $(".freeCheck").css("display", "none");
-
-                    if ($("select[name='workSelect']").val() !== "작품 선택") {
-                        if ($("input[name='"+event.target.value+"']").val() === "1") {
-                            $("input[name='prodPrice']").val(0);
-                            $("input[name='prodPrice']").attr("type", "hidden");
-                            $(".free").css("display", "inline");
-                            $(".freeCheck").css("display", "block");
-                        }
-                    }
-                });
             });
 
-            function addProduct() {
-                if ((${prodCategory == 2}) && ($("select[name='workSelect']").val() === "작품 선택")) {
-                    alert("작품을 선택해주세요.");
-                    return false;
-                }
-                if (${prodCategory == 0}) {
-                    if ($("input[name='prodCnt']").val() === "") {
-                        alert("1개 이상의 팝콘 수량을 입력해주세요.");
-                        return false;
-                    }
-                }
-                if ($("input[name='prodPrice']").val() === "") {
-                    alert("가격을 입력해주세요.");
-                    return false;
-                }
-                if (${prodCategory == 2}) {
-                    $("input[name='workNo']").val($("select[name='workSelect']").val());
-                }
-                $("form[name='addProduct']").attr("method", "post").attr("action", "/product/addProduct").submit();
+            function updateProduct() {
+                $("form[name='updateProduct']").attr("method", "post").attr("action", "/product/updateProduct").submit();
             }
-
-            function fncProdNameCheck() {
-                if ($(".prodNameCheck").css("display") === "block") {
-                    $(".prodNameCheck").css("display", "none");
-                }
-                if ($(".check").css("display") === "block") {
-                    $(".check").css("display", "none");
-                }
-
-                if ($("input[name='prodCnt']").val() === "0") {
-                    $("input[name='prodCnt']").val("");
-                    $(".check").css("display", "block");
-                }
-
-                if ($("input[name='prodCnt']").val() !== "") {
-                    $.ajax(
-                        {
-                            url: "/product/json/prodNameCheck?prodCnt=" + $("input[name='prodCnt']").val(),
-                            method: "GET",
-                            dataType: "text",
-                            success: function (data, status) {
-                                if (data === "1") {
-                                    $(".prodNameCheck").css("display", "block");
-                                }
-                            },
-                            error: function (status) {
-                                //Debug...
-                                alert("error");
-                            }
-                        });
-                }
-            }
-
 
             function fncGetProductList(currentPage) {
                 $("input[name='currentPage']").val(currentPage);
@@ -165,7 +96,7 @@
 
         <form name="form">
             <input type="hidden" name="userId" value="">
-            <input type="hidden" name="prodCategory" value="${prodCategory}">
+            <input type="hidden" name="prodCategory" value="${product.prodCategory}">
         </form>
         <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
             <tr>
@@ -226,61 +157,42 @@
 
 
         <c:if test="${prodCategory == 0}">
-            <h2>팝콘 등록하기</h2>
+            <h2>팝콘 정보 수정하기</h2>
         </c:if>
         <c:if test="${prodCategory == 2}">
-            <h2>저작권 등록하기</h2>
+            <h2>저작권 정보 수정하기</h2>
         </c:if>
-        <form name="addProduct" enctype="multipart/form-data">
-            <input type="hidden" name="prodCategory" value="${prodCategory}">
+        <form name="updateProduct" enctype="multipart/form-data">
+            <input type="hidden" name="prodCategory" value="${product.prodCategory}">
+            <input type="hidden" name="prodNo" value="${product.prodNo}">
 
-            <c:if test="${prodCategory == 0}">
+            <c:if test="${product.prodCategory == 0}">
                 <label>팝콘 수량: </label>
-                <input type="number" min="1" value="1" name="prodCnt" required> 개
-                <p class="prodNameCheck" style="color: red; display: none;">
-                    해당 수량의 팝콘이 등록되어있습니다.
-                </p>
-                <p class="check" style="color: red; display: none;">
-                    팝콘 수량은 1개 이상부터 가능합니다.
-                </p>
+                <input type="number" min="1" value="${product.prodCnt}" name="prodCnt" required> 개
                 <br><br>
 
                 <label>팝콘 가격: </label><br>
-                <input type="number" min="100" value="100" name="prodPrice" required> 원<br><br>
+                <input type="number" min="100" value="${product.prodPrice}" name="prodPrice" required> 원<br><br>
 
                 <p>* 파일 용량 1MB 이하</p>
                 <p>* JPG만 업로드 가능</p>
                 <label>팝콘 이미지: </label>
-                <input type="file" name="file"><br><br>
+                <img width="300px" height="300px" src="/file/product/${product.prodImage}"><br>
+                <input type="file" name="file" value="${product.prodImage}"><br><br>
             </c:if>
 
-            <c:if test="${prodCategory == 2}">
+            <c:if test="${product.prodCategory == 2}">
                 <input type="file" name="file" style="display: none;">
                 <input type="hidden" name="workNo" value="">
 
-                <label>작품 이름: </label><br>
-                <select name="workSelect">
-                    <option>작품 선택</option>
-                    <c:set var="i" value="0"/>
-                    <c:forEach var="work" items="${ workList }">
-                        <c:set var="i" value="${i+1}"/>
-                        <option value="${work.workNo}" name="workNo">
-                                ${work.workName}
-                                <input type="hidden" name="${work.workNo}" value="${work.fap}">
-                        </option>
-                    </c:forEach>
-                </select><br><br>
+                <label>저작권 이름: </label><br>
+                <div>${product.prodName}</div><br><br>
 
                 <label>저작권 가격: </label><br>
-                <input type="number" min="0" value="100" name="prodPrice" required>
-                <span class="free" style="display: none;">0</span> 개<br>
-                <p class="freeCheck" style="color: red; display: none;">
-                    무료인 작품의 저작권 가격은 팝콘 0개입니다.
-                </p>
-                <br>
+                <input type="number" min="100" value="100" name="prodPrice" required> 개<br><br>
             </c:if>
 
-            <input type="submit" value="등록">
+            <input type="submit" value="수정">
         </form>
 
     </body>
