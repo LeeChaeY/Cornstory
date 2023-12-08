@@ -4,7 +4,6 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-
 <mapper namespace="com.cornstory.service.product.ProductDao">
 
 	<resultMap type="product" id="productSelectMap">
@@ -21,6 +20,26 @@
 		<result property="prodCnt" column="prod_cnt" jdbcType="INTEGER"/>
 		<result property="prodDate" column="prod_date" jdbcType="DATE"/>
 	</resultMap>
+
+	<resultMap type="work" id="workSelectMap">
+		<id 	property="workNo" 		column="work_no"/>
+		<result property="userId" 		column="user_id"/>
+		<result property="category" 	column="category"/>
+		<result property="genre1" 		column="genre1"/>
+		<result property="genre2" 		column="genre2"/>
+		<result property="genre3" 		column="genre3"/>
+		<result property="fap" 			column="fap"/>
+		<result property="workName" 	column="work_name"/>
+		<result property="note" 		column="note"/>
+		<result property="thumbnail" 	column="thumbnail"/>
+		<result property="viewCnt" 		column="view_cnt"/>
+		<result property="workDate" 	column="work_date"/>
+		<result property="status" 		column="status"/>
+		<result property="workDesc" 	column="work_desc"/>
+		<result property="complete" 	column="complete"/>
+	</resultMap>
+
+
 
 	<insert id="addProduct" parameterType="product">
 		INSERT
@@ -68,36 +87,17 @@
 
 	<select id="countProductPopCorn" parameterType="search" resultType="int">
 		SELECT COUNT(*) AS totalCount
-		FROM (SELECT *  FROM  product
-		<where>
-			prod_category = 0
-			<if test='searchCondition != null and !searchCondition.equals("")
-						and searchKeyword != null and !searchKeyword.equals("")'>
-				<if test='searchCondition.equals("0")'>
-					AND LOWER(prod_name) LIKE LOWER(CONCAT('%', #{searchKeyword},'%'))
-				</if>
-			</if>
-		</where>
-		) countTable
+		FROM product
 	</select>
 
 	<select id="listProductPopcorn" parameterType="map" resultMap="productSelectMap">
 		SELECT *
 		FROM (SELECT inner_table.*, @rownum := @rownum + 1 AS row_seq
-		FROM (SELECT *
-		FROM product
-		<where>
-			prod_category = 0
-			<if test='search.searchCondition != null and !search.searchCondition.equals("")
-										and search.searchKeyword != null and !search.searchKeyword.equals("")'>
-				<if test='search.searchCondition.equals("0")'>
-					AND LOWER(prod_name) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%'))
-				</if>
-			</if>
-		</where>
-		ORDER BY prod_price
-		) inner_table, (SELECT @rownum := 0) r
-		LIMIT #{endRowNum}
+				FROM (SELECT *
+						FROM product
+						ORDER BY prod_price
+						) inner_table, (SELECT @rownum := 0) r
+				LIMIT #{endRowNum}
 		) AS result
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
 	</select>
@@ -127,7 +127,7 @@
 		FROM (SELECT prod_no, prod_category, prod_name, episode_order,
 		prod_price, prod_image, prod_date, work_no,
 		U.user_id, nickname
-		FROM  PRODUCT P JOIN USER U ON U.user_id = P.user_id
+		FROM  product P JOIN user U ON U.user_id = P.user_id
 		<where>
 			prod_category = 2
 			<if test='search.searchCondition != null and !search.searchCondition.equals("")
@@ -146,8 +146,8 @@
 		) AS result
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
 	</select>
-	<!--
-	<select id="listCompleteWork" parameterType="string" resultType="workSelectMap">
+
+	<select id="listCompleteWork" parameterType="string" resultMap="workSelectMap">
 		SELECT work_no, user_id, category, fap,
 			   work_name, thumbnail, work_date, status, complete
 		FROM work
@@ -156,7 +156,7 @@
 							  	FROM product
 							  	WHERE prod_category = 2);
 	</select>
-	-->
+
 	<select id="countProductProdName" parameterType="string" resultType="int">
 		SELECT COUNT(*)
 		FROM product

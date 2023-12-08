@@ -18,7 +18,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	private ProductDao productDao;
-	
+
 	@Override
 	public int addProduct(Product product) throws Exception {
 		if (product.getProdCategory() == 2)
@@ -48,16 +48,22 @@ public class ProductServiceImpl implements ProductService {
 		int totalCountPopcorn = productDao.countProductPopCorn(search);
 		System.out.println("ProductServiceImpl :: totalCountPopcorn :: "+totalCountPopcorn);
 
-		map.put("search", search);
-		map.put("userId", userId);
-		int totalCountCopyright = productDao.countProductCopyright(map);
-		System.out.println("ProductServiceImpl :: totalCountCopyright :: "+totalCountCopyright);
-
 		map.put("startRowNum", (search.getCurrentPage()-1) * search.getPageSize() + 1);
 		map.put("endRowNum", search.getCurrentPage() * search.getPageSize());
 
 		List<Product> popcornList = productDao.listProductPopcorn(map);
+
+		map.put("search", search);
+		map.put("userId", userId);
+
+		int totalCountCopyright = productDao.countProductCopyright(map);
+		System.out.println("ProductServiceImpl :: totalCountCopyright :: "+totalCountCopyright);
+
 		List<Product> copyrightList = productDao.listProductCopyright(map);
+
+		for (Product product: copyrightList) {
+			product.setWorkName(product.getProdName().replace(" 저작권", ""));
+		}
 
 		map.put("totalCountPopcorn", totalCountPopcorn);
 		map.put("totalCountCopyright", totalCountCopyright);
@@ -78,9 +84,9 @@ public class ProductServiceImpl implements ProductService {
 
 	}
 
-//	@Override
-//	public int listCompleteWork(String userId) throws Exception {
-//		return (productDao.listCompleteWork(userId) == 0) ? 0 : 1;
-//	}
+	@Override
+	public List<Work> listCompleteWork(String userId) throws Exception {
+		return productDao.listCompleteWork(userId);
+	}
 
 }

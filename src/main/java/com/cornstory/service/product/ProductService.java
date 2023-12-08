@@ -2,6 +2,7 @@ package com.cornstory.service.product;
 
 import com.cornstory.common.Search;
 import com.cornstory.domain.Product;
+import com.cornstory.domain.Work;
 
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,7 @@ public interface ProductService {
 
 	public int prodNameCheck(String prodName) throws Exception;
 
-//	public int listCompleteWork(String userId) throws Exception;
+	public List<Work> listCompleteWork(String userId) throws Exception;
 
 	public List<Product> getCopylight(String userId) throws Exception;
 }
