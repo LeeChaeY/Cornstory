@@ -10,7 +10,7 @@ public interface BookmarkDao {
 
     void addBookmark(Bookmark bookmark);
 
-    void deleteBookmark(int bookmarkNo);
+    void deleteBookmark(Bookmark bookmark);
 
     Bookmark getBookmarkByNo(int bookmarkNo);
 

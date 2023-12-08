@@ -12,27 +12,27 @@
 
     <!-- 삽입 쿼리 -->
     <insert id="addBookmark" parameterType="bookmark">
-        INSERT INTO BOOKMARK (user_id, work_no)
+        INSERT INTO bookmark (user_id, work_no)
         VALUES (#{userId}, #{workNo})
     </insert>
 
     <!-- 삭제 쿼리 -->
-    <delete id="deleteBookmark" parameterType="int">
-        DELETE FROM BOOKMARK
-        WHERE bookmark_no = #{bookmarkNo}
+    <delete id="deleteBookmark" parameterType="bookmark">
+        DELETE FROM bookmark
+        WHERE bookmark_no = #{bookmarkNo} AND user_id = #{userId}
     </delete>
 
     <!-- 조회 쿼리 by bookmark_no -->
     <select id="getBookmarkByNo" parameterType="int" resultMap="bookmarkResultMap">
         SELECT bookmark_no, user_id, work_no
-        FROM BOOKMARK
+        FROM bookmark
         WHERE bookmark_no = #{bookmarkNo}
     </select>
 
     <!-- 조회 쿼리 by user_id -->
     <select id="getBookmarksByUserId" parameterType="string" resultMap="bookmarkResultMap">
         SELECT bookmark_no, user_id, work_no
-        FROM BOOKMARK
+        FROM bookmark
         WHERE user_id = #{userId}
     </select>
 

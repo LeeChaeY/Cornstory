@@ -81,7 +81,7 @@ class EpisodeTests {
 		newComment.setEpisodeNo(10002);
 		newComment.setWorkNo(10002);
 		newComment.setUserId("user001");
-		newComment.setEContent("Test comment content");
+		newComment.setContent("Test comment content");
 
 		episodeService.addEpisodeComment(newComment);
 
@@ -103,8 +103,8 @@ class EpisodeTests {
 	//@Test
 	public void testUpdateEpisodeComment() throws Exception {
 		EpisodeComment newComment = new EpisodeComment();
-		newComment.setECommentNo(10006);
-		newComment.setEContent("Updated comment content");
+		newComment.setCommentNo(10006);
+		newComment.setContent("Updated comment content");
 
 		episodeService.updateEpisodeComment(newComment);
 	}
