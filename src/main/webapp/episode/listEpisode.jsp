@@ -35,6 +35,7 @@
     <div class="info-item">창작여부: ${work.status == 0 ? '원작' : '창작'}</div>
     <div class="info-item">작업 설명: ${work.workDesc}</div>
     <div class="info-item"><a href="../episode/addEpisode?workNo=${work.workNo}">작품 회차 추가</a></div>
+    <div class="info-item"><a href="../work/addBookmark?workNo=${work.workNo}">찜하기</a></div>
 </div>
 
 <table border="1">
@@ -47,18 +48,31 @@
         <th>에피소드 등록일</th>
         <th>에피소드 파일명</th>
         <th>에피소드 디렉토리</th>
+        <c:if test="${user.userId eq work.userId}">
+        <th>에피소드 수정</th>
+        <th>에피소드 삭제</th>
+        </c:if>
     </tr>
     </thead>
     <tbody>
     <c:forEach var="episode" items="${list}">
         <tr>
             <td>${episode.episodeNo}</td>
-            <td>${episode.episodeName}</td>
+            <td><a href="../episode/getEpisode?episodeNo=${episode.episodeNo}">${episode.episodeName}</a></td>
             <td>${episode.episodeOrder}</td>
             <td>${episode.thumbnail}</td>
             <td><fmt:formatDate value="${episode.episodeDate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
             <td>${episode.fileName}</td>
             <td>${episode.directory}</td>
+            <c:if test="${user.userId eq work.userId}">
+            <td><a href="../episode/updateEpisode?episodeNo=${episode.episodeNo}">수정</a></td>
+            <td>
+                <form method="post" action="../episode/deleteEpisode">
+                <input type="hidden" name="episodeNo" value="${episode.episodeNo}" />
+                <button type="submit">삭제</button>
+                </form>
+            </td>
+            </c:if>
         </tr>
     </c:forEach>
     </tbody>

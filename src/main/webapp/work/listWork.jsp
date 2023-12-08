@@ -5,12 +5,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>작업 목록</title>
+    <title>작품 조회 목록</title>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
 
-<h2>작업 목록</h2>
+<h2>작품 조회 목록</h2>
 
 <form id="searchForm" action="../work/listWork" method="get">
     <label for="searchKeyword">검색 키워드:</label>

@@ -72,13 +72,19 @@ public class WorkServiceImpl implements WorkService {
     }
 
     @Override
+    public List<Work> listBookmark(String userId) throws Exception {
+
+        return workDao.listBookmark(userId);
+    }
+
+    @Override
     public void addBookmark(Bookmark bookmark) {
         bookmarkDao.addBookmark(bookmark);
     }
 
     @Override
-    public void removeBookmark(int bookmarkNo) {
-        bookmarkDao.deleteBookmark(bookmarkNo);
+    public void deleteBookmark(Bookmark bookmark) {
+        bookmarkDao.deleteBookmark(bookmark);
     }
 
     @Override

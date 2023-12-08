@@ -5,12 +5,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>작품 목록</title>
+    <title>작품 회차 목록</title>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
 
-<h2>작품 목록</h2>
+<h2>작품 회차 목록</h2>
 <table border="1">
     <thead>
     <tr>
@@ -26,8 +26,10 @@
         <th>작업 일자</th>
         <th>창작여부</th>
         <th>작업 설명</th>
+        <c:if test="${user.userId eq work.userId}">
         <th>작업 수정</th>
         <th>작업 삭제</th>
+        </c:if>
     </tr>
     </thead>
     <tbody id="workListBody">
@@ -56,12 +58,17 @@
             <td>${work.workDate}</td>
             <td>${work.status == 0 ? '원작' : '창작'}</td>
             <td>${work.workDesc}</td>
+            <c:if test="${user.userId eq work.userId}">
             <td>
                 <a href="../work/updateWork?workNo=${work.workNo}">수정</a>
             </td>
             <td>
-                <a href="../work/deleteWork?workNo=${work.workNo}">삭제</a>
+                <form method="post" action="../work/deleteWork">
+                    <input type="hidden" name="workNo" value="${work.workNo}" />
+                    <button type="submit">삭제</button>
+                </form>
             </td>
+            </c:if>
         </tr>
     </c:forEach>
     </tbody>

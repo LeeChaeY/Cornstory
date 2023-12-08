@@ -5,12 +5,12 @@
 
     <!-- EpisodeComment 클래스를 위한 Result Map -->
     <resultMap id="episodeCommentResultMap" type="episodeComment">
-        <result property="eCommentNo"   column="e_comment_no" />
+        <result property="commentNo"   column="e_comment_no" />
         <result property="episodeNo"    column="episode_no" />
         <result property="workNo"       column="work_no" />
         <result property="userId"       column="user_id" />
-        <result property="eContent"     column="e_content" />
-        <result property="eCommentDate" column="e_comment_date" />
+        <result property="content"     column="e_content" />
+        <result property="commentDate" column="e_comment_date" />
     </resultMap>
 
     <!-- 작품 회차에 대한 목록 -->
@@ -21,19 +21,19 @@
     <!-- 작품 회차의 댓글 등록-->
     <insert id="addEpisodeComment" parameterType="episodeComment">
         INSERT INTO episode_comment (episode_no, work_no, user_id, e_content, e_comment_date)
-        VALUES (#{episodeNo}, #{workNo}, #{userId}, #{eContent}, now())
+        VALUES (#{episodeNo}, #{workNo}, #{userId}, #{content}, now())
     </insert>
 
     <!-- 작품 회차의 댓글 수정-->
     <update id="updateEpisodeComment" parameterType="episodeComment">
         UPDATE episode_comment
-        SET e_content = #{eContent}, e_comment_date = now()
-        WHERE e_comment_no = #{eCommentNo}
+        SET e_content = #{content}, e_comment_date = now()
+        WHERE e_comment_no = #{commentNo}
     </update>
 
     <!-- 댓글 회차의 댓글 삭제 -->
     <delete id="deleteEpisodeComment" parameterType="int">
-        DELETE FROM episode_comment WHERE e_comment_no = #{eCommentNo}
+        DELETE FROM episode_comment WHERE e_comment_no = #{commentNo}
     </delete>
 
 </mapper>

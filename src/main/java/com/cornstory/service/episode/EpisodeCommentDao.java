@@ -18,5 +18,5 @@ public interface EpisodeCommentDao {
     public void updateEpisodeComment(EpisodeComment episodeComment);
 
     //댓글 회차의 댓글 삭제
-    public void deleteEpisodeComment(int eCommentNo);
+    public void deleteEpisodeComment(int commentNo);
 }

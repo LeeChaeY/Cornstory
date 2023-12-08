@@ -34,4 +34,6 @@ public interface WorkDao {
 
     //작가 작품의 리스트 갯수
     public int getMyWorkCount(String userId) throws Exception;
+
+    public List<Work> listBookmark(String userId) throws Exception;
 }
