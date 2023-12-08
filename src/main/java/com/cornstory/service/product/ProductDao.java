@@ -1,6 +1,7 @@
 package com.cornstory.service.product;
 
 import com.cornstory.common.Search;
+import com.cornstory.domain.Work;
 import org.apache.ibatis.annotations.Mapper;
 //import org.apache.ibatis.annotations.Mapper;
 
@@ -30,7 +31,7 @@ public interface ProductDao {
 
 	public int countProductProdName(String prodName) throws Exception;
 
-	public int listCompleteWork(String userId) throws Exception;
+	public List<Work> listCompleteWork(String userId) throws Exception;
 
 	public int countLastEpisode(int workNo) throws Exception;
 

@@ -18,7 +18,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	private ProductDao productDao;
-	
+
 	@Override
 	public int addProduct(Product product) throws Exception {
 		if (product.getProdCategory() == 2)
@@ -61,6 +61,10 @@ public class ProductServiceImpl implements ProductService {
 
 		List<Product> copyrightList = productDao.listProductCopyright(map);
 
+		for (Product product: copyrightList) {
+			product.setWorkName(product.getProdName().replace(" 저작권", ""));
+		}
+
 		map.put("totalCountPopcorn", totalCountPopcorn);
 		map.put("totalCountCopyright", totalCountCopyright);
 		map.put("popcornList", popcornList);
@@ -81,8 +85,8 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public int listCompleteWork(String userId) throws Exception {
-		return (productDao.listCompleteWork(userId) == 0) ? 0 : 1;
+	public List<Work> listCompleteWork(String userId) throws Exception {
+		return productDao.listCompleteWork(userId);
 	}
 
 }

@@ -61,11 +61,19 @@
   </c:if><br><br>
 
   Chat-채팅<br>
+  <c:if test="${!empty sessionScope.user}">
+    <br><br>
+    <a href="/chat/listChatSpace">채팅</a>
+  </c:if><br><br>
   <!-- 관리자인 경우에만 특정 기능 표시 -->
   <c:if test="${sessionScope.user.role eq 1}">
   </c:if><br><br>
 
   Product-상품<br>
+  <c:if test="${!empty sessionScope.user}">
+    <br><br>
+    <a href="/product/listProduct">스토어</a>
+  </c:if><br><br>
   <!-- 관리자인 경우에만 특정 기능 표시 -->
   <c:if test="${sessionScope.user.role eq 1}">
   </c:if><br><br>
@@ -94,10 +102,6 @@
 </c:if>
 
 
-
-
-  <br><br>
-  <a href="/chat/listChatSpace">채팅</a>
 </body>
 
 </html>

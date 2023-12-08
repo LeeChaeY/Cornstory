@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -45,8 +46,10 @@ public class ProductController {
     }
 
     @GetMapping("addProduct")
-    public String addProduct() throws Exception {
-        System.out.println("/product/addProduct : GET");
+    public String addProduct(Model model, @RequestParam("prodCategory") int prodCategory) throws Exception {
+        System.out.println("/product/addProduct : GET :: prodCategory :: "+prodCategory);
+        model.addAttribute("prodCategory", prodCategory);
+
         return "product/addProduct";
     }
 
@@ -78,6 +81,8 @@ public class ProductController {
             product.setProdName(work.getWorkName()+" "+episode.getEpisodeOrder()+" 회차");
         } else if (product.getProdCategory() == 2) {
             product.setProdName(work.getWorkName()+" 저작권");
+            List<Work> workList = productService.listCompleteWork((String) session.getAttribute("userId"));
+            model.addAttribute("workList", workList);
         }
         System.out.println("/product/addProduct : " + product);
 
@@ -109,7 +114,7 @@ public class ProductController {
                 product.setProdImage("popcorn.png");
             }
         }
-        return "product/addProduct";
+        return "redirect:/product/listStore";
     }
 
     @GetMapping("updateProduct")
@@ -122,7 +127,7 @@ public class ProductController {
         return "product/updateProduct";
     }
 
-    @GetMapping("updateProduct")
+    @PostMapping("updateProduct")
     public String updateProduct(Model model, @ModelAttribute("product") Product product,
                                 @RequestParam("file") MultipartFile file, HttpServletRequest request,
                                 HttpSession session) throws Exception {
@@ -173,7 +178,7 @@ public class ProductController {
             }
         }
 
-        return "product/updateProduct";
+        return "redirect:/product/listStore";
     }
 
     @RequestMapping("listProduct")
@@ -194,21 +199,21 @@ public class ProductController {
         }
         search.setPageSize(pageSize);
 
-        Map<String, Object> map = productService.listProduct(search, "");
-        Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
-        System.out.println("/product/listProduct :: " + resultPage);
+        Map<String, Object> map = productService.listProduct(search, userId);
+//        Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
+//        System.out.println("/product/listProduct :: " + resultPage);
 
         model.addAttribute("totalCountPopcorn", map.get("totalCountPopcorn"));
         model.addAttribute("totalCountCopyright", map.get("totalCountCopyright"));
         model.addAttribute("popcornList", map.get("popcornList"));
         model.addAttribute("copyrightList", map.get("copyrightList"));
-        model.addAttribute("resultPage", resultPage);
+//        model.addAttribute("resultPage", resultPage);
         model.addAttribute("search", search);
 
         System.out.println(map);
         System.out.println(search);
 
-        return "product/listProduct";
+        return "product/listStore";
     }
 
 }
