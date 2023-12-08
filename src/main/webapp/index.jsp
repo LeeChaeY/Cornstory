@@ -56,6 +56,11 @@
       <a href="/user/listUser">목록 조회</a>
     </c:if><br><br>
 
+    <p>Work-작품</p>
+    <!-- 관리자인 경우에만 특정 기능 표시 -->
+    <a href="/work/addWork">작품등록</a>
+    <br><br>
+
     <p>Chat-채팅</p>
     <!-- 관리자인 경우에만 특정 기능 표시 -->
     <a href="/chat/listChatSpace">채팅</a>

@@ -105,7 +105,7 @@ public class SupportController {
         supportService.addSupport(support);
         System.out.println("들어온 값을 확인해보자" + support);
 
-        return "support/getSupport?supNo="+support.getSupNo();
+        return "support/getSupport";
     }
 
     @RequestMapping( value="getSupport", method=RequestMethod.GET )
