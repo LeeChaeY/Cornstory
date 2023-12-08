@@ -139,4 +139,11 @@
 		WHERE user_id=#{userId}
 	</select>
 
+	<select id="listBookmark" parameterType="string" resultMap="workSelectMap">
+		SELECT w.work_no, w.user_id, w.category, w.genre1, w.genre2, w.genre3, w.fap, w.work_name, w.note, w.thumbnail,
+			   w.view_cnt, w.work_date, w.status, w.work_desc, w.complete
+		FROM work w, bookmark b
+		WHERE w.user_id=#{userId} AND w.user_id=b.user_id
+	</select>
+
 </mapper>

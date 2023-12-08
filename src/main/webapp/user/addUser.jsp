@@ -45,7 +45,32 @@
                 var phoneNumber = $(this).val();
                 checkPhoneNumberFormat(phoneNumber);
             });
+
+            $("form").submit(function (event) {
+                // 아이디, 닉네임, 패스워드 유효성 검사
+                var isUserIdValid = checkUserId($("#userId").val());
+                var isNickNameValid = checkNickName($("#nickName").val());
+                var isPasswordValid = checkPasswordPattern($("#password").val());
+
+                // 검사 결과에 따라 폼 제출 여부 결정
+                if (!(isUserIdValid && isNickNameValid && isPasswordValid)) {
+                    event.preventDefault(); // 폼 제출 중단
+                    alert("입력값을 확인해주세요."); // 사용자에게 메시지 표시 (원하는 메시지로 변경 가능)
+                }
+            });
+
         });
+        //길이제한
+        function updateCharCount(inputId, countId) {
+            var input = document.getElementById(inputId);
+            var count = document.getElementById(countId);
+
+            if (input.value.length > input.maxLength) {
+                input.value = input.value.substring(0, input.maxLength);
+            }
+
+            count.textContent = '글자 수: ' + input.value.length + '/' + input.maxLength;
+        }
 
         //아이디 중복체크
         function checkUserId(userId) {
@@ -94,6 +119,7 @@
                 var pattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()])[A-Za-z\d!@#$%^&*()]{8,16}$/;
                 if (!pattern.test(password)) {
                     passwordMessage.text("조건에 맞게 입력해주세요.").css("color", "red");
+                    return false;
                 } else {
                     passwordMessage.text("사용가능한 비밀번호입니다.").css("color", "green");
                 }
@@ -113,6 +139,7 @@
                 var pattern = /^[a-zA-Z0-9가-힣]{2,8}$/;
                 if (!pattern.test(nickName)) {
                     nickNameMessage.text("한글, 영문, 숫자만 입력 가능하며 2~8글자여야 합니다.").css("color", "red");
+                    return false;
                 } else {
                     // Ajax를 이용하여 서버로 닉네임 중복 검사 요청을 보냅니다.
                     $.ajax({
@@ -124,6 +151,7 @@
                                 nickNameMessage.text("사용 가능한 닉네임입니다.").css("color", "green");
                             } else {
                                 nickNameMessage.text("이미 있는 닉네임입니다.").css("color", "red");
+                                return false;
                             }
                         },
                         error: function (error) {
@@ -179,7 +207,7 @@
     <input type="email" id="email" name="email" required><br><br>
 
     <label for="userId">아이디:</label><br>
-    <input type="text" id="userId" name="userId" maxlength="8" pattern="[a-zA-Z0-9]+" title="영문 또는 숫자만 입력 가능" required>
+    <input type="text" id="userId" name="userId" pattern="[a-zA-Z0-9]+" maxlength="8" title="영문 또는 숫자만 입력 가능" oninput="updateCharCount('userId', 'userIdLength')" required>
     <span id="userIdMessage"></span><br>
     <span id="userIdLength">0/8</span><br>
     최소 4글자 최대 8글자 작성가능합니다.<br>
@@ -188,14 +216,14 @@
     <label for="password">패스워드 :</label><br>
     <input type="password" id="password" name="password"
            pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()])[A-Za-z\d!@#$%^&*()]{8,16}$"
-           title="# 영문, 숫자, 특수문자를 혼합하여 8자 이상 16자 이하로 입력하세요" required>
+           title="# 영문, 숫자, 특수문자를 혼합하여 8자 이상 16자 이하로 입력하세요" required maxlength="16" oninput="updateCharCount('password', 'passwordLength')">
     <span id="passwordMessage"></span><br>
     <span id="passwordLength">0/16</span><br>
     최소 8글자 최대 16글자 작성가능합니다.<br>
     영문, 숫자, 특수문자를 혼합하여 작성 해야 합니다.<br><br>
 
     <label for="nickName">닉네임:</label><br>
-    <input type="text" id="nickName" name="nickName" required min="8">
+    <input type="text" id="nickName" name="nickName" required maxlength="8" oninput="updateCharCount('nickName', 'nickNameLength')"/>
     <span id="nickNameMessage"></span><br>
     <span id="nickNameLength">0/8</span><br>
     최소 2글자 최대 8글자 작성가능합니다.<br>

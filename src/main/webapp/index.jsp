@@ -56,15 +56,27 @@
       <a href="/user/listUser">목록 조회</a>
     </c:if><br><br>
 
-    <p>Work-작품</p>
-    <!-- 관리자인 경우에만 특정 기능 표시 -->
-    <a href="/work/addWork">작품등록</a>
-    <br><br>
+  Work-작품<br>
+  <!-- 관리자인 경우에만 특정 기능 표시 -->
+  <c:if test="${sessionScope.user.role eq 1}">
+    <a href="/work/listwork">작품 조회 목록</a>
+    <a href="/work/bookmark">찜하기 조회</a>
+    <a href="/work/addwork">작품 추가 조회</a>
+    <a href="/work/updatework">작품 수정 조회</a>
+    <a href="/work/getwork">작품 회차 목록</a>
+    <a href="/work/addEpisode">작품 회차 추가</a>
+    <a href="/work/listEpisode">작품 회차 추가</a>
+  </c:if><br><br>
 
-    <p>Chat-채팅</p>
-    <!-- 관리자인 경우에만 특정 기능 표시 -->
-    <a href="/chat/listChatSpace">채팅</a>
-    <br><br>
+  Story-작품<br>
+  <!-- 관리자인 경우에만 특정 기능 표시 -->
+  <c:if test="${sessionScope.user.role eq 1}">
+  </c:if><br><br>
+
+      Chat-채팅<br>
+      <!-- 관리자인 경우에만 특정 기능 표시 -->
+      <c:if test="${sessionScope.user.role eq 1}">
+      </c:if><br><br>
 
     <p>Product-상품</p>
     미등록
