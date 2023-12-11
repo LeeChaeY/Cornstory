@@ -18,6 +18,6 @@ public class CornstoryApplication {
 		System.out.println("[ MainController.index() start........]");//<== 디버깅용
 		//==> web.xml : <welcome-file>~~~.html or ~~.jsp</welcome-fle> : 물리적인 파일이어야 함.
 		return "redirect:/index";
-
 	}
+
 }

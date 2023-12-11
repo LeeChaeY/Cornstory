@@ -36,4 +36,6 @@ public interface WorkDao {
     public int getMyWorkCount(String userId) throws Exception;
 
     public List<Work> listBookmark(String userId) throws Exception;
+
+    public void updateViews(Work Work) throws  Exception;
 }

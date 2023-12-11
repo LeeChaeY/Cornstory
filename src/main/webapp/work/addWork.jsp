@@ -26,7 +26,7 @@
 <form action="../work/addWork" method="post" onsubmit="return validateForm()" enctype="multipart/form-data">
 
     <label for="userId">작성자:</label>
-    <input type="text" id="userId" name="userId" value="${user.userId}" required />
+    <input type="text" id="userId" name="userId" value="${user.userId}" required readonly/>
 
     <label>창작 여부:</label>
     <label>
