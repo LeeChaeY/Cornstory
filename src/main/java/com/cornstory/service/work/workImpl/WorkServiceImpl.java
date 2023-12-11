@@ -78,6 +78,11 @@ public class WorkServiceImpl implements WorkService {
     }
 
     @Override
+    public void updateViews(Work work) throws Exception {
+        workDao.updateViews(work);
+    }
+
+    @Override
     public void addBookmark(Bookmark bookmark) {
         bookmarkDao.addBookmark(bookmark);
     }

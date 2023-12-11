@@ -146,4 +146,13 @@
 		WHERE w.user_id=#{userId} AND w.user_id=b.user_id
 	</select>
 
+	<!--조회수 추가-->
+	<update id="updateViews" parameterType="work">
+		UPDATE work
+		<set>
+			view_cnt = #{viewCnt}
+		</set>
+		WHERE work_no = #{workNo}
+	</update>
+
 </mapper>

@@ -70,14 +70,11 @@ public class EpisodeServiceImpl implements EpisodeService{
         return episodeDao.episodeMax(workNo);
     }
 
-    @Override
-    public Episode getLatestEpisode(int workNo) {
-        return episodeDao.getLatestEpisode(workNo);
-    }
+
 
     @Override
-    public List<EpisodeComment> listEpisodeComment(int episodeNo) throws Exception{
-        return episodeCommentDao.listEpisodeComment(episodeNo);
+    public List<EpisodeComment> listEpisodeComment() throws Exception{
+        return episodeCommentDao.listEpisodeComment();
     }
 
     //작품 회차의 댓글 등록
@@ -96,5 +93,10 @@ public class EpisodeServiceImpl implements EpisodeService{
     @Override
     public void deleteEpisodeComment(int commentNo) throws Exception{
         episodeCommentDao.deleteEpisodeComment(commentNo);
+    }
+
+    @Override
+    public Episode getLatestEpisode(Episode episode) throws Exception {
+        return episodeDao.getLatestEpisode(episode);
     }
 }

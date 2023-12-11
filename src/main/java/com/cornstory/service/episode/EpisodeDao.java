@@ -29,5 +29,5 @@ public interface EpisodeDao {
 
     public int episodeMax(int workNo) throws Exception;
 
-    public Episode getLatestEpisode(int workNo);
+    public Episode getLatestEpisode(Episode episode);
 }

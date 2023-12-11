@@ -21,7 +21,7 @@
     <!-- 스토리 댓글 수정 -->
     <update id="updateComment" parameterType="storyComment">
         UPDATE story_comment
-        SET s_content = #{content : VARCHAR},
+        SET s_content = #{sContent : VARCHAR},
             s_comment_date = now()
         WHERE s_comment_no = #{sCommentNo}
     </update>

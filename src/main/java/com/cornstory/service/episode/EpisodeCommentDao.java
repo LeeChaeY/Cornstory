@@ -9,7 +9,7 @@ import java.util.List;
 public interface EpisodeCommentDao {
 
     //작품 회차에 대한 목록
-    public List<EpisodeComment> listEpisodeComment(int episodeNo);
+    public List<EpisodeComment> listEpisodeComment();
 
     //작품 회차의 댓글 등록
     public void addEpisodeComment(EpisodeComment episodeComment);

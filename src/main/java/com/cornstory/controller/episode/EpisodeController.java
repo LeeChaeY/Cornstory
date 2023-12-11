@@ -104,11 +104,13 @@ public class EpisodeController {
 
        episodeService.addEpisode(episode);
 
-       episode = episodeService.getLatestEpisode(episode.getWorkNo());
+
+        //System.out.println("작품 회차 팝콘 : "+episodeService.getLatestEpisode(work.getWorkNo()).toString());
+        Episode episode1=episodeService.getLatestEpisode(episode);
 
        Product product=new Product();
-       product.setEpisodeNo(episode.getEpisodeNo());
-       product.setWorkNo(episode.getWorkNo());
+       product.setEpisodeNo(episode1.getEpisodeNo());
+       product.setWorkNo(workNo);
        product.setUserId(work.getUserId());
        product.setProdCategory(1);
        product.setProdName(episode.getEpisodeName());
@@ -123,7 +125,11 @@ public class EpisodeController {
             product.setProdPrice(5);
         }
         product.setProdCnt(1);
-       productService.addProduct(product);
+
+        System.out.println(" 상품 등록 가능??????"+product.toString());
+        //productService.addProduct(product);
+
+
         return "index";
     }
 
@@ -203,7 +209,7 @@ public class EpisodeController {
         }
 
 
-        model.addAttribute("list",episodeService.listEpisodeComment(episodeNo));
+        model.addAttribute("list",episodeService.listEpisodeComment());
         model.addAttribute("work",work);
         model.addAttribute("user",user);
         model.addAttribute("episode",episode);
@@ -227,39 +233,5 @@ public class EpisodeController {
         }
     }
 
-    // 댓글 추가
-    @PostMapping("addComment")
-    public String addComment(@ModelAttribute EpisodeComment episodeComment,@SessionAttribute(name="user", required = false) User user) {
-        Episode episode=episodeService.getEpisode(episodeComment.getEpisodeNo());
-        episodeComment.setUserId(user.getUserId());
-        episodeComment.setWorkNo(episode.getWorkNo());
-        try {
-            episodeService.addEpisodeComment(episodeComment);
-        } catch (Exception e) {
-            e.printStackTrace(); // 예외 처리를 적절히 수행하세요.
-        }
-        return "episode/getEpisode?episodeNo=" + episodeComment.getEpisodeNo();
-    }
 
-    // 댓글 수정
-    @PostMapping("updateComment")
-    public String updateComment(@ModelAttribute EpisodeComment episodeComment) {
-        try {
-            episodeService.updateEpisodeComment(episodeComment);
-        } catch (Exception e) {
-            e.printStackTrace(); // 예외 처리를 적절히 수행하세요.
-        }
-        return "redirect:/episode/getEpisode?episodeNo=" + episodeComment.getEpisodeNo();
-    }
-
-    // 댓글 삭제
-    @PostMapping("deleteComment")
-    public String deleteComment(@RequestParam int eCommentNo, @RequestParam int episodeNo) {
-        try {
-            episodeService.deleteEpisodeComment(eCommentNo);
-        } catch (Exception e) {
-            e.printStackTrace(); // 예외 처리를 적절히 수행하세요.
-        }
-        return "episode/getEpisode?episodeNo=" + episodeNo;
-    }
 }
