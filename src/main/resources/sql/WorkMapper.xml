@@ -87,6 +87,9 @@
 		<if test="orderCondition == 0 or orderCondition == null">
 			desc
 		</if>
+		<if test="offset >= 0">
+			LIMIT #{pageSize} OFFSET #{offset}
+		</if>
 	</select>
 
 	<select id="getTotalCount" parameterType="com.cornstory.common.Search" resultType="java.lang.Integer">

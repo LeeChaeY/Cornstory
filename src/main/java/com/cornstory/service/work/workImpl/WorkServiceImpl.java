@@ -45,6 +45,9 @@ public class WorkServiceImpl implements WorkService {
 
     @Override
     public Map<String, Object> listWork(Search search) throws Exception {
+        // currentPage에 따라 offset을 동적으로 계산
+        search.setOffset((search.getCurrentPage() - 1) * search.getPageSize());
+
         List<Work> list = workDao.listWork(search);
         int totalCount = workDao.getTotalCount(search);
 
@@ -54,6 +57,7 @@ public class WorkServiceImpl implements WorkService {
 
         return map;
     }
+
 
     @Override
     public Work getDuplication(Work work) throws Exception {

@@ -139,21 +139,21 @@ public class WorkController {
         }
         return "work/getWork";
     }
-    @RequestMapping ("listWork")
+    @RequestMapping("listWork")
     public String listWork(@ModelAttribute("search") Search search, Model model) throws Exception {
         System.out.println("[ WorkController.listWork() start........]");
 
-        System.out.println(search.toString());
+        search.setCurrentPage(1);
+        search.setPageSize(3);
 
-        search.setSearchKeyword(search.getSearchKeyword());
+        System.out.println(search.getSearchKeyword());
+        Map<String, Object> map = workService.listWork(search);
 
-        Map<String, Object> map=workService.listWork(search);
-
-        model.addAttribute("list",map.get("list"));
-        model.addAttribute("totalCount",map.get("totalCount"));
+        //model.addAttribute("list", map.get("list"));
+        model.addAttribute("totalCount", map.get("totalCount"));
         model.addAttribute("search", search);
-        return "work/listWork";
 
+        return "work/listWork";
     }
 
     @RequestMapping ("getWork")
