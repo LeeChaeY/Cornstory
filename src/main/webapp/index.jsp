@@ -1,126 +1,200 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 <html lang="ko">
 
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="imagetoolbar" content="no">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>대시보드</title>
-
-  <script type="text/javascript">
-
-    $(function () {
-      //==> 추가된부분 : "addUser"  Event 연결
-      $("a[href='#' ]:contains('채팅')").on("click", function () {
-        if ("${!empty sessionScope.user}") {
-          $(self.location).attr("href", "/chat/listChatSpace");
-        }
-      });
-
-    });
-
-  </script>
+  <meta name="format-detection" content="telephone=no">
+  <meta name="title" content="웹사이트">
+  <meta name="description" content="웹사이트입니다.">
+  <meta name="keywords" content="키워드,키워드,키워드">
+  <meta property="og:title" content="웹사이트">
+  <meta property="og:description" content="웹사이트입니다">
+  <meta property="og:image" content="https://웹사이트/images/opengraph.png">
+  <meta property="og:url" content="https://웹사이트">
+  <title>cornstory</title>
+  <link rel="stylesheet" href="ssh/css/setting.css">
+  <link rel="stylesheet" href="ssh/css/plugin.css">
+  <link rel="stylesheet" href="ssh/css/template.css">
+  <link rel="stylesheet" href="ssh/css/common.css">
+  <link rel="stylesheet" href="ssh/css/style.css">
 </head>
 
 <body>
-<h2>Main</h2>
-<div style="font-size: 15px;">
-  <%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>
-</div>
+<!--top start-->
+<%@ include file="layout/top.jsp" %>
+<!--top end-->
 
-<!--로그인 안되어 있을때 볼 수 있는 위치 -->
-<c:if test="${sessionScope.user == null}">
-  <!-- 로그인 페이지로 이동하는 링크 또는 다른 작업 추가 -->
-  <a href="/user/login">로그인</a>
-</c:if>
+<!--center start-->
+<main class="th-layout-main ">
+  <div class="opilsol-N4" data-bid="muLPW5z3N1">
+    <div class="visual-container">
+      <div class="visual-swiper">
+        <div class="swiper-wrapper">
+          <!-- 여기에 반복문 추가 -->
+          <script>
+            var images = [
+              "https://images.unsplash.com/photo-1568051417544-7be7671f4c2a?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=M3w0OTE2MDd8MHwxfHNlYXJjaHwyMDN8fCVFQyVCMSU4NXxrb3wwfHx8fDE3MDIwMTU4MjF8MA&amp;ixlib=rb-4.0.3&amp;q=80&amp;w=1080",
+              "https://images.unsplash.com/photo-1571258126466-de842f523326?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=M3w0OTE2MDd8MHwxfHNlYXJjaHwxMjN8fCVFQyVCMSU4NXxrb3wwfHx8fDE3MDIwMTU3Njh8MA&amp;ixlib=rb-4.0.3&amp;q=80&amp;w=1080",
+              "https://images.unsplash.com/photo-1562849321-9e59cc8c4212?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=M3w0OTE2MDd8MHwxfHNlYXJjaHwxMTR8fCVFQyVCMSU4NXxrb3wwfHx8fDE3MDIwMTU3NDB8MA&amp;ixlib=rb-4.0.3&amp;q=80&amp;w=1080"
+            ];
 
-<c:if test="${sessionScope.user != null}">
-  <p>안녕하세요, ${sessionScope.user.nickName}님!</p>
-  <p>회원님의 등급은,
-    <c:choose>
-      <c:when test="${sessionScope.user.role eq 1}">관리자</c:when>
-      <c:otherwise>회원</c:otherwise>
-    </c:choose>
-    입니다.!</p><br>
-
-  <form action="/user/logout" method="post">
-    <br> <button type="submit">로그아웃</button>
-  </form>
-
-  <div>
-    <p>User-회원</p>
-    <a href="/user/getUser?userId=${sessionScope.user.userId}">회원정보 조회</a>&nbsp&nbsp&nbsp
-    <!-- 관리자인 경우에만 특정 기능 표시 -->
-    <c:if test="${sessionScope.user.role eq 1}">
-      <a href="/user/listUser">목록 조회</a>
-    </c:if><br><br>
-
-    Work-작품<br>
-    <a href="/work/listWork">작품  목록</a>
-    <a href="/work/addWork">작품 등록</a>
-    <a href="/work/updateWork">작품 수정</a>
-    <a href="/work/getWork">작품  조회</a><br><br>
-    Episode-에피소드<br>
-    <a href="/work/addEpisode">작품 회차 추가</a>
-    <a href="/work/listEpisode">작품 회차 목록</a><br><br>
-    BookMark-찜하기<br>
-    <a href="/work/bookmark">찜하기 조회</a>
-
-    <br><br>
-
-    Story-게시판<br>
-    <!-- 관리자인 경우에만 특정 기능 표시 -->
-    <c:if test="${sessionScope.user.role eq 1}">
-    </c:if><br><br>
-
-    Chat-채팅<br>
-    <c:if test="${!empty sessionScope.user}">
-      <a href="/chat/listChatSpace">채팅</a>
-    </c:if><br><br><br>
-
-    <c:if test="${!empty sessionScope.user}">
-      <a href="/chat/listChatSpace">채팅방 목록 조회</a>
-    </c:if> |
-    <c:if test="${!empty sessionScope.user}">
-      <a href="/chat/addChatSpace">채팅방 개설</a>
-    </c:if> |
-    <c:if test="${!empty sessionScope.user}">
-      <a href="/chat/updateChatSpace?chatSpaceNo=10020">채팅방 수정(10020)</a>
-    </c:if> |
-    <c:if test="${!empty sessionScope.user}">
-      <a href="/chat/enterChatSpace?chatSpaceNo=10020">채팅방 입장(10020)</a>
-    </c:if><br><br><br>
-
-    <p>Product-상품</p>
-    <c:if test="${!empty sessionScope.user}">
-      <a href="/product/listProduct">스토어(상품+구매)</a>
-    </c:if><br><br><br>
-
-    <p>Purchase-판매&구매</p>
-    미등록
-    <br><br>
-
-    <p>Support-고객센터</p>
-    <!-- 관리자 또는 회원에 따라 링크가 다르게 표시 -->
-    <c:choose>
-      <c:when test="${sessionScope.user.role eq 1}">
-        <a href="/support/addSupport?category=0">공지사항 등록</a>&nbsp
-        <a href="/support/addSupport?category=1">Q&A[답변] 등록</a>
-      </c:when>
-      <c:otherwise>
-        <a href="/support/addSupport?category=1">질문 등록</a>&nbsp
-        <a href="/support/addSupport?category=2">신고 등록</a>
-      </c:otherwise>
-    </c:choose>
+            for (var i = 0; i < images.length; i++) {
+              document.write('<div class="swiper-slide">');
+              document.write('<img class="visual-bg" src="' + images[i] + '" alt="">');
+              document.write('<div class="visual-text-box">');
+              document.write('<h2 class="visual-title" data-swiper-parallax="-700">');
+              document.write('<span class="br">꿈과 창작을 펼치는</span>플렛폼 <br>');
+              document.write('<span class="br">고객 만족도 향상을 위한</span> 솔루션 제공');
+              document.write('</h2>');
+              document.write('<div class="visual-subtitle" data-swiper-parallax="-1000">');
+              document.write('<span class="br">다양한 스타일의 창작물들이 모여, 당신만의 독특한 이야기를 창조할 수 있는 기회를 제공합니다. </span>');
+              document.write('</div>');
+              document.write('</div>');
+              document.write('</div>');
+            }
+          </script>
+          <!-- 반복문 끝 -->
+        </div>
+      </div>
+    </div>
   </div>
-</c:if>
 
 
-
-
-<br><br>
-
+  <!-- [E]opilsol-N4 -->
+  <!-- [S]opilsol-N29 -->
+  <div class="opilsol-N29" data-bid="FBLpwD88jR" >
+  </div>
+  <!-- [E]opilsol-N29 -->
+  <!-- [S]opilsol-N5 -->
+  <div class="opilsol-N5" data-bid="KElPW5Z3Nk" >
+    <div class="content-container">
+      <div class="container-md">
+        <div class="textset">
+          <h2 class="textset-tit">작품 목록</h2>
+          <p class="textset-desc h5">단순한 글쓰기를 넘어, 독자들의 마음을 사로잡기 위해 최상의 플랫폼을 제공합니다. 색다른 장르와 다양한 스타일의 창작물들이 모여, 당신만의 독특한 이야기를 창조할 수 있는 기회를 제공합니다. 독자들과의 소통을 강화하며, 창작자와 독자 모두에게 풍부한 경험을 선사합니다.</p>
+        </div>
+      </div>
+      <div class="container-md">
+        <div class="slide-container">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <a class="cardset cardset-border" href="javascript:void(0);">
+                <figure class="cardset-figure">
+                  <img class="cardset-img" src="https://images.pexels.com/photos/5474287/pexels-photo-5474287.jpeg" alt="">
+                </figure>
+                <div class="cardset-body">
+                  <h5 class="cardset-tit">웹소설 제목</h5>
+                  <p class="cardset-desc">소설 설명</p>
+                  <span class="btnset btnset-text btnset-icon icon-right btnset-sm">자세히 보기</span>
+                </div>
+              </a>
+            </div>
+            <div class="swiper-slide">
+              <a class="cardset cardset-border" href="javascript:void(0);">
+                <figure class="cardset-figure">
+                  <img class="cardset-img" src="ssh/images/m-sec1-img-2.jpg" alt="이미지">
+                </figure>
+                <div class="cardset-body">
+                  <h5 class="cardset-tit">웹툰 제목</h5>
+                  <p class="cardset-desc">웹툰 설명</p>
+                  <span class="btnset btnset-text btnset-icon icon-right btnset-sm">자세히 보기</span>
+                </div>
+              </a>
+            </div>
+            <div class="swiper-slide">
+              <a class="cardset cardset-border" href="javascript:void(0);">
+                <figure class="cardset-figure">
+                  <img class="cardset-img" src="ssh/images/m-sec1-img-3.jpg" alt="이미지">
+                </figure>
+                <div class="cardset-body">
+                  <h5 class="cardset-tit">웹드라마 제목</h5>
+                  <p class="cardset-desc">웹드라마 설명</p>
+                  <span class="btnset btnset-text btnset-icon icon-right btnset-sm">자세히 보기</span>
+                </div>
+              </a>
+            </div>
+            <div class="swiper-slide">
+              <a class="cardset cardset-border" href="javascript:void(0);">
+                <figure class="cardset-figure">
+                  <img class="cardset-img" src="ssh/images/m-sec1-img-4.jpg" alt="이미지">
+                </figure>
+                <div class="cardset-body">
+                  <h5 class="cardset-tit">웹소설 제목</h5>
+                  <p class="cardset-desc">소설 설명</p>
+                  <span class="btnset btnset-text btnset-icon icon-right btnset-sm">자세히 보기</span>
+                </div>
+              </a>
+            </div>
+            <div class="swiper-slide">
+              <a class="cardset cardset-border" href="javascript:void(0);">
+                <figure class="cardset-figure">
+                  <img class="cardset-img" src="ssh/images/m-sec1-img-1.jpg" alt="이미지">
+                </figure>
+                <div class="cardset-body">
+                  <h5 class="cardset-tit">웹소설 제목</h5>
+                  <p class="cardset-desc">소설 설명</p>
+                  <span class="btnset btnset-text btnset-icon icon-right btnset-sm">자세히 보기</span>
+                </div>
+              </a>
+            </div>
+            <div class="swiper-slide">
+              <a class="cardset cardset-border" href="javascript:void(0);">
+                <figure class="cardset-figure">
+                  <img class="cardset-img" src="ssh/images/m-sec1-img-2.jpg" alt="이미지">
+                </figure>
+                <div class="cardset-body">
+                  <h5 class="cardset-tit">웹소설 제목</h5>
+                  <p class="cardset-desc">소설 설명</p>
+                  <span class="btnset btnset-text btnset-icon icon-right btnset-sm">자세히 보기</span>
+                </div>
+              </a>
+            </div>
+            <div class="swiper-slide">
+              <a class="cardset cardset-border" href="javascript:void(0);">
+                <figure class="cardset-figure">
+                  <img class="cardset-img" src="ssh/images/m-sec1-img-3.jpg" alt="이미지">
+                </figure>
+                <div class="cardset-body">
+                  <h5 class="cardset-tit">웹소설 제목</h5>
+                  <p class="cardset-desc">소설 설명</p>
+                  <span class="btnset btnset-text btnset-icon icon-right btnset-sm">자세히 보기</span>
+                </div>
+              </a>
+            </div>
+            <div class="swiper-slide">
+              <a class="cardset cardset-border" href="javascript:void(0);">
+                <figure class="cardset-figure">
+                  <img class="cardset-img" src="ssh/images/m-sec1-img-4.jpg" alt="이미지">
+                </figure>
+                <div class="cardset-body">
+                  <h5 class="cardset-tit">웹소설 제목</h5>
+                  <p class="cardset-desc">소설 설명</p>
+                  <span class="btnset btnset-text btnset-icon icon-right btnset-sm">자세히 보기</span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-control">
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- [E]opilsol-N5 -->
+</main>
+<!-- [S]thwhole-wfLpW5Z3pJ -->
+<%@ include file="layout/bottom.jsp" %>
+<!-- [E]thwhole-wfLpW5Z3pJ -->
+<script src="ssh/js/setting.js"></script>
+<script src="ssh/js/plugin.js"></script>
+<script src="ssh/js/template.js"></script>
+<script src="ssh/js/common.js"></script>
+<script src="ssh/js/script.js"></script>
 </body>
-
-</html>
