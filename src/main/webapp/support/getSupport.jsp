@@ -18,7 +18,7 @@
 
 <c:if test="${not empty support}">
     <p>지원 번호: ${support.supNo}</p>
-    <p>등록자 닉네임: ${support.user.nickName}</p>
+    <p name="${support.user.userId}">$>등록자 닉네임: {support.user.nickName}</p>
     <p>내용: ${support.supContent}</p>
     <p>카테고리: ${support.supCategory}</p>
     <p>등록일자: ${support.regDate}</p>

@@ -120,7 +120,7 @@ public class SupportController {
 
         System.out.println("getSupport"+support);
 
-        return "support/getSupport";
+        return "support/getSupport?supNo="+support.getSupNo();
     }
 }
 

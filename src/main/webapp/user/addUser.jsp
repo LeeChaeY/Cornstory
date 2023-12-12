@@ -181,7 +181,7 @@
     </script>
 </head>
 <body>
-
+<%@ include file="../layout/top.jsp" %>
 <h2>회원가입</h2>
 
 <form action="../user/addUser" method="post" enctype="multipart/form-data" >
