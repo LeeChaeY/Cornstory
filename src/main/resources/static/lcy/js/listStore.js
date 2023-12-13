@@ -1,6 +1,11 @@
 
 // opilsol-N24 [XZlQ1o5z61]
 $(function() {
+    if($("input[name='userId']").val() === "") {
+        $("input[id='checkset-e-5-1']").attr("checked", "");
+    } else {
+        $("input[id='checkset-e-5-2']").attr("checked", "");
+    }
 
     $(".dropset").on("click", function() {
         $(self.location).attr("href", "/");
@@ -45,21 +50,20 @@ $(function() {
 
 function fncGetProductList(currentPage) {
     $("input[name='currentPage']").val(currentPage);
+    let sessionUserId = $("input[name='sessionUserId']").val();
     let spanText = event.target.innerText;
 
     if (spanText === "상품 조회") {
         $("input[name='userId']").val("");
-        $(self.location).attr("href", "/product/listProduct");
+        $("form[name='form']").attr("method", "post").attr("action", "/product/listProduct").submit();
+        // $(self.location).attr("href", "/product/listProduct");
     } else if (spanText === "나의 저작권") {
+        $("input[name='userId']").val(sessionUserId);
         $("form[name='form']").attr("method", "post").attr("action", "/product/listProduct").submit();
     } else if (spanText === "저작권 등록") {
-        $("input[name='userId']").val("");
-        $("input[name='prodCategory']").val(2);
-        $("form[name='form']").attr("method", "get").attr("action", "/product/addProduct").submit();
+        $(self.location).attr("href", "/product/addProduct?prodCategory=2").submit();
     } else if (spanText === "팝콘 등록") {
-        $("input[name='userId']").val("");
-        $("input[name='prodCategory']").val(0);
-        $("form[name='form']").attr("method", "get").attr("action", "/product/addProduct").submit();
+        $(self.location).attr("href", "/product/addProduct?prodCategory=0").submit();
     } else if (spanText === "팝콘 소비 내역") {
         //$("input[name='userId']").val("${sessionScope.user.userId}");
         $("form[name='form']").attr("method", "post").attr("action", "/product/listProduct").submit();

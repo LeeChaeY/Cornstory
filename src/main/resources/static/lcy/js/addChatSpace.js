@@ -4,7 +4,7 @@ $(function() {
     });
 
     $("input[type='button'][value='취소']").on("click", function() {
-        history.go(1);
+        history.go(-1);
     });
 
     $("input[type='button'][value='등록']").on("click", function() {

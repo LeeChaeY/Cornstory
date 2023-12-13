@@ -41,6 +41,13 @@
       // 폼을 제출하지 않도록 false 반환
       return false;
     }
+
+
+    function chatSpace() {
+      $("input[name='userId']").val(sessionUserId);
+      $("input[name='enterUserId']").val("");
+      $("form[name='form']").attr("method", "post").attr("action", "/chat/listChatSpace").submit();
+    }
   </script>
   <style>
     /* 모달 스타일 */
@@ -131,7 +138,17 @@
             </li>
             <li class="header-subitem">
               <a class="header-sublink" href="javascript:void(0)">
-                <span>나의 채팅방</span>
+                <span>개설한 채팅방</span>
+              </a>
+            </li>
+            <li class="header-subitem">
+              <a class="header-sublink" href="javascript:void(0)">
+                <span>입장한 채팅방</span>
+              </a>
+            </li>
+            <li class="header-subitem">
+              <a class="header-sublink" href="/chat/addChatSpace">
+                <span>채팅방 추가하기</span>
               </a>
             </li>
           </ul>
@@ -146,11 +163,42 @@
                 <span>상품 조회</span>
               </a>
             </li>
+            <c:if test="${sessionScope.user.role == 0}">
+              <li class="header-subitem">
+                <a class="header-sublink" href="javascript:void(0)">
+                  <span>나의 저작권</span>
+                </a>
+              </li>
+              <li class="header-subitem">
+                <a class="header-sublink" href="/product/addProduct?prodCategory=2">
+                  <span>저작권 등록</span>
+                </a>
+              </li>
+            </c:if>
+            <c:if test="${sessionScope.user.role == 1}">
+              <li class="header-subitem">
+                <a class="header-sublink" href="/product/addProduct?prodCategory=0">
+                  <span>팝콘 등록</span>
+                </a>
+              </li>
+            </c:if>
             <li class="header-subitem">
               <a class="header-sublink" href="javascript:void(0)">
-                <span>상품 등록</span>
+                <span>팝콘 소비 내역</span>
               </a>
             </li>
+            <li class="header-subitem">
+              <a class="header-sublink" href="javascript:void(0)">
+                <span>팝콘 충전 내역</span>
+              </a>
+            </li>
+            <c:if test="${sessionScope.user.role == 1}">
+              <li class="header-subitem">
+                <a class="header-sublink" href="javascript:void(0)">
+                  <span>팝콘 총 매출</span>
+                </a>
+              </li>
+            </c:if>
           </ul>
         </li>
         <li class="header-gnbitem">
@@ -252,37 +300,78 @@
           </ul>
         </li>
         <li class="fullmenu-gnbitem">
-          <a class="fullmenu-gnblink" href="javascript:void(0)">
+          <a class="fullmenu-gnblink" href="/chat/listChatSpace">
             <span>채팅</span>
           </a>
           <ul class="fullmenu-sublist">
             <li class="fullmenu-subitem">
-              <a class="fullmenu-sublink" href="javascript:void(0)">
+              <a class="fullmenu-sublink" href="/chat/listChatSpace">
                 <span>채팅방 목록</span>
               </a>
             </li>
             <li class="fullmenu-subitem">
               <a class="fullmenu-sublink" href="javascript:void(0)">
-                <span>나의 채팅방방</span>
+                <span>개설한 채팅방</span>
+              </a>
+            </li>
+            <li class="fullmenu-subitem">
+              <a class="fullmenu-sublink" href="javascript:void(0)">
+                <span>입장한 채팅방</span>
+              </a>
+            </li>
+            <li class="fullmenu-subitem">
+              <a class="fullmenu-sublink" href="/chat/addChatSpace">
+                <span>채팅방 추가하기</span>
               </a>
             </li>
           </ul>
         </li>
         <li class="fullmenu-gnbitem">
-          <a class="fullmenu-gnblink" href="javascript:void(0)">
+          <a class="fullmenu-gnblink" href="/product/listProduct">
             <span>스토어</span>
           </a>
           <ul class="fullmenu-sublist">
             <li class="fullmenu-subitem">
-              <a class="fullmenu-sublink" href="javascript:void(0)">
+              <a class="fullmenu-sublink" href="/product/listProduct">
                 <span>상품 조회</span>
+              </a>
+            </li>
+            <c:if test="${sessionScope.user.role == 0}">
+              <li class="fullmenu-subitem">
+                <a class="fullmenu-sublink" href="javascript:void(0)">
+                  <span>나의 저작권</span>
+                </a>
+              </li>
+              <li class="fullmenu-subitem">
+                <a class="fullmenu-sublink" href="/product/addProduct?prodCategory=2">
+                  <span>저작권 등록</span>
+                </a>
+              </li>
+            </c:if>
+            <c:if test="${sessionScope.user.role == 1}">
+              <li class="fullmenu-subitem">
+                <a class="fullmenu-sublink" href="/product/addProduct?prodCategory=0">
+                  <span>팝콘 등록</span>
+                </a>
+              </li>
+            </c:if>
+            <li class="fullmenu-subitem">
+              <a class="fullmenu-sublink" href="javascript:void(0)">
+                <span>팝콘 소비 내역</span>
               </a>
             </li>
             <li class="fullmenu-subitem">
               <a class="fullmenu-sublink" href="javascript:void(0)">
-                <span>상품 등록</span>
+                <span>팝콘 충전 내역</span>
               </a>
             </li>
+            <c:if test="${sessionScope.user.role == 1}">
+              <li class="fullmenu-subitem">
+                <a class="fullmenu-sublink" href="javascript:void(0)">
+                  <span>팝콘 총 매출</span>
+                </a>
+              </li>
+            </c:if>
           </ul>
         </li>
         <li class="fullmenu-gnbitem">

@@ -7,6 +7,35 @@ $(function() {
         $("input[id='checkset-e-4-3']").attr("checked", "");
     }
 
+    let genre = $("input[name='genre']").val();
+    if (genre === "") {
+        $("input[id='radioset-c-1-1']").attr("checked", "");
+    } else if (genre === "학원") {
+        $("input[id='radioset-c-1-2']").attr("checked", "");
+    } else if (genre === "액션") {
+        $("input[id='radioset-c-1-3']").attr("checked", "");
+    } else if (genre === "SF") {
+        $("input[id='radioset-c-1-4']").attr("checked", "");
+    } else if (genre === "판타지") {
+        $("input[id='radioset-c-1-5']").attr("checked", "");
+    } else if (genre === "개그") {
+        $("input[id='radioset-c-1-6']").attr("checked", "");
+    } else if (genre === "로맨스") {
+        $("input[id='radioset-c-1-7']").attr("checked", "");
+    } else if (genre === "스포츠") {
+        $("input[id='radioset-c-1-8']").attr("checked", "");
+    } else if (genre === "일상") {
+        $("input[id='radioset-c-1-9']").attr("checked", "");
+    } else if (genre === "추리") {
+        $("input[id='radioset-c-1-10']").attr("checked", "");
+    } else if (genre === "스릴러") {
+        $("input[id='radioset-c-1-11']").attr("checked", "");
+    } else if (genre === "무협") {
+        $("input[id='radioset-c-1-12']").attr("checked", "");
+    } else if (genre === "기타") {
+        $("input[id='radioset-c-1-13']").attr("checked", "");
+    }
+
     $(".listStoreSearchButton").on("click", function() {
         $("form[name='form']").attr("method", "post").attr("action", "/chat/listChatSpace").submit();
     });

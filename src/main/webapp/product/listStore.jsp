@@ -57,7 +57,7 @@
             </div>
             <div class="checkset-wrap">
                 <div class="checkset">
-                    <input id="checkset-e-5-1" class="visually-hidden" type="radio" name="inquiryType" value="" checked="">
+                    <input id="checkset-e-5-1" class="visually-hidden" type="radio" name="inquiryType" value="">
                     <label class="checkset-thumb" for="checkset-e-5-1">
                         <span>상품 조회</span>
                     </label>
@@ -109,9 +109,9 @@
     </div>
 </div>
 <!-- [E]opilsol-N26 -->
-<main class="th-layout-main ">
+<main class="th-layout-main">
     <!-- [S]opilsol-N24 -->
-    <div class="opilsol-N24" data-bid="XZlQ1o5z61" style="margin-left: 0px;">
+    <div class="opilsol-N24" data-bid="XZlQ1o5z61">
         <div class="content-container">
             <div class="container-md">
                 <div class="tableset">
@@ -179,25 +179,23 @@
                     </div>
                 </div>
             </div>
-            <br><br><br>
+            <br><br>
 
-
-            <form name="form">
-                <input type="hidden" name="userId" value="${sessionScope.user.userId}">
-                <input type="hidden" name="prodCategory" value="">
-                <div class="listStoreSearch inputset inputset-line inputset-lg">
-<%--                    <input type="hidden" name="searchCondition" value="${!empty search.searchCondition && search.searchCondition.equals("0") ? "selected" : ""}">--%>
-                    <button class="listStoreSearchButton inputset-icon icon-right icon-search btn" type="button" aria-label="아이콘"></button>
-                    <input type="text" name="searchKeyword" class="inputset-input form-control" placeholder="작품명 또는 작가 닉네임을 입력해 주세요."
-                           aria-label="내용" value="${!empty search.searchKeyword ? search.searchKeyword : ''}">
-                </div>
-            </form>
-
-            <br>
             <div class="content-container">
                 <div class="container-md">
                     <div class="tableset">
                         <div class="tableset-inner">
+                            <form name="form" method="post">
+                                <input type="hidden" name="userId" value="${userId}">
+                                <input type="hidden" name="sessionUserId" value="${sessionScope.user.userId}">
+                                <input type="hidden" name="prodCategory" value="">
+                                <div class="listStoreSearch inputset inputset-line inputset-lg">
+                                    <button class="listStoreSearchButton inputset-icon icon-right icon-search btn" type="button" aria-label="아이콘"></button>
+                                    <input type="text" name="searchKeyword" class="inputset-input form-control" placeholder="작품명 또는 작가 닉네임을 입력해 주세요."
+                                           aria-label="내용" value="${!empty search.searchKeyword ? search.searchKeyword : ''}">
+                                </div>
+                            </form><br>
+
                             <h3>저작권</h3> 전체 ${totalCountCopyright} 개
                             <table class="tableset-table table">
                                 <colgroup>

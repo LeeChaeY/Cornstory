@@ -20,7 +20,7 @@
     <meta property="og:url" content="https://웹사이트">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <title>listStore</title>
+    <title>updateChatSpace</title>
     <link rel="stylesheet" href="/ssh/css/style.css">
     <link rel="stylesheet" href="/ssh/css/plugin.css">
     <link rel="stylesheet" href="/ssh/css/template.css">

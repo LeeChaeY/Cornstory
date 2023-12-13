@@ -220,6 +220,7 @@ public class ProductController {
         model.addAttribute("copyrightList", map.get("copyrightList"));
 //        model.addAttribute("resultPage", resultPage);
         model.addAttribute("search", search);
+        model.addAttribute("userId", userId);
 
         System.out.println(map);
         System.out.println(search);

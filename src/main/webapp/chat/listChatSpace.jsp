@@ -20,7 +20,7 @@
     <meta property="og:url" content="https://웹사이트">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <title>listStore</title>
+    <title>listChatSpace</title>
     <link rel="stylesheet" href="/ssh/css/style.css">
     <link rel="stylesheet" href="/ssh/css/plugin.css">
     <link rel="stylesheet" href="/ssh/css/template.css">
@@ -95,68 +95,55 @@
             <div class="container-md">
                 <div class="radioset-wrap">
                     <div class="radioset">
-                        <input id="radioset-c-1-1" name="radioset-c-1" class="visually-hidden" type="radio" value=""
-                               checked="">
+                        <input id="radioset-c-1-1" name="radioset-c-1" class="visually-hidden" type="radio" value="">
                         <label class="radioset-thumb thumb-round" for="radioset-c-1-1">전체</label>
                     </div>
                     <div class="radioset">
-                        <input id="radioset-c-1-2" name="radioset-c-1" class="visually-hidden" type="radio" value=""
-                               checked="">
+                        <input id="radioset-c-1-2" name="radioset-c-1" class="visually-hidden" type="radio" value="">
                         <label class="radioset-thumb thumb-round" for="radioset-c-1-2">학원</label>
                     </div>
                     <div class="radioset">
-                        <input id="radioset-c-1-3" name="radioset-c-1" class="visually-hidden" type="radio" value=""
-                               checked="">
+                        <input id="radioset-c-1-3" name="radioset-c-1" class="visually-hidden" type="radio" value="">
                         <label class="radioset-thumb thumb-round" for="radioset-c-1-3">액션</label>
                     </div>
                     <div class="radioset">
-                        <input id="radioset-c-1-4" name="radioset-c-1" class="visually-hidden" type="radio" value=""
-                               checked="">
+                        <input id="radioset-c-1-4" name="radioset-c-1" class="visually-hidden" type="radio" value="">
                         <label class="radioset-thumb thumb-round" for="radioset-c-1-4">SF</label>
                     </div>
                     <div class="radioset">
-                        <input id="radioset-c-1-5" name="radioset-c-1" class="visually-hidden" type="radio" value=""
-                               checked="">
+                        <input id="radioset-c-1-5" name="radioset-c-1" class="visually-hidden" type="radio" value="">
                         <label class="radioset-thumb thumb-round" for="radioset-c-1-5">판타지</label>
                     </div>
                     <div class="radioset">
-                        <input id="radioset-c-1-6" name="radioset-c-1" class="visually-hidden" type="radio" value=""
-                               checked="">
+                        <input id="radioset-c-1-6" name="radioset-c-1" class="visually-hidden" type="radio" value="">
                         <label class="radioset-thumb thumb-round" for="radioset-c-1-6">개그</label>
                     </div>
                     <div class="radioset">
-                        <input id="radioset-c-1-7" name="radioset-c-1" class="visually-hidden" type="radio" value=""
-                               checked="">
+                        <input id="radioset-c-1-7" name="radioset-c-1" class="visually-hidden" type="radio" value="">
                         <label class="radioset-thumb thumb-round" for="radioset-c-1-7">로맨스</label>
                     </div>
                     <div class="radioset">
-                        <input id="radioset-c-1-8" name="radioset-c-1" class="visually-hidden" type="radio" value=""
-                               checked="">
+                        <input id="radioset-c-1-8" name="radioset-c-1" class="visually-hidden" type="radio" value="">
                         <label class="radioset-thumb thumb-round" for="radioset-c-1-8">스포츠</label>
                     </div>
                     <div class="radioset">
-                        <input id="radioset-c-1-9" name="radioset-c-1" class="visually-hidden" type="radio" value=""
-                               checked="">
+                        <input id="radioset-c-1-9" name="radioset-c-1" class="visually-hidden" type="radio" value="">
                         <label class="radioset-thumb thumb-round" for="radioset-c-1-9">일상</label>
                     </div>
                     <div class="radioset">
-                        <input id="radioset-c-1-10" name="radioset-c-1" class="visually-hidden" type="radio" value=""
-                               checked="">
+                        <input id="radioset-c-1-10" name="radioset-c-1" class="visually-hidden" type="radio" value="">
                         <label class="radioset-thumb thumb-round" for="radioset-c-1-10">추리</label>
                     </div>
                     <div class="radioset">
-                        <input id="radioset-c-1-11" name="radioset-c-1" class="visually-hidden" type="radio" value=""
-                               checked="">
+                        <input id="radioset-c-1-11" name="radioset-c-1" class="visually-hidden" type="radio" value="">
                         <label class="radioset-thumb thumb-round" for="radioset-c-1-11">스릴러</label>
                     </div>
                     <div class="radioset">
-                        <input id="radioset-c-1-12" name="radioset-c-1" class="visually-hidden" type="radio" value=""
-                               checked="">
+                        <input id="radioset-c-1-12" name="radioset-c-1" class="visually-hidden" type="radio" value="">
                         <label class="radioset-thumb thumb-round" for="radioset-c-1-12">무협</label>
                     </div>
                     <div class="radioset">
-                        <input id="radioset-c-1-13" name="radioset-c-1" class="visually-hidden" type="radio" value=""
-                               checked="">
+                        <input id="radioset-c-1-13" name="radioset-c-1" class="visually-hidden" type="radio" value="">
                         <label class="radioset-thumb thumb-round" for="radioset-c-1-13">기타</label>
                     </div>
                 </div>
