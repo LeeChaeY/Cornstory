@@ -17,11 +17,11 @@
   <meta property="og:image" content="https://웹사이트/images/opengraph.png">
   <meta property="og:url" content="https://웹사이트">
   <title>cornstory</title>
-  <link rel="stylesheet" href="ssh/css/setting.css">
-  <link rel="stylesheet" href="ssh/css/plugin.css">
-  <link rel="stylesheet" href="ssh/css/template.css">
-  <link rel="stylesheet" href="ssh/css/common.css">
-  <link rel="stylesheet" href="ssh/css/style.css">
+  <link rel="stylesheet" href="/ssh/css/setting.css">
+  <link rel="stylesheet" href="/ssh/css/plugin.css">
+  <link rel="stylesheet" href="/ssh/css/template.css">
+  <link rel="stylesheet" href="/ssh/css/common.css">
+  <link rel="stylesheet" href="/ssh/css/style.css">
 </head>
 
 <body>

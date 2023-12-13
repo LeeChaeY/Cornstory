@@ -39,7 +39,7 @@ public class ProductController {
     //    @Value("${pageUnit}")
     int pageUnit = 5;
     //    @Value("${pageSize}")
-    int pageSize = 3;
+    int pageSize = 10;
 
     public ProductController() {
         System.out.println("ProductController 진입");
@@ -183,9 +183,6 @@ public class ProductController {
                     // 파일 업로드 실패 처리
                     System.out.println("<scrpt>alert('파일의 크기는 10MB까지 입니다.");
                 }
-            } else {
-                // 업로드된 파일이 없는 경우 처리
-                product.setProdImage("");
             }
         }
 
@@ -197,16 +194,16 @@ public class ProductController {
 
     @RequestMapping("listProduct")
     public String listProduct(Model model, @ModelAttribute("search") Search search,
-                              HttpServletRequest request, HttpSession session) throws Exception {
+                              HttpServletRequest request) throws Exception {
         System.out.println("/product/listProduct : GET / POST");
 
         String userId = "";
         if (request.getParameter("userId") != null) userId = request.getParameter("userId");
-//        User user = (User) session.getAttribute("user");
+        System.out.println("/product/listProduct : GET / POST :: userId :: "+userId);
 
-        if (search.getSearchCondition() == null) {
-            search.setSearchCondition("");
-        }
+//        if (search.getSearchCondition() == null) {
+//            search.setSearchCondition("");
+//        }
 
         if (search.getCurrentPage() == 0) {
             search.setCurrentPage(1);

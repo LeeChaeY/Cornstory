@@ -100,45 +100,43 @@
 
 	<select id="countProductCopyright" parameterType="map" resultType="int">
 		SELECT COUNT(*) AS totalCount
-		FROM (SELECT *
-		FROM product
-		<where>
-			prod_category = 2
-			<if test='search.searchCondition != null and !search.searchCondition.equals("")
-					and search.searchKeyword != null and !search.searchKeyword.equals("")'>
-				<if test='search.searchCondition.equals("0")'>
-					AND LOWER(prod_name) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%'))
-				</if>
-			</if>
-			<if test='userId != null and !userId.equals("")'>
-				AND user_id = #{userId}
-			</if>
-		</where>
-		) countTable
+		FROM (SELECT prod_no, prod_category, prod_name, episode_order,
+					prod_price, prod_image, prod_date, work_no,
+					U.user_id, nickname
+				FROM product P JOIN user U ON P.user_id = U.user_id
+				<where>
+					prod_category = 2
+					<if test='search.searchKeyword != null and !search.searchKeyword.equals("")'>
+						AND LOWER(prod_name) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%'))
+						OR LOWER(nickname) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%'))
+					</if>
+					<if test='userId != null and !userId.equals("")'>
+						AND U.user_id = #{userId}
+					</if>
+				</where>
+			) countTable
 	</select>
 
 	<select id="listProductCopyright" parameterType="map" resultMap="productSelectMap">
 	SELECT *
 		FROM ( SELECT inner_table.*, @rownum := @rownum + 1 AS row_seq
 		FROM (SELECT prod_no, prod_category, prod_name, episode_order,
-		prod_price, prod_image, prod_date, work_no,
-		U.user_id, nickname
-		FROM  product P JOIN user U ON U.user_id = P.user_id
-		<where>
-			prod_category = 2
-			<if test='search.searchCondition != null and !search.searchCondition.equals("")
-								and search.searchKeyword != null and !search.searchKeyword.equals("")'>
-				<if test='search.searchCondition.equals("0")'>
-					AND LOWER(prod_name) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%'))
-				</if>
-			</if>
-			<if test='userId != null and !userId.equals("")'>
-				AND P.user_id = #{userId}
-			</if>
-		</where>
-		ORDER BY prod_no
-		) inner_table, (SELECT @rownum := 0) r
-		LIMIT #{endRowNum}
+					prod_price, prod_image, prod_date, work_no,
+					U.user_id, nickname
+				FROM  product P JOIN user U ON U.user_id = P.user_id
+				<where>
+					prod_category = 2
+					<if test='search.searchKeyword != null and !search.searchKeyword.equals("")'>
+						AND LOWER(prod_name) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%'))
+						OR LOWER(nickname) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%'))
+					</if>
+					<if test='userId != null and !userId.equals("")'>
+						AND U.user_id = #{userId}
+					</if>
+				</where>
+				ORDER BY prod_no
+			) inner_table, (SELECT @rownum := 0) r
+			LIMIT #{endRowNum}
 		) AS result
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
 	</select>

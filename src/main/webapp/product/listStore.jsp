@@ -2,335 +2,286 @@
          pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>listStore</title>
 
-        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<html lang="ko">
 
-        <script type="text/css">
-            a {
-                text-decoration: none;
-            }
-        </script>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="imagetoolbar" content="no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="title" content="웹사이트">
+    <meta name="description" content="웹사이트입니다.">
+    <meta name="keywords" content="키워드,키워드,키워드">
+    <meta property="og:title" content="웹사이트">
+    <meta property="og:description" content="웹사이트입니다">
+    <meta property="og:image" content="https://웹사이트/images/opengraph.png">
+    <meta property="og:url" content="https://웹사이트">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <title>listStore</title>
+    <link rel="stylesheet" href="/ssh/css/style.css">
+    <link rel="stylesheet" href="/ssh/css/plugin.css">
+    <link rel="stylesheet" href="/ssh/css/template.css">
+    <link rel="stylesheet" href="/ssh/css/common.css">
+    <link rel="stylesheet" href="/ssh/css/style.css">
 
-        <script type="text/javascript">
-
-            $(function() {
-
-                $("span").click(function(){
-                    fncGetProductList('1');
-                });
-
-                $("input[name='tranCnt']").on("change", function(){
-                    if ($(this).val() < 1) {
-                        $(this).val(1);
-                    }
-                });
-            });
+    <link rel="stylesheet" href="/lcy/css/style.css">
 
 
-            function fncGetProductList(currentPage) {
-                $("input[name='currentPage']").val(currentPage);
+    <!-- [E]thwhole-wfLpW5Z3pJ -->
+    <script src="/ssh/js/setting.js"></script>
+    <script src="/ssh/js/plugin.js"></script>
+    <script src="/ssh/js/template.js"></script>
+    <script src="/ssh/js/common.js"></script>
+    <script src="/ssh/js/script.js"></script>
 
-                let spanText = event.target.innerText;
-                if (spanText === "목록") {
-                    // $(self.location).attr("href", "/product/listProduct");
-                    $("form[name='form']").attr("method", "post").attr("action", "/product/listProduct").submit();
-                }
-                else if (spanText === "나의 저작권") {
-                    $("input[name='userId']").val("${sessionScope.user.userId}");
-                    $("form[name='form']").attr("method", "post").attr("action", "/product/listProduct").submit();
-                }
-                else if (spanText === "저작권 등록") {
-                    $("input[name='prodCategory']").val(2);
-                    $("form[name='form']").attr("method", "get").attr("action", "/product/addProduct").submit();
-                }
-                else if (spanText === "팝콘 등록") {
-                    $("input[name='prodCategory']").val(0);
-                    $("form[name='form']").attr("method", "get").attr("action", "/product/addProduct").submit();
-                }
-                else if (spanText === "팝콘 소비 내역") {
-                    <%--$("input[name='userId']").val("${sessionScope.user.userId}");--%>
-                    $("form[name='form']").attr("method", "post").attr("action", "/product/listProduct").submit();
-                }
-                else if (spanText === "팝콘 충전 내역") {
-                    <%--$("input[name='userId']").val("${sessionScope.user.userId}");--%>
-                    $("form[name='form']").attr("method", "post").attr("action", "/product/listProduct").submit();
-                }
-                else if (spanText === "팝콘 총 매출") {
-                    <%--$("input[name='userId']").val("${sessionScope.user.userId}");--%>
-                    $("form[name='form']").attr("method", "post").attr("action", "/product/listProduct").submit();
-                }
-                else if (spanText === "검색") {
-                    <%--$("input[name='userId']").val("${sessionScope.user.userId}");--%>
-                    $("form[name='form']").attr("method", "post").attr("action", "/product/listProduct").submit();
-                }
-            }
+    <script src="/lcy/js/listStore.js"></script>
+</head>
 
-            function addPurchase(prodNo) {
-                let tranCnt = $("input[name='tranCnt']").val();
-                $(self.location).attr("href", "/purchase/addPurchase?prodNo=" + prodNo + "&tranCnt=" + tranCnt);
-            }
+<body>
 
-            function viewWork(workNo) {
-                $(self.location).attr("href", "/work/getDetailWork?workNo=" + workNo);
-            }
+<%@ include file="../layout/top.jsp" %>
 
-            function updateProduct(prodNo) {
-                $(self.location).attr("href", "/product/updateProduct?prodNo=" + prodNo);
-            }
-
-            function deleteProduct(prodNo) {
-                $.ajax(
-                    {
-                        url : "/product/json/deleteProduct?prodNo="+prodNo,
-                        method : "GET",
-                        dataType : "text",
-                        data : {},
-                        success : function(returnMessage, status) {
-                            // alert(returnMessage);
-                            $("input[value='"+prodNo+"']").parents("tr").children("td").remove();
-                        },
-                        error : function(status) {
-
-                            //Debug...
-                            alert("error");
-                        }
-                    });
-            }
-
-        </script>
-    </head>
-    <body>
-
-        <table height="37" >
-            <tr>
-                <td height="37">
-                    <img width="15" height="37"/>
-                </td>
-                <td style="padding-left:10px;">
-                    <table >
-                        <tr>
-                            <td class="ct_ttl01">
-                                <a href="/"><h2>메인</h2></a>
-                            </td>
-                            <td class="ct_ttl01">
-                                스토어
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-                <td height="37">
-                    <img src="" width="12" height="37"/>
-                </td>
-            </tr>
-        </table>
-
-        <form name="form">
-            <input type="hidden" name="userId" value="">
-            <input type="hidden" name="prodCategory" value="">
-        </form>
-        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
-            <tr>
-                <td>
-                    <div align="center">
-                        <strong><span>목록</span></strong> |
-                        <c:if test="${sessionScope.user.role == 0}">
-                            <span><strong>나의 저작권</strong></span> |
-                            <span><strong>저작권 등록</strong></span> |
-                        </c:if>
-                        <c:if test="${sessionScope.user.role == 1}">
-                            <span><strong>팝콘 등록</strong></span> |
-                        </c:if>
-                        <span><strong>팝콘 소비 내역</strong></span> |
-                        <span><strong>팝콘 충전 내역</strong></span> |
-                        <c:if test="${sessionScope.user.role == 1}">
-                            <span><strong>팝콘 총 매출</strong></span>
-                        </c:if>
+<!-- [E]thwhole-lNlPW5z3lS -->
+<!-- [S]opilsol-N26 -->
+<div class="opilsol-N26" data-bid="sblQ1o2joM">
+    <div class="content-container">
+        <div class="contents-form container-md">
+            <div class="contents-form-top d-flex justify-content-between">
+                <h3 class="inputset-tit">스토어</h3>
+                <div class="dropset dropset-solid">
+                    <div class="dropset-head"></div>
+                </div>
+            </div>
+            <div class="checkset-wrap">
+                <div class="checkset">
+                    <input id="checkset-e-5-1" class="visually-hidden" type="radio" name="inquiryType" value="" checked="">
+                    <label class="checkset-thumb" for="checkset-e-5-1">
+                        <span>상품 조회</span>
+                    </label>
+                </div>
+                <c:if test="${sessionScope.user.role == 0}">
+                    <div class="checkset">
+                        <input id="checkset-e-5-2" class="visually-hidden" type="radio" name="inquiryType" value="">
+                        <label class="checkset-thumb" for="checkset-e-5-2">
+                            <span>나의 저작권</span>
+                        </label>
                     </div>
-                    <br>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="11" height="1"></td>
-            </tr>
-
-            <tr>
-                <td align="right">
-                    <select name="searchCondition" class="ct_input_g" style="width:100px">
-                        <option value="0"
-                        ${!empty search.searchCondition && search.searchCondition.equals("0") ? "selected" : ""}>
-                            저작권 이름
-                        </option>
-                    </select>
-                    <input type="text" name="searchKeyword"
-                           value="${!empty search.searchCondition && search.searchCondition.equals('1') ? search.searchKeyword : ''}"
-                           class="ct_input_g" style="width:200px; height:19px" />
-                </td>
-
-                <td align="right" width="70">
-                    <table border="0" cellspacing="0" cellpadding="0">
-                        <tr>
-                            <td width="17" height="23">
-                            </td>
-                            <td class="ct_btn01" style="padding-top:3px;"
-                                onClick="fncGetProductList('1');">
-                                검색
-                            </td>
-                            <td width="14" height="23">
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        </table>
-
-        <table width="90%">
-            <tr height="30px">
-                <td colspan="11" >
-                    <h3>팝콘</h3> 전체 ${totalCountPopcorn} 개
-                </td>
-            </tr>
-            <tr>
-                <td colspan="11" bgcolor="808285" height="1" width="90%"></td>
-            </tr>
-
-            <tr>
-                <td class="ct_list_b" align="center" width="20">No</td>
-                <td class="ct_line02"></td>
-                <td class="ct_list_b" align="center" width="150">팝콘 이미지</td>
-                <td class="ct_line02"></td>
-                <td class="ct_list_b" align="center" width="100">팝콘 이름</td>
-                <td class="ct_line02"></td>
-                <td class="ct_list_b" align="center" width="50">팝콘 가격</td>
-                <td class="ct_line02"></td>
-                <td class="ct_list_b" align="center" width="50">팝콘 개수</td>
-                <td class="ct_line02"></td>
-                <td class="ct_list_b" align="center" width="50">팝콘 등록일</td>
-                <td class="ct_line02"></td>
-                <td class="ct_list_b" align="center" width="250"></td>
-            </tr>
-            <tr>
-                <td colspan="11" bgcolor="808285" height="1" width="90%"></td>
-            </tr>
-
-            <c:set var="i" value="0"/>
-            <c:forEach var="popcorn" items="${ popcornList }">
-                <c:set var="i" value="${i+1}"/>
-                <tr class="ct_list_pop" style="height: 30px;">
-                    <td align="center"><input type="hidden" name="prodNo" value="${popcorn.prodNo}">${ i }</td>
-                    <td></td>
-                    <td align="center"><img width="30px" height="30px" src="/file/product/${popcorn.prodImage}"></td>
-                    <td></td>
-                    <td align="center">${popcorn.prodName}</td>
-                    <td></td>
-                    <td align="center">${popcorn.prodPrice}</td>
-                    <td></td>
-                    <td align="center">${popcorn.prodCnt}</td>
-                    <td></td>
-                    <td align="center">${popcorn.prodDate}</td>
-                    <td></td>
-                    <td align="center">
-                        <c:if test="${sessionScope.user.role == 0}">
-                            <input type="number" min="1" value="1" name="tranCnt" style="width: 50px;"> 개
-                            <input type="button" value="충전하기" onClick="addPurchase(${popcorn.prodNo});">
-                        </c:if>
-                        <c:if test="${sessionScope.user.role == 1}">
-                            <input type="button" value="수정하기" onclick="updateProduct(${popcorn.prodNo});"><br>
-                            <input type="button" value="삭제하기" onclick="deleteProduct(${popcorn.prodNo});"><br>
-                        </c:if>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="11" height="1"></td>
-                </tr>
-            </c:forEach>
-        </table>
-
-
-
-
-        <hr width="5">
-
-        <table width="90%">
-            <tr height="30px">
-                <td colspan="11" >
-                    <h3>저작권</h3> 전체 ${totalCountCopyright} 개
-                </td>
-            </tr>
-            <tr>
-                <td colspan="11" bgcolor="808285" height="1" width="90%"></td>
-            </tr>
-
-            <tr>
-                <td class="ct_list_b" align="center" width="20">No</td>
-                <td class="ct_line02"></td>
-                <td class="ct_list_b" align="center" width="150">저작권 이미지</td>
-                <td class="ct_line02"></td>
-                <td class="ct_list_b" align="center" width="100">저작권 이름</td>
-                <td class="ct_line02"></td>
-                <td class="ct_list_b" align="center" width="100">작품명</td>
-                <td class="ct_line02"></td>
-                <td class="ct_list_b" align="center" width="50">저작권 가격</td>
-                <td class="ct_line02"></td>
-                <td class="ct_list_b" align="center" width="50">완결 회차</td>
-                <td class="ct_line02"></td>
-                <td class="ct_list_b" align="center" width="200">등록일</td>
-                <td class="ct_line02"></td>
-                <td class="ct_list_b" align="center" width="200">작가명</td>
-                <td class="ct_line02"></td>
-                <td class="ct_list_b" align="center" width="100"></td>
-                <td class="ct_line02"></td>
-                <td class="ct_list_b" align="center" width="100"></td>
-            </tr>
-            <tr>
-                <td colspan="11" bgcolor="808285" height="1" width="90%"></td>
-            </tr>
-            
-            <c:set var="i" value="0"/>
-            <c:forEach var="copyright" items="${ copyrightList }">
-                <c:set var="i" value="${i+1}"/>
-                <tr class="ct_list_pop">
-                    <td align="center"><input type="hidden" name="prodNo" value="${copyright.prodNo}">${ i }</td>
-                    <td></td>
-                    <td align="center"><img width="300px" height="300px" src="/file/work/${copyright.prodImage}"></td>
-                    <td></td>
-                    <td align="center">${copyright.prodName}</td>
-                    <td></td>
-                    <td align="center">${copyright.workName}</td>
-                    <td></td>
-                    <td align="center">${popcorn.prodPrice}</td>
-                    <td></td>
-                    <td align="center">${popcorn.episodeOrder}</td>
-                    <td></td>
-                    <td align="center">${popcorn.prodDate}</td>
-                    <td></td>
-                    <td align="center">${popcorn.nickname}</td>
-                    <td></td>
-                    <td align="center">
-                        <input type="button" name="viewWork" value="작품 보러가기">
-                    </td>
-                    <td></td>
-                    <td align="center">
-                        <c:if test="${sessionScope.user.role == 0}">
-                            <input type="button" value="구매하기" onClick="addPurchase(${copyright.prodNo});">
-                        </c:if>
-                        <c:if test="${sessionScope.user.role == 1}">
-                            <input type="button" value="수정하기" onclick="updateProduct(${copyright.prodNo});"><br>
-                            <input type="button" value="삭제하기" onclick="deleteProduct(${copyright.prodNo});"><br>
-                        </c:if>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="11" height="1"></td>
-                </tr>
-            </c:forEach>
-        </table>
+                    <div class="checkset">
+                        <input id="checkset-e-5-3" class="visually-hidden" type="radio" name="inquiryType" value="">
+                        <label class="checkset-thumb" for="checkset-e-5-3">
+                            <span>저작권 등록</span>
+                        </label>
+                    </div>
+                </c:if>
+                <c:if test="${sessionScope.user.role == 1}">
+                    <div class="checkset">
+                        <input id="checkset-e-5-4" class="visually-hidden" type="radio" name="inquiryType" value="">
+                        <label class="checkset-thumb" for="checkset-e-5-4">
+                            <span>팝콘 등록</span>
+                        </label>
+                    </div>
+                </c:if>
+                <div class="checkset">
+                    <input id="checkset-e-5-5" class="visually-hidden" type="radio" name="inquiryType" value="">
+                    <label class="checkset-thumb" for="checkset-e-5-5">
+                        <span>팝콘 소비 내역</span>
+                    </label>
+                </div>
+                <div class="checkset">
+                    <input id="checkset-e-5-6" class="visually-hidden" type="radio" name="inquiryType" value="">
+                    <label class="checkset-thumb" for="checkset-e-5-6">
+                        <span>팝콘 충전 내역</span>
+                    </label>
+                </div>
+                <c:if test="${sessionScope.user.role == 1}">
+                    <div class="checkset">
+                        <input id="checkset-e-5-7" class="visually-hidden" type="radio" name="inquiryType" value="">
+                        <label class="checkset-thumb" for="checkset-e-5-7">
+                            <span>팝콘 총 매출</span>
+                        </label>
+                    </div>
+                </c:if>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- [E]opilsol-N26 -->
+<main class="th-layout-main ">
+    <!-- [S]opilsol-N24 -->
+    <div class="opilsol-N24" data-bid="XZlQ1o5z61" style="margin-left: 0px;">
+        <div class="content-container">
+            <div class="container-md">
+                <div class="tableset">
+                    <div class="tableset-inner">
+                        <h3>팝콘</h3> 전체 ${totalCountPopcorn} 개
+                        <table class="tableset-table table">
+                            <colgroup>
+                                <col>
+                                <col>
+                                <col>
+                                <col>
+                                <col>
+                                <col>
+                                <col>
+                            </colgroup>
+                            <thead class="thead-border-top">
+                            <tr>
+                                <th class="number" scope="col">NO</th>
+                                <th scope="col">팝콘 이미지</th>
+                                <th scope="col">팝콘 이름</th>
+                                <th scope="col">팝콘 가격</th>
+                                <th scope="col">팝콘 개수</th>
+                                <th scope="col">팝콘 등록일</th>
+                                <th class="last-child" scope="col"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <c:set var="i" value="0"/>
+                                <c:forEach var="popcorn" items="${ popcornList }">
+                                    <c:set var="i" value="${i+1}"/>
+                                    <tr>
+                                        <td class="number">
+                                            <input type="hidden" name="prodNo" value="${popcorn.prodNo}">
+                                                ${i}
+                                        </td>
+                                        <td>
+                                            <img width="100px" height="100px" src="/file/product/${popcorn.prodImage}">
+                                        </td>
+                                        <td>
+                                                ${popcorn.prodName}
+                                        </td>
+                                        <td>
+                                                ${popcorn.prodPrice}
+                                        </td>
+                                        <td>
+                                                ${popcorn.prodCnt}
+                                        </td>
+                                        <td>
+                                                ${popcorn.prodDate}
+                                        </td>
+                                        <td class="last-child">
+                                            <c:if test="${sessionScope.user.role == 0}">
+                                                <input type="number" min="1" value="1" name="tranCnt" style="width: 50px;"> 개
+                                                <input type="button" value="충전하기">
+                                            </c:if>
+                                            <c:if test="${sessionScope.user.role == 1}">
+                                                <input type="button" value="수정하기"><br>
+                                                <input type="button" value="삭제하기"><br>
+                                            </c:if>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <br><br><br>
 
 
-    </body>
+            <form name="form">
+                <input type="hidden" name="userId" value="${sessionScope.user.userId}">
+                <input type="hidden" name="prodCategory" value="">
+                <div class="listStoreSearch inputset inputset-line inputset-lg">
+<%--                    <input type="hidden" name="searchCondition" value="${!empty search.searchCondition && search.searchCondition.equals("0") ? "selected" : ""}">--%>
+                    <button class="listStoreSearchButton inputset-icon icon-right icon-search btn" type="button" aria-label="아이콘"></button>
+                    <input type="text" name="searchKeyword" class="inputset-input form-control" placeholder="작품명 또는 작가 닉네임을 입력해 주세요."
+                           aria-label="내용" value="${!empty search.searchKeyword ? search.searchKeyword : ''}">
+                </div>
+            </form>
+
+            <br>
+            <div class="content-container">
+                <div class="container-md">
+                    <div class="tableset">
+                        <div class="tableset-inner">
+                            <h3>저작권</h3> 전체 ${totalCountCopyright} 개
+                            <table class="tableset-table table">
+                                <colgroup>
+                                    <col>
+                                    <col>
+                                    <col>
+                                    <col>
+                                    <col>
+                                    <col>
+                                    <col>
+                                    <col>
+                                    <col>
+                                </colgroup>
+                                <thead class="thead-border-top">
+                                <tr>
+                                    <th class="number" scope="col">NO</th>
+                                    <th scope="col">저작권 이미지</th>
+                                    <th scope="col">저작권 이름</th>
+                                    <th scope="col">작품명</th>
+                                    <th scope="col">저작권 가격</th>
+                                    <th scope="col">완결 회차</th>
+                                    <th scope="col">등록일</th>
+                                    <th scope="col">작가명</th>
+                                    <th class="last-child" scope="col"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <c:set var="i" value="0"/>
+                                    <c:forEach var="copyright" items="${ copyrightList }">
+                                        <c:set var="i" value="${i+1}"/>
+                                        <tr>
+                                            <td class="number">
+                                                <input type="hidden" name="prodNo" value="${copyright.prodNo}">
+                                                    ${i}
+                                            </td>
+                                            <td>
+                                                <img width="100px" height="100px" src="/file/work/${copyright.prodImage}">
+                                            </td>
+                                            <td>
+                                                    ${copyright.prodName}
+                                            </td>
+                                            <td class="viewWork">
+                                                    <input type="hidden" name="workNo" value="${copyright.workNo}">
+                                                    ${copyright.workName}
+                                            </td>
+                                            <td>
+                                                    ${copyright.prodPrice}
+                                            </td>
+                                            <td>
+                                                    ${copyright.episodeOrder}
+                                            </td>
+                                            <td>
+                                                    ${copyright.prodDate}
+                                            </td>
+                                            <td class="viewUser">
+                                                    <input type="hidden" name="userId" value="${copyright.userId}">
+                                                    ${copyright.nickname}
+                                            </td>
+                                            <td class="last-child">
+                                                <c:if test="${sessionScope.user.role == 0}">
+                                                    <input type="button" value="구매하기">
+                                                </c:if>
+                                                <c:if test="${sessionScope.user.role == 1}">
+                                                    <input type="button" value="수정하기"><br>
+                                                    <input type="button" value="삭제하기"><br>
+                                                </c:if>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [E]opilsol-N24 -->
+</main>
+
+
+
+<%@ include file="../layout/bottom.jsp" %>
+
+</body>
+
 </html>

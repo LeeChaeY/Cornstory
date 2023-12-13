@@ -16,11 +16,11 @@
   <meta property="og:image" content="https://웹사이트/images/opengraph.png">
   <meta property="og:url" content="https://웹사이트">
   <title>cornstory</title>
-  <link rel="stylesheet" href="ssh/css/setting.css">
-  <link rel="stylesheet" href="ssh/css/plugin.css">
-  <link rel="stylesheet" href="ssh/css/template.css">
-  <link rel="stylesheet" href="ssh/css/common.css">
-  <link rel="stylesheet" href="ssh/css/style.css">
+  <link rel="stylesheet" href="/ssh/css/setting.css">
+  <link rel="stylesheet" href="/ssh/css/plugin.css">
+  <link rel="stylesheet" href="/ssh/css/template.css">
+  <link rel="stylesheet" href="/ssh/css/common.css">
+  <link rel="stylesheet" href="/ssh/css/style.css">
 
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script>
@@ -120,12 +120,12 @@
           </ul>
         </li>
         <li class="header-gnbitem">
-          <a class="header-gnblink" href="javascript:void(0)">
+          <a class="header-gnblink" href="/chat/listChatSpace">
             <span>채팅</span>
           </a>
           <ul class="header-sublist">
             <li class="header-subitem">
-              <a class="header-sublink" href="javascript:void(0)">
+              <a class="header-sublink" href="/chat/listChatSpace">
                 <span>채팅방 목록</span>
               </a>
             </li>
@@ -137,12 +137,12 @@
           </ul>
         </li>
         <li class="header-gnbitem">
-          <a class="header-gnblink" href="javascript:void(0)">
+          <a class="header-gnblink" href="/product/listProduct">
             <span>스토어</span>
           </a>
           <ul class="header-sublist">
             <li class="header-subitem">
-              <a class="header-sublink" href="javascript:void(0)">
+              <a class="header-sublink" href="/product/listProduct">
                 <span>상품 조회</span>
               </a>
             </li>
@@ -349,9 +349,9 @@
   </div>
 </header>
 
-<script src="ssh/js/setting.js"></script>
-<script src="ssh/js/plugin.js"></script>
-<script src="ssh/js/template.js"></script>
-<script src="ssh/js/common.js"></script>
-<script src="ssh/js/script.js"></script>
+<script src="/ssh/js/setting.js"></script>
+<script src="/ssh/js/plugin.js"></script>
+<script src="/ssh/js/template.js"></script>
+<script src="/ssh/js/common.js"></script>
+<script src="/ssh/js/script.js"></script>
 </body>
