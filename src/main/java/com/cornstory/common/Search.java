@@ -9,10 +9,20 @@ public class Search {
 	private String orderCondition;
 	private String orderKeyword;
 	private int pageSize;
-	
+
+	private int offset;
+
 	public Search(){
 	}
-	
+
+	public int getOffset() {
+		return offset;
+	}
+
+	public void setOffset(int offset) {
+		this.offset = offset;
+	}
+
 	public int getPageSize() {
 		return pageSize;
 	}
