@@ -46,23 +46,25 @@ public class ChatRestController {
         // request.getServletContext().getRealPath(""): webapp 상대 경로
 
         // 기존 파일 삭제
-        try {
-            String deleteImg = chatService.getChatSpace(chatSpaceNo).getcSpaceImage();
-            String deleteDir = uploadDir + File.separator + deleteImg;
-            File fileToDelete = new File(deleteDir);
+        String deleteImg = chatService.getChatSpace(chatSpaceNo).getcSpaceImage();
+        if (!deleteImg.equals("chat.jpg")) {
+            try {
+                String deleteDir = uploadDir + File.separator + deleteImg;
+                File fileToDelete = new File(deleteDir);
 
-            // 파일을 삭제합니다.
-            if (fileToDelete.exists()) {
-                if (fileToDelete.delete()) {
-                    System.out.println("파일이 성공적으로 삭제되었습니다.");
-                } else {
-                    System.out.println("파일을 삭제하는 데 문제가 발생했습니다.");
-                }     
+                // 파일을 삭제합니다.
+                if (fileToDelete.exists()) {
+                    if (fileToDelete.delete()) {
+                        System.out.println("파일이 성공적으로 삭제되었습니다.");
+                    } else {
+                        System.out.println("파일을 삭제하는 데 문제가 발생했습니다.");
+                    }
+                }
+            } catch(Exception e){
+                e.printStackTrace();
+                // 파일 업로드 실패 처리
+                System.out.println("파일 삭제 실패");
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            // 파일 업로드 실패 처리
-            System.out.println("파일 삭제 실패");
         }
 
         chatService.deleteChatSpace(chatSpaceNo);

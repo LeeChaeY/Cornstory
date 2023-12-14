@@ -60,7 +60,7 @@ public class WorkController {
 
     }
     @PostMapping("addWork")
-    public String addWork(@ModelAttribute("work") Work work, @RequestParam("thumbnailFile") MultipartFile file, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public String addWork(@ModelAttribute("work") Work work, @RequestParam("thumbnailFile") MultipartFile file) throws Exception {
         System.out.println("[ WorkController.addWork() start........]");
         String fileName = work.getUserId() + "_" + work.getWorkName();
         fileName = fileName.replaceAll("[^a-zA-Z0-9가-힣_]", "_");
@@ -85,7 +85,7 @@ public class WorkController {
 
          workService.addWork(work);
 
-        return "index";
+        return "work/getWork";
     }
 
     @GetMapping("updateWork")
@@ -124,7 +124,7 @@ public class WorkController {
         }
 
         workService.updateWork(work);
-        return "index";
+        return "work/getWork";
 
     }
 
@@ -137,23 +137,23 @@ public class WorkController {
         } catch (Exception e) {
             e.printStackTrace(); // 에러 로깅 또는 예외 처리
         }
-        return "index";
+        return "work/getWork";
     }
-    @RequestMapping ("listWork")
+    @RequestMapping("listWork")
     public String listWork(@ModelAttribute("search") Search search, Model model) throws Exception {
         System.out.println("[ WorkController.listWork() start........]");
 
-        System.out.println(search.toString());
+        search.setCurrentPage(1);
+        search.setPageSize(3);
 
-        search.setSearchKeyword(search.getSearchKeyword());
+        System.out.println(search.getSearchKeyword());
+        Map<String, Object> map = workService.listWork(search);
 
-        Map<String, Object> map=workService.listWork(search);
-
-        model.addAttribute("list",map.get("list"));
-        model.addAttribute("totalCount",map.get("totalCount"));
+        //model.addAttribute("list", map.get("list"));
+        model.addAttribute("totalCount", map.get("totalCount"));
         model.addAttribute("search", search);
-        return "work/listWork";
 
+        return "work/listWork";
     }
 
     @RequestMapping ("getWork")
@@ -172,6 +172,8 @@ public class WorkController {
     public String getDetailWork( @RequestParam("workNo") int workNo, Model model, @SessionAttribute(name="user", required = false)User user) throws Exception {
         System.out.println("[ WorkController.getWork() start........]");
         Work work = workService.getWork(workNo);
+        work.setViewCnt(work.getViewCnt()+1);
+        workService.updateViews(work);
 
         Map<String, Object> map=episodeService.listEpisode(workNo);
         model.addAttribute("work",work);

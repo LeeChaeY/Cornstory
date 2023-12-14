@@ -91,7 +91,7 @@ class EpisodeTests {
 	//@Test
 	public void testGetEpisodeCommentById() throws Exception {
 
-		List<EpisodeComment> retrievedComment = episodeService.listEpisodeComment(10002);
+		List<EpisodeComment> retrievedComment = episodeService.listEpisodeComment();
 		for (EpisodeComment episodeComment : retrievedComment) {
 			System.out.println(episodeComment);
 		}

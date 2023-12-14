@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +36,7 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
 
     @Override
-    public Map<String, Object> listPurchase(Search search, String userId, int tranCategory) throws Exception {
+    public Map<String, Object> listPurchase(Search search, String userId, int role, int tranCategory) throws Exception {
         Map<String,Object> map = new HashMap<String,Object>();
         int totalCount = 0;
         List<Purchase> list = null;
@@ -43,17 +44,23 @@ public class PurchaseServiceImpl implements PurchaseService {
         map.put("userId", userId);
         map.put("startRowNum", (search.getCurrentPage()-1) * search.getPageSize() + 1);
         map.put("endRowNum", search.getCurrentPage() * search.getPageSize());
+        map.put("role", role);
+        map.put("tranCategory", tranCategory);
 
 //        tranCategory - 0: 팝콘, 1: 작품 회차, 2: 저작권
         if (tranCategory == 1 || tranCategory == 2) {
             map.put("search", search);
+
+            System.out.println("PurchaseServiceImpl :: listPurchase :: "+map);
             totalCount = purchaseDao.countPurchase(map);
             System.out.println("PurchaseServiceImpl :: countPurchase :: "+totalCount);
 
             list = purchaseDao.listPurchase(map);
 
         } else if (tranCategory == 0) {
-            totalCount = purchaseDao.countPurchasePopcorn(userId);
+            map.put("userId", userId);
+
+            totalCount = purchaseDao.countPurchasePopcorn(map);
             System.out.println("PurchaseServiceImpl :: countPurchasePopcorn :: "+totalCount);
 
             list = purchaseDao.listPurchasePopcorn(map);
@@ -70,13 +77,35 @@ public class PurchaseServiceImpl implements PurchaseService {
         Map<String,Object> map = new HashMap<String,Object>();
         map.put("userId", userId);
         map.put("tranCategory", 1);
-        List<Integer> workList = purchaseDao.countWorkTotalPopcorn(map);
+        List<Map> workSaleList = purchaseDao.countWorkTotalPopcorn(map);
 
         map.put("tranCategory", 2);
-        List<Integer> copyrightList = purchaseDao.countWorkTotalPopcorn(map);
+        List<Map> copyrightSaleList = purchaseDao.countWorkTotalPopcorn(map);
 
+        List<Map> workList = new ArrayList<Map>();
+        int size = (workSaleList.size() > copyrightSaleList.size()) ? workSaleList.size() : copyrightSaleList.size();
+        for (int i=0; i<size; i++) {
+            Map work = new HashMap();
+            if (i < workSaleList.size()) {
+                work.put("workNo", workSaleList.get(i).get("work_no"));
+                work.put("category", workSaleList.get(i).get("category"));
+                work.put("workName", workSaleList.get(i).get("work_name"));
+                work.put("nickname", workSaleList.get(i).get("nickname"));
+                work.put("workPrice", workSaleList.get(i).get("prod_price"));
+                work.put("workTotalPrice", workSaleList.get(i).get("total_price"));
+            }
+            if (i < copyrightSaleList.size()) {
+                work.put("workNo", copyrightSaleList.get(i).get("work_no"));
+                work.put("category", copyrightSaleList.get(i).get("category"));
+                work.put("workName", workSaleList.get(i).get("work_name"));
+                work.put("nickname", workSaleList.get(i).get("nickname"));
+                work.put("copyPrice", copyrightSaleList.get(i).get("prod_price"));
+                work.put("copyTotalPrice", copyrightSaleList.get(i).get("total_price"));
+            }
+            workList.add(work);
+        }
         map.put("workList", workList);
-        map.put("copyList", copyrightList);
+        map.put("totalCount", workList.size());
         return map;
     }
 

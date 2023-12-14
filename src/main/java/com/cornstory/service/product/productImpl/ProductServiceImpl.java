@@ -32,8 +32,18 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	public Product getProductByEpisodeNo(int episodeNo) throws Exception {
+		return productDao.getProductByEpisodeNo(episodeNo);
+	}
+
+	@Override
 	public int updateProduct(Product product) throws Exception {
 		return productDao.updateProduct(product);
+	}
+
+	@Override
+	public int updateProductEpisode(Product product) throws Exception {
+		return productDao.updateProductEpisode(product);
 	}
 
 	@Override
@@ -74,8 +84,8 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public int prodNameCheck(String prodName) throws Exception {
-		return (productDao.countProductProdName(prodName) == 0) ? 0 : 1;
+	public int prodNameCheck(int prodCnt) throws Exception {
+		return (productDao.countProductProdName(prodCnt) == 0) ? 0 : 1;
 	}
 
 	@Override

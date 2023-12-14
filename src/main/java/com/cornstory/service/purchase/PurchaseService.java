@@ -15,7 +15,7 @@ public interface PurchaseService {
 
     public int deletePurchase(int tranNo) throws Exception;
 
-    public Map<String, Object> listPurchase(Search search, String userId, int tranCategory) throws Exception;
+    public Map<String, Object> listPurchase(Search search, String userId, int role, int tranCategory) throws Exception;
 
     public Map<String, Object> countWorkTotalPopcorn(String userId) throws Exception;
 

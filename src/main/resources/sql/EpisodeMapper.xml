@@ -72,10 +72,10 @@
     </select>
 
     <!-- 작품의 최신 회차 가져오기 -->
-    <select id="getLatestEpisode" parameterType="int" resultType="episode">
+    <select id="getLatestEpisode" parameterType="episode" resultType="episode">
         SELECT *
         FROM episode
-        WHERE work_no = #{workNo : INTEGER}
+        WHERE work_no = #{workNo : INTEGER} AND episode_order = #{episodeNo}
         ORDER BY episode_order DESC
         LIMIT 1
     </select>

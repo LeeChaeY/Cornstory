@@ -1,146 +1,191 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>updateChatSpace</title>
+         pageEncoding="UTF-8" %>
 
-        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-        <script type="text/css">
-            a {
-                text-decoration: none;
-            }
-        </script>
+<html lang="ko">
 
-        <script type="text/javascript">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="imagetoolbar" content="no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="title" content="웹사이트">
+    <meta name="description" content="웹사이트입니다.">
+    <meta name="keywords" content="키워드,키워드,키워드">
+    <meta property="og:title" content="웹사이트">
+    <meta property="og:description" content="웹사이트입니다">
+    <meta property="og:image" content="https://웹사이트/images/opengraph.png">
+    <meta property="og:url" content="https://웹사이트">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <title>updateChatSpace</title>
+    <link rel="stylesheet" href="/ssh/css/style.css">
+    <link rel="stylesheet" href="/ssh/css/plugin.css">
+    <link rel="stylesheet" href="/ssh/css/template.css">
+    <link rel="stylesheet" href="/ssh/css/common.css">
+    <link rel="stylesheet" href="/ssh/css/style.css">
 
-            $(function() {
-
-                $("span").click(function(){
-                    if (event.target.innerText === '채팅방 추가하기') {
-                        $(self.location).attr("href", "/chat/addChatSpace");
-                        return false;
-                    }
-                    fncGetChatList('1');
-                });
-
-                $("input[type='button'][value='채팅방 수정']").on("click", function () {
-                    // form이 실제로 submit되는 것을 막음
-                    event.preventDefault();
-
-                    // $("form[name='updateForm']").attr("method", "POST").attr("enctype", "multipart/form-data").attr("action", "/chat/updateChatSpace");
-
-                    // form 데이터를 가져오기 (만약 FormData 객체를 사용하려면 적절히 변경)
-                    let formData = new FormData(this);
-
-                    // 서버로 POST 요청 보내기
-                    fetch(this.action, {
-                        method: "post",
-                        body: formData
-                    })
-                    .then(response => response.text())
-                    .then(responseText => {
-                        let popWin = window.open("/chat/enterChatSpace?chatSpaceNo="+"${chatSpace.chatSpaceNo}","popWin","scrollbars=yes");
-
-                        $(self.location).attr("href", "/chat/listChatSpace");
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-
-                    // $("form[name='updateForm']").attr("method", "POST").attr("enctype", "multipart/form-data").attr("action", "/chat/updateChatSpace").submit();
-                    // popWin = window.open("/chat/enterChatSpace?chatSpaceNo="+chatSpaceNo,"popWin","scrollbars=yes");
-                });
-            });
+    <link rel="stylesheet" href="/lcy/css/style.css">
 
 
-            function fncGetChatList(currentPage) {
-                $("input[name='currentPage']").val(currentPage);
+    <!-- [E]thwhole-wfLpW5Z3pJ -->
+    <script src="/ssh/js/setting.js"></script>
+    <script src="/ssh/js/plugin.js"></script>
+    <script src="/ssh/js/template.js"></script>
+    <script src="/ssh/js/common.js"></script>
+    <script src="/ssh/js/script.js"></script>
 
-                let spanText = event.target.innerText;
-                if (spanText === "개설한 채팅방") {
-                    $("input[name='userId']").val("${sessionScope.user.userId}");
-                    $("form[name='form']").attr("method", "post").attr("action", "/chat/listChatSpace").submit();
-                }
-                else if (spanText === "입장한 채팅방") {
-                    $("input[name='enterUserId']").val("${sessionScope.user.userId}");
-                    $("form[name='form']").attr("method", "post").attr("action", "/chat/listChatSpace").submit();
-                }
-                else {
-                    $("input[name='userId']").val("");
-                    $("input[name='enterUserId']").val("");
-                    $("form[name='form']").attr("method", "post").attr("action", "/chat/listChatSpace").submit();
-                }
-            }
-        </script>
-    </head>
-    <body>
+    <script src="/lcy/js/addChatSpace.js"></script>
+</head>
 
-        <table height="37" >
-            <tr>
-                <td height="37">
-                    <img width="15" height="37"/>
-                </td>
-                <td style="padding-left:10px;">
-                    <table >
-                        <tr>
-                            <td class="ct_ttl01">
-                                채팅방 목록
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-                <td height="37">
-                    <img src="" width="12" height="37"/>
-                </td>
-            </tr>
-        </table>
+<body>
 
+<%@ include file="../layout/top.jsp" %>
 
-        <form name="form">
-            <input type="hidden" name="genre" value="">
-            <input type="hidden" name="userId" value="">
-            <input type="hidden" name="enterUserId" value="">
-        </form>
-        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
-            <tr>
-                <td>
-                    <div align="center">
-                        <strong><span>채팅방 목록</span></strong> |
-                        <span><strong>개설한 채팅방</strong></span> |
-                        <span><strong>입장한 채팅방</strong></span> |
-                        <a href="#"><span><strong>채팅방 추가하기</strong></span></a>
+<!-- [E]thwhole-lNlPW5z3lS -->
+<!-- [S]opilsol-N26 -->
+<div class="opilsol-N26" data-bid="Mr11fzPLNQx" id="">
+    <div class="content-container">
+        <div class="contents-form container-md">
+            <div class="contents-form-top d-flex justify-content-between">
+                <h3 class="inputset-tit">채팅</h3>
+                <div class="dropset dropset-solid">
+                    <div class="dropset-head"></div>
+                </div>
+            </div>
+            <div class="checkset-wrap">
+                <div class="checkset">
+                    <input id="checkset-e-4-1" class="visually-hidden" type="radio" name="inquiryType" value="">
+                    <label class="checkset-thumb" for="checkset-e-4-1">
+                        <span>채팅방 목록</span>
+                    </label>
+                </div>
+                <div class="checkset">
+                    <input id="checkset-e-4-2" class="visually-hidden" type="radio" name="inquiryType" value="">
+                    <label class="checkset-thumb" for="checkset-e-4-2">
+                        <span>개설한 채팅방</span>
+                    </label>
+                </div>
+                <div class="checkset">
+                    <input id="checkset-e-4-3" class="visually-hidden" type="radio" name="inquiryType" value="">
+                    <label class="checkset-thumb" for="checkset-e-4-3">
+                        <span>입장한 채팅방</span>
+                    </label>
+                </div>
+                <div class="checkset">
+                    <input id="checkset-e-4-4" class="visually-hidden" type="radio" name="inquiryType" value=""
+                           checked="">
+                    <label class="checkset-thumb" for="checkset-e-4-4">
+                        <span>채팅방 추가하기</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form name="form">
+    <input type="hidden" name="genre" value="${genre}">
+    <input type="hidden" name="userId" value="${userId}">
+    <input type="hidden" name="enterUserId" value="${enterUserId}">
+    <input type="hidden" name="sessionUserId" value="${sessionScope.user.userId}">
+</form>
+
+<!-- [E]opilsol-N26 -->
+<main class="th-layout-main ">
+    <!-- [S]opilsol-N27 -->
+    <div class="opilsol-N27" data-bid="PNlQ32jk6H">
+        <div class="content-container">
+            <div class="contents-form container-md">
+                <div class="contents-form-top d-flex justify-content-between">
+                    <h3 class="inputset-tit">채팅방 추가하기</h3>
+                    <span class="req">필수 선택입니다.</span>
+                </div>
+                <div class="contents-form tableset">
+                    <div class="tableset-inner">
+                        <form name="updateForm" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="chatSpaceNo" value="${chatSpace.chatSpaceNo}">
+                            <table class="tableset-table table">
+                                <colgroup>
+                                    <col>
+                                    <col>
+                                    <col>
+                                    <col>
+                                </colgroup>
+                                <tbody>
+                                <tr>
+                                    <th>
+                                        <label class="label">개설자 닉네임</label>
+                                    </th>
+                                    <td>
+                                        <div class="inputset">
+                                            ${sessionScope.user.nickName}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <label class="req label" for="Name">채팅방 제목</label>
+                                    </th>
+                                    <td>
+                                        <div class="inputset">
+                                            <input type="text" class="inputset-input form-control" name="cSpaceName" id="Name"
+                                                   value="${chatSpace.cSpaceName}" aria-label="이름">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <span class="label">장르</span>
+                                    </th>
+                                    <td colspan="3">
+                                        ${chatSpace.genre}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <span class="label">썸네일 첨부</span>
+                                    </th>
+                                    <td colspan="2">
+                                        <div class="fileset fileset-lg fileset-label">
+                                            <label>
+                                                <div class="fileset-body">
+                                                    <div class="fileset-group">
+                                                        <input type="file" class="fileset-input" name="file">
+                                                        <button class="fileset-cancel"></button>
+                                                    </div>
+                                                    <span class="btnset btnset-line btnset-mono btnset-lg btnset-rect fileset-upload">썸네일 첨부</span>
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <p class="p1 co-text3">이미지 형식의 jpg만 첨부 가능합니다.</p>
+                                        <p class="p1 co-text3">첨부파일은 10MB를 초과할 수 없으며, 최대 1개까지 가능합니다.</p>
+                                    </td>
+                                    <td colspan="1">
+                                        * 기존 썸네일<br><br>
+                                        <img width="100px" height="100px" src="/file/chat/${chatSpace.cSpaceImage}">
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                        <br>
+                        <div class="bottom-btn">
+                            <input type="button" class="btnset btnset-lg btnset-dark btnset-rect" value="취소"/>
+                            <input type="button" class="btnset btnset-lg btnset-rect" value="수정"/>
+                        </div>
                     </div>
-                    <br>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="11" height="1"></td>
-            </tr>
-        </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [E]opilsol-N27 -->
+</main>
 
-        <h2>채팅방 수정</h2>
-        <form name="updateForm" method="post" enctype="multipart/form-data" target="popWin">
-            <input type="hidden" name="chatSpaceNo" value="${chatSpace.chatSpaceNo}">
+<%@ include file="../layout/bottom.jsp" %>
 
-            <label>개설자 닉네임: </label>
-            <div>${sessionScope.user.nickName}</div><br><br>
+</body>
 
-            <label>제목: </label>
-            <input type="text" name="cSpaceName" value="${chatSpace.cSpaceName}" maxlength="30" style="width: 400px" required><br><br>
-
-            <label>장르:</label><br>
-            <div>${chatSpace.genre}</div><br>
-
-            <label>썸네일: </label>
-            <div><img width="300px" height="300px" src="/file/chat/${chatSpace.cSpaceImage}"></div>
-            <input type="file" name="file" value="${chatSpace.cSpaceImage}"><br><br>
-
-            <input type="submit" value="채팅방 수정">
-        </form>
-
-    </body>
 </html>

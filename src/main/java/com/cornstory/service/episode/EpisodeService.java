@@ -26,9 +26,7 @@ public interface EpisodeService {
     //작품회차 최고 목록
     public int episodeMax(int workNo) throws Exception;
 
-    public Episode getLatestEpisode(int workNo);
-
-    public List<EpisodeComment> listEpisodeComment(int episodeNo) throws Exception;
+    public List<EpisodeComment> listEpisodeComment() throws Exception;
 
     //작품 회차의 댓글 등록
     public void addEpisodeComment(EpisodeComment episodeComment)throws Exception;
@@ -38,4 +36,6 @@ public interface EpisodeService {
 
     //댓글 회차의 댓글 삭제
     public void deleteEpisodeComment(int commentNo)throws Exception;
+
+    public Episode getLatestEpisode(Episode episode)throws Exception;
 }

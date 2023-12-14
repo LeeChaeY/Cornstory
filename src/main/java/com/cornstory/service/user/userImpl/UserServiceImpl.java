@@ -85,4 +85,9 @@ public class UserServiceImpl implements UserService {
 		}
 		return result; // 사용자가 존재하지 않으면 true 반환
 	}
+
+
+	public int updateUserPopcornCnt(Map map) throws Exception {
+		return userDao.updateUserPopcornCnt(map);
+	}
 }

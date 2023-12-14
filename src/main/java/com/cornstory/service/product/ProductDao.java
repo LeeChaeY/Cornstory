@@ -17,7 +17,11 @@ public interface ProductDao {
 
 	public Product getProduct(int prodNo) throws Exception;
 
+	public Product getProductByEpisodeNo(int episodeNo) throws Exception;
+
 	public int updateProduct(Product product) throws Exception;
+
+	public int updateProductEpisode(Product product) throws Exception;
 
 	public int deleteProduct(int prodNo) throws Exception;
 
@@ -29,7 +33,7 @@ public interface ProductDao {
 
 	public  List<Product> listProductCopyright(Map map) throws Exception;
 
-	public int countProductProdName(String prodName) throws Exception;
+	public int countProductProdName(int prodCnt) throws Exception;
 
 	public List<Work> listCompleteWork(String userId) throws Exception;
 

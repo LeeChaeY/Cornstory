@@ -11,6 +11,7 @@
 	<groupId>com.cornstory</groupId>
 	<artifactId>Cornstory</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 	<name>Cornstory</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
@@ -77,6 +78,7 @@
 
 		<dependency>
 			<groupId>org.mongodb</groupId>
+
 			<artifactId>mongodb-driver-sync</artifactId>
 			<version>4.11.1</version> <!-- Use the latest version available -->
 		</dependency>
@@ -98,6 +100,17 @@
 			<artifactId>jakarta.servlet.jsp.jstl</artifactId>
 			<version>3.0.1</version>
 		</dependency>
+
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.security</groupId>-->
+<!--			<artifactId>spring-security-taglibs</artifactId>-->
+<!--		</dependency>-->
+
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-security</artifactId>-->
+<!--		</dependency>-->
+
 		<dependency>
 			<groupId>dom4j</groupId>
 			<artifactId>dom4j</artifactId>
