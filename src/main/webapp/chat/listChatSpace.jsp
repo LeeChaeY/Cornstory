@@ -1,277 +1,247 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8" %>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>listChatSpace</title>
-        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<html lang="ko">
 
-        <style type="text/css">
-            a {
-                text-decoration: none;
-                color: #111111;
-                cursor: default;
-            }
-        </style>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="imagetoolbar" content="no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="title" content="웹사이트">
+    <meta name="description" content="웹사이트입니다.">
+    <meta name="keywords" content="키워드,키워드,키워드">
+    <meta property="og:title" content="웹사이트">
+    <meta property="og:description" content="웹사이트입니다">
+    <meta property="og:image" content="https://웹사이트/images/opengraph.png">
+    <meta property="og:url" content="https://웹사이트">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <title>listChatSpace</title>
+    <link rel="stylesheet" href="/ssh/css/style.css">
+    <link rel="stylesheet" href="/ssh/css/plugin.css">
+    <link rel="stylesheet" href="/ssh/css/template.css">
+    <link rel="stylesheet" href="/ssh/css/common.css">
+    <link rel="stylesheet" href="/ssh/css/style.css">
 
-        <script type="text/javascript">
-
-            $(function() {
-                $("span").click(function(){
-                    if (event.target.innerText === '채팅방 추가하기') {
-                        $(self.location).attr("href", "/chat/addChatSpace");
-                        return false;
-                    }
-                    fncGetChatList('1');
-                });
-
-                $("input[type='button'][value='입장하기']").on("click", function (${chatSpace.chatSpcaeNo}) {
-                    //enterChatSpace(${chatSpace.chatSpaceNo});
-                });
-
-                $("input[type='button'][value='삭제하기']").on("click", function (${chatSpace.chatSpaceNo}) {
-                    // deleteChatSpace(chatSpaceNo);
-                });
-
-                $("input[type='button'][value='나가기']").on("click", function (chatSpaceNo) {
-                    // deleteChatEnter(chatSpaceNo);
-                });
-            });
+    <link rel="stylesheet" href="/lcy/css/style.css">
 
 
-            function fncGetChatList(currentPage){
-                let genreList = ["학원", "액션", "SF", "판타지", "개그", "로맨스", "스포츠",
-                    "일상", "추리", "스릴러", "무협", "기타"];
+    <!-- [E]thwhole-wfLpW5Z3pJ -->
+    <script src="/ssh/js/setting.js"></script>
+    <script src="/ssh/js/plugin.js"></script>
+    <script src="/ssh/js/template.js"></script>
+    <script src="/ssh/js/common.js"></script>
+    <script src="/ssh/js/script.js"></script>
 
-                $("input[name='currentPage']").val(currentPage);
+    <script src="/lcy/js/listChatSpace.js"></script>
+</head>
 
-                let spanText = event.target.innerText;
+<body>
 
-                if (genreList.indexOf(spanText) !== -1) $("input[name='genre']").val(spanText);
-                else if (spanText === "전체" || spanText === "채팅방 목록") {
-                    $("input[name='genre']").val("");
-                    $("input[name='searchKeyword']").val("");
-                }
-                else $("input[name='genre']").val("");
-
-
-                if (spanText === "개설한 채팅방") {
-                    $("input[name='userId']").val("${sessionScope.user.userId}");
-                    $("form[name='form']").attr("method", "post").attr("action", "/chat/listChatSpace").submit();
-                }
-                else if (spanText === "입장한 채팅방") {
-                    $("input[name='enterUserId']").val("${sessionScope.user.userId}");
-                    $("form[name='form']").attr("method", "post").attr("action", "/chat/listChatSpace").submit();
-                }
-                else {
-                    $("input[name='userId']").val("");
-                    $("input[name='enterUserId']").val("");
-                    $("form[name='form']").attr("method", "post").attr("action", "/chat/listChatSpace").submit();
-                }
-            }
-
-            function enterChatSpace(chatSpaceNo) {
-                // $(self.location).attr("href", "/chat/enterChatSpace?chatSpaceNo="+chatSpaceNo);
-                popWin = window.open("/chat/enterChatSpace?chatSpaceNo="+chatSpaceNo,"popWin","scrollbars=yes");
-            }
-
-            function updateChatSpace(chatSpaceNo) {
-
-                $(self.location).attr("href", "/chat/updateChatSpace?chatSpaceNo="+chatSpaceNo);
-            }
-
-            function deleteChatSpace(chatSpaceNo) {
-                $.ajax(
-                    {
-                        url : "/chat/json/deleteChatSpace/"+chatSpaceNo+"",
-                        method : "GET",
-                        success : function(JSONData , status) {
-                            $("input[value='"+chatSpaceNo+"']").parents("tr").children("td").remove();
-                        },
-                        error : function(status) {
-
-                            //Debug...
-                            alert("error");
-                        }
-                    });
-            }
-
-            function deleteChatEnter(chatSpaceNo) {
-                $.ajax(
-                    {
-                        url : "/chat/json/deleteChatEnter?chatSpaceNo="+chatSpaceNo,
-                        method : "GET",
-                        dataType : "text",
-                        data : {},
-                        success : function(returnMessage, status) {
-                            // alert(returnMessage);
-                            let cnt = $("input[value='"+chatSpaceNo+"']").parents("tr").children("td").eq(10).text() - 1;
-                            $("input[value='"+chatSpaceNo+"']").parents("tr").children("td").eq(10).text(cnt);
-                            $("input[value='"+chatSpaceNo+"']").parents("tr").children("td").eq(14).children("input").eq(1).remove();
-                        },
-                        error : function(status) {
-
-                            //Debug...
-                            alert("error");
-                        }
-                    });
-            }
-        </script>
-    </head>
-    <body>
-        <form action="/chat/listChatSpace" name="form">
-        <table height="37" >
-            <tr>
-                <td height="37">
-                    <img width="15" height="37"/>
-                </td>
-                <td style="padding-left:10px;">
-                    <table >
-                        <tr>
-                            <td class="ct_ttl01">
-                                채팅방 목록
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-                <td height="37">
-                    <img src="" width="12" height="37"/>
-                </td>
-            </tr>
-        </table>
+<%@ include file="../layout/top.jsp" %>
 
 
-        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
-            <input type="hidden" name="genre" value="">
-            <input type="hidden" name="userId" value="">
-            <input type="hidden" name="enterUserId" value="">
-            <tr>
-                <td>
-                    <div align="center">
-                        <strong><span>채팅방 목록</span></strong> |
-                        <span><strong>개설한 채팅방</strong></span> |
-                        <span><strong>입장한 채팅방</strong></span> |
-                        <a href="#"><span><strong>채팅방 추가하기</strong></span></a>
+<!-- [E]thwhole-lNlPW5z3lS -->
+<!-- [S]opilsol-N26 -->
+<div class="opilsol-N26" data-bid="dL11fYz8S6T" id="">
+    <div class="content-container">
+        <div class="contents-form container-md">
+            <div class="contents-form-top d-flex justify-content-between">
+                <h3 class="inputset-tit">채팅</h3>
+                <div class="dropset dropset-solid">
+                    <div class="dropset-head"></div>
+                </div>
+            </div>
+            <div class="checkset-wrap">
+                <div class="checkset">
+                    <input id="checkset-e-4-1" class="visually-hidden" type="radio" name="inquiryType" value="">
+                    <label class="checkset-thumb" for="checkset-e-4-1">
+                        <span>채팅방 목록</span>
+                    </label>
+                </div>
+                <div class="checkset">
+                    <input id="checkset-e-4-2" class="visually-hidden" type="radio" name="inquiryType" value="">
+                    <label class="checkset-thumb" for="checkset-e-4-2">
+                        <span>개설한 채팅방</span>
+                    </label>
+                </div>
+                <div class="checkset">
+                    <input id="checkset-e-4-3" class="visually-hidden" type="radio" name="inquiryType" value="">
+                    <label class="checkset-thumb" for="checkset-e-4-3">
+                        <span>입장한 채팅방</span>
+                    </label>
+                </div>
+                <div class="checkset">
+                    <input id="checkset-e-4-4" class="visually-hidden" type="radio" name="inquiryType" value="">
+                    <label class="checkset-thumb" for="checkset-e-4-4">
+                        <span>채팅방 추가하기</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- [E]opilsol-N26 -->
+<main class="th-layout-main ">
+    <!-- [S]opilsol-N24 -->
+    <div class="opilsol-N24" data-bid="El2cLoRe4L1" style="margin-left: 0px;">
+        <div class="content-container">
+            <div class="container-md">
+                <div class="radioset-wrap">
+                    <div class="radioset">
+                        <input id="radioset-c-1-1" name="radioset-c-1" class="visually-hidden" type="radio" value="">
+                        <label class="radioset-thumb thumb-round" for="radioset-c-1-1">전체</label>
                     </div>
-                    <br>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="11" height="1"></td>
-            </tr>
-            <tr><td><div class="genre"><br>
-                <span>전체</span> |
-                <span>학원</span> |
-                <span>액션</span> |
-                <span>SF</span> |
-                <span>판타지</span> |
-                <span>개그</span> |
-                <span>로맨스</span> |
-                <span>스포츠</span> |
-                <span>일상</span> |
-                <span>추리</span> |
-                <span>스릴러</span> |
-                <span>무협</span> |
-                <span>기타</span>
-            </div></td></tr>
-            <tr>
-                <td align="right">
-                    <select name="searchCondition" class="ct_input_g" style="width:100px">
-                        <option value="1"
-                        ${!empty search.searchCondition && search.searchCondition.equals("1") ? "selected" : ""}>
-                            채팅방 이름
-                        </option>
-                    </select>
-                    <input type="text" name="searchKeyword"
-                           value="${!empty search.searchCondition && search.searchCondition.equals('1') ? search.searchKeyword : ''}"
-                           class="ct_input_g" style="width:200px; height:19px" />
-                </td>
+                    <div class="radioset">
+                        <input id="radioset-c-1-2" name="radioset-c-1" class="visually-hidden" type="radio" value="">
+                        <label class="radioset-thumb thumb-round" for="radioset-c-1-2">학원</label>
+                    </div>
+                    <div class="radioset">
+                        <input id="radioset-c-1-3" name="radioset-c-1" class="visually-hidden" type="radio" value="">
+                        <label class="radioset-thumb thumb-round" for="radioset-c-1-3">액션</label>
+                    </div>
+                    <div class="radioset">
+                        <input id="radioset-c-1-4" name="radioset-c-1" class="visually-hidden" type="radio" value="">
+                        <label class="radioset-thumb thumb-round" for="radioset-c-1-4">SF</label>
+                    </div>
+                    <div class="radioset">
+                        <input id="radioset-c-1-5" name="radioset-c-1" class="visually-hidden" type="radio" value="">
+                        <label class="radioset-thumb thumb-round" for="radioset-c-1-5">판타지</label>
+                    </div>
+                    <div class="radioset">
+                        <input id="radioset-c-1-6" name="radioset-c-1" class="visually-hidden" type="radio" value="">
+                        <label class="radioset-thumb thumb-round" for="radioset-c-1-6">개그</label>
+                    </div>
+                    <div class="radioset">
+                        <input id="radioset-c-1-7" name="radioset-c-1" class="visually-hidden" type="radio" value="">
+                        <label class="radioset-thumb thumb-round" for="radioset-c-1-7">로맨스</label>
+                    </div>
+                    <div class="radioset">
+                        <input id="radioset-c-1-8" name="radioset-c-1" class="visually-hidden" type="radio" value="">
+                        <label class="radioset-thumb thumb-round" for="radioset-c-1-8">스포츠</label>
+                    </div>
+                    <div class="radioset">
+                        <input id="radioset-c-1-9" name="radioset-c-1" class="visually-hidden" type="radio" value="">
+                        <label class="radioset-thumb thumb-round" for="radioset-c-1-9">일상</label>
+                    </div>
+                    <div class="radioset">
+                        <input id="radioset-c-1-10" name="radioset-c-1" class="visually-hidden" type="radio" value="">
+                        <label class="radioset-thumb thumb-round" for="radioset-c-1-10">추리</label>
+                    </div>
+                    <div class="radioset">
+                        <input id="radioset-c-1-11" name="radioset-c-1" class="visually-hidden" type="radio" value="">
+                        <label class="radioset-thumb thumb-round" for="radioset-c-1-11">스릴러</label>
+                    </div>
+                    <div class="radioset">
+                        <input id="radioset-c-1-12" name="radioset-c-1" class="visually-hidden" type="radio" value="">
+                        <label class="radioset-thumb thumb-round" for="radioset-c-1-12">무협</label>
+                    </div>
+                    <div class="radioset">
+                        <input id="radioset-c-1-13" name="radioset-c-1" class="visually-hidden" type="radio" value="">
+                        <label class="radioset-thumb thumb-round" for="radioset-c-1-13">기타</label>
+                    </div>
+                </div>
+                <br><br>
+                <div class="tableset">
+                    <div class="tableset-inner">
+                        <form name="form">
+                            <div class="inputset inputset-line inputset-lg">
+                                <button class="listStoreSearchButton inputset-icon icon-right icon-search btn"
+                                        type="button"
+                                        aria-label="아이콘"></button>
+                                <input type="text" class="inputset-input form-control" name="searchKeyword"
+                                       placeholder="채팅방 이름 또는 개설자 닉네임을 입력해 주세요." aria-label="내용"
+                                        value="${!empty search.searchKeyword ? search.searchKeyword:''}">
+                            </div>
+                            <br>
+                            <h3 contenteditable="true">채팅방 목록</h3> 전체 ${resultPage.totalCount} 개<br>
+                            <input type="hidden" name="genre" value="${genre}">
+                            <input type="hidden" name="userId" value="${userId}">
+                            <input type="hidden" name="enterUserId" value="${enterUserId}">
+                            <input type="hidden" name="sessionUserId" value="${sessionScope.user.userId}">
+                        </form>
+                        <table class="tableset-table table">
+                            <colgroup>
+                                <col>
+                                <col>
+                                <col>
+                                <col>
+                                <col>
+                                <col>
+                                <col>
+                                <col>
+                            </colgroup>
+                            <thead class="thead-border-top">
+                            <tr>
+                                <th class="number" scope="col">NO</th>
+                                <th scope="col">채팅방 이미지</th>
+                                <th scope="col">채팅방 제목</th>
+                                <th scope="col">채팅방 개설자</th>
+                                <th scope="col">채팅방 장르</th>
+                                <th scope="col">채팅방 인원수</th>
+                                <th scope="col">채팅방 개설일</th>
+                                <th class="last-child" scope="col"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:set var="i" value="0"/>
+                            <c:forEach var="chatSpace" items="${ list }">
+                                <c:set var="i" value="${i+1}"/>
+                                <tr>
+                                    <td class="number">
+                                        <input type="hidden" name="chatSpaceNo" value="${chatSpace.chatSpaceNo}">
+                                            ${i}
+                                    </td>
+                                    <td>
+                                        <img width="100px" height="100px" src="/file/chat/${chatSpace.cSpaceImage}">
+                                    </td>
+                                    <td>
+                                            ${chatSpace.cSpaceName}
+                                    </td>
+                                    <td>
+                                        <img src="/file/chat/${chatSpace.userImage}">
+                                            ${chatSpace.nickname}
+                                    </td>
+                                    <td>
+                                            ${chatSpace.genre}
+                                    </td>
+                                    <td>
+                                            ${chatSpace.cSpaceUserCnt}
+                                    </td>
+                                    <td>
+                                            ${chatSpace.cSpaceDate}
+                                    </td>
+                                    <td class="last-child">
+                                        <input type="button" value="입장하기"><br>
+                                        <c:if test="${chatSpace.userId != sessionScope.user.userId && chatSpace.chatEnterCheck == 1}">
+                                            <input type="button" value="나가기">
+                                        </c:if>
+                                        <c:if test="${chatSpace.userId == sessionScope.user.userId}">
+                                            <input type="button" value="수정하기"><br>
+                                            <input type="button" value="삭제하기"><br>
+                                        </c:if>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [E]opilsol-N24 -->
+</main>
 
-                <td align="right" width="70">
-                    <table border="0" cellspacing="0" cellpadding="0">
-                        <tr>
-                            <td width="17" height="23">
-                            </td>
-                            <td class="ct_btn01" style="padding-top:3px;"
-                                onClick="fncGetChatList('1');">
-                                검색
-                            </td>
-                            <td width="14" height="23">
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        </table>
 
+<%@ include file="../layout/bottom.jsp" %>
 
-        <table width="90%">
-            <tr height="30px">
-                <td colspan="11" >
-                    전체  ${ resultPage.totalCount } 건수,	현재 ${ resultPage.currentPage } 페이지
-                </td>
-            </tr>
-            <tr>
-                <td class="ct_list_b" align="center" width="20">No</td>
-                <td class="ct_line02"></td>
-                <td class="ct_list_b" align="center" width="150">채팅방 이미지</td>
-                <td class="ct_line02"></td>
-                <td class="ct_list_b" align="center" width="100">채팅방 제목</td>
-                <td class="ct_line02"></td>
-                <td class="ct_list_b" align="center" width="50">채팅방 개설일</td>
-                <td class="ct_line02"></td>
-                <td class="ct_list_b" align="center" width="50">채팅방 개설자</td>
-                <td class="ct_line02"></td>
-                <td class="ct_list_b" align="center" width="50">채팅방 인원수</td>
-                <td class="ct_line02"></td>
-                <td class="ct_list_b" align="center" width="50">장르</td>
-                <td class="ct_line02"></td>
-                <td class="ct_list_b" align="center" width="100"></td>
-            </tr>
-            <tr>
-                <td colspan="11" bgcolor="808285" height="1" width="90%"></td>
-            </tr>
+</body>
 
-            <c:set var="i" value="0"/>
-            <c:forEach var="chatSpace" items="${ list }">
-                <c:set var="i" value="${i+1}"/>
-                <tr class="ct_list_pop">
-                    <td align="center"><input type="hidden" name="chatSpaceNo" value="${chatSpace.chatSpaceNo}">${ i }</td>
-                    <td></td>
-                    <td align="center"><img width="300px" height="300px" src="/file/chat/${chatSpace.cSpaceImage}"></td>
-                    <td></td>
-                    <td align="center">${chatSpace.cSpaceName}</td>
-                    <td></td>
-                    <td align="center">${chatSpace.cSpaceDate}</td>
-                    <td></td>
-                    <td align="center"><img src="/file/chat/${chatSpace.userImage}">  ${chatSpace.nickname}</td>
-                    <td></td>
-                    <td align="center">${chatSpace.cSpaceUserCnt}</td>
-                    <td></td>
-                    <td align="center">${chatSpace.genre}</td>
-                    <td></td>
-                    <td align="center">
-                        <input type="button" value="입장하기" onclick="enterChatSpace(${chatSpace.chatSpaceNo});"><br>
-                        <c:if test="${chatSpace.userId != sessionScope.user.userId && chatSpace.chatEnterCheck == 1}">
-                            <input type="button" value="나가기" onClick="deleteChatEnter(${chatSpace.chatSpaceNo});">
-                        </c:if>
-                        <c:if test="${chatSpace.userId == sessionScope.user.userId}">
-                            <input type="button" value="수정하기" onclick="updateChatSpace(${chatSpace.chatSpaceNo});"><br>
-                            <input type="button" value="삭제하기" onclick="deleteChatSpace(${chatSpace.chatSpaceNo});"><br>
-                        </c:if>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="11" height="1"></td>
-                </tr>
-            </c:forEach>
-        </table>
-
-        </form>
-
-    </body>
 </html>

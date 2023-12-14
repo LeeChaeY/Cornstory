@@ -8,9 +8,11 @@ import com.cornstory.service.work.WorkService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -37,16 +39,30 @@ public class WorkRestController {
     }
 
     @GetMapping("json/listWork")
-    public Map<String, Object> listWorks(@RequestParam(required = false) String searchCondition,
-                                         @RequestParam(required = false) String orderKeyword,
-                                         @RequestParam(required = false) String orderCondition) throws Exception {
+    public Map<String, Object> listWorksPaged(@RequestParam(required = false) String searchCondition,
+                                              @RequestParam(required = false) String orderKeyword,
+                                              @RequestParam(required = false) String orderCondition,
+                                              @RequestParam(required = false) String searchKetword,
+                                              @RequestParam int currentPage,
+                                              @RequestParam int pageSize) throws Exception {
         Search search = new Search();
+        search.setSearchKeyword(searchKetword);
         search.setSearchCondition(searchCondition);
         search.setOrderKeyword(orderKeyword);
         search.setOrderCondition(orderCondition);
-        System.out.println("이건 RestController listWork() :"+search);
+        search.setCurrentPage(currentPage);
+        search.setPageSize(pageSize);
+
+
+
         // 작품 목록 조회
-        return workService.listWork(search);
+        Map<String, Object> map = workService.listWork(search);
+
+        map.put("list", map.get("list"));
+        map.put("totalCount", map.get("totalCount"));
+        map.put("search", search);
+
+        return map;
     }
 
 }

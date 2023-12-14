@@ -31,7 +31,7 @@ public class ChatController {
 //    @Value("${pageUnit}")
     int pageUnit = 5;
 //    @Value("${pageSize}")
-    int pageSize = 3;
+    int pageSize = 10;
 
     public ChatController() {
         System.out.println("ChatController 진입");
@@ -108,15 +108,17 @@ public class ChatController {
             try {
                 // 기존 파일 삭제
                 String deleteImg = chatService.getChatSpace(chatSpace.getChatSpaceNo()).getcSpaceImage();
-                String deleteDir = uploadDir + File.separator + deleteImg;
-                File fileToDelete = new File(deleteDir);
+                if (!deleteImg.equals("chat.jpg")) {
+                    String deleteDir = uploadDir + File.separator + deleteImg;
+                    File fileToDelete = new File(deleteDir);
 
-                // 파일을 삭제합니다.
-                if (fileToDelete.exists()) {
-                    if (fileToDelete.delete()) {
-                        System.out.println("파일이 성공적으로 삭제되었습니다.");
-                    } else {
-                        System.out.println("파일을 삭제하는 데 문제가 발생했습니다.");
+                    // 파일을 삭제합니다.
+                    if (fileToDelete.exists()) {
+                        if (fileToDelete.delete()) {
+                            System.out.println("파일이 성공적으로 삭제되었습니다.");
+                        } else {
+                            System.out.println("파일을 삭제하는 데 문제가 발생했습니다.");
+                        }
                     }
                 }
 
@@ -163,9 +165,9 @@ public class ChatController {
         System.out.println("/chat/listChatSpace : GET/POST :: enterUserId : " + enterUserId);
         System.out.println("/chat/listChatSpace : GET/POST :: genre : " + genre);
 
-        if (search.getSearchCondition() == null) {
-            search.setSearchCondition("");
-        }
+//        if (search.getSearchCondition() == null) {
+//            search.setSearchCondition("");
+//        }
 
         if(search.getCurrentPage() == 0 ){
             search.setCurrentPage(1);
@@ -187,6 +189,9 @@ public class ChatController {
         model.addAttribute("resultPage", resultPage);
         model.addAttribute("search", search);
         model.addAttribute("chatSpaceNo2", chatSpaceNo2);
+        model.addAttribute("userId", userId);
+        model.addAttribute("genre", genre);
+        model.addAttribute("enterUserId", enterUserId);
 
         System.out.println(map.get("list"));
         System.out.println(search);

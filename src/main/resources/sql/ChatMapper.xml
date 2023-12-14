@@ -64,21 +64,23 @@
 
 	<select id="countChatSpace" parameterType="map" resultType="int">
 		SELECT COUNT(*) AS totalCount
-		FROM (SELECT chat_space_no, U.user_id, c_space_name, c_space_image,
+		FROM (SELECT DISTINCT CS.chat_space_no, CS.user_id, c_space_name, c_space_image,
 					c_space_user_cnt, c_space_date, genre, nickname, user_image
 		      FROM  chat_space CS JOIN user U ON CS.user_id = U.user_id
+									JOIN chat_enter CE ON CE.chat_space_no = CS.chat_space_no
 				<where>
-					<if test='search.searchCondition != null and !search.searchCondition.equals("")
-							and search.searchKeyword != null and !search.searchKeyword.equals("")'>
-						<if test='search.searchCondition.equals("1")'>
-							AND LOWER(c_space_name) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%'))
-						</if>
+					<if test='search.searchKeyword != null and !search.searchKeyword.equals("")'>
+						(LOWER(c_space_name) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%'))
+						OR LOWER(nickname) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%')))
 					</if>
 					<if test='userId != null and !userId.equals("")'>
 						AND U.user_id = #{userId}
 					</if>
 					<if test='genre != null and !genre.equals("")'>
-						AND genre = #{search.searchKeyword}
+						AND genre = #{genre}
+					</if>
+					<if test='enterUserId != null and !enterUserId.equals("")'>
+						AND CE.user_id = #{enterUserId}
 					</if>
 				</where>
 		) countTable
@@ -92,11 +94,9 @@
 						FROM chat_space CS JOIN user U ON CS.user_id = U.user_id
 											JOIN chat_enter CE ON CE.chat_space_no = CS.chat_space_no
 						<where>
-							<if test='search.searchCondition != null and !search.searchCondition.equals("")
-									and search.searchKeyword != null and !search.searchKeyword.equals("")'>
-								<if test='search.searchCondition.equals("1")'>
-									AND LOWER(c_space_name) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%'))
-								</if>
+							<if test='search.searchKeyword != null and !search.searchKeyword.equals("")'>
+								(LOWER(c_space_name) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%'))
+								OR LOWER(nickname) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%')))
 							</if>
 							<if test='userId != null and !userId.equals("")'>
 								AND U.user_id = #{userId}
@@ -146,7 +146,7 @@
 		SELECT COUNT(*) AS totalCount
 		FROM (SELECT chat_enter_no, chat_space_no, U.user_id,
 					 user_image, chat_enter_date, nickname
-		      FROM chat_enter CE JOIN user U ON CE.user_id = U.user_id
+		      	FROM chat_enter CE JOIN user U ON CE.user_id = U.user_id
 				WHERE chat_space_no = #{chatSpaceNo}
 		) countTable
 	</select>

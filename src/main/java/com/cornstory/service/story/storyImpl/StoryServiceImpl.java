@@ -27,7 +27,7 @@ public class StoryServiceImpl implements StoryService {
     //스토리 추가
     @Override
     public void addStory(Story story)throws Exception {
-        storyDao.listStory();
+        storyDao.addStory(story);
     }
 
     //스토리 수정

@@ -74,8 +74,8 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public int prodNameCheck(String prodName) throws Exception {
-		return (productDao.countProductProdName(prodName) == 0) ? 0 : 1;
+	public int prodNameCheck(int prodCnt) throws Exception {
+		return (productDao.countProductProdName(prodCnt) == 0) ? 0 : 1;
 	}
 
 	@Override

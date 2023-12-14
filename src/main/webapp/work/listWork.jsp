@@ -7,6 +7,38 @@
 <head>
     <title>작품 조회 목록</title>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        #searchForm {
+            margin-bottom: 20px;
+        }
+
+        #workList {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .work-item {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+
+        #totalCount {
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
 
@@ -72,74 +104,151 @@
 
 
 </form>
-<table border="1">
-    <thead>
-    <tr>
-        <th>작업 번호</th>
-        <th>작성자</th>
-        <th>카테고리</th>
-        <th>장르</th>
-        <th>FAP</th>
-        <th>작업 이름</th>
-        <th>메모</th>
-        <th>썸네일</th>
-        <th>조회 수</th>
-        <th>작업 일자</th>
-        <th>창작여부</th>
-        <th>작업 설명</th>
-    </tr>
-    </thead>
-    <tbody id="workListBody">
-    <c:forEach var="work" items="${list}">
-        <tr>
-            <td>${work.workNo}</td>
-            <td><a href="../work/getDetailWork?workNo=${work.workNo}">${work.userId}</a></td>
-            <td>
-                <c:choose>
-                    <c:when test="${work.category eq '0'}">웹소설</c:when>
-                    <c:when test="${work.category eq '1'}">웹툰</c:when>
-                    <c:when test="${work.category eq '2'}">웹드라마</c:when>
-                    <c:otherwise>기타</c:otherwise>
-                </c:choose>
-            </td>
-            <td>
-                ${work.genre1}
-                <c:if test="${not empty work.genre2}">, ${work.genre2}</c:if>
-                <c:if test="${not empty work.genre3}">, ${work.genre3}</c:if>
-            </td>
-            <td>${work.fap == 0 ? '무료' : '유료'}</td>
-            <td>${work.workName}</td>
-            <td>${work.note}</td>
-            <td>${work.thumbnail}</td>
-            <td><fmt:formatNumber value="${work.viewCnt}" pattern="#,##0" /></td>
-            <td>${work.workDate}</td>
-            <td>${work.status == 0 ? '원작' : '창작'}</td>
-            <td>${work.workDesc}</td>
-        </tr>
-    </c:forEach>
-    </tbody>
-</table>
 
 <p>전체 개수: <span id="totalCount">${totalCount}</span></p>
 
+<!-- 기존의 table 대신 div를 사용한 목록 부분 -->
+<div id="workList">
+<%--        <div class="work-item">--%>
+<%--            <p>작성자: ${work.userId}</p>--%>
+<%--            <td>--%>
+<%--                <c:choose>--%>
+<%--                    <c:when test="${work.category eq '0'}">웹소설</c:when>--%>
+<%--                    <c:when test="${work.category eq '1'}">웹툰</c:when>--%>
+<%--                    <c:when test="${work.category eq '2'}">웹드라마</c:when>--%>
+<%--                    <c:otherwise>기타</c:otherwise>--%>
+<%--                </c:choose>--%>
+<%--            </td>--%>
+<%--            <td>--%>
+<%--                    ${work.genre1}--%>
+<%--                <c:if test="${not empty work.genre2}">, ${work.genre2}</c:if>--%>
+<%--                <c:if test="${not empty work.genre3}">, ${work.genre3}</c:if>--%>
+<%--            </td>--%>
+<%--            <p>FAP: ${work.fap == 0 ? '무료' : '유료'}</p>--%>
+<%--            <p>작업 이름: ${work.workName}</p>--%>
+<%--            <p>썸네일: <a href='../work/getDetailWork?workNo=${work.workNo}'>${work.thumbnail}</a></p>--%>
+<%--            <p>조회 수: <fmt:formatNumber value="${work.viewCnt}" pattern="#,##0" /></p>--%>
+<%--            <p>작업 일자: ${work.workDate}</p>--%>
+<%--            <p>창작여부: ${work.status == 0 ? '원작' : '창작'}</p>--%>
+<%--        </div>--%>
+</div>
+
+<!-- 추가된 작업 목록을 저장할 div 요소 -->
+<div id="additionalWorkList"></div>
+
+<!-- 페이지 정보를 저장할 hidden input -->
+<input type="hidden" id="currentPage" value="${search.currentPage}" />
+<input type="hidden" id="loading" value="false" />
+
 </body>
 <script>
-    $(document).ready(function() {
-        //updateWorkList();
+    $(document).ready(function () {
         // 검색 폼의 라디오 버튼이나 체크 박스 변경 시에 검색 수행
-        $("#searchForm").on("change", "input[type='radio'], input[type='checkbox']", function() {
-                // 초기 로드가 아닌 경우에만 updateWorkList 함수 호출
-                updateWorkList();
+        $("#searchForm").on("change", "input[type='radio'], input[type='checkbox']", function () {
+            // 초기 로드가 아닌 경우에만 updateWorkList 함수 호출
+            updateWorkList(true);
         });
 
+        // 스크롤 이벤트 리스너 등록
+        $(window).scroll(function () {
+            var scrollHeight = $(document).height();
+            var scrollTop = $(window).scrollTop();
+            var clientHeight = $(window).height();
 
+            // 스크롤이 페이지 하단에 닿으면 추가 데이터 로드
+            if (scrollTop + clientHeight >= scrollHeight - 100) {
+                loadMoreWorks();
+            }
+        });
 
-        function updateWorkList() {
+        // 초기 로딩 시에 추가 데이터 로드
+        loadMoreWorks();
 
+        function loadMoreWorks() {
+            var loading = $("#loading").val();
+
+            if (loading === "false") {
+                var currentPage = parseInt($("#currentPage").val());
+
+                // 로딩 중 상태로 변경
+                $("#loading").val("true");
+
+                $.ajax({
+                    type: "GET",
+                    url: "/work/json/listWork",
+                    data: {
+
+                        searchCondition: $("input[name='searchCondition']:checked").val(),
+                        orderKeyword: $("input[name='orderKeyword']:checked").val(),
+                        orderCondition: $("input[name='orderCondition']:checked").val(),
+                        searchKeyword: $("#searchKeyword").val(),
+                        currentPage: currentPage,
+                        pageSize: 3
+                    },
+                    dataType: "json",
+                    success: function (response) {
+                        var workList = $("#workList");
+
+                        $.each(response.list, function (index, work) {
+                            // 중복 작품인지 체크
+                            if (workList.find(".work-item[data-workno='" + work.workNo + "']").length === 0) {
+                                var workItem = $("<div class='work-item' data-workno='" + work.workNo + "'></div>");
+
+                                workItem.append("<p>작성자: " + work.userId + "</p>");
+
+                                // 카테고리 텍스트 처리
+                                var categoryText = getCategoryText(work.category);
+                                workItem.append("<p>카테고리: " + categoryText + "</p>");
+
+                                // 장르 텍스트 처리
+                                var genreText = getGenreText(work.genre1, work.genre2, work.genre3);
+                                workItem.append("<p>장르: " + genreText + "</p>");
+
+                                // FAP 텍스트 처리
+                                var fapText = work.fap == 0 ? "무료" : "유료";
+                                workItem.append("<p>FAP: " + fapText + "</p>");
+
+                                workItem.append("<p>작업 이름: " + work.workName + "</p>");
+                                workItem.append("<p>썸네일: <a href='../work/getDetailWork?workNo=" + work.workNo + "'>" + work.thumbnail + "</a></p>");
+                                workItem.append("<p>조회 수: " + work.viewCnt + "</p>");
+                                workItem.append("<p>작업 일자: " + work.workDate + "</p>");
+
+                                // 창작여부 텍스트 처리
+                                var statusText = work.status == 0 ? '원작' : '창작';
+                                workItem.append("<p>창작여부: " + statusText + "</p>");
+
+                                workList.append(workItem);
+                            }
+                        });
+
+                        // 현재 페이지 업데이트
+                        $("#currentPage").val(currentPage + 1);
+
+                        // 로딩 완료 상태로 변경
+                        $("#loading").val("false");
+                    },
+                    error: function (error) {
+                        console.error("Error fetching work list: ", error);
+
+                        // 로딩 완료 상태로 변경
+                        $("#loading").val("false");
+                    }
+                });
+            }
+        }
+
+        function updateWorkList(clearList) {
             // 검색 조건 수집
             var searchCondition = $("input[name='searchCondition']:checked").val();
             var orderKeyword = $("input[name='orderKeyword']:checked").val();
             var orderCondition = $("input[name='orderCondition']:checked").val();
+            var searchKeyword = $("#searchKeyword").val(); // 검색 키워드 수집
+
+            var currentPage = 1;
+            if (!clearList) {
+                // 추가 데이터 로드가 아닌 경우 현재 페이지를 가져옴
+                currentPage = parseInt($("#currentPage").val());
+            }
 
             // Ajax를 사용하여 작품 목록 요청
             $.ajax({
@@ -148,47 +257,48 @@
                 data: {
                     searchCondition: searchCondition,
                     orderKeyword: orderKeyword,
-                    orderCondition: orderCondition
+                    orderCondition: orderCondition,
+                    //searchKeyword: searchKeyword,
+                    currentPage: currentPage,
+                    pageSize: 3
                 },
                 dataType: "json",
                 success: function(response) {
                     // 성공적으로 응답을 받았을 때 처리
                     console.log(response.list);
 
+                    if (clearList) {
+                        // 초기 로드가 아닌 경우 기존 목록을 제거
+                        $("#workList").empty();
+                    }
+
                     // 작품 목록을 동적으로 생성하여 화면에 추가
-                    var workListBody = $("#workListBody");
-                    workListBody.empty();  // 기존 목록 제거
-
+                    var workList = $("#workList");
                     $.each(response.list, function(index, work) {
-                        var row = $("<tr></tr>");
+                        // 중복 작품인지 체크
+                        if (workList.find(".work-item[data-workno='" + work.workNo + "']").length === 0) {
+                            var workItem = $("<div class='work-item' data-workno='" + work.workNo + "'></div>");
 
-                        row.append("<td>" + work.workNo + "</td>");
-                        row.append("<td><a href='../work/getDetailWork?workNo=" + work.workNo + "'>" + work.userId + "</a></td>");
-                        if(work.category == '0'){
-                            row.append("<td>웹소설</td>");
-                        }else if(work.category == '1'){
-                            row.append("<td>웹툰</td>");
-                        }else if(work.workcategory == '2'){
-                            row.append("<td>웹드라마</td>");
+                            workItem.append("<p>작성자:"  + work.userId + "</p>");
+                            var categoryText = getCategoryText(work.category);
+                            workItem.append("<p>카테고리: " + categoryText + "</p>");
+                            var genreText = getGenreText(work.genre1, work.genre2, work.genre3);
+                            workItem.append("<p>장르: " + genreText + "</p>");
+                            var fap = work.fap == 0 ? "무료" : "유료";
+                            workItem.append("<p>FAP: " + fap + "</p>");
+                            workItem.append("<p>작업 이름: " + work.workName + "</p>");
+                            workItem.append("<p>썸네일: <a href='../work/getDetailWork?workNo=" + work.workNo + "'>" + work.thumbnail + "</a></p>");
+                            workItem.append("<p>조회 수: " + work.viewCnt + "</p>");
+                            workItem.append("<p>작업 일자: " + work.workDate + "</p>");
+                            var status = work.status === 0 ? "원작" : "창작";
+                            workItem.append("<p>창작여부: " + status + "</p>");
+                            workItem.append("<p>작업 설명: " + work.workDesc + "</p>");
+
+                            workList.append(workItem);
                         }
-                        var genreText = (work.genre1 || "") + (work.genre2 ? ", " + work.genre2 : "") + (work.genre3 ? ", " + work.genre3 : "");
-                        row.append("<td>" + genreText + "</td>");
-                        var fap = work.fap == 0 ? "무료" : "유료";
-                        row.append("<td>" + fap + "</td>");
-                        row.append("<td>" + work.workName + "</td>");
-                        row.append("<td>" + work.note + "</td>");
-                        row.append("<td>" + work.thumbnail+ "</td>");
-                        row.append("<td>" + work.viewCnt+ "</td>");
-                        row.append("<td>" + work.workDate+ "</td>");
-                        var status = work.status ==0 ? "원작" : "창작";
-                        row.append("<td>" + status+ "</td>");
-                        row.append("<td>" + work.workDesc+ "</td>");
-
-
-
-                        workListBody.append(row);
                     });
 
+                    $("#currentPage").val(currentPage + 1);
                     $("#totalCount").text(response.totalCount);
                 },
                 error: function(error) {
@@ -197,8 +307,34 @@
             });
         }
 
+        // 작품 카테고리 번호를 텍스트로 변환하는 함수
+        function getCategoryText(category) {
+            switch (category) {
+                case '0':
+                    return "웹소설";
+                case '1':
+                    return "웹툰";
+                case '2':
+                    return "웹드라마";
+                default:
+                    return "웹소설";
+            }
+        }
 
-
+        // 작품 장르를 텍스트로 변환하는 함수
+        function getGenreText(genre1, genre2, genre3) {
+            var result = "";
+            if (genre1) {
+                result += genre1;
+            }
+            if (genre2) {
+                result += ", " + genre2;
+            }
+            if (genre3) {
+                result += ", " + genre3;
+            }
+            return result;
+        }
     });
 </script>
 

@@ -38,4 +38,6 @@ public interface WorkService {
 
     public List<Work> listBookmark(String userId) throws Exception;
 
+    public void updateViews(Work work) throws  Exception;
+
 }

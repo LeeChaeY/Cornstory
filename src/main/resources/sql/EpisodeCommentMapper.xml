@@ -13,9 +13,9 @@
         <result property="commentDate" column="e_comment_date" />
     </resultMap>
 
-    <!-- 작품 회차에 대한 목록 -->
-    <select id="listEpisodeComment" parameterType="int" resultMap="episodeCommentResultMap">
-        SELECT * FROM episode_comment WHERE episode_no=#{episodeNo} ORDER BY e_comment_no DESC
+    <!-- 작품 회차에 대한 댓글 목록 -->
+    <select id="listEpisodeComment" resultMap="episodeCommentResultMap">
+        SELECT * FROM episode_comment ORDER BY e_comment_no DESC
     </select>
 
     <!-- 작품 회차의 댓글 등록-->

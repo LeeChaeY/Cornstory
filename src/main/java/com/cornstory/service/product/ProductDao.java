@@ -29,7 +29,7 @@ public interface ProductDao {
 
 	public  List<Product> listProductCopyright(Map map) throws Exception;
 
-	public int countProductProdName(String prodName) throws Exception;
+	public int countProductProdName(int prodCnt) throws Exception;
 
 	public List<Work> listCompleteWork(String userId) throws Exception;
 

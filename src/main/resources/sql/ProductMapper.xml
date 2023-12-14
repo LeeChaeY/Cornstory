@@ -41,7 +41,8 @@
 
 
 
-	<insert id="addProduct" parameterType="product">
+	<insert id="addProduct" parameterType="product" useGeneratedKeys="true"
+			keyProperty="prodNo" keyColumn="prod_no">
 		INSERT
 		INTO product (work_no, episode_no, user_id, prod_category, prod_name, episode_order, prod_image, prod_price, prod_cnt, prod_date)
 		VALUES (
@@ -92,57 +93,50 @@
 
 	<select id="listProductPopcorn" parameterType="map" resultMap="productSelectMap">
 		SELECT *
-		FROM (SELECT inner_table.*, @rownum := @rownum + 1 AS row_seq
-				FROM (SELECT *
-						FROM product
-						ORDER BY prod_price
-						) inner_table, (SELECT @rownum := 0) r
-				LIMIT #{endRowNum}
-		) AS result
-		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+		FROM product
+		WHERE prod_category = 0
+		ORDER BY prod_price
 	</select>
 
 	<select id="countProductCopyright" parameterType="map" resultType="int">
 		SELECT COUNT(*) AS totalCount
-		FROM (SELECT *
-		FROM product
-		<where>
-			prod_category = 2
-			<if test='search.searchCondition != null and !search.searchCondition.equals("")
-					and search.searchKeyword != null and !search.searchKeyword.equals("")'>
-				<if test='search.searchCondition.equals("0")'>
-					AND LOWER(prod_name) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%'))
-				</if>
-			</if>
-			<if test='userId != null and !userId.equals("")'>
-				AND user_id = #{userId}
-			</if>
-		</where>
-		) countTable
+		FROM (SELECT prod_no, prod_category, prod_name, episode_order,
+					prod_price, prod_image, prod_date, work_no,
+					U.user_id, nickname
+				FROM product P JOIN user U ON P.user_id = U.user_id
+				<where>
+					prod_category = 2
+					<if test='search.searchKeyword != null and !search.searchKeyword.equals("")'>
+						AND LOWER(prod_name) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%'))
+						OR LOWER(nickname) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%'))
+					</if>
+					<if test='userId != null and !userId.equals("")'>
+						AND U.user_id = #{userId}
+					</if>
+				</where>
+			) countTable
 	</select>
 
 	<select id="listProductCopyright" parameterType="map" resultMap="productSelectMap">
 	SELECT *
 		FROM ( SELECT inner_table.*, @rownum := @rownum + 1 AS row_seq
 		FROM (SELECT prod_no, prod_category, prod_name, episode_order,
-		prod_price, prod_image, prod_date, work_no,
-		U.user_id, nickname
-		FROM  product P JOIN user U ON U.user_id = P.user_id
-		<where>
-			prod_category = 2
-			<if test='search.searchCondition != null and !search.searchCondition.equals("")
-								and search.searchKeyword != null and !search.searchKeyword.equals("")'>
-				<if test='search.searchCondition.equals("0")'>
-					AND LOWER(prod_name) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%'))
-				</if>
-			</if>
-			<if test='userId != null and !userId.equals("")'>
-				AND P.user_id = #{userId}
-			</if>
-		</where>
-		ORDER BY prod_no
-		) inner_table, (SELECT @rownum := 0) r
-		LIMIT #{endRowNum}
+					prod_price, prod_image, prod_date, work_no,
+					U.user_id, nickname
+				FROM  product P JOIN user U ON U.user_id = P.user_id
+				<where>
+					prod_category = 2
+					<if test='search.searchKeyword != null and !search.searchKeyword.equals("")'>
+						AND LOWER(prod_name) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%'))
+						OR LOWER(nickname) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%'))
+					</if>
+					<if test='userId != null and !userId.equals("")'>
+						AND U.user_id = #{userId}
+					</if>
+				</where>
+				ORDER BY prod_no
+			) inner_table, (SELECT @rownum := 0) r
+			LIMIT #{endRowNum}
 		) AS result
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
 	</select>
@@ -157,17 +151,18 @@
 							  	WHERE prod_category = 2);
 	</select>
 
-	<select id="countProductProdName" parameterType="string" resultType="int">
+	<select id="countProductProdName" parameterType="int" resultType="int">
 		SELECT COUNT(*)
 		FROM product
-		WHERE prod_name = #{prodName}
+		WHERE prod_cnt = #{prodCnt}
 	</select>
 
 	<select id="countLastEpisode" parameterType="int" resultType="int">
 		SELECT MAX(E.episode_order)
-		FROM episode E JOIN product P ON E.work_no = P.work_no
-		WHERE P.work_no = #{workNo}
+		FROM EPISODE E JOIN PRODUCT P ON E.work_no = P.work_no
+		WHERE P.work_no = #{workNo};
 	</select>
+
 	<!--저작권의 이름들 가져오가-->
 	<select id="getCopylight" parameterType="String" resultMap="productSelectMap">
 		SELECT prod_name from product P, purchase Pu where P.prod_no=Pu.prod_no And Pu.buyer_id=#{userId}
