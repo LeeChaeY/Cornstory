@@ -1,5 +1,7 @@
 package com.cornstory.controller.support;
 
+import com.cornstory.common.Search;
+import com.cornstory.domain.Support;
 import com.cornstory.domain.Support;
 import com.cornstory.domain.User;
 import com.cornstory.service.support.SupportService;
@@ -18,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.File;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/support/*")
@@ -38,6 +42,9 @@ public class SupportController {
                              @RequestParam(name = "supImage", required = false) MultipartFile supImage,
                              Model model, HttpServletRequest request, HttpSession session) throws Exception {
         System.out.println("support/add : POST");
+        String userId = ((User) session.getAttribute("user")).getUserId();
+        support.setUserId(userId);
+        System.out.println("support/add" +support);
 
         int category = support.getSupCategory();
 
@@ -87,13 +94,13 @@ public class SupportController {
                 break;
             case 2:
                 // 신고 등록
-                String reportedUserNick = request.getParameter("supContent");
+                String reportedSupportNick = request.getParameter("supContent");
                 String reportContent = request.getParameter("supPluscon");
 
 
                 try {
                     // 신고 등록 로직 추가
-                    // 예시: supportService.addReport(support, reportedUserNick, reportContent);
+                    // 예시: supportService.addReport(support, reportedSupportNick, reportContent);
                 } catch (Exception e) {
                     // 파일 업로드 예외 처리
                     e.printStackTrace();
@@ -109,9 +116,9 @@ public class SupportController {
     }
 
     @RequestMapping( value="getSupport", method=RequestMethod.GET )
-    public String getUser(@RequestParam("supNo") int supNo , Model model ) throws Exception {
+    public String getSupport(@RequestParam("supNo") int supNo , Model model ) throws Exception {
 
-        System.out.println("user/getUser : GET");
+        System.out.println("support/getSupport : GET");
         //Business Logic
         Support support = supportService.getSupport(supNo);
 
@@ -120,8 +127,29 @@ public class SupportController {
 
         System.out.println("getSupport"+support);
 
-        return "support/getSupport?supNo="+support.getSupNo();
+        return "support/getSupport";
     }
+
+
+    @RequestMapping(value = "listSupport")
+    public String listSupport(@ModelAttribute("search") Search search, Model model) throws Exception {
+        System.out.println("support/listSupport : GET / POST");
+
+        // Business logic 수행
+        Map<String, Object> map = supportService.listSupport(search);
+
+        // Model 과 View 연결
+        model.addAttribute("list", map.get("list"));
+        model.addAttribute("totalCount",map.get("totalCount"));
+        model.addAttribute("search", search);
+
+        // 결과 확인
+        System.out.println(search.toString());
+        System.out.println("리스트 map를 출력해보자 :::::"+map);
+        System.out.println("=================================");
+        return "support/listSupport";
+    }
+
 }
 
 
