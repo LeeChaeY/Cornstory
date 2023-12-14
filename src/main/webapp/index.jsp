@@ -38,12 +38,25 @@
           <!-- 여기에 반복문 추가 -->
           <script>
             var images = [
-              "https://images.unsplash.com/photo-1568051417544-7be7671f4c2a?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=M3w0OTE2MDd8MHwxfHNlYXJjaHwyMDN8fCVFQyVCMSU4NXxrb3wwfHx8fDE3MDIwMTU4MjF8MA&amp;ixlib=rb-4.0.3&amp;q=80&amp;w=1080",
-              "https://images.unsplash.com/photo-1571258126466-de842f523326?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=M3w0OTE2MDd8MHwxfHNlYXJjaHwxMjN8fCVFQyVCMSU4NXxrb3wwfHx8fDE3MDIwMTU3Njh8MA&amp;ixlib=rb-4.0.3&amp;q=80&amp;w=1080",
-              "https://images.unsplash.com/photo-1562849321-9e59cc8c4212?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=M3w0OTE2MDd8MHwxfHNlYXJjaHwxMTR8fCVFQyVCMSU4NXxrb3wwfHx8fDE3MDIwMTU3NDB8MA&amp;ixlib=rb-4.0.3&amp;q=80&amp;w=1080"
+              "../ssh/images/main.jpg",
+              "../ssh/images/one.jpg",
+              "../ssh/images/two.jpg"
             ];
 
+            // 이미지 슬라이드를 복사하여 끝에 추가
+            var clonedImages = images.slice();
+            images.push(...clonedImages);
+
+            // 이미지 미리 로딩 함수
+            function preloadImage(src) {
+              var img = new Image();
+              img.src = src;
+            }
+
             for (var i = 0; i < images.length; i++) {
+              // 이미지 미리 로딩
+              preloadImage(images[i]);
+
               document.write('<div class="swiper-slide">');
               document.write('<img class="visual-bg" src="' + images[i] + '" alt="">');
               document.write('<div class="visual-text-box">');
@@ -97,7 +110,7 @@
             <div class="swiper-slide">
               <a class="cardset cardset-border" href="javascript:void(0);">
                 <figure class="cardset-figure">
-                  <img class="cardset-img" src="ssh/images/m-sec1-img-2.jpg" alt="이미지">
+                  <img class="cardset-img" src="../ssh/images/onemain.jpg" alt="이미지">
                 </figure>
                 <div class="cardset-body">
                   <h5 class="cardset-tit">웹툰 제목</h5>
@@ -109,7 +122,7 @@
             <div class="swiper-slide">
               <a class="cardset cardset-border" href="javascript:void(0);">
                 <figure class="cardset-figure">
-                  <img class="cardset-img" src="ssh/images/m-sec1-img-3.jpg" alt="이미지">
+                  <img class="cardset-img" src="../ssh/images/m-sec1-img-3.jpg" alt="이미지">
                 </figure>
                 <div class="cardset-body">
                   <h5 class="cardset-tit">웹드라마 제목</h5>
@@ -121,7 +134,7 @@
             <div class="swiper-slide">
               <a class="cardset cardset-border" href="javascript:void(0);">
                 <figure class="cardset-figure">
-                  <img class="cardset-img" src="ssh/images/m-sec1-img-4.jpg" alt="이미지">
+                  <img class="cardset-img" src="../ssh/images/m-sec1-img-4.jpg" alt="이미지">
                 </figure>
                 <div class="cardset-body">
                   <h5 class="cardset-tit">웹소설 제목</h5>
@@ -133,7 +146,7 @@
             <div class="swiper-slide">
               <a class="cardset cardset-border" href="javascript:void(0);">
                 <figure class="cardset-figure">
-                  <img class="cardset-img" src="ssh/images/m-sec1-img-1.jpg" alt="이미지">
+                  <img class="cardset-img" src="../ssh/images/m-sec1-img-1.jpg" alt="이미지">
                 </figure>
                 <div class="cardset-body">
                   <h5 class="cardset-tit">웹소설 제목</h5>
@@ -145,7 +158,7 @@
             <div class="swiper-slide">
               <a class="cardset cardset-border" href="javascript:void(0);">
                 <figure class="cardset-figure">
-                  <img class="cardset-img" src="ssh/images/m-sec1-img-2.jpg" alt="이미지">
+                  <img class="cardset-img" src="../ssh/images/m-sec1-img-2.jpg" alt="이미지">
                 </figure>
                 <div class="cardset-body">
                   <h5 class="cardset-tit">웹소설 제목</h5>
@@ -157,7 +170,7 @@
             <div class="swiper-slide">
               <a class="cardset cardset-border" href="javascript:void(0);">
                 <figure class="cardset-figure">
-                  <img class="cardset-img" src="ssh/images/m-sec1-img-3.jpg" alt="이미지">
+                  <img class="cardset-img" src="../ssh/images/m-sec1-img-3.jpg" alt="이미지">
                 </figure>
                 <div class="cardset-body">
                   <h5 class="cardset-tit">웹소설 제목</h5>
@@ -169,7 +182,7 @@
             <div class="swiper-slide">
               <a class="cardset cardset-border" href="javascript:void(0);">
                 <figure class="cardset-figure">
-                  <img class="cardset-img" src="ssh/images/m-sec1-img-4.jpg" alt="이미지">
+                  <img class="cardset-img" src="../ssh/images/m-sec1-img-4.jpg" alt="이미지">
                 </figure>
                 <div class="cardset-body">
                   <h5 class="cardset-tit">웹소설 제목</h5>
@@ -192,9 +205,9 @@
 <!-- [S]thwhole-wfLpW5Z3pJ -->
 <%@ include file="layout/bottom.jsp" %>
 <!-- [E]thwhole-wfLpW5Z3pJ -->
-<script src="ssh/js/setting.js"></script>
-<script src="ssh/js/plugin.js"></script>
-<script src="ssh/js/template.js"></script>
-<script src="ssh/js/common.js"></script>
-<script src="ssh/js/script.js"></script>
+<script src="../ssh/js/setting.js"></script>
+<script src="../ssh/js/plugin.js"></script>
+<script src="../ssh/js/template.js"></script>
+<script src="../ssh/js/common.js"></script>
+<script src="../ssh/js/script.js"></script>
 </body>

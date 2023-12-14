@@ -48,7 +48,7 @@ public class UserController {
             session.setAttribute("user", dbUser);
             System.out.println(dbUser + " 출력해보자 로그인 정보 가져오기");
             System.out.println("Login 성공 홈페이지로 이동");
-            return "index"; // 로그인 성공 시 홈페이지로 이동
+            return "redirect:/index.jsp"; // 로그인 성공 시 홈페이지로 이동
         } else {
             model.addAttribute("errorMessage", "잘못된 정보 또는 없는 계정입니다.");
             System.out.println("Login 실패 로그인페이지 유지");
@@ -79,7 +79,7 @@ public class UserController {
         System.out.println("user/addUser : POST");
 
         // 유효성 검사 실패 시
-
+        System.out.println(user + "들어온 정보 확인 하기 ");
 
         // 파일 업로드 처리 (파일이 있을 때만 수행)
         if (filename != null && !filename.isEmpty()) {

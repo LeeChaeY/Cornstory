@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -18,62 +17,18 @@
   <meta property="og:image" content="https://웹사이트/images/opengraph.png">
   <meta property="og:url" content="https://웹사이트">
   <title>cornstory</title>
-  <link rel="stylesheet" href="/ssh/css/setting.css">
-  <link rel="stylesheet" href="/ssh/css/plugin.css">
-  <link rel="stylesheet" href="/ssh/css/template.css">
-  <link rel="stylesheet" href="/ssh/css/common.css">
-  <link rel="stylesheet" href="/ssh/css/style.css">
+  <link rel="stylesheet" href="../ssh/css/setting.css">
+  <link rel="stylesheet" href="../ssh/css/plugin.css">
+  <link rel="stylesheet" href="../ssh/css/template.css">
+  <link rel="stylesheet" href="../ssh/css/common.css">
+  <link rel="stylesheet" href="../ssh/css/style.css">
 
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script>
-    function openLoginModal() {
-      var modal = document.getElementById('loginModal');
-      modal.style.display = 'block';
-    }
-
-    function closeLoginModal() {
-      var modal = document.getElementById('loginModal');
-      modal.style.display = 'none';
-    }
-
-    function submitLoginForm() {
-      // 여기에 로그인 처리 로직을 추가하세요.
-      // 예: AJAX를 사용하여 서버로 로그인 요청을 보낼 수 있습니다.
-      console.log("로그인 요청");
-      // 폼을 제출하지 않도록 false 반환
-      return false;
-    }
-
-
-    function chatSpace() {
-      $("input[name='userId']").val(sessionUserId);
-      $("input[name='enterUserId']").val("");
-      $("form[name='form']").attr("method", "post").attr("action", "/chat/listChatSpace").submit();
+    function redirectToIndex() {
+      window.location.href = "../index.jsp";
     }
   </script>
-  <style>
-    /* 모달 스타일 */
-    #loginModal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-    }
-
-    .modal-content {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    }
-  </style>
 </head>
 
 <body>
@@ -84,7 +39,11 @@
   <div class="header-container container-lg">
 
     <div class="header-left">
-      <h1 class="header-title">CornStory </h1>
+      <h1 class="header-title">
+        <a href="../index.jsp">
+          <img src="../ssh/images/logo.png" alt="로고">
+        </a>
+      </h1>
     </div>
     <div class="header-center">
 
@@ -129,12 +88,12 @@
           </ul>
         </li>
         <li class="header-gnbitem">
-          <a class="header-gnblink" href="/chat/listChatSpace">
+          <a class="header-gnblink" href="javascript:void(0)">
             <span>채팅</span>
           </a>
           <ul class="header-sublist">
             <li class="header-subitem">
-              <a class="header-sublink" href="/chat/listChatSpace">
+              <a class="header-sublink" href="javascript:void(0)">
                 <span>채팅방 목록</span>
               </a>
             </li>
@@ -146,71 +105,109 @@
           </ul>
         </li>
         <li class="header-gnbitem">
-          <a class="header-gnblink" href="/product/listProduct">
+          <a class="header-gnblink" href="javascript:void(0)">
             <span>스토어</span>
           </a>
           <ul class="header-sublist">
             <li class="header-subitem">
-              <a class="header-sublink" href="/product/listProduct">
+              <a class="header-sublink" href="javascript:void(0)">
                 <span>상품 조회</span>
               </a>
             </li>
-            <c:if test="${sessionScope.user.role == 0}">
-              <li class="header-subitem">
-                <a class="header-sublink" href="/product/addProduct?prodCategory=2">
-                  <span>저작권 등록</span>
-                </a>
-              </li>
-            </c:if>
-            <c:if test="${sessionScope.user.role == 1}">
-              <li class="header-subitem">
-                <a class="header-sublink" href="/product/addProduct?prodCategory=0">
-                  <span>팝콘 등록</span>
-                </a>
-              </li>
-            </c:if>
+            <li class="header-subitem">
+              <a class="header-sublink" href="javascript:void(0)">
+                <span>상품 등록</span>
+              </a>
+            </li>
           </ul>
         </li>
+
+
+
         <li class="header-gnbitem">
           <a class="header-gnblink" href="javascript:void(0)">
             <span>고객센터</span>
           </a>
+
           <ul class="header-sublist">
+
             <li class="header-subitem">
-              <a class="header-sublink" href="javascript:void(0)">
+              <a class="header-sublink" href="support/listSupport?category=0">
                 <span>공지사항</span>
               </a>
             </li>
+
             <li class="header-subitem">
-              <a class="header-sublink" href="javascript:void(0)">
+              <a class="header-sublink" href="support/listSupport?category=1">
                 <span>Q&amp;A​<br></span>
               </a>
             </li>
+
             <li class="header-subitem">
-              <a class="header-sublink" href="javascript:void(0)">
+              <a class="header-sublink" href="support/listSupport?category=2">
                 <span>신고센터<br></span>
               </a>
             </li>
+
+            <li class="header-subitem">
+              <a class="header-sublink" href="user/listUser">
+                <span>회원목록<br></span>
+              </a>
+            </li>
+
           </ul>
         </li>
       </ul>
     </div>
     <div class="header-right">
       <div class="header-utils">
-        <button class="btn-search">
-          <img src="ssh/icons/ico_search_white.svg" alt="검색">
+        <button class="btn-search" >
+          <img src="../ssh/icons/ico_search_white.svg" alt="검색">
         </button>
-        <button class="btn-user">
-          <a href="/user/login"><img src="ssh/icons/ico_user_white.svg" alt="마이페이지"></a>
-        </button>
+        <c:choose>
+          <c:when test="${empty sessionScope.user}">
+            <!-- 로그인하지 않은 상태일 때 -->
+            <a href="/user/login" >
+              <button class="btn-user">
+                <img src="../ssh/icons/ico_user_white.svg" alt="마이페이지">
+                 <img src="../ssh/images/login.png" alt="로고">
+              </button>
+            </a>
+          </c:when>
+          <c:otherwise>
+            <!-- 로그인한 상태일 때 -->
+
+            <div class="btn-user" style="display: flex; align-items: center;">
+              <a href="/user/getUser?userId=${sessionScope.user.userId}" style="color: white; font-size: 15px; margin-left: 10px; display: inline-block; text-align: center;">
+                <img src="../file/user/${sessionScope.user.userImage}" width="30" style="border-radius: 50%; max-width: 100%;" alt=""/>
+                  ${sessionScope.user.nickName}
+              </a>
+              <form action="/user/logout" method="post">
+                <button type="submit" style="border: none; background: none; padding: 0; cursor: pointer;">
+                  <img src="../ssh/images/logout.png" alt="로고">
+                </button>
+              </form>
+            </div>
+
+
+
+
+
+
+
+          </c:otherwise>
+        </c:choose>
+
+
+
         <button class="btn-allmenu">
-          <img src="ssh/icons/ico_menu3_white.svg" alt="PC메뉴">
+          <img src="../ssh/icons/ico_menu3_white.svg" alt="PC메뉴">
         </button>
         <button class="btn-momenu">
-          <img src="ssh/icons/ico_menu3_white.svg" alt="모바일메뉴">
+          <img src="../ssh/icons/ico_menu3_white.svg" alt="모바일메뉴">
         </button>
         <button class="btn-moclose">
-          <img src="ssh/icons/ico_close_black.svg" alt="닫기">
+          <img src="../ssh/icons/ico_close_black.svg" alt="닫기">
         </button>
       </div>
     </div>
@@ -222,7 +219,14 @@
       <div class="fullmenu-head">
         <h4 class="fullmenu-title">
           <a href="javascript:void(0)">
-            <h2>CornStory</h2>
+            <h1 class="header-title">
+              <form>
+                <button type="button" onclick="redirectToIndex()">
+                  <img src="../ssh/images/logo.png" alt="로고">
+                </button>
+              </form>
+
+            </h1>
           </a>
         </h4>
 
@@ -270,46 +274,37 @@
           </ul>
         </li>
         <li class="fullmenu-gnbitem">
-          <a class="fullmenu-gnblink" href="/chat/listChatSpace">
+          <a class="fullmenu-gnblink" href="javascript:void(0)">
             <span>채팅</span>
           </a>
           <ul class="fullmenu-sublist">
             <li class="fullmenu-subitem">
-              <a class="fullmenu-sublink" href="/chat/listChatSpace">
+              <a class="fullmenu-sublink" href="javascript:void(0)">
                 <span>채팅방 목록</span>
               </a>
             </li>
             <li class="fullmenu-subitem">
               <a class="fullmenu-sublink" href="javascript:void(0)">
-                <span>나의 채팅방</span>
+                <span>나의 채팅방방</span>
               </a>
             </li>
           </ul>
         </li>
         <li class="fullmenu-gnbitem">
-          <a class="fullmenu-gnblink" href="/product/listProduct">
+          <a class="fullmenu-gnblink" href="javascript:void(0)">
             <span>스토어</span>
           </a>
           <ul class="fullmenu-sublist">
             <li class="fullmenu-subitem">
-              <a class="fullmenu-sublink" href="/product/listProduct">
+              <a class="fullmenu-sublink" href="javascript:void(0)">
                 <span>상품 조회</span>
               </a>
             </li>
-            <c:if test="${sessionScope.user.role == 0}">
-              <li class="fullmenu-subitem">
-                <a class="fullmenu-sublink" href="/product/addProduct?prodCategory=2">
-                  <span>저작권 등록</span>
-                </a>
-              </li>
-            </c:if>
-            <c:if test="${sessionScope.user.role == 1}">
-              <li class="fullmenu-subitem">
-                <a class="fullmenu-sublink" href="/product/addProduct?prodCategory=0">
-                  <span>팝콘 등록</span>
-                </a>
-              </li>
-            </c:if>
+            <li class="fullmenu-subitem">
+              <a class="fullmenu-sublink" href="javascript:void(0)">
+                <span>상품 등록</span>
+              </a>
+            </li>
           </ul>
         </li>
         <li class="fullmenu-gnbitem">
@@ -327,17 +322,26 @@
                 <span>Q&amp;A</span>
               </a>
             </li>
+            <c:if test="${sessionScope.user.role eq 0}">
             <li class="fullmenu-subitem">
               <a class="fullmenu-sublink" href="javascript:void(0)">
                 <span>신고센​터</span>
               </a>
             </li>
+            </c:if>
+            <c:if test="${sessionScope.user.role eq 1}">
+              <li class="fullmenu-subitem">
+                <a class="fullmenu-sublink" href="user/listUser">
+                  <span>회원목록 조회</span>
+                </a>
+              </li>
+            </c:if>
           </ul>
         </li>
       </ul>
     </div>
     <button class="fullmenu-close">
-      <img src="ssh/icons/ico_close_black.svg" alt="닫기">
+      <img src="../ssh/icons/ico_close_black.svg" alt="닫기">
     </button>
   </div>
   <div class="header-search fullmenu-top">
@@ -371,14 +375,14 @@
       </div>
     </div>
     <button class="fullmenu-close">
-      <img src="ssh/icons/ico_close_black.svg" alt="닫기">
+      <img src="../ssh/icons/ico_close_black.svg" alt="닫기">
     </button>
   </div>
 </header>
 
-<script src="/ssh/js/setting.js"></script>
-<script src="/ssh/js/plugin.js"></script>
-<script src="/ssh/js/template.js"></script>
-<script src="/ssh/js/common.js"></script>
-<script src="/ssh/js/script.js"></script>
+<script src="../ssh/js/setting.js"></script>
+<script src="../ssh/js/plugin.js"></script>
+<script src="../ssh/js/template.js"></script>
+<script src="../ssh/js/common.js"></script>
+<script src="../ssh/js/script.js"></script>
 </body>
