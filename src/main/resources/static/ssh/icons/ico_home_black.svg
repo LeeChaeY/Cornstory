@@ -1,0 +1,7 @@
+<svg id="home_icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <rect id="bg" width="24" height="24" fill="#e50025" opacity="0"/>
+  <g id="icon">
+    <path id="패스_15263" data-name="패스 15263" d="M4,12.364,12,4l8,8.364" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <path id="패스_15264" data-name="패스 15264" d="M12,4,5.739,10.545v8A1.424,1.424,0,0,0,7.13,20H9.565V16.364a1.424,1.424,0,0,1,1.392-1.455h2.086a1.424,1.424,0,0,1,1.392,1.455V20H16.87a1.424,1.424,0,0,0,1.391-1.455v-8Z" fill="none" stroke="#111" stroke-linejoin="round" stroke-width="2"/>
+  </g>
+</svg>
