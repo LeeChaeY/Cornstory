@@ -44,7 +44,9 @@
                     <div class="contant-nav">
 
                         <a class="con-link" href="javascript:void(0)">다음 게시물</a>
-                        &nbsp; &nbsp; &nbsp;
+
+                    &nbsp; &nbsp; &nbsp;
+
                         <a class="con-link" href="javascript:void(0)">이전 게시물</a>
 
                     </div>
