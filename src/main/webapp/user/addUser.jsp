@@ -3,7 +3,23 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>회원가입</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="imagetoolbar" content="no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="title" content="웹사이트">
+    <meta name="description" content="웹사이트입니다.">
+    <meta name="keywords" content="키워드,키워드,키워드">
+    <meta property="og:title" content="웹사이트">
+    <meta property="og:description" content="웹사이트입니다">
+    <meta property="og:image" content="https://웹사이트/images/opengraph.png">
+    <meta property="og:url" content="https://웹사이트">
+    <title>회원 가입</title>
+    <link rel="stylesheet" href="../ssh/css/setting.css">
+    <link rel="stylesheet" href="../ssh/css/plugin.css">
+    <link rel="stylesheet" href="../ssh/css/template.css">
+    <link rel="stylesheet" href="../ssh/css/common.css">
+    <link rel="stylesheet" href="../ssh/css/style.css">
 
 
 
@@ -18,8 +34,8 @@
                 }
             }).open();
         }
-        </script>
-        <script>
+    </script>
+    <script>
         //아이디 중복 체크 및 체크 길이
         $(document).ready(function () {
             //아이디 체크
@@ -53,10 +69,7 @@
                 var isPasswordValid = checkPasswordPattern($("#password").val());
 
                 // 검사 결과에 따라 폼 제출 여부 결정
-                if (!(isUserIdValid && isNickNameValid && isPasswordValid)) {
-                    event.preventDefault(); // 폼 제출 중단
-                    alert("입력값을 확인해주세요."); // 사용자에게 메시지 표시 (원하는 메시지로 변경 가능)
-                }
+
             });
 
         });
@@ -69,7 +82,7 @@
                 input.value = input.value.substring(0, input.maxLength);
             }
 
-            count.textContent = '글자 수: ' + input.value.length + '/' + input.maxLength;
+            count.textContent = input.value.length + '/' + input.maxLength;
         }
 
         //아이디 중복체크
@@ -179,64 +192,148 @@
             }
         }
     </script>
+    <style>
+        .check-text {
+            padding: 140px;
+            font-size: 12px;
+        }
+        .check-image {
+
+            font-size: 12px;
+        }
+    </style>
 </head>
 <body>
 <%@ include file="../layout/top.jsp" %>
-<h2>회원가입</h2>
+<form action="../user/addUser" method="post" enctype="multipart/form-data" >'
+    <main class="th-layout-main ">
+        <!-- [S]opilsol-N29 -->
+        <div class="opilsol-N29" data-bid="XmlPWctWqn" >
+            <div class="modal">
+            </div>
+        </div>
+        <!-- [E]opilsol-N29 -->
+    </main>
+    <div class="opilsol-N31" data-bid="vELq1mwLiX">
+        <div class="content-container">
+            <div class="textset content-top">
+                <div class="container-md">
+                    <h2 class="textset-tit">회원가입</h2>
+                    <ul class="step-list">
+                        <li>약관동의</li>
+                        <li class="active">정보입력</li>
+                        <li>가입완료</li>
+                    </ul>
+                </div>
+            </div>
 
-<form action="../user/addUser" method="post" enctype="multipart/form-data" >
-
-    <label for="userName">성명:</label><br>
-    <input type="text" id="userName" name="userName" required><br><br>
-
-    <label for="birthday">생년월일:</label><br>
-    <input type="date" id="birthday" name="birthday" required><br><br>
-
-    <label for="phone">전화번호:</label><br>
-    <input type="text" id="phone" name="phone" required><br>
-    <span id="phoneMessage"></span><br><br>
-
-    <label for="addr">주소:</label><br>
-    <input type="text" id="addr" name="addr" required>
-    <button type="button" onclick="findAddress()">주소 찾기</button><br><br>
-
-    <label for="address">상세주소:</label><br>
-    <input type="text" id="address" name="address" required><br><br>
-
-    <label for="email">Email:</label><br>
-    <input type="email" id="email" name="email" required><br><br>
-
-    <label for="userId">아이디:</label><br>
-    <input type="text" id="userId" name="userId" pattern="[a-zA-Z0-9]+" maxlength="8" title="영문 또는 숫자만 입력 가능" oninput="updateCharCount('userId', 'userIdLength')" required>
-    <span id="userIdMessage"></span><br>
-    <span id="userIdLength">0/8</span><br>
-    최소 4글자 최대 8글자 작성가능합니다.<br>
-    # 영문과 숫자만 작성 가능합니다.<br><br>
-
-    <label for="password">패스워드 :</label><br>
-    <input type="password" id="password" name="password"
-           pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()])[A-Za-z\d!@#$%^&*()]{8,16}$"
-           title="# 영문, 숫자, 특수문자를 혼합하여 8자 이상 16자 이하로 입력하세요" required maxlength="16" oninput="updateCharCount('password', 'passwordLength')">
-    <span id="passwordMessage"></span><br>
-    <span id="passwordLength">0/16</span><br>
-    최소 8글자 최대 16글자 작성가능합니다.<br>
-    영문, 숫자, 특수문자를 혼합하여 작성 해야 합니다.<br><br>
-
-    <label for="nickName">닉네임:</label><br>
-    <input type="text" id="nickName" name="nickName" required maxlength="8" oninput="updateCharCount('nickName', 'nickNameLength')"/>
-    <span id="nickNameMessage"></span><br>
-    <span id="nickNameLength">0/8</span><br>
-    최소 2글자 최대 8글자 작성가능합니다.<br>
-    # 영문과 숫자 한글을 조합하여 작성 가능합니다.<br><br>
+            <div class="contents-form">
+                <div class="container-md">
+                    <div class="contents-form-top">
+                        <h3 class="inputset-tit">정보입력</h3>
+                    </div>
 
 
-    <label for="userImage">회원 사진:</label><br>
-    <input type="file" id="userImage" name="filename" accept=".jpg"/><br>
-    파일 용량 1MB 이하<br>
-    JPG만 업로드 가능<br>
-    회원 프로필에 들어갈 사진 입니다.<br>
 
-    <button type="submit">가입하기</button>
+                    <div class="inputset inputset-lg inputset-group">
+                        <label class="inputset-label" for="userId">아이디 </label>
+                        <input type="text" class="inputset-input form-control"  id="userId" name="userId"
+                               pattern="[a-zA-Z0-9]+" maxlength="8" title="영문 또는 숫자만 입력 가능"
+                               oninput="updateCharCount('userId', 'userIdLength')" required>
+                        <span class="checkset-text" id="userIdLength">0/8</span>
+                    </div>
+                    <span class="check-text">한글 영문 숫자를 등록 가능하여 최소 4자 최대 8자 등록 가능합니다.</span>
+                    <span class="check-text" id="userIdMessage"></span>
+
+
+                    <div class="inputset inputset-lg inputset-group">
+                        <label class="inputset-label" for="password">비밀번호</label>
+                        <input type="password" class="inputset-input form-control" id="password" name="password"
+                               pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()])[A-Za-z\d!@#$%^&*()]{8,16}$"
+                               title="# 영문, 숫자, 특수문자를 혼합하여 8자 이상 16자 이하로 입력하세요" required maxlength="16"
+                               oninput="updateCharCount('password', 'passwordLength')">
+                        <span id="passwordLength">0/16</span>
+                    </div>
+                    <span class="check-text"> 영문 숫자 특수문자를 조합하여 최소 8자 최대 16자 등록 가능합니다.</span>
+                    <span class="check-text" id="passwordMessage"></span>
+
+
+                    <div class="inputset inputset-lg inputset-group" for="nickName">
+                        <label class="inputset-label">닉네임</label>
+                        <input type="text" class="inputset-input form-control" id="nickName" name="nickName"
+                               required maxlength="8" oninput="updateCharCount('nickName', 'nickNameLength')"/>
+                        <span id="nickNameLength">0/8</span>
+                    </div>
+                    <span class="check-text">영문과 숫자 한글을 조합하여 최소 2자 최대 8자 등록 가능합니다.</span>
+                    <span class="check-text" id="nickNameMessage"></span>
+
+
+                    <div class="inputset inputset-lg inputset-group" for="userName">
+                        <label class="inputset-label">이름</label>
+                        <input type="text" class="inputset-input form-control" id="userName" name="userName" required>
+                    </div>
+
+
+                    <div class="inputset inputset-lg inputset-group" for="birthday">
+                        <label class="inputset-label">생년월일</label>
+                        <input type="date" class="inputset-input form-control" id="birthday" name="birthday" required>
+                    </div>
+
+
+                    <div class="inputset inputset-lg inputset-group" for="addr">
+                        <label class="inputset-label">주소</label>
+                        <input type="text" class="inputset-input form-control" id="addr" name="addr" required>
+                        <button class="check-image" type="button" onclick="findAddress()">주소 찾기</button>
+                    </div>
+
+
+                    <div class="inputset inputset-lg inputset-group" for="address">
+                        <label class="inputset-label">상세주소</label>
+                        <input type="text" class="inputset-input form-control" id="address" name="address" required>
+                    </div>
+
+                    <div class="inputset inputset-lg inputset-group" for="userImage">
+                        <label class="inputset-label">회원 이미지</label>
+                        <input class="check-image" type="file" id="userImage" name="filename" accept=".jpg"/>
+
+                    </div>
+                    <span class="check-text"> 파일 용량 1MB 이하 JPG만 업로드 가능합니다.</span>
+
+
+                    <div class="inputset inputset-lg inputset-group" for="phone">
+                        <label class="inputset-label">휴대폰번호</label>
+                        <input type="text" class="inputset-input form-control" id="phone" name="phone" required>
+                    </div>
+                    <span class="check-text" id="phoneMessage"></span>
+
+
+                    <div class="inputset inputset-lg inputset-group" for="email">
+                        <label class="inputset-label">이메일</label>
+                        <input type="text" class="inputset-input form-control"  id="email" name="email" required>
+                    </div>
+                </div>
+                <div class="bottom-btn">
+                    <button class="btnset btnset-lg btnset-dark btnset-rect">취소</button>
+                    <a class="btnset btnset-lg btnset-rect" href="addEnd.jsp">회원가입</a>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- [E]opilsol-N31 -->
+    <!-- [S]opilsol-N29 -->
+    <div class="opilsol-N29" data-bid="InLpwD1WuH" style="margin-top: 34px; margin-right: 5px;" id="">
+        <div class="modal">
+        </div>
+    </div>
+    <%@ include file="../layout/bottom.jsp" %>
+    <script src="../ssh/js/setting.js"></script>
+    <script src="../ssh/js/plugin.js"></script>
+    <script src="../ssh/js/template.js"></script>
+    <script src="../ssh/js/common.js"></script>
+    <script src="../ssh/js/script.js"></script>
 </form>
 
 </body>
