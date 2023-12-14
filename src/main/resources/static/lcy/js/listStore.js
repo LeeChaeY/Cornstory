@@ -65,11 +65,12 @@ function fncGetProductList(currentPage) {
     } else if (spanText === "팝콘 등록") {
         $(self.location).attr("href", "/product/addProduct?prodCategory=0").submit();
     } else if (spanText === "팝콘 소비 내역") {
-        //$("input[name='userId']").val("${sessionScope.user.userId}");
+        // $("input[name='userId']").val(sessionUserId);
         $("form[name='form']").attr("method", "post").attr("action", "/product/listProduct").submit();
     } else if (spanText === "팝콘 충전 내역") {
-        //$("input[name='userId']").val("${sessionScope.user.userId}");
-        $("form[name='form']").attr("method", "post").attr("action", "/product/listProduct").submit();
+        $("input[name='userId']").val(sessionUserId);
+        $("input[name='tranCategory']").val(0);
+        $("form[name='form']").attr("method", "post").attr("action", "/purchase/listPurchase").submit();
     } else if (spanText === "팝콘 총 매출") {
         $("input[name='userId']").val("");
         //$("input[name='userId']").val("${sessionScope.user.userId}");

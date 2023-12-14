@@ -189,6 +189,7 @@
                                 <input type="hidden" name="userId" value="${userId}">
                                 <input type="hidden" name="sessionUserId" value="${sessionScope.user.userId}">
                                 <input type="hidden" name="prodCategory" value="">
+                                <input type="hidden" name="tranCategory" value="">
                                 <div class="listStoreSearch inputset inputset-line inputset-lg">
                                     <button class="listStoreSearchButton inputset-icon icon-right icon-search btn" type="button" aria-label="아이콘"></button>
                                     <input type="text" name="searchKeyword" class="inputset-input form-control" placeholder="작품명 또는 작가 닉네임을 입력해 주세요."

@@ -76,23 +76,29 @@
 	</select>
 
 	<select id="listPurchase" parameterType="map" resultMap="purchaseSelectMap">
-		SELECT *
-		FROM ( SELECT inner_table.*, @rownum := @rownum + 1 AS row_seq
-		FROM (SELECT tran_no, Pu.prod_no, seller_id, buyer_id, tran_category, tran_method, tran_cnt,
-					bf_popcorn_cnt, af_popcorn_cnt, Pu.episode_order, Pu.prod_price, tran_date,
-					W.work_no, work_name, category
-				FROM purchase Pu JOIN product P ON Pu.prod_no = P.prod_no JOIN work W ON P.work_no = W.work_no
-		<where>
-			buyer_id = #{userId}
-			<if test='search.searchCondition != null and !search.searchCondition.equals("0")'>
-				AND LOWER(work_name) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%'))
-			</if>
-		</where>
-		) inner_table, (SELECT @rownum := 0) r
-		LIMIT #{endRowNum}
-		) AS result
-		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
-	</select>
+        SELECT *
+        FROM ( SELECT inner_table.*, @rownum := @rownum + 1 AS row_seq
+				FROM (SELECT tran_no, Pu.prod_no, seller_id, buyer_id, tran_category, tran_method, tran_cnt,
+							bf_popcorn_cnt, af_popcorn_cnt, Pu.episode_order, Pu.prod_price, tran_date,
+							W.work_no, work_name, category
+						FROM purchase Pu JOIN product P ON Pu.prod_no = P.prod_no JOIN work W ON P.work_no = W.work_no
+						<where>
+							buyer_id = #{userId}
+							<if test='search.searchCondition != null and !search.searchCondition.equals("")
+									and search.searchKeyword != null and !search.searchKeyword.equals("")'>
+								<if test='search.searchCondition.equals("0")'>
+									AND LOWER(work_name) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%'))
+								</if>
+								<if test='search.searchCondition.equals("1")'>
+									AND tran_category = 2
+								</if>
+							</if>
+						</where>
+        		) inner_table, (SELECT @rownum := 0) r
+        		LIMIT #{endRowNum}
+        ) AS result
+        WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+    </select>
 
 	<select id="countWorkTotalPopcorn" parameterType="map" resultType="hashmap">
 		SELECT work_no, SUM(P.prod_price) as total_price, ROUND(AVG(P.prod_price), 0) as prod_price
