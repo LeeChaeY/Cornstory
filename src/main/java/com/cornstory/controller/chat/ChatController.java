@@ -31,7 +31,7 @@ public class ChatController {
 //    @Value("${pageUnit}")
     int pageUnit = 5;
 //    @Value("${pageSize}")
-    int pageSize = 10;
+    int pageSize = 100;
 
     public ChatController() {
         System.out.println("ChatController 진입");

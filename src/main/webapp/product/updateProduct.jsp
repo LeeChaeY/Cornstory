@@ -44,70 +44,7 @@
 
 <%@ include file="../layout/top.jsp" %>
 
-<!-- [E]thwhole-lNlPW5z3lS -->
-<!-- [S]opilsol-N26 -->
-<div class="opilsol-N26" data-bid="sblQ1o2joM">
-    <div class="content-container">
-        <div class="contents-form container-md">
-            <div class="contents-form-top d-flex justify-content-between">
-                <h3 class="inputset-tit">스토어</h3>
-                <div class="dropset dropset-solid">
-                    <div class="dropset-head"></div>
-                </div>
-            </div>
-            <div class="checkset-wrap">
-                <div class="checkset">
-                    <input id="checkset-e-5-1" class="visually-hidden" type="radio" name="inquiryType" value="">
-                    <label class="checkset-thumb" for="checkset-e-5-1">
-                        <span>상품 조회</span>
-                    </label>
-                </div>
-                <c:if test="${sessionScope.user.role == 0}">
-                    <div class="checkset">
-                        <input id="checkset-e-5-2" class="visually-hidden" type="radio" name="inquiryType" value="">
-                        <label class="checkset-thumb" for="checkset-e-5-2">
-                            <span>나의 저작권</span>
-                        </label>
-                    </div>
-                    <div class="checkset">
-                        <input id="checkset-e-5-3" class="visually-hidden" type="radio" name="inquiryType" value="" checked="">
-                        <label class="checkset-thumb" for="checkset-e-5-3">
-                            <span>저작권 등록</span>
-                        </label>
-                    </div>
-                </c:if>
-                <c:if test="${sessionScope.user.role == 1}">
-                    <div class="checkset">
-                        <input id="checkset-e-5-4" class="visually-hidden" type="radio" name="inquiryType" value="" checked="">
-                        <label class="checkset-thumb" for="checkset-e-5-4">
-                            <span>팝콘 등록</span>
-                        </label>
-                    </div>
-                </c:if>
-                <div class="checkset">
-                    <input id="checkset-e-5-5" class="visually-hidden" type="radio" name="inquiryType" value="">
-                    <label class="checkset-thumb" for="checkset-e-5-5">
-                        <span>팝콘 소비 내역</span>
-                    </label>
-                </div>
-                <div class="checkset">
-                    <input id="checkset-e-5-6" class="visually-hidden" type="radio" name="inquiryType" value="">
-                    <label class="checkset-thumb" for="checkset-e-5-6">
-                        <span>팝콘 충전 내역</span>
-                    </label>
-                </div>
-                <c:if test="${sessionScope.user.role == 1}">
-                    <div class="checkset">
-                        <input id="checkset-e-5-7" class="visually-hidden" type="radio" name="inquiryType" value="">
-                        <label class="checkset-thumb" for="checkset-e-5-7">
-                            <span>팝콘 총 매출</span>
-                        </label>
-                    </div>
-                </c:if>
-            </div>
-        </div>
-    </div>
-</div>
+<%@ include file="../product/listStoreTop.jsp" %>
 
 <!-- [E]opilsol-N26 -->
 <main class="th-layout-main ">

@@ -17,7 +17,11 @@ public interface ProductDao {
 
 	public Product getProduct(int prodNo) throws Exception;
 
+	public Product getProductByEpisodeNo(int episodeNo) throws Exception;
+
 	public int updateProduct(Product product) throws Exception;
+
+	public int updateProductEpisode(Product product) throws Exception;
 
 	public int deleteProduct(int prodNo) throws Exception;
 

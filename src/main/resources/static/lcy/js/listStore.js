@@ -7,15 +7,9 @@ $(function() {
         $("input[id='checkset-e-5-2']").attr("checked", "");
     }
 
-    $(".dropset").on("click", function() {
-        $(self.location).attr("href", "/");
-    });
     $(".listStoreSearchButton").on("click", function() {
         // $("input[name='searchCondition']").val("0");
         $("form[name='form']").attr("method", "post").attr("action", "/product/listProduct").submit();
-    });
-    $("span").on("click", function() {
-        fncGetProductList('1');
     });
     $(".viewWork").on("click", function() {
         let workNo = $(this).parents("tr").children("td").eq(3).children("input").val();
@@ -34,7 +28,13 @@ $(function() {
 
     $("input[value='충전하기']").on("click", function() {
         let prodNo = $(this).parents("tr").children("td").eq(0).children("input").val();
-        addPurchase(prodNo);
+        addPurchaseKakao(prodNo);
+    });
+
+    $("input[value='구매하기']").on("click", function() {
+        let prodNo = $(this).parents("tr").children("td").eq(0).children("input").val();
+        let prodPrice = $(this).parents("tr").children("td").eq(4).text().replace(/\s/g, '');
+        addPurchase(prodNo, prodPrice);
     });
 
     $("input[value='수정하기']").on("click", function() {
@@ -64,10 +64,11 @@ function fncGetProductList(currentPage) {
         $(self.location).attr("href", "/product/addProduct?prodCategory=2").submit();
     } else if (spanText === "팝콘 등록") {
         $(self.location).attr("href", "/product/addProduct?prodCategory=0").submit();
-    } else if (spanText === "팝콘 소비 내역") {
-        // $("input[name='userId']").val(sessionUserId);
-        $("form[name='form']").attr("method", "post").attr("action", "/product/listProduct").submit();
-    } else if (spanText === "팝콘 충전 내역") {
+    } else if (spanText === "구매 내역") {
+        $("input[name='userId']").val(sessionUserId);
+        $("input[name='tranCategory']").val(1);
+        $("form[name='form']").attr("method", "post").attr("action", "/purchase/listPurchase").submit();
+    } else if (spanText === "판매 내역") {
         $("input[name='userId']").val(sessionUserId);
         $("input[name='tranCategory']").val(0);
         $("form[name='form']").attr("method", "post").attr("action", "/purchase/listPurchase").submit();
@@ -78,7 +79,7 @@ function fncGetProductList(currentPage) {
     }
 }
 
-function addPurchase(prodNo, prodName, prodPrice) {
+function addPurchaseKakao(prodNo) {
     let tranCnt = $("input[name='tranCnt']").val();
     $.ajax({
         url: '/purchase/json/kakaopayReady',
@@ -99,6 +100,14 @@ function addPurchase(prodNo, prodName, prodPrice) {
             alert(error);
         }
     });
+}
+
+function addPurchase(prodNo, prodPrice) {
+    if (parseInt($("input[name='popcornCnt']").val()) < parseInt(prodPrice)) {
+        alert("팝콘이 부족합니다. 충전 후 구매해주세요.");
+        return;
+    }
+    $(self.location).attr("href", "/purchase/addPurchase?prodNo=" + prodNo + "&tranCnt=1&tranMethod=0");
 }
 
 function viewWork(workNo) {

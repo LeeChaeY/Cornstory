@@ -39,7 +39,7 @@ public class ProductController {
     //    @Value("${pageUnit}")
     int pageUnit = 5;
     //    @Value("${pageSize}")
-    int pageSize = 10;
+    int pageSize = 100;
 
     public ProductController() {
         System.out.println("ProductController 진입");
@@ -68,29 +68,15 @@ public class ProductController {
         String userId = ((User) session.getAttribute("user")).getUserId();
         product.setUserId(userId);
 
-        Work work = null;
-        Episode episode = null;
-
-        if (product.getProdCategory() != 0) {
-            work = workService.getWork(product.getWorkNo());
-            product.setProdImage(work.getThumbnail());
-            if (work.getCategory() == 2) product.setProdPrice(work.getCategory()+3);
-            else product.setProdPrice(work.getCategory()+2);
-            product.setProdCnt(1);
-        }
-
         if (product.getProdCategory() == 0) {
             product.setProdName("팝콘 "+product.getProdCnt()+" 개");
-        }
-        else if (product.getProdCategory() == 1) {
-            episode = episodeService.getEpisode(product.getEpisodeNo());
-            product.setEpisodeOrder(episode.getEpisodeOrder());
-            product.setProdName(work.getWorkName()+" "+episode.getEpisodeOrder()+" 회차");
         } else if (product.getProdCategory() == 2) {
+            Work work = workService.getWork(product.getWorkNo());
+            product.setProdImage(work.getThumbnail());
+            product.setProdCnt(1);
             product.setProdName(work.getWorkName()+" 저작권");
         }
         System.out.println("/product/addProduct : " + product);
-
 
         // https://action713.tistory.com/entry/%EC%8A%A4%ED%94%84%EB%A7%81-%ED%8C%8C%EC%9D%BC-%EA%B2%BD%EB%A1%9C
         String uploadDir = request.getServletContext().getRealPath("")+"\\..\\resources\\static\\file\\product\\";

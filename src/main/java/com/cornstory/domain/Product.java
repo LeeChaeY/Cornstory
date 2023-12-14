@@ -17,6 +17,8 @@ public class Product {
 	private int prodCnt;		// 작품 회차, 저작권의 상품 수량은 1
 	private Date prodDate;		// yyyy-MM-dd
 
+	private String nickname;
+
 	public Product() {
 		// TODO Auto-generated constructor stub
 	}
@@ -185,6 +187,14 @@ public class Product {
 		this.prodDate = prodDate;
 	}
 
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
 	@Override
 	public String toString() {
 		return "Product{" +
@@ -200,6 +210,7 @@ public class Product {
 				", prodPrice=" + prodPrice +
 				", prodCnt=" + prodCnt +
 				", prodDate=" + prodDate +
+				", nickname='" + nickname + '\'' +
 				'}';
 	}
 }

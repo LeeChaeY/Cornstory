@@ -11,6 +11,7 @@ public class Purchase {
 	private int tranCategory;		// 0 : 팝콘, 1: 작품 회차, 2: 저작권, product꺼 그대로 가져오기
 	private int tranMethod;			// 0 - 팝콘, 1 - 카카오페이, 2 - 토스페이, 3 - 카드
 	private int tranCnt;			// 팝콘은 팝콘 수량, 작품 회차, 저작권은 디폴트 1
+	private int prodCnt;
 	private int bfPopcornCnt;		// 구매 전 회원이 보유한 팝콘수, 회원에서 정보 가져오기
 	private int afPopcornCnt;		// 구매 후 회원의 팝콘수, 팝콘은 bfPopcornCnt+상품 수량, 작품 회차, 저작권은 bfPopcornCnt-상품 가격
 	private Integer episodeOrder;	// 작품 회차는 회차 순서, 저작권은 작품 완결 회차, product꺼 그대로 가져오기
@@ -141,6 +142,14 @@ public class Purchase {
 		this.tranCnt = tranCnt;
 	}
 
+	public int getProdCnt() {
+		return prodCnt;
+	}
+
+	public void setProdCnt(int prodCnt) {
+		this.prodCnt = prodCnt;
+	}
+
 	public int getBfPopcornCnt() {
 		return bfPopcornCnt;
 	}
@@ -215,6 +224,7 @@ public class Purchase {
 				", tranCategory=" + tranCategory +
 				", tranMethod=" + tranMethod +
 				", tranCnt=" + tranCnt +
+				", prodCnt=" + prodCnt +
 				", bfPopcornCnt=" + bfPopcornCnt +
 				", afPopcornCnt=" + afPopcornCnt +
 				", episodeOrder=" + episodeOrder +

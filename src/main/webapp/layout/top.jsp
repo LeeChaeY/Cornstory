@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -138,17 +140,7 @@
             </li>
             <li class="header-subitem">
               <a class="header-sublink" href="javascript:void(0)">
-                <span>개설한 채팅방</span>
-              </a>
-            </li>
-            <li class="header-subitem">
-              <a class="header-sublink" href="javascript:void(0)">
-                <span>입장한 채팅방</span>
-              </a>
-            </li>
-            <li class="header-subitem">
-              <a class="header-sublink" href="/chat/addChatSpace">
-                <span>채팅방 추가하기</span>
+                <span>나의 채팅방</span>
               </a>
             </li>
           </ul>
@@ -165,11 +157,6 @@
             </li>
             <c:if test="${sessionScope.user.role == 0}">
               <li class="header-subitem">
-                <a class="header-sublink" href="javascript:void(0)">
-                  <span>나의 저작권</span>
-                </a>
-              </li>
-              <li class="header-subitem">
                 <a class="header-sublink" href="/product/addProduct?prodCategory=2">
                   <span>저작권 등록</span>
                 </a>
@@ -179,23 +166,6 @@
               <li class="header-subitem">
                 <a class="header-sublink" href="/product/addProduct?prodCategory=0">
                   <span>팝콘 등록</span>
-                </a>
-              </li>
-            </c:if>
-            <li class="header-subitem">
-              <a class="header-sublink" href="javascript:void(0)">
-                <span>팝콘 소비 내역</span>
-              </a>
-            </li>
-            <li class="header-subitem">
-              <a class="header-sublink" href="javascript:void(0)">
-                <span>팝콘 충전 내역</span>
-              </a>
-            </li>
-            <c:if test="${sessionScope.user.role == 1}">
-              <li class="header-subitem">
-                <a class="header-sublink" href="javascript:void(0)">
-                  <span>팝콘 총 매출</span>
                 </a>
               </li>
             </c:if>
@@ -311,17 +281,7 @@
             </li>
             <li class="fullmenu-subitem">
               <a class="fullmenu-sublink" href="javascript:void(0)">
-                <span>개설한 채팅방</span>
-              </a>
-            </li>
-            <li class="fullmenu-subitem">
-              <a class="fullmenu-sublink" href="javascript:void(0)">
-                <span>입장한 채팅방</span>
-              </a>
-            </li>
-            <li class="fullmenu-subitem">
-              <a class="fullmenu-sublink" href="/chat/addChatSpace">
-                <span>채팅방 추가하기</span>
+                <span>나의 채팅방</span>
               </a>
             </li>
           </ul>
@@ -338,11 +298,6 @@
             </li>
             <c:if test="${sessionScope.user.role == 0}">
               <li class="fullmenu-subitem">
-                <a class="fullmenu-sublink" href="javascript:void(0)">
-                  <span>나의 저작권</span>
-                </a>
-              </li>
-              <li class="fullmenu-subitem">
                 <a class="fullmenu-sublink" href="/product/addProduct?prodCategory=2">
                   <span>저작권 등록</span>
                 </a>
@@ -352,23 +307,6 @@
               <li class="fullmenu-subitem">
                 <a class="fullmenu-sublink" href="/product/addProduct?prodCategory=0">
                   <span>팝콘 등록</span>
-                </a>
-              </li>
-            </c:if>
-            <li class="fullmenu-subitem">
-              <a class="fullmenu-sublink" href="javascript:void(0)">
-                <span>팝콘 소비 내역</span>
-              </a>
-            </li>
-            <li class="fullmenu-subitem">
-              <a class="fullmenu-sublink" href="javascript:void(0)">
-                <span>팝콘 충전 내역</span>
-              </a>
-            </li>
-            <c:if test="${sessionScope.user.role == 1}">
-              <li class="fullmenu-subitem">
-                <a class="fullmenu-sublink" href="javascript:void(0)">
-                  <span>팝콘 총 매출</span>
                 </a>
               </li>
             </c:if>
