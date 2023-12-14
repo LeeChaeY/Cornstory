@@ -1,5 +1,6 @@
 package com.cornstory.controller.purchase;
 
+import com.cornstory.common.Search;
 import com.cornstory.domain.*;
 import com.cornstory.service.product.ProductService;
 import com.cornstory.service.purchase.PurchaseService;
@@ -8,6 +9,7 @@ import com.cornstory.service.work.WorkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
@@ -117,6 +119,36 @@ public class PurchaseController {
         userService.updateUserPopcornCnt(map);
 
         return "redirect:/product/listProduct";
+    }
+
+    @RequestMapping("listPurchase")
+    public String listPurchase(Model model, @ModelAttribute("search") Search search,
+                               @SessionAttribute("user") User user, @RequestParam("tranCategory") int tranCategory) throws Exception {
+        System.out.println("/purchase/listPurchase : GET :: search = " + search);
+
+        if (search.getSearchCondition() == null) {
+            search.setSearchCondition("");
+        }
+
+        if (search.getCurrentPage() == 0) {
+            search.setCurrentPage(1);
+        }
+        search.setPageSize(pageSize);
+
+        Map<String, Object> map = purchaseService.listPurchase(search, user.getUserId(), tranCategory);
+//        Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
+//        System.out.println("/purchase/listPurchase :: " + resultPage);
+
+//        model.addAttribute("resultPage", resultPage);
+        model.addAttribute("totalCount", map.get("totalCount"));
+        model.addAttribute("list", map.get("list"));
+        model.addAttribute("search", search);
+        model.addAttribute("userId", user.getUserId());
+
+        System.out.println(map);
+        System.out.println(search);
+
+        return "purchase/listPurchase";
     }
 
 }
