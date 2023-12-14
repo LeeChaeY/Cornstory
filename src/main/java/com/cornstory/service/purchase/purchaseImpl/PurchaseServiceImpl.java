@@ -89,12 +89,16 @@ public class PurchaseServiceImpl implements PurchaseService {
             if (i < workSaleList.size()) {
                 work.put("workNo", workSaleList.get(i).get("work_no"));
                 work.put("category", workSaleList.get(i).get("category"));
+                work.put("workName", workSaleList.get(i).get("work_name"));
+                work.put("nickname", workSaleList.get(i).get("nickname"));
                 work.put("workPrice", workSaleList.get(i).get("prod_price"));
                 work.put("workTotalPrice", workSaleList.get(i).get("total_price"));
             }
             if (i < copyrightSaleList.size()) {
                 work.put("workNo", copyrightSaleList.get(i).get("work_no"));
                 work.put("category", copyrightSaleList.get(i).get("category"));
+                work.put("workName", workSaleList.get(i).get("work_name"));
+                work.put("nickname", workSaleList.get(i).get("nickname"));
                 work.put("copyPrice", copyrightSaleList.get(i).get("prod_price"));
                 work.put("copyTotalPrice", copyrightSaleList.get(i).get("total_price"));
             }
