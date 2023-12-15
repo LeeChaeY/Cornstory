@@ -109,25 +109,32 @@ public class EpisodeController {
         Episode episode1=episodeService.getLatestEpisode(episode);
 
        Product product=new Product();
-       product.setEpisodeNo(episode1.getEpisodeNo());
+       int episodeNo = episodeService.addEpisode(episode);
+       product.setEpisodeNo(episodeNo);
        product.setWorkNo(workNo);
        product.setUserId(work.getUserId());
        product.setProdCategory(1);
-       product.setProdName(episode.getEpisodeName());
+       product.setProdName(work.getWorkName()+" "+episode.getEpisodeOrder()+" 회차");
        product.setWorkName(work.getWorkName());
        product.setEpisodeOrder(episode.getEpisodeOrder());
        product.setProdImage(episode.getThumbnail());
-        if(work.getCategory()==0){
-            product.setProdPrice(2);
-        }else if(work.getCategory()==1){
-            product.setProdPrice(3);
-        }else if(work.getCategory()==2){
-            product.setProdPrice(5);
-        }
+       product.setProdCnt(1);
+       if(work.getFap() == 0){
+           product.setProdPrice(0);
+       }else{
+           if(work.getCategory()==0){
+               product.setProdPrice(2);
+           }else if(work.getCategory()==1){
+               product.setProdPrice(3);
+           }else if(work.getCategory()==2){
+               product.setProdPrice(5);
+           }
+       }
+
         product.setProdCnt(1);
 
         System.out.println(" 상품 등록 가능??????"+product.toString());
-        //productService.addProduct(product);
+        productService.addProduct(product);
 
 
         return "index";

@@ -1,76 +1,165 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>${work.workName} | ${episode.episodeOrder}화</title>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <title>cornstory</title>
+    <link rel="stylesheet" href="/ssh/css/setting.css">
+    <link rel="stylesheet" href="/ssh/css/plugin.css">
+    <link rel="stylesheet" href="/ssh/css/template.css">
+    <link rel="stylesheet" href="/ssh/css/common.css">
+    <link rel="stylesheet" href="/ssh/css/style.css">
+    <meta charset="utf-8">
+    <style>
+        /* 기본 스타일 설정 */
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #e9ecef;
+            --text-color: #333333;
+            --background-color: #ffffff;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+
+        /* 콘텐츠 컨테이너 스타일 */
+        .content-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        /* 제목 및 날짜 표시 스타일 */
+        .textset-tit, .textset-eu {
+            font-size: 24px;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        /* 에피소드 콘텐츠 스타일 */
+        .text-content, .image-content, .video-content {
+            margin-top: 20px;
+            padding: 15px;
+            background: var(--secondary-color);
+            border-radius: 5px;
+        }
+
+        .image-content img, .video-content video {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+
+        /* 댓글 섹션 스타일링 */
+        #commentForm, #commentList {
+            margin-top: 20px;
+            padding: 15px;
+            background: var(--secondary-color);
+            border-radius: 5px;
+        }
+
+        #commentForm textarea {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        #commentList div {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        #commentList strong {
+            font-weight: bold;
+        }
+
+        /* 반응형 디자인 */
+        @media screen and (max-width: 768px) {
+            .textset-tit, .textset-eu {
+                font-size: 20px;
+            }
+        }
+
+    </style>
 </head>
-<body>
 
-<h2>${work.workName} | ${episode.episodeOrder}화 | ${episode.episodeName}</h2>
-<div>
-    <strong>작품 회차 등록일:</strong> <fmt:formatDate value="${episode.episodeDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
-</div>
+<!--top start-->
+<%@ include file="../layout/top.jsp" %>
+<!--top end-->
 
-<c:choose>
-    <c:when test="${work.category eq '0'}">
-        <div>
-            <strong>에피소드 텍스트 내용:</strong>
-                ${textContent}
-        </div>
-    </c:when>
+<main class="th-layout-main ">
 
-    <c:when test="${work.category eq '1'}">
-        <div>
-            <strong>에피소드 이미지:</strong>
-            <img src="${files}" alt="Episode Image" style="max-width: 300px; max-height: 300px; display: block;">
-        </div>
-    </c:when>
-
-    <c:when test="${work.category eq '2'}">
-        <div>
-            <strong>에피소드 영상:</strong>
-            <video controls width="300" autoplay="autoplay" muted="muted">
-                <source id="mov01" src="${files}" type="video/mp4">
-            </video>
-        </div>
-    </c:when>
-</c:choose>
-
-<!-- 댓글 폼 -->
-<div id="commentForm">
-    <input type="hidden" id="episodeNo" value="${episode.episodeNo}">
-    <textarea id="commentContent" placeholder="댓글을 입력하세요"></textarea>
-    <button type="button" onclick="addComment()">댓글 추가</button>
-</div>
-<h3>댓글 목록</h3>
-<div id="commentList">
-    <c:if test="${not empty list}">
-        <c:forEach var="comment" items="${list}">
-            <div>
-                <strong>${comment.userId}</strong>
-                <span>${comment.commentDate}</span>
+    <div class="opilsol-N34" data-bid="Dklq5i7YYR" >
+        <div class="content-container container-md">
+            <div class="textset content-tit">
+                <h4 class="h4">${work.workName} | ${episode.episodeOrder}</h4>
+                <h2 class="textset-tit">${episode.episodeName}</h2>
+                <p class="textset-eu"><fmt:formatDate value="${episode.episodeDate}" pattern="yyyy-MM-dd HH:mm:ss"/></p>
             </div>
-            <p>${comment.content}</p>
+        </div>
+    </div>
 
-            <!-- 수정 및 삭제 버튼 -->
-            <button onclick="openModal('${comment.commentNo}', '${comment.content}')">수정</button>
-            <button onclick="deleteComment('${comment.commentNo}')">삭제</button>
+    <div class="opilsol-N17" data-bid="GkLq5I7z1g">
+        <div class="content-container">
+            <c:choose>
+                <!-- 텍스트 에피소드의 경우 -->
+                <c:when test="${work.category eq '0'}">
+                    <div class="text-content">
+                        <p>${textContent}</p>
+                    </div>
+                </c:when>
 
-            <!-- 수정 및 삭제 모달 -->
-            <div class="modal" id="commentModal_${comment.commentNo}" style="display: none;">
-                <div class="modal-content">
-                    <span class="close" onclick="closeModal('commentModal_${comment.commentNo}')">&times;</span>
-                    <textarea id="editedContent_${comment.commentNo}" placeholder="댓글을 수정하세요"></textarea>
-                    <button onclick="updateComment('${comment.commentNo}')">수정</button>
+                <!-- 이미지 에피소드의 경우 -->
+                <c:when test="${work.category eq '1'}">
+                    <div class="image-content">
+                        <img src="${files}" alt="Episode Image" style="max-width: 300px; max-height: 300px; display: block;">
+                    </div>
+                </c:when>
+
+                <!-- 비디오 에피소드의 경우 -->
+                <c:when test="${work.category eq '2'}">
+                    <div class="video-content">
+                        <video controls style="width: 100%; height: auto;">
+                            <source src="${files}" type="video/mp4">
+                            브라우저가 비디오를 지원하지 않습니다.
+                        </video>
+                    </div>
+                </c:when>
+            </c:choose>
+        </div>
+    </div>
+
+    <!-- 다른 섹션들 -->
+
+    <div class="opilsol-N22" data-bid="QklQ5i7Z5J">
+        <div class="content-container">
+            <div class="container-md">
+                <h4 class="h4">댓글란</h4>
+                <div id="commentForm">
+                    <input type="hidden" id="episodeNo" value="${episode.episodeNo}">
+                    <textarea id="commentContent" placeholder="댓글을 입력하세요"></textarea>
+                    <button type="button" onclick="addComment()">댓글 추가</button>
+                </div>
+                <h3>댓글 목록</h3>
+                <div id="commentList">
+                    <!-- 댓글 목록이 여기에 동적으로 로드됩니다. -->
                 </div>
             </div>
-        </c:forEach>
-    </c:if>
-</div>
+        </div>
+    </div>
+</main>
+
+<%@ include file="../layout/bottom.jsp" %>
 
 </body>
 <script>
@@ -91,8 +180,9 @@
                 userId: userId,
                 workNo: workNo
             }),
-            success: function (comments) {
+            success: function () {
                 loadComments();
+                document.getElementById("commentContent").value = ''; // 댓글 입력란 초기화
             },
             error: function () {
                 alert("댓글 추가 실패");
@@ -102,9 +192,12 @@
 
     // 댓글 목록을 서버에서 가져와서 화면에 표시하는 함수
     function loadComments() {
+        var episodeNo = document.getElementById("episodeNo").value;
+
         $.ajax({
             type: "GET",
             url: "/episode/json/listComment",
+            data: {episodeNo: episodeNo},
             success: function (comments) {
                 displayCommentList(comments);
             },
@@ -121,51 +214,37 @@
 
     // 댓글 목록을 화면에 표시하는 함수
     function displayCommentList(comments) {
-        var isEmpty = comments.length === 0;
         var commentListElement = document.getElementById("commentList");
+        commentListElement.innerHTML = ""; // 댓글 목록 초기화
 
-        // 기존에 표시된 댓글들을 모두 제거 (초기화)
-        if (commentListElement) {
-            commentListElement.innerHTML = "";
-        }
-
-        // comments 배열을 순회하면서 각 댓글을 화면에 추가
-        for (var i = 0; i < comments.length; i++) {
-            var comment = comments[i];
+        comments.forEach(function (comment) {
             var listItem = document.createElement("div");
-
-            var htmlContent =
+            listItem.innerHTML =
                 '<div>' +
-                '<strong>' + comment.userId + '</strong>' +
+                '<strong>' + comment.userId + '</strong> ' +
                 '<span>' + comment.commentDate + '</span>' +
                 '</div>' +
                 '<p>' + comment.content + '</p>' +
-                '<button onclick="openModal(\'' + comment.commentNo + '\', \'' + comment.content + '\')">수정</button>' +
+                '<button onclick="openModal(\'' + comment.commentNo + '\', \'' + escapeHtml(comment.content) + '\')">수정</button>' +
                 '<button onclick="deleteComment(\'' + comment.commentNo + '\')">삭제</button>';
 
-            // 수정 및 삭제 모달 추가
-            if (!isEmpty) {
-                htmlContent +=
-                    '<div class="modal" id="commentModal_' + comment.commentNo + '" style="display: none;">' +
-                    '<div class="modal-content">' +
-                    '<span class="close" onclick="closeModal(\'commentModal_' + comment.commentNo + '\')">&times;</span>' +
-                    '<textarea id="editedContent_' + comment.commentNo + '" placeholder="댓글을 수정하세요"></textarea>' +
-                    '<button onclick="updateComment(\'' + comment.commentNo + '\')">수정</button>' +
-                    '</div>' +
-                    '</div>';
-            }
-
-            listItem.innerHTML = htmlContent;
             commentListElement.appendChild(listItem);
-        }
+        });
 
-        if (isEmpty) {
-            var emptyMessage = document.createElement("p");
-            emptyMessage.textContent = "아직 댓글 내역이 없습니다.";
-            commentListElement.appendChild(emptyMessage);
+        if (comments.length === 0) {
+            commentListElement.innerHTML = "<p>아직 댓글 내역이 없습니다.</p>";
         }
     }
 
+    // HTML 태그를 escape 하는 함수
+    function escapeHtml(unsafe) {
+        return unsafe
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
     // 댓글 수정 모달 열기
     function openModal(commentNo, content) {
         document.getElementById("editedContent_" + commentNo).value = content;
@@ -177,11 +256,9 @@
         document.getElementById(modalId).style.display = "none";
     }
 
-
     // 댓글 수정
     function updateComment(commentNo) {
         var editedContent = document.getElementById("editedContent_" + commentNo).value;
-
         $.ajax({
             type: "POST",
             url: "/episode/json/updateComment",
@@ -190,36 +267,34 @@
                 commentNo: commentNo,
                 content: editedContent
             }),
-            success: function (comments) {
-                // 댓글 수정 후, 화면 갱신
-                loadComments();
+            success: function () {
+                loadComments(); // 댓글 목록 다시 로드
+                closeModal('commentModal_' + commentNo); // 모달 닫기
             },
             error: function () {
-                loadComments();
+                alert("댓글 수정 실패");
             }
         });
     }
 
     // 댓글 삭제
     function deleteComment(commentNo) {
-        // AJAX를 사용하여 서버에 댓글 삭제 요청을 보냄 (RESTful API 활용)
-        // 실제 서버 URL은 프로젝트에 맞게 수정 필요
-        console.log(commentNo)
-        $.ajax({
-            type: "POST",
-            url: "/episode/json/deleteComment",
-            contentType: "application/json",
-            data: JSON.stringify({
-                commentNo: commentNo
-            }),
-            success: function () {
-                // 댓글 삭제 후, 화면 갱신
-                loadComments();
-            },
-            error: function () {
-                alert("댓글 삭제 실패");
-            }
-        });
+        if(confirm("댓글을 삭제하시겠습니까?")) {
+            $.ajax({
+                type: "POST",
+                url: "/episode/json/deleteComment",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    commentNo: commentNo
+                }),
+                success: function () {
+                    loadComments(); // 댓글 목록 다시 로드
+                },
+                error: function () {
+                    alert("댓글 삭제 실패");
+                }
+            });
+        }
     }
 </script>
 

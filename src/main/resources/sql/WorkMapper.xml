@@ -66,22 +66,20 @@
 			<if test="searchKeyword != null">
 				AND work_name LIKE CONCAT('%',#{searchKeyword},'%') OR user_id LIKE CONCAT('%',#{searchKeyword},'%')
 			</if>
-			<if test="searchKeyword == null">
 				<choose>
 					<when test="searchCondition == 0">
-						category = 0
+						AND category = 0
 					</when>
 					<when test="searchCondition == 1">
-						category = 1
+						AND category = 1
 					</when>
 					<when test="searchCondition == 2">
-						category = 2
+						AND category = 2
 					</when>
 				</choose>
 				<if test="orderKeyword != null">
 					AND (genre1 = #{orderKeyword} OR genre2 = #{orderKeyword} OR genre3 = #{orderKeyword})
 				</if>
-			</if>
 		</where>
 		ORDER BY view_cnt
 		<if test="orderCondition == 0 or orderCondition == null">
@@ -92,29 +90,28 @@
 		</if>
 	</select>
 
-	<select id="getTotalCount" parameterType="com.cornstory.common.Search" resultType="java.lang.Integer">
+	<select id="getTotalCount" parameterType="search" resultType="java.lang.Integer">
 		SELECT COUNT(*)
 		FROM work
 		<where>
 			<if test="searchKeyword != null">
 				AND work_name LIKE CONCAT('%',#{searchKeyword},'%') OR user_id LIKE CONCAT('%',#{searchKeyword},'%')
 			</if>
-			<if test="searchKeyword == null">
 				<choose>
 					<when test="searchCondition == 0">
-						category = 0
+						AND category = 0
 					</when>
 					<when test="searchCondition == 1">
-						category = 1
+						AND category = 1
 					</when>
 					<when test="searchCondition == 2">
-						category = 2
+						AND category = 2
 					</when>
 				</choose>
 				<if test="orderKeyword != null">
 					AND (genre1 = #{orderKeyword} OR genre2 = #{orderKeyword} OR genre3 = #{orderKeyword})
 				</if>
-			</if>
+
 		</where>
 		ORDER BY view_cnt
 		<if test="orderCondition == 0 or orderCondition == null">

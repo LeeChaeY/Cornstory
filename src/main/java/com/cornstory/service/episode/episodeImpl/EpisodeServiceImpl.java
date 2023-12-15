@@ -37,8 +37,9 @@ public class EpisodeServiceImpl implements EpisodeService{
 
     //작품 회차 생성
     @Override
-    public void addEpisode(Episode episode) {
+    public int addEpisode(Episode episode) {
         episodeDao.addEpisode(episode);
+        return episode.getEpisodeNo();
     }
 
     //작품 회차 수정

@@ -1,86 +1,277 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
+<!DOCTYPE html>
 <html>
 <head>
-    <title>작품 회차 추가</title>
+    <title>cornstory</title>
+    <link rel="stylesheet" href="/ssh/css/setting.css">
+    <link rel="stylesheet" href="/ssh/css/plugin.css">
+    <link rel="stylesheet" href="/ssh/css/template.css">
+    <link rel="stylesheet" href="/ssh/css/common.css">
+    <link rel="stylesheet" href="/ssh/css/style.css">
+    <style>
+        /* 기본 스타일 재정의 */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .content-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .textset-tit {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .inputset-label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .inputset-input, .inputset-textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .inputset-group {
+            margin-bottom: 20px;
+        }
+
+        .bottom-btn {
+            text-align: center;
+        }
+
+        .btnset {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #0056b3;
+            color: white;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+
+
+        .checkset-label {
+            cursor: pointer;
+        }
+
+        .checkset-text {
+            margin-left: 20px;
+            vertical-align: top;
+        }
+
+        #thumbnailPreviewContainer img,
+        #imagePreviewContainer img,
+        #videoPreviewContainer video {
+            max-width: 100%;
+            height: auto;
+            margin-top: 10px;
+        }
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
 
+<!--top start-->
+<%@ include file="../layout/top.jsp" %>
+<!--top end-->
+
 <h2>작품 회차 추가</h2>
 
-<form action="../episode/updateEpisode" method="post" enctype="multipart/form-data">
-
-    <div class="info-item">카테고리:
-        <c:choose>
-            <c:when test="${work.category eq '0'}">웹소설</c:when>
-            <c:when test="${work.category eq '1'}">웹툰</c:when>
-            <c:when test="${work.category eq '2'}">웹드라마</c:when>
-            <c:otherwise>기타</c:otherwise>
-        </c:choose>
-    </div>
-    <div class="info-item">작품명: ${work.workName}</div>
-
-    <input type="hidden" id="episodeNo" name="episodeNo" value="${episode.episodeNo}" />
-
-    <input type="hidden" id="workNo" name="workNo" value="${episode.workNo}" />
-
-    <!-- 작품 회차순서 입력 -->
-    <label for="episodeOrder">작품 회차:</label>
-    <div>
-        <input type="number" id="episodeOrder" name="episodeOrder" min="1" required readonly value="${episode.episodeOrder}"/>
-    </div>
-
-    <!-- 작품 회차명 입력 -->
-    <label for="episodeName">회차명:</label>
-    <div>
-        <input type="text" id="episodeName" name="episodeName" value="${episode.episodeName}" required />
-    </div>
-
-    <!-- 작품 회차 대표이미지 업로드 -->
-    <label for="thumbnailFile">작품 회차 이미지 (오직 이미지만):</label>
-    <div>
-        <input type="file" name="thumbnailFile" id="thumbnailFile" onchange="setThumbnailPreview(event);" accept=".jpg" />
-    </div>
-    <div id="thumbnailPreviewContainer">
-        <img src="${episode.thumbnail}" alt="Thumbnail" style="max-width: 300px; max-height: 300px; display: block;">
-    </div>
-    <br/>
-    <br/>
-    <br/>
-    <!-- 파일 업로드를 위한 추가적인 필드들 -->
-    <label for="episodeFile">회차 등록 파일:</label>
-    <div>
-        <c:choose>
-            <c:when test="${work.category eq '0'}"> <!-- 웹소설인 경우 -->
-                <input type="file" name="episodeFile" id="episodeFile" accept=".txt" required onchange="readTextFilePreview(this);"  />
-                <span>텍스트 파일(.txt)을 업로드해주세요.</span>
-                <div id="textPreviewContainer">${episode.directory}${episode.fileName}</div>
-            </c:when>
-            <c:when test="${work.category eq '1'}"> <!-- 웹툰인 경우 -->
-                <input type="file" name="episodeFile" id="episodeFile" accept=".jpg" required onchange="setImagePreview(this);" value="${episode.directory + episode.fileName}"/>
-                <span>이미지 파일(.jpg)을 업로드해주세요.</span>
-                <div id="imagePreviewContainer"><img src="<c:out value='${episode.directory}${episode.fileName}' />" alt="webToon" style="max-width: 300px; max-height: 300px; display: block;"></div>
-            </c:when>
-            <c:when test="${work.category eq '2'}"> <!-- 웹드라마인 경우 -->
-                <input type="file" name="episodeFile" id="episodeFile" accept=".mp4" required onchange="setVideoPreview(this);" value="${episode.directory + episode.fileName}"/>
-                <span>영상 파일(.mp4)을 업로드해주세요.</span>
-                <div id="videoPreviewContainer">
-                    <video controls width="300">
-                        <source src="${episode.directory}${episode.fileName}" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
+<main class="th-layout-main">
+    <!-- [S]opilsol-N31 -->
+    <div class="opilsol-N31" data-bid="Jo2cLR2NPB1">
+        <div class="content-container">
+            <div class="textset content-top">
+                <div class="container-md">
+                    <h2 class="textset-tit">작품 회차 수정</h2>
                 </div>
-            </c:when>
-        </c:choose>
-    </div>
+            </div>
+            <div class="contents-form">
+                <form action="../episode/updateEpisode" method="post" enctype="multipart/form-data">
+                    <!-- 카테고리 정보 -->
+                    <div class="inputset inputset-lg inputset-group">
+                        <label class="inputset-label">카테고리</label>
+                        <p class="h5">
+                            <c:choose>
+                                <c:when test="${work.category eq '0'}">웹소설</c:when>
+                                <c:when test="${work.category eq '1'}">웹툰</c:when>
+                                <c:when test="${work.category eq '2'}">웹드라마</c:when>
+                                <c:otherwise>기타</c:otherwise>
+                            </c:choose>
+                        </p>
+                    </div>
 
-    <br/>
-    <br/>
-    <br/>
-    <button type="submit">회차 수정</button>
-</form>
+                    <!-- 작품명 정보 -->
+                    <div class="inputset inputset-lg inputset-group">
+                        <label class="inputset-label" for="workName">작품명</label>
+                        <input type="text" id="workName" name="workName" class="inputset-input form-control" value="${work.workName}" readonly>
+                    </div>
+
+                    <!-- 회차 순서 -->
+                    <div class="inputset inputset-lg inputset-group">
+                        <label class="inputset-label" for="episodeOrder">회차 순서</label>
+                        <input type="number" id="episodeOrder" name="episodeOrder" class="inputset-input form-control" value="${episode.episodeOrder}" readonly>
+                    </div>
+
+                    <!-- 회차명 입력 -->
+                    <div class="inputset inputset-lg inputset-group">
+                        <label class="inputset-label" for="episodeName">회차명</label>
+                        <input type="text" id="episodeName" name="episodeName" class="inputset-input form-control" value="${episode.episodeName}" required>
+                    </div>
+
+                    <!-- 회차 대표 썸네일 업로드 -->
+                    <div class="inputset inputset-lg inputset-group">
+                        <label class="inputset-label" for="thumbnailFile">회차 대표 썸네일</label>
+                        <input type="file" name="thumbnailFile" id="thumbnailFile" accept="image/*">
+                        <div id="thumbnailPreviewContainer">
+                            <img src="${episode.thumbnail}" alt="Thumbnail" style="max-width: 300px; max-height: 300px; display: block;">
+                        </div>
+                    </div>
+
+                    <!-- 파일 업로드 필드 -->
+                    <div class="inputset inputset-lg inputset-group">
+                        <label class="inputset-label" for="episodeFile">회차 등록 파일</label>
+                        <c:choose>
+                            <c:when test="${work.category eq '0'}">
+                                <input type="file" name="episodeFile" id="episodeFile" accept=".txt" onchange="readTextFilePreview(this);">
+                                <div id="textPreviewContainer">${episode.directory}${episode.fileName}</div>
+                            </c:when>
+                            <c:when test="${work.category eq '1'}">
+                                <input type="file" name="episodeFile" id="episodeFile" accept=".jpg" onchange="setImagePreview(this);">
+                                <div id="imagePreviewContainer"><img src="<c:out value='${episode.directory}${episode.fileName}' />" alt="webToon" style="max-width: 300px; max-height: 300px; display: block;"></div>
+                            </c:when>
+                            <c:when test="${work.category eq '2'}">
+                                <input type="file" name="episodeFile" id="episodeFile" accept=".mp4" onchange="setVideoPreview(this);">
+                                <div id="videoPreviewContainer">
+                                    <video controls width="300">
+                                        <source src="${episode.directory}${episode.fileName}" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </div>
+                            </c:when>
+                        </c:choose>
+                    </div>
+
+                    <!-- 운영 원칙 동의 체크박스 -->
+                    <div class="inputset inputset-lg inputset-group">
+                        <label class="inputset-label" for="checkset-c-6-1">운영 원칙 동의</label>
+                        <div class="checkset checkset-sm">
+                            <input id="checkset-c-6-1" class="checkset-input input-round" type="checkbox" name="termsAgreement" required>
+                            <label class="checkset-label" for="checkset-c-6-1"></label>
+                            <span class="checkset-text" style="font-size: 12px; line-height: 1.5;">
+                                저작권 등 다른 사람의 권리를 침해하거나 명예를 훼손하는 게시물은 이용약관 및 관련 법률에 의해 제재를 받을 수 있습니다.
+                                <br>성인물, 폭력물 등의 게시물은 통보 없이 삭제될 수 있습니다.
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- 제출 버튼 -->
+                    <div class="bottom-btn">
+                        <button type="submit" class="btnset btnset-lg btnset-dark">회차 수정</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- [E]opilsol-N31 -->
+</main>
+
+
+<%--<form action="../episode/updateEpisode" method="post" enctype="multipart/form-data">--%>
+
+<%--    <div class="info-item">카테고리:--%>
+<%--        <c:choose>--%>
+<%--            <c:when test="${work.category eq '0'}">웹소설</c:when>--%>
+<%--            <c:when test="${work.category eq '1'}">웹툰</c:when>--%>
+<%--            <c:when test="${work.category eq '2'}">웹드라마</c:when>--%>
+<%--            <c:otherwise>기타</c:otherwise>--%>
+<%--        </c:choose>--%>
+<%--    </div>--%>
+<%--    <div class="info-item">작품명: ${work.workName}</div>--%>
+
+<%--    <input type="hidden" id="episodeNo" name="episodeNo" value="${episode.episodeNo}" />--%>
+
+<%--    <input type="hidden" id="workNo" name="workNo" value="${episode.workNo}" />--%>
+
+<%--    <!-- 작품 회차순서 입력 -->--%>
+<%--    <label for="episodeOrder">작품 회차:</label>--%>
+<%--    <div>--%>
+<%--        <input type="number" id="episodeOrder" name="episodeOrder" min="1" required readonly value="${episode.episodeOrder}"/>--%>
+<%--    </div>--%>
+
+<%--    <!-- 작품 회차명 입력 -->--%>
+<%--    <label for="episodeName">회차명:</label>--%>
+<%--    <div>--%>
+<%--        <input type="text" id="episodeName" name="episodeName" value="${episode.episodeName}" required />--%>
+<%--    </div>--%>
+
+<%--    <!-- 작품 회차 대표이미지 업로드 -->--%>
+<%--    <label for="thumbnailFile">작품 회차 이미지 (오직 이미지만):</label>--%>
+<%--    <div>--%>
+<%--        <input type="file" name="thumbnailFile" id="thumbnailFile" onchange="setThumbnailPreview(event);" accept=".jpg" />--%>
+<%--    </div>--%>
+<%--    <div id="thumbnailPreviewContainer">--%>
+<%--        <img src="${episode.thumbnail}" alt="Thumbnail" style="max-width: 300px; max-height: 300px; display: block;">--%>
+<%--    </div>--%>
+<%--    <br/>--%>
+<%--    <br/>--%>
+<%--    <br/>--%>
+<%--    <!-- 파일 업로드를 위한 추가적인 필드들 -->--%>
+<%--    <label for="episodeFile">회차 등록 파일:</label>--%>
+<%--    <div>--%>
+<%--        <c:choose>--%>
+<%--            <c:when test="${work.category eq '0'}"> <!-- 웹소설인 경우 -->--%>
+<%--                <input type="file" name="episodeFile" id="episodeFile" accept=".txt" required onchange="readTextFilePreview(this);"  />--%>
+<%--                <span>텍스트 파일(.txt)을 업로드해주세요.</span>--%>
+<%--                <div id="textPreviewContainer">${episode.directory}${episode.fileName}</div>--%>
+<%--            </c:when>--%>
+<%--            <c:when test="${work.category eq '1'}"> <!-- 웹툰인 경우 -->--%>
+<%--                <input type="file" name="episodeFile" id="episodeFile" accept=".jpg" required onchange="setImagePreview(this);" value="${episode.directory + episode.fileName}"/>--%>
+<%--                <span>이미지 파일(.jpg)을 업로드해주세요.</span>--%>
+<%--                <div id="imagePreviewContainer"><img src="<c:out value='${episode.directory}${episode.fileName}' />" alt="webToon" style="max-width: 300px; max-height: 300px; display: block;"></div>--%>
+<%--            </c:when>--%>
+<%--            <c:when test="${work.category eq '2'}"> <!-- 웹드라마인 경우 -->--%>
+<%--                <input type="file" name="episodeFile" id="episodeFile" accept=".mp4" required onchange="setVideoPreview(this);" value="${episode.directory + episode.fileName}"/>--%>
+<%--                <span>영상 파일(.mp4)을 업로드해주세요.</span>--%>
+<%--                <div id="videoPreviewContainer">--%>
+<%--                    <video controls width="300">--%>
+<%--                        <source src="${episode.directory}${episode.fileName}" type="video/mp4">--%>
+<%--                        Your browser does not support the video tag.--%>
+<%--                    </video>--%>
+<%--                </div>--%>
+<%--            </c:when>--%>
+<%--        </c:choose>--%>
+<%--    </div>--%>
+
+<%--    <br/>--%>
+<%--    <br/>--%>
+<%--    <br/>--%>
+<%--    <button type="submit">회차 수정</button>--%>
+<%--</form>--%>
+
+
+<%@ include file="../layout/bottom.jsp" %>
+
 </body>
 <script>
     // 이미지 미리보기 함수
