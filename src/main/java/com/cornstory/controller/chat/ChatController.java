@@ -46,10 +46,9 @@ public class ChatController {
     @PostMapping(value="addChatSpace")
     public String addChatSpace(Model model, @ModelAttribute("chatSpace") ChatSpace chatSpace,
                                @RequestParam("file") MultipartFile file, HttpServletRequest request,
-                               HttpSession session) throws Exception {
+                               @SessionAttribute("user") User user) throws Exception {
         System.out.println("/chat/addChatSpace : POST");
-        String userId = ((User) session.getAttribute("user")).getUserId();
-        chatSpace.setUserId(userId);
+        chatSpace.setUserId(user.getUserId());
         System.out.println("/chat/addChatSpace : " + chatSpace);
 
         // https://action713.tistory.com/entry/%EC%8A%A4%ED%94%84%EB%A7%81-%ED%8C%8C%EC%9D%BC-%EA%B2%BD%EB%A1%9C
@@ -95,7 +94,7 @@ public class ChatController {
     }
 
     @PostMapping(value="updateChatSpace")
-    public String updateChatSpace(Model model, @ModelAttribute("chatSpace") ChatSpace chatSpace,
+    public String updateChatSpace(@ModelAttribute("chatSpace") ChatSpace chatSpace,
                                   @RequestParam("file") MultipartFile file, HttpServletRequest request) throws Exception {
         System.out.println("/chat/updateChatSpace : POST");
         System.out.println("/chat/updateChatSpace : " + chatSpace);
@@ -150,7 +149,7 @@ public class ChatController {
 
     @RequestMapping(value="listChatSpace")
     public String listChatSpace(Model model, @ModelAttribute("search") Search search,
-                                HttpServletRequest request, HttpSession session) throws Exception {
+                                HttpServletRequest request, @SessionAttribute("user") User user) throws Exception {
         String userId = "";
         String enterUserId = "";
         String genre = "";
@@ -179,7 +178,7 @@ public class ChatController {
         System.out.println("/chat/listChatSpace ::"+resultPage);
 
         Map<String, Object> map01 = new HashMap<String, Object>();
-        map01.put("userId", ((User) session.getAttribute("user")).getUserId());
+        map01.put("userId", user.getUserId());
         for (ChatSpace chatSpace : (List<ChatSpace>)map.get("list")) {
             map01.put("chatSpaceNo", chatSpace.getChatSpaceNo());
             chatSpace.setChatEnterCheck(chatService.countChatEnterCheck(map01));
@@ -204,19 +203,18 @@ public class ChatController {
 
     @RequestMapping(value="enterChatSpace")
     public String enterChatSpace(@RequestParam("chatSpaceNo") int chatSpaceNo,
-                                 HttpSession session, Model model) throws Exception {
-        String userId = ((User) session.getAttribute("user")).getUserId();
-        System.out.println("/chat/enterChatSpace : GET/POST :: userId : " + userId + ", chatSpaceNo : " + chatSpaceNo);
+                                 @SessionAttribute("user") User user, Model model) throws Exception {
+        System.out.println("/chat/enterChatSpace : GET/POST :: userId : " + user.getUserId() + ", chatSpaceNo : " + chatSpaceNo);
 
         ChatSpace chatSpace = chatService.getChatSpace(chatSpaceNo);
-        chatSpace.setUserId(userId);
+        chatSpace.setUserId(user.getUserId());
 
         Map<String, Object> map01 = new HashMap<String, Object>();
-        map01.put("userId", userId);
+        map01.put("userId", user.getUserId());
         map01.put("chatSpaceNo", chatSpaceNo);
 
         if (chatService.countChatEnterCheck(map01) == 0)
-            chatService.addChatEnter(userId, chatSpaceNo);
+            chatService.addChatEnter(user.getUserId(), chatSpaceNo);
 
         chatSpace = chatService.getChatSpace(chatSpaceNo);
         User createUser = userService.getUser(chatSpace.getUserId());
@@ -226,7 +224,7 @@ public class ChatController {
         System.out.println("/chat/enterChatSpace : GET :: " + chatSpace);
         model.addAttribute("chatSpace", chatSpace);
 
-        String startDate = chatService.getChatEnter(userId, chatSpaceNo).getChatEnterDate().toString();
+        String startDate = chatService.getChatEnter(user.getUserId(), chatSpaceNo).getChatEnterDate().toString();
 
         Map <String, Object> map = chatService.listChat(chatSpace.getChatSpaceNo(), startDate, "");
         System.out.println("/chat/enterChatSpace : GET :: " + map.get("list"));

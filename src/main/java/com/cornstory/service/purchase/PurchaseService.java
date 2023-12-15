@@ -17,7 +17,7 @@ public interface PurchaseService {
 
     public Map<String, Object> listPurchase(Search search, String userId, int role, int tranCategory) throws Exception;
 
-    public Map<String, Object> countWorkTotalPopcorn(String userId) throws Exception;
+    public Map<String, Object> countWorkTotalPopcorn(Search search, String userId, int role) throws Exception;
 
-    public Map<String, Object> listTotalSale(Date startDate, Date endDate) throws Exception;
+    public Map<String, Object> listTotalSale(int condition) throws Exception;
 }

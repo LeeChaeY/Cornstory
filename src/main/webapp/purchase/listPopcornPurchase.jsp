@@ -58,6 +58,7 @@
                     <input type="hidden" name="sessionUserId" value="${sessionScope.user.userId}">
                     <input type="hidden" name="prodCategory" value="">
                     <input type="hidden" name="tranCategory" value="">
+                    <input type="hidden" name="condition" value="${condition}">
                     <%--                <div class="inputset inputset-line inputset-lg">--%>
                     <%--                    <button class="inputset-icon icon-right icon-search btn" type="button" aria-label="아이콘"></button>--%>
                     <%--                    <input type="text" class="inputset-input form-control" placeholder="저작권 이름을 입력해 주세요."--%>

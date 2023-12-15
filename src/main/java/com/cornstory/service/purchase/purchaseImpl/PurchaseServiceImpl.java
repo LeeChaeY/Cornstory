@@ -73,34 +73,39 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
 
     @Override
-    public Map<String, Object> countWorkTotalPopcorn(String userId) throws Exception {
+    public Map<String, Object> countWorkTotalPopcorn(Search search, String userId, int role) throws Exception {
         Map<String,Object> map = new HashMap<String,Object>();
         map.put("userId", userId);
+        map.put("role", role);
+        map.put("search", search);
+
         map.put("tranCategory", 1);
         List<Map> workSaleList = purchaseDao.countWorkTotalPopcorn(map);
+        System.out.println("PurchaseServiceImpl :: countWorkTotalPopcorn :: workSaleList :: "+workSaleList);
 
         map.put("tranCategory", 2);
         List<Map> copyrightSaleList = purchaseDao.countWorkTotalPopcorn(map);
+        System.out.println("PurchaseServiceImpl :: countWorkTotalPopcorn :: copySaleList :: "+copyrightSaleList);
 
         List<Map> workList = new ArrayList<Map>();
-        int size = (workSaleList.size() > copyrightSaleList.size()) ? workSaleList.size() : copyrightSaleList.size();
-        for (int i=0; i<size; i++) {
+        for (int i=0; i<workSaleList.size(); i++) {
             Map work = new HashMap();
-            if (i < workSaleList.size()) {
-                work.put("workNo", workSaleList.get(i).get("work_no"));
-                work.put("category", workSaleList.get(i).get("category"));
-                work.put("workName", workSaleList.get(i).get("work_name"));
-                work.put("nickname", workSaleList.get(i).get("nickname"));
-                work.put("workPrice", workSaleList.get(i).get("prod_price"));
-                work.put("workTotalPrice", workSaleList.get(i).get("total_price"));
-            }
+            work.put("workNo", workSaleList.get(i).get("work_no"));
+            work.put("category", workSaleList.get(i).get("category"));
+            work.put("workName", workSaleList.get(i).get("work_name"));
+            work.put("nickname", workSaleList.get(i).get("nickname"));
+            work.put("workPrice", workSaleList.get(i).get("prod_price"));
+            work.put("workTotalPrice", workSaleList.get(i).get("total_price"));
+            work.put("workUserCount", workSaleList.get(i).get("user_count"));
+
             if (i < copyrightSaleList.size()) {
-                work.put("workNo", copyrightSaleList.get(i).get("work_no"));
-                work.put("category", copyrightSaleList.get(i).get("category"));
-                work.put("workName", workSaleList.get(i).get("work_name"));
-                work.put("nickname", workSaleList.get(i).get("nickname"));
                 work.put("copyPrice", copyrightSaleList.get(i).get("prod_price"));
                 work.put("copyTotalPrice", copyrightSaleList.get(i).get("total_price"));
+                work.put("copyUserCount", copyrightSaleList.get(i).get("user_count"));
+            } else {
+                work.put("copyPrice", -1);
+                work.put("copyTotalPrice", 0);
+                work.put("copyUserCount", 0);
             }
             workList.add(work);
         }
@@ -110,19 +115,30 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
 
     @Override
-    public Map<String, Object> listTotalSale(Date startDate, Date endDate) throws Exception {
+    public Map<String, Object> listTotalSale(int condition) throws Exception {
         Map<String,Object> map = new HashMap<String,Object>();
-        map.put("startDate", startDate);
-        map.put("endDate", endDate);
+        map.put("condition", condition);
 
         map.put("tranCategory", 0);
-        List<Integer> purchaseCnt = purchaseDao.countTotalPurchase(map);
-        map.put("purchaseCnt", purchaseCnt);
+        List<Map> purchaseCnt = purchaseDao.countTotalPurchase(map);
 
         map.put("tranCategory", 1);
-        List<Integer> useCnt = purchaseDao.countTotalPurchase(map);
-        map.put("useCnt", useCnt);
+        List<Map> usePopcornCnt = purchaseDao.countTotalPurchase(map);
 
+        List<Map> list = new ArrayList<Map>();
+        for (int i=0; i<purchaseCnt.size(); i++) {
+            Map map01 = new HashMap();
+            map01.put("purchasePopcornCnt", purchaseCnt.get(i).get("popcorn_cnt"));
+            map01.put("purchasePrice", purchaseCnt.get(i).get("prod_price_sum"));
+            map01.put("usePopcornCnt", usePopcornCnt.get(i).get("prod_price_sum"));
+            if (condition != 0) map01.put("date", usePopcornCnt.get(i).get("date"));
+            else map01.put("date", "");
+            list.add(map01);
+        }
+
+        System.out.println("PurchaseServiceImpl :: listTotalSale :: "+map);
+        map.put("list", list);
+        map.put("totalCount", list.size());
         return map;
     }
 }

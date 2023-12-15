@@ -59,31 +59,31 @@
                     <input type="hidden" name="prodCategory" value="">
                     <input type="hidden" name="tranCategory" value="${tranCategory}">
                     <input type="hidden" name="condition" value="${condition}">
-                    <div class="inputset inputset-line inputset-lg">
-                        <button class="listStoreSearchButton inputset-icon icon-right icon-search btn"
-                                type="button"
-                                aria-label="아이콘"></button>
-                        <input type="text" class="inputset-input form-control" name="searchKeyword"
-                               placeholder="작품 이름을 입력해 주세요." aria-label="내용"
-                               value="${!empty search.searchKeyword ? search.searchKeyword:''}">
-                    </div>
                 </form>
                 <br>
                 <br><br>
 
                 <div class="tableset">
                     <div class="tableset-inner">
-                        <h3>판매 내역</h3> 전체 ${totalCount} 개 <br>
-                        <p align="right">* 회차가 등록된 작품만 보여집니다.</p>
+                        <h3>팝콘 총 매출</h3> 전체 ${totalCount} 개 <br>
+
+                        <select name="condition" class="selectset selectset-lg">
+                            <option value="0" class="selectset-item"
+                            ${!empty condition && condition.equals("0") ? "selected" : ""}>
+                                전체
+                            </option>
+                            <option value="1" class="selectset-item"
+                            ${!empty condition && condition.equals("1") ? "selected" : ""}>
+                                일별
+                            </option>
+                            <option value="2" class="selectset-item"
+                            ${!empty condition && condition.equals("2") ? "selected" : ""}>
+                                월별
+                            </option>
+                        </select>
+
                         <table class="tableset-table table">
                             <colgroup>
-                                <col>
-                                <c:if test="${sessionScope.user.role == 1}">
-                                    <col>
-                                </c:if>
-                                <col>
-                                <col>
-                                <col>
                                 <col>
                                 <col>
                                 <col>
@@ -93,67 +93,36 @@
                             <thead class="thead-border-top">
                             <tr>
                                 <th class="number" scope="col">NO</th>
-                                <c:if test="${sessionScope.user.role == 1}">
-                                    <th scope="col">닉네임</th>
-                                </c:if>
-                                <th scope="col">작품 이름</th>
-                                <th scope="col">카테고리</th>
-                                <th scope="col">작품 회차 가격</th>
-                                <th scope="col">작품 구매 인원</th>
-                                <th scope="col">작품 누적 팝콘수</th>
-                                <th scope="col">저작권 가격</th>
-                                <th scope="col">저작권 구매 인원</th>
-                                <th scope="col">저작권 누적 팝콘수</th>
-                                <th scope="col">누적 판매 팝콘수</th>
+                                <th scope="col">기간</th>
+                                <th scope="col">총 구매 팝콘수</th>
+                                <th scope="col">총 팝콘 구매 금액</th>
+                                <th scope="col">총 소비 팝콘수</th>
                             </tr>
                             </thead>
                             <tbody>
                             <c:set var="i" value="0"/>
-                            <c:forEach var="workSale" items="${ workList }">
+                            <c:forEach var="purchaseCnt" items="${ list }">
                                 <c:set var="i" value="${i+1}"/>
                                 <tr>
                                     <td class="number">
-                                            <input type="hidden" name="workNo" value="${workSale.work_no}">
                                             ${i}
                                     </td>
-                                    <c:if test="${sessionScope.user.role == 1}">
-                                        <td>
-                                                ${workSale.nickname}
-                                        </td>
-                                    </c:if>
                                     <td>
-                                            ${workSale.workName}
-                                    </td>
-                                    <td>
-                                            <c:if test="${workSale.category == 0}">웹소설</c:if>
-                                            <c:if test="${workSale.category == 1}">웹툰</c:if>
-                                            <c:if test="${workSale.category == 2}">웹드라마</c:if>
-                                    </td>
-                                    <td>
-                                            ${workSale.workPrice} 팝콘
-                                    </td>
-                                    <td>
-                                            ${workSale.workUserCount} 명
-                                    </td>
-                                    <td>
-                                            ${workSale.workTotalPrice} 팝콘
-                                    </td>
-                                    <td>
-                                            <c:if test="${workSale.copyPrice == -1}">
-                                                저작권 등록 X
+                                            <c:if test="${purchaseCnt.date} == ''">
+                                                전체
                                             </c:if>
-                                            <c:if test="${workSale.copyPrice != -1}">
-                                                ${workSale.copyPrice} 팝콘
+                                            <c:if test="${purchaseCnt.date} !Q= ''">
+                                                ${purchaseCnt.date}
                                             </c:if>
                                     </td>
                                     <td>
-                                            ${workSale.copyUserCount} 명
+                                            ${purchaseCnt.purchasePopcornCnt}
                                     </td>
                                     <td>
-                                            ${workSale.copyTotalPrice} 팝콘
+                                            ${purchaseCnt.purchasePrice}
                                     </td>
                                     <td>
-                                            ${workSale.workTotalPrice + workSale.copyTotalPrice} 팝콘
+                                            ${purchaseCnt.usePopcornCnt}
                                     </td>
                                 </tr>
                             </c:forEach>

@@ -5,7 +5,14 @@ $(function() {
 
     $(".listStoreSearchButton").on("click", function() {
         // $("input[name='searchCondition']").val("0");
-        $("form[name='form']").attr("method", "post").attr("action", "/purchase/listPurchase").submit();
+        $("form[name='form']").attr("method", "post").attr("action", "/purchase/listSale").submit();
+    });
+    $("select.selectset").on("change", function() {
+        alert();
+        alert($(this).val());
+        $("input[name='userId']").val("");
+        // $("input[name='condition']").val(0);
+        $("form[name='form']").attr("method", "post").attr("action", "/purchase/listTotalSale").submit();
     });
     $(".viewWork").on("click", function() {
         let workNo = $(this).parents("tr").children("td").eq(3).children("input").val();
@@ -16,10 +23,6 @@ $(function() {
         viewUser(userId)
     });
 
-    $("input[value='삭제하기']").on("click", function() {
-        // let prodNo = $(this).parents("tr").children("td").eq(0).children("input").val();
-        // deleteProduct(prodNo);
-    });
 });
 
 
@@ -29,21 +32,4 @@ function viewWork(workNo) {
 
 function viewUser(userId) {
     $(self.location).attr("href", "/user/getUser?userId=" + userId);
-}
-
-function deleteProduct(prodNo) {
-    $.ajax({
-        url: "/product/json/deleteProduct?prodNo=" + prodNo,
-        method: "GET",
-        dataType: "text",
-        data: {},
-        success: function(returnMessage, status) {
-            // alert(returnMessage);
-            $("input[value='" + prodNo + "']").parents("tr").children("td").remove();
-        },
-        error: function(status) {
-            //Debug...
-            alert("error");
-        }
-    });
 }

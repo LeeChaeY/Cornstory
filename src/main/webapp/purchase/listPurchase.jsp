@@ -58,6 +58,7 @@
                     <input type="hidden" name="sessionUserId" value="${sessionScope.user.userId}">
                     <input type="hidden" name="prodCategory" value="">
                     <input type="hidden" name="tranCategory" value="${tranCategory}">
+                    <input type="hidden" name="condition" value="${condition}">
                     <div class="inputset inputset-line inputset-lg">
                         <button class="listStoreSearchButton inputset-icon icon-right icon-search btn"
                                 type="button"

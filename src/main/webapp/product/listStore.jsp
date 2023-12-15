@@ -95,10 +95,10 @@
                                                 ${popcorn.prodName}
                                         </td>
                                         <td>
-                                                ${popcorn.prodPrice}
+                                                ${popcorn.prodPrice} 원
                                         </td>
                                         <td>
-                                                ${popcorn.prodCnt}
+                                                ${popcorn.prodCnt} 개
                                         </td>
                                         <td>
                                                 ${popcorn.prodDate}
@@ -133,6 +133,7 @@
                                 <input type="hidden" name="sessionUserId" value="${sessionScope.user.userId}">
                                 <input type="hidden" name="prodCategory" value="">
                                 <input type="hidden" name="tranCategory" value="">
+                                <input type="hidden" name="condition" value="${condition}">
                                 <div class="listStoreSearch inputset inputset-line inputset-lg">
                                     <button class="listStoreSearchButton inputset-icon icon-right icon-search btn"
                                             type="button" aria-label="아이콘"></button>
@@ -190,10 +191,10 @@
                                                 ${copyright.workName}
                                         </td>
                                         <td>
-                                                ${copyright.prodPrice}
+                                                ${copyright.prodPrice} 팝콘
                                         </td>
                                         <td>
-                                                ${copyright.episodeOrder}
+                                                ${copyright.episodeOrder} 회차 완결
                                         </td>
                                         <td>
                                                 ${copyright.prodDate}

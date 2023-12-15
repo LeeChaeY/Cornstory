@@ -73,12 +73,11 @@ public class ChatRestController {
     }
 
     @GetMapping(value="json/deleteChatEnter")
-    public String deleteChatEnter(@RequestParam("chatSpaceNo") int chatSpaceNo, HttpSession session) throws Exception {
-        String userId = ((User) session.getAttribute("user")).getUserId();
-        System.out.println("/chat/json/deleteChatEnter : GET ::: userId : " + userId + "chatSpaceNo : " + chatSpaceNo);
+    public String deleteChatEnter(@RequestParam("chatSpaceNo") int chatSpaceNo, @SessionAttribute("user") User user) throws Exception {
+        System.out.println("/chat/json/deleteChatEnter : GET ::: userId : " + user.getUserId() + "chatSpaceNo : " + chatSpaceNo);
         Map<String, Object> map = new HashMap<String, Object>();
 
-        map.put("userId", userId);
+        map.put("userId", user.getUserId());
         map.put("chatSpaceNo", chatSpaceNo);
 
         chatService.deleteChatEnter(map);
@@ -89,13 +88,12 @@ public class ChatRestController {
 
 
     @PostMapping(value="json/addChat")
-    public Chat addChat(@RequestBody Chat chat, HttpSession session) throws Exception {
+    public Chat addChat(@RequestBody Chat chat, @SessionAttribute("user") User user) throws Exception {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         chat.setChatDate(dateFormat.format(new Timestamp(System.currentTimeMillis())));
+        chat.setUserId(user.getUserId());
 
-        String userId = ((User) session.getAttribute("user")).getUserId();
-        chat.setUserId(userId);
-        User user = userService.getUser(userId);
+        user = userService.getUser(user.getUserId());
         chat.setNickname(user.getNickName());
         chat.setUserImage(user.getUserImage());
 
