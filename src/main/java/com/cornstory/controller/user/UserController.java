@@ -36,7 +36,7 @@ public class UserController {
     @RequestMapping( value="login", method=RequestMethod.GET )
     public String login() throws Exception{
         System.out.println("user/login : GET");
-        return "user/login2";
+        return "user/login";
     }
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
@@ -52,7 +52,7 @@ public class UserController {
         } else {
             model.addAttribute("errorMessage", "잘못된 정보 또는 없는 계정입니다.");
             System.out.println("Login 실패 로그인페이지 유지");
-            return "user/login2"; // 로그인 실패 시 로그인 페이지에 머무름
+            return "user/login"; // 로그인 실패 시 로그인 페이지에 머무름
         }
     }
 
