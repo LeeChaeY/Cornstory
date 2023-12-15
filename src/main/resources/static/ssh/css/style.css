@@ -29,8 +29,8 @@ header-left@charset "utf-8";
  .opilsol-N4 .visual-container .visual-text-box .visual-subtitle { max-width: 54rem; }
 }
 @media (max-width: 1024px) {
- .opilsol-N4 .visual-container { height: 80rem; }
- .opilsol-N4 .visual-container .swiper-slide { height: 80rem; }
+ .opilsol-N4 .visual-container { height: 50rem; }
+ .opilsol-N4 .visual-container .swiper-slide { height: 50rem; }
  .opilsol-N4 .visual-container .swiper-slide .visual-bg { height: 80rem; }
  .opilsol-N4 .visual-container .visual-text-box .visual-title .br { display: block; }
  .opilsol-N4 .visual-container .visual-text-box .visual-subtitle .br { display: block; }
