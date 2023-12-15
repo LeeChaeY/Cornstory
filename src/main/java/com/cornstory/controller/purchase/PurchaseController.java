@@ -173,7 +173,7 @@ public class PurchaseController {
         }
         search.setPageSize(pageSize);
 
-        Map<String, Object> map = purchaseService.countWorkTotalPopcorn(user.getUserId());
+        Map<String, Object> map = purchaseService.countWorkTotalPopcorn(search, user.getUserId(), user.getRole());
 //        Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
 //        System.out.println("/purchase/listPurchase :: " + resultPage);
 
@@ -188,6 +188,36 @@ public class PurchaseController {
         System.out.println(search);
 
         return "purchase/listSale";
+    }
+
+    @PostMapping("listTotalSale")
+    public String listTotalSale(Model model, int condition) throws Exception {
+        System.out.println("/purchase/listTotalSale : GET :: condition = " + condition);
+//        System.out.println("/purchase/listSale : GET/POST :: tranCategory = " + tranCategory);
+
+//        if (search.getSearchCondition() == null) {
+//            search.setSearchCondition("");
+//        }
+//
+//        if (search.getCurrentPage() == 0) {
+//            search.setCurrentPage(1);
+//        }
+//        search.setPageSize(pageSize);
+
+        Map<String, Object> map = purchaseService.listTotalSale(condition);
+
+//        model.addAttribute("purchasePopcornCnt", map.get("purchasePopcornCnt"));
+//        model.addAttribute("purchasePrice", map.get("purchasePrice"));
+//        model.addAttribute("usePopcornCnt", map.get("usePopcornCnt"));
+        model.addAttribute("list", map.get("list"));
+        model.addAttribute("totalCount", map.get("totalCount"));
+        model.addAttribute("condition", condition);
+//        model.addAttribute("tranCategory", tranCategory);
+
+        System.out.println(map);
+//        System.out.println(search);
+
+        return "purchase/listTotalSale";
     }
 
 }

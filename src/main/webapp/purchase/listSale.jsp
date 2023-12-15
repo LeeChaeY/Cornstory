@@ -58,6 +58,7 @@
                     <input type="hidden" name="sessionUserId" value="${sessionScope.user.userId}">
                     <input type="hidden" name="prodCategory" value="">
                     <input type="hidden" name="tranCategory" value="${tranCategory}">
+                    <input type="hidden" name="condition" value="${condition}">
                     <div class="inputset inputset-line inputset-lg">
                         <button class="listStoreSearchButton inputset-icon icon-right icon-search btn"
                                 type="button"
@@ -73,11 +74,11 @@
                 <div class="tableset">
                     <div class="tableset-inner">
                         <h3>판매 내역</h3> 전체 ${totalCount} 개 <br>
+                        <p align="right">* 회차가 등록된 작품만 보여집니다.</p>
                         <table class="tableset-table table">
                             <colgroup>
                                 <col>
                                 <c:if test="${sessionScope.user.role == 1}">
-                                    <col>
                                     <col>
                                 </c:if>
                                 <col>
@@ -104,9 +105,6 @@
                                 <th scope="col">저작권 구매 인원</th>
                                 <th scope="col">저작권 누적 팝콘수</th>
                                 <th scope="col">누적 판매 팝콘수</th>
-                                <c:if test="${sessionScope.user.role == 1}">
-                                    <th class="last-child" scope="col"></th>
-                                </c:if>
                             </tr>
                             </thead>
                             <tbody>
@@ -132,31 +130,31 @@
                                             <c:if test="${workSale.category == 2}">웹드라마</c:if>
                                     </td>
                                     <td>
-                                            ${workSale.workPrice} 개
+                                            ${workSale.workPrice} 팝콘
                                     </td>
                                     <td>
-                                            ${workSale.workTotalPrice / workSale.workPrice} 명
+                                            ${workSale.workUserCount} 명
                                     </td>
                                     <td>
                                             ${workSale.workTotalPrice} 팝콘
                                     </td>
                                     <td>
-                                            ${workSale.copyPrice} 개
+                                            <c:if test="${workSale.copyPrice == -1}">
+                                                저작권 등록 X
+                                            </c:if>
+                                            <c:if test="${workSale.copyPrice != -1}">
+                                                ${workSale.copyPrice} 팝콘
+                                            </c:if>
                                     </td>
                                     <td>
-                                            ${workSale.copyTotalPrice / workSale.copyPrice} 명
+                                            ${workSale.copyUserCount} 명
                                     </td>
                                     <td>
                                             ${workSale.copyTotalPrice} 팝콘
                                     </td>
                                     <td>
-                                            ${workSale.workTotalPrice + workSale.copyTotalPrice}$ 팝콘
+                                            ${workSale.workTotalPrice + workSale.copyTotalPrice} 팝콘
                                     </td>
-                                    <c:if test="${sessionScope.user.role == 1}">
-                                        <td>
-                                            <input type="button" value="삭제하기"><br>
-                                        </td>
-                                    </c:if>
                                 </tr>
                             </c:forEach>
                             </tbody>

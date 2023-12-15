@@ -47,12 +47,12 @@ public class ProductController {
 
     @GetMapping("addProduct")
     public String addProduct(Model model, @RequestParam("prodCategory") int prodCategory,
-                             HttpSession session) throws Exception {
+                             @SessionAttribute("user") User user) throws Exception {
         System.out.println("/product/addProduct : GET :: prodCategory :: "+prodCategory);
         model.addAttribute("prodCategory", prodCategory);
 
         if (prodCategory == 2) {
-            List<Work> workList = productService.listCompleteWork(((User) session.getAttribute("user")).getUserId());
+            List<Work> workList = productService.listCompleteWork(user.getUserId());
             System.out.println("/product/addProduct : " + workList);
             model.addAttribute("workList", workList);
         }
@@ -63,10 +63,9 @@ public class ProductController {
     @PostMapping("addProduct")
     public String addProduct(Model model, @ModelAttribute("product") Product product,
                              @RequestParam("file") MultipartFile file, HttpServletRequest request,
-                             HttpSession session) throws Exception {
+                             @SessionAttribute("user") User user) throws Exception {
         System.out.println("/product/addProduct : POST");
-        String userId = ((User) session.getAttribute("user")).getUserId();
-        product.setUserId(userId);
+        product.setUserId(user.getUserId());
 
         if (product.getProdCategory() == 0) {
             product.setProdName("팝콘 "+product.getProdCnt()+" 개");
@@ -123,13 +122,12 @@ public class ProductController {
     }
 
     @PostMapping("updateProduct")
-    public String updateProduct(Model model, @ModelAttribute("product") Product product,
+    public String updateProduct(@ModelAttribute("product") Product product,
                                 @RequestParam("file") MultipartFile file, HttpServletRequest request,
-                                HttpSession session) throws Exception {
+                                @SessionAttribute("user") User user) throws Exception {
         System.out.println("/product/updateProduct : POST");
 
-        String userId = ((User) session.getAttribute("user")).getUserId();
-        product.setUserId(userId);
+        product.setUserId(user.getUserId());
 
 
         // https://action713.tistory.com/entry/%EC%8A%A4%ED%94%84%EB%A7%81-%ED%8C%8C%EC%9D%BC-%EA%B2%BD%EB%A1%9C

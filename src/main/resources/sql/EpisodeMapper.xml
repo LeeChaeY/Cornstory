@@ -23,7 +23,8 @@
     </select>
 
     <!-- 작품 회차 생성 -->
-    <insert id="addEpisode" parameterType="episode">
+    <insert id="addEpisode" parameterType="episode" useGeneratedKeys="true"
+            keyProperty="episodeNo" keyColumn="episode_no">
         INSERT INTO episode (work_no, episode_name, episode_order, e_thumbnail, episode_date, file_name, directory)
         VALUES (#{workNo : INTEGER}, #{episodeName : VARCHAR}, #{episodeOrder : INTEGER}, #{thumbnail : VARCHAR},
                 now(), #{fileName : VARCHAR}, #{directory : VARCHAR})
@@ -54,7 +55,7 @@
         SELECT *
         FROM episode
         WHERE work_no = #{workNo : INTEGER}
-        ORDER BY episode_order
+        ORDER BY episode_order desc
     </select>
 
     <!-- 작품회차 목록 갯수 -->
