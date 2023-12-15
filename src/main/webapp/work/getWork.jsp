@@ -119,7 +119,7 @@
 <main class="th-layout-main ">
     <div class="opilsol-N31" data-bid="nu2ClPPZgeB" id="">
         <div class="content-container">
-            <h2 class="textset-tit">내 작품 목록</h2>
+            <h2 class="textset-tit">나의 작품 목록</h2>
             <p>전체 개수: ${myCount}</p>
             <div class="container-md">
                 <c:forEach var="work" items="${list}">

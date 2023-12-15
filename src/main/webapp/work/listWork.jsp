@@ -160,7 +160,8 @@
     <main class="th-layout-main ">
         <div class="opilsol-N31" data-bid="nu2ClPPZgeB" >
             <div class="content-container">
-                <h2 class="textset-tit">내 작품 목록</h2>
+
+                <h2 class="textset-tit">작품 목록</h2>
                 <!-- 전체 작품 개수를 표시 -->
                 <p>전체 개수: <span id="totalCount">${totalCount}</span></p>
 

@@ -97,12 +97,12 @@
               </a>
             </li>
             <li class="header-subitem">
-              <a class="header-sublink" href="/work/bookmark">
+              <a class="header-sublink" href="/work/listBookmark">
                 <span>찜 목록</span>
               </a>
             </li>
             <li class="header-subitem">
-              <a class="header-sublink" href="javascript:void(0)">
+              <a class="header-sublink" href="/work/getWork">
                 <span>나의 작품</span>
               </a>
             </li>
@@ -338,20 +338,11 @@
                 <span>상품 조회</span>
               </a>
             </li>
-            <c:if test="${sessionScope.user.role eq 0}">
               <li class="fullmenu-subitem">
                 <a class="fullmenu-sublink" href="/product/addProduct?prodCategory=2">
                   <span>상품 등록</span>
                 </a>
               </li>
-            </c:if>
-            <c:if test="${sessionScope.user.role eq 1}">
-              <li class="fullmenu-subitem">
-                <a class="fullmenu-sublink" href="/product/addProduct?prodCategory=0">
-                  <span>상품 등록</span>
-                </a>
-              </li>
-            </c:if>
           </ul>
         </li>
         <li class="fullmenu-gnbitem">
