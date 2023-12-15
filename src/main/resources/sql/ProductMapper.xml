@@ -64,6 +64,12 @@
 		WHERE prod_no = #{prodNo}
 	</select>
 
+	<select id="getProductByEpisodeNo" parameterType="int" resultMap="productSelectMap">
+		SELECT *
+		FROM product
+		WHERE episode_no = #{episodeNo}
+	</select>
+
 	<update id="updateProduct" parameterType="product">
 		UPDATE product
 		<trim prefix="set" suffixOverrides=",">
@@ -78,6 +84,16 @@
 			</if>
 		</trim>
 		WHERE prod_no = #{prodNo}
+	</update>
+
+	<update id="updateProductEpisode" parameterType="product">
+		UPDATE product
+		<trim prefix="set" suffixOverrides=",">
+			<if test="prodPrice != 0">
+				prod_price = #{prodPrice}
+			</if>
+		</trim>
+		WHERE work_no = #{workNo} and episode_no IS NOT NULL
 	</update>
 
 	<delete id="deleteProduct" parameterType="int">
@@ -158,8 +174,8 @@
 	</select>
 
 	<select id="countLastEpisode" parameterType="int" resultType="int">
-		SELECT MAX(E.episode_order)
-		FROM EPISODE E JOIN PRODUCT P ON E.work_no = P.work_no
+		SELECT COALESCE(MAX(E.episode_order), 0)
+		FROM episode E JOIN product P ON E.work_no = P.work_no
 		WHERE P.work_no = #{workNo};
 	</select>
 

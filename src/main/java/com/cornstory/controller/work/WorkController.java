@@ -60,8 +60,9 @@ public class WorkController {
 
     }
     @PostMapping("addWork")
-    public String addWork(@ModelAttribute("work") Work work, @RequestParam("thumbnailFile") MultipartFile file) throws Exception {
+    public String addWork(@ModelAttribute("work") Work work, @RequestParam("thumbnailFile") MultipartFile file, @SessionAttribute(name="user", required = false)User user) throws Exception {
         System.out.println("[ WorkController.addWork() start........]");
+        work.setUserId(user.getUserId());
         String fileName = work.getUserId() + "_" + work.getWorkName();
         fileName = fileName.replaceAll("[^a-zA-Z0-9가-힣_]", "_");
         fileName += ".jpg";
@@ -74,8 +75,9 @@ public class WorkController {
                 Files.write(Path.of(filePath), file.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 
                 // 파일 경로를 Work 객체에 저장
-
-                work.setThumbnail(filePath);
+                System.out.println(filePath);
+                work.setThumbnail("..\\file\\work"+ File.separator + fileName);
+                System.out.println(work.toString());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -103,6 +105,7 @@ public class WorkController {
     @PostMapping("updateWork")
     public String updateWork(@ModelAttribute("work") Work work, @RequestParam("thumbnailFile") MultipartFile file) throws Exception{
         System.out.println("[ WorkController.updateWork() start........]");
+        System.out.println(work.toString());
         String fileName = work.getUserId() + "_" + work.getWorkName();
         fileName = fileName.replaceAll("[^a-zA-Z0-9가-힣_]", "_");
         fileName += ".jpg";
@@ -116,15 +119,15 @@ public class WorkController {
 
                 // 파일 경로를 Work 객체에 저장
 
-                work.setThumbnail(filePath);
+                work.setThumbnail("..\\file\\work"+ File.separator + fileName);
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
         }
-
+        System.out.println(work);
         workService.updateWork(work);
-        return "work/getWork";
+        return "redirect:/work/getWork";
 
     }
 
@@ -143,11 +146,10 @@ public class WorkController {
     public String listWork(@ModelAttribute("search") Search search, Model model) throws Exception {
         System.out.println("[ WorkController.listWork() start........]");
 
-        search.setCurrentPage(1);
-        search.setPageSize(3);
-
-        System.out.println(search.getSearchKeyword());
         Map<String, Object> map = workService.listWork(search);
+
+        search.setCurrentPage(1);
+        search.setPageSize(5);
 
         //model.addAttribute("list", map.get("list"));
         model.addAttribute("totalCount", map.get("totalCount"));

@@ -12,7 +12,7 @@ public interface EpisodeService {
     Episode getEpisode(int episodeNo);
 
     //작품 회차 생성
-    public void addEpisode(Episode episode);
+    public int addEpisode(Episode episode);
 
     //작품 회차 수정
     public void updateEpisode(Episode episode);

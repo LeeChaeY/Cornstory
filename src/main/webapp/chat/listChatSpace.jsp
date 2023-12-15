@@ -205,7 +205,7 @@
                                             ${chatSpace.cSpaceName}
                                     </td>
                                     <td>
-                                        <img src="/file/chat/${chatSpace.userImage}">
+                                        <img src="/file/user/${chatSpace.userImage}" width="30" style="border-radius: 50%; max-width: 100%;" alt="">
                                             ${chatSpace.nickname}
                                     </td>
                                     <td>

@@ -32,8 +32,18 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	public Product getProductByEpisodeNo(int episodeNo) throws Exception {
+		return productDao.getProductByEpisodeNo(episodeNo);
+	}
+
+	@Override
 	public int updateProduct(Product product) throws Exception {
 		return productDao.updateProduct(product);
+	}
+
+	@Override
+	public int updateProductEpisode(Product product) throws Exception {
+		return productDao.updateProductEpisode(product);
 	}
 
 	@Override

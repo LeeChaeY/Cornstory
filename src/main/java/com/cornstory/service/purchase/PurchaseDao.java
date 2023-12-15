@@ -21,11 +21,11 @@ public interface PurchaseDao {
 
     public List<Purchase> listPurchase(Map map) throws Exception;
 
-    public List<Integer> countWorkTotalPopcorn(Map map) throws Exception;
+    public List<Map> countWorkTotalPopcorn(Map map) throws Exception;
 
-    public int countPurchasePopcorn(String userId) throws Exception;
+    public int countPurchasePopcorn(Map map) throws Exception;
 
     public List<Purchase> listPurchasePopcorn(Map map) throws Exception;
 
-    public List<Integer> countTotalPurchase(Map map) throws Exception;
+    public List<Map> countTotalPurchase(Map map) throws Exception;
 }

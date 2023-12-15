@@ -1,5 +1,7 @@
 
 $(function() {
+    $("input[id='checkset-e-5-3']").attr("checked", "");
+    $("input[id='checkset-e-5-4']").attr("checked", "");
 
     $("input[name='prodCnt']").on("input", function() {
         fncProdNameCheck();
@@ -21,43 +23,10 @@ $(function() {
         $(self.location).attr("href", "/");
     });
 
-    $("span").on("click", function() {
-        fncGetProductList('1');
-    });
-
     $("select[name='workSelect']").on("change", function() {
         workSelect();
     });
 });
-
-function fncGetProductList(currentPage) {
-    $("input[name='currentPage']").val(currentPage);
-    let sessionUserId = $("input[name='sessionUserId']").val();
-    let spanText = event.target.innerText;
-
-    if (spanText === "상품 조회") {
-        $("input[name='userId']").val("");
-        $("form[name='form']").attr("method", "post").attr("action", "/product/listProduct").submit();
-        // $(self.location).attr("href", "/product/listProduct");
-    } else if (spanText === "나의 저작권") {
-        $("input[name='userId']").val(sessionUserId);
-        $("form[name='form']").attr("method", "post").attr("action", "/product/listProduct").submit();
-    } else if (spanText === "저작권 등록") {
-        $(self.location).attr("href", "/product/addProduct?prodCategory=2").submit();
-    } else if (spanText === "팝콘 등록") {
-        $(self.location).attr("href", "/product/addProduct?prodCategory=0").submit();
-    } else if (spanText === "팝콘 소비 내역") {
-        //$("input[name='userId']").val("${sessionScope.user.userId}");
-        $("form[name='form']").attr("method", "post").attr("action", "/product/listProduct").submit();
-    } else if (spanText === "팝콘 충전 내역") {
-        //$("input[name='userId']").val("${sessionScope.user.userId}");
-        $("form[name='form']").attr("method", "post").attr("action", "/product/listProduct").submit();
-    } else if (spanText === "팝콘 총 매출") {
-        $("input[name='userId']").val("");
-        //$("input[name='userId']").val("${sessionScope.user.userId}");
-        $("form[name='form']").attr("method", "post").attr("action", "/product/listProduct").submit();
-    }
-}
 
 function addProduct() {
     let prodCategory = $("input[name='prodCategory']").val();
@@ -78,6 +47,9 @@ function addProduct() {
     }
     if (prodCategory === "2") {
         $("input[name='workNo']").val($("select[name='workSelect']").val());
+        // $("input[name='workNo']").val(10024);
+        // $("input[name='episodeNo']").val(10034);
+        // $("input[name='prodCategory']").val(1);
     }
     $("form[name='addProduct']").attr("method", "post").attr("action", "/product/addProduct").submit();
 }
