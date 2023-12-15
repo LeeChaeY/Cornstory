@@ -39,7 +39,7 @@ public class ProductController {
     //    @Value("${pageUnit}")
     int pageUnit = 5;
     //    @Value("${pageSize}")
-    int pageSize = 3;
+    int pageSize = 100;
 
     public ProductController() {
         System.out.println("ProductController 진입");
@@ -68,29 +68,15 @@ public class ProductController {
         String userId = ((User) session.getAttribute("user")).getUserId();
         product.setUserId(userId);
 
-        Work work = null;
-        Episode episode = null;
-
-        if (product.getProdCategory() != 0) {
-            work = workService.getWork(product.getWorkNo());
-            product.setProdImage(work.getThumbnail());
-            if (work.getCategory() == 2) product.setProdPrice(work.getCategory()+3);
-            else product.setProdPrice(work.getCategory()+2);
-            product.setProdCnt(1);
-        }
-
         if (product.getProdCategory() == 0) {
             product.setProdName("팝콘 "+product.getProdCnt()+" 개");
-        }
-        else if (product.getProdCategory() == 1) {
-            episode = episodeService.getEpisode(product.getEpisodeNo());
-            product.setEpisodeOrder(episode.getEpisodeOrder());
-            product.setProdName(work.getWorkName()+" "+episode.getEpisodeOrder()+" 회차");
         } else if (product.getProdCategory() == 2) {
+            Work work = workService.getWork(product.getWorkNo());
+            product.setProdImage(work.getThumbnail());
+            product.setProdCnt(1);
             product.setProdName(work.getWorkName()+" 저작권");
         }
         System.out.println("/product/addProduct : " + product);
-
 
         // https://action713.tistory.com/entry/%EC%8A%A4%ED%94%84%EB%A7%81-%ED%8C%8C%EC%9D%BC-%EA%B2%BD%EB%A1%9C
         String uploadDir = request.getServletContext().getRealPath("")+"\\..\\resources\\static\\file\\product\\";
@@ -183,9 +169,6 @@ public class ProductController {
                     // 파일 업로드 실패 처리
                     System.out.println("<scrpt>alert('파일의 크기는 10MB까지 입니다.");
                 }
-            } else {
-                // 업로드된 파일이 없는 경우 처리
-                product.setProdImage("");
             }
         }
 
@@ -197,16 +180,16 @@ public class ProductController {
 
     @RequestMapping("listProduct")
     public String listProduct(Model model, @ModelAttribute("search") Search search,
-                              HttpServletRequest request, HttpSession session) throws Exception {
+                              HttpServletRequest request) throws Exception {
         System.out.println("/product/listProduct : GET / POST");
 
         String userId = "";
         if (request.getParameter("userId") != null) userId = request.getParameter("userId");
-//        User user = (User) session.getAttribute("user");
+        System.out.println("/product/listProduct : GET / POST :: userId :: "+userId);
 
-        if (search.getSearchCondition() == null) {
-            search.setSearchCondition("");
-        }
+//        if (search.getSearchCondition() == null) {
+//            search.setSearchCondition("");
+//        }
 
         if (search.getCurrentPage() == 0) {
             search.setCurrentPage(1);
@@ -223,6 +206,7 @@ public class ProductController {
         model.addAttribute("copyrightList", map.get("copyrightList"));
 //        model.addAttribute("resultPage", resultPage);
         model.addAttribute("search", search);
+        model.addAttribute("userId", userId);
 
         System.out.println(map);
         System.out.println(search);

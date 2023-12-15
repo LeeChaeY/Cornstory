@@ -1,199 +1,181 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>updateProduct</title>
 
-        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<html lang="ko">
 
-        <script type="text/css">
-            a {
-                text-decoration: none;
-            }
-        </script>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="imagetoolbar" content="no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="title" content="웹사이트">
+    <meta name="description" content="웹사이트입니다.">
+    <meta name="keywords" content="키워드,키워드,키워드">
+    <meta property="og:title" content="웹사이트">
+    <meta property="og:description" content="웹사이트입니다">
+    <meta property="og:image" content="https://웹사이트/images/opengraph.png">
+    <meta property="og:url" content="https://웹사이트">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <title>updateProduct</title>
+    <link rel="stylesheet" href="/ssh/css/style.css">
+    <link rel="stylesheet" href="/ssh/css/plugin.css">
+    <link rel="stylesheet" href="/ssh/css/template.css">
+    <link rel="stylesheet" href="/ssh/css/common.css">
+    <link rel="stylesheet" href="/ssh/css/style.css">
 
-        <script type="text/javascript">
+    <link rel="stylesheet" href="/lcy/css/style.css">
 
-            $(function() {
 
-                $("input[value='수정']").on("click", function(){
-                    updateProduct();
-                });
+    <!-- [E]thwhole-wfLpW5Z3pJ -->
+    <script src="/ssh/js/setting.js"></script>
+    <script src="/ssh/js/plugin.js"></script>
+    <script src="/ssh/js/template.js"></script>
+    <script src="/ssh/js/common.js"></script>
+    <script src="/ssh/js/script.js"></script>
 
-                $("span").on("click", function(){
-                    fncGetProductList('1');
-                });
-            });
+    <script src="/lcy/js/addProduct.js"></script>
+</head>
 
-            function updateProduct() {
-                $("form[name='updateProduct']").attr("method", "post").attr("action", "/product/updateProduct").submit();
-            }
+<body>
 
-            function fncGetProductList(currentPage) {
-                $("input[name='currentPage']").val(currentPage);
+<%@ include file="../layout/top.jsp" %>
 
-                let spanText = event.target.innerText;
-                if (spanText === "목록") {
-                    // $(self.location).attr("href", "/product/listProduct");
-                    $("form[name='form']").attr("method", "post").attr("action", "/product/listProduct").submit();
-                }
-                else if (spanText === "나의 저작권") {
-                    $("input[name='userId']").val("${sessionScope.user.userId}");
-                    $("form[name='form']").attr("method", "post").attr("action", "/product/listProduct").submit();
-                }
-                else if (spanText === "저작권 등록") {
-                    $("input[name='prodCategory']").val(2);
-                    $("form[name='form']").attr("method", "get").attr("action", "/product/addProduct").submit();
-                }
-                else if (spanText === "팝콘 등록") {
-                    $("input[name='prodCategory']").val(0);
-                    $("form[name='form']").attr("method", "get").attr("action", "/product/addProduct").submit();
-                }
-                else if (spanText === "팝콘 소비 내역") {
-                    <%--$("input[name='userId']").val("${sessionScope.user.userId}");--%>
-                    $("form[name='form']").attr("method", "post").attr("action", "/product/listProduct").submit();
-                }
-                else if (spanText === "팝콘 충전 내역") {
-                    <%--$("input[name='userId']").val("${sessionScope.user.userId}");--%>
-                    $("form[name='form']").attr("method", "post").attr("action", "/product/listProduct").submit();
-                }
-                else if (spanText === "팝콘 총 매출") {
-                    <%--$("input[name='userId']").val("${sessionScope.user.userId}");--%>
-                    $("form[name='form']").attr("method", "post").attr("action", "/product/listProduct").submit();
-                }
-            }
-        </script>
-    </head>
-    <body>
+<%@ include file="../product/listStoreTop.jsp" %>
 
-        <table height="37" >
-            <tr>
-                <td height="37">
-                    <img width="15" height="37"/>
-                </td>
-                <td style="padding-left:10px;">
-                    <table >
-                        <tr>
-                            <td class="ct_ttl01">
-                                <a href="/"><h2>메인</h2></a>
-                            </td>
-                            <td class="ct_ttl01">
-                                스토어
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-                <td height="37">
-                    <img src="" width="12" height="37"/>
-                </td>
-            </tr>
-        </table>
+<!-- [E]opilsol-N26 -->
+<main class="th-layout-main ">
+    <!-- [S]opilsol-N27 -->
+    <div class="opilsol-N27" data-bid="Si2cLPRPujy">
+        <div class="content-container">
+            <div class="contents-form container-md">
+                <div class="contents-form-top d-flex justify-content-between">
+                    <c:if test="${product.prodCategory == 0}">
+                        <h3 class="inputset-tit">팝콘 수정하기</h3>
+                    </c:if>
+                    <c:if test="${product.prodCategory == 2}">
+                        <h3 class="inputset-tit">저작권 수정하기</h3>
+                    </c:if>
+                    <span class="req">필수 선택입니다.</span>
+                </div>
 
-        <form name="form">
-            <input type="hidden" name="userId" value="">
-            <input type="hidden" name="prodCategory" value="${product.prodCategory}">
-        </form>
-        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
-            <tr>
-                <td>
-                    <div align="center">
-                        <strong><span>목록</span></strong> |
-                        <c:if test="${sessionScope.user.role == 0}">
-                            <span><strong>나의 저작권</strong></span> |
-                            <span><strong>저작권 등록</strong></span> |
-                        </c:if>
-                        <c:if test="${sessionScope.user.role == 1}">
-                            <span><strong>팝콘 등록</strong></span> |
-                        </c:if>
-                        <span><strong>팝콘 소비 내역</strong></span> |
-                        <span><strong>팝콘 충전 내역</strong></span> |
-                        <c:if test="${sessionScope.user.role == 1}">
-                            <span><strong>팝콘 총 매출</strong></span>
-                        </c:if>
+                <form name="form" method="post">
+                    <input type="hidden" name="userId" value="${userId}">
+                    <input type="hidden" name="sessionUserId" value="${sessionScope.user.userId}">
+                    <input type="hidden" name="prodCate" value="">
+                </form>
+
+                <div class="contents-form tableset">
+                    <div class="tableset-inner">
+                        <form name="updateProduct" enctype="multipart/form-data">
+                            <input type="hidden" name="prodCategory" value="${product.prodCategory}">
+                            <input type="hidden" name="prodNo" value="${product.prodNo}">
+                            <table class="tableset-table table">
+                                <colgroup>
+                                    <col>
+                                    <col>
+                                    <col>
+                                </colgroup>
+                                <tbody>
+                                <c:if test="${product.prodCategory == 0}">
+                                    <tr>
+                                        <th>
+                                            <label class="req label">팝콘 수량</label>
+                                        </th>
+                                        <td>
+                                            <input type="number" min="1" value="${product.prodCnt}" name="prodCnt" required=""> 개
+                                            <p class="prodNameCheck" style="color: red; display: none;">
+                                                해당 수량의 팝콘이 등록되어있습니다.
+                                            </p>
+                                            <p class="check" style="color: red; display: none;">
+                                                팝콘 수량은 1개 이상부터 가능합니다.
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <label class="req label">팝콘 가격</label>
+                                        </th>
+                                        <td>
+                                            <div class="inputset">
+                                                <input type="number" min="100" value="${product.prodPrice}" name="prodPrice" required="">
+                                                원<br><br>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <span class="label">팝콘 이미지 첨부</span>
+                                        </th>
+                                        <td colspan="2">
+                                            <div class="fileset fileset-lg fileset-label">
+                                                <label>
+                                                    <div class="fileset-body">
+                                                        <div class="fileset-group">
+                                                            <input type="file" class="fileset-input" name="file">
+                                                            <button class="fileset-cancel"></button>
+                                                        </div>
+                                                        <span class="btnset btnset-line btnset-mono btnset-lg btnset-rect fileset-upload">팝콘 이미지 첨부</span>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                            <p class="p1 co-text3">이미지 형식의 jpg만 첨부 가능합니다.</p>
+                                            <p class="p1 co-text3">첨부파일은 10MB를 초과할 수 없으며, 최대 1개까지 가능합니다.</p>
+                                        </td>
+                                        <td colspan="1">
+                                            * 기존 팝콘 이미지<br><br>
+                                            <img width="100px" height="100px" src="/file/product/${product.prodImage}">
+                                        </td>
+                                    </tr>
+                                </c:if>
+
+                                <c:if test="${product.prodCategory == 2}">
+                                    <tr>
+                                        <th>
+                                            <input type="file" name="file" style="display: none;">
+                                            <input type="hidden" name="workNo" value="">
+                                            <label class="label">작품 이름</label>
+                                        </th>
+                                        <td>
+                                            ${product.prodName}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <label class="req label">저작권 가격</label>
+                                        </th>
+                                        <td>
+                                            <div class="inputset">
+                                                <input type="number" min="0" value="${product.prodPrice}" name="prodPrice" required="">
+                                                <span class="free" style="display: none;">0</span> 개<br>
+                                                <p class="freeCheck" style="color: red; display: none;">
+                                                    무료인 작품의 저작권 가격은 팝콘 0개입니다.
+                                                </p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </c:if>
+                                </tbody>
+                            </table>
+                        </form>
+                        <br>
+                        <div class="bottom-btn">
+                            <input type="button" class="btnset btnset-lg btnset-dark btnset-rect" value="취소"/>
+                            <input type="button" class="btnset btnset-lg btnset-rect" value="수정"/>
+                        </div>
                     </div>
-                    <br>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="11" height="1"></td>
-            </tr>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [E]opilsol-N27 -->
+</main>
 
-            <tr>
-                <td align="right">
-                    <select name="searchCondition" class="ct_input_g" style="width:100px">
-                        <option value="0"
-                        ${!empty search.searchCondition && search.searchCondition.equals("0") ? "selected" : ""}>
-                            저작권 이름
-                        </option>
-                    </select>
-                    <input type="text" name="searchKeyword"
-                           value="${!empty search.searchCondition && search.searchCondition.equals('1') ? search.searchKeyword : ''}"
-                           class="ct_input_g" style="width:200px; height:19px" />
-                </td>
+<%@ include file="../layout/bottom.jsp" %>
 
-                <td align="right" width="70">
-                    <table border="0" cellspacing="0" cellpadding="0">
-                        <tr>
-                            <td width="17" height="23">
-                            </td>
-                            <td class="ct_btn01" style="padding-top:3px;"
-                                onClick="fncGetProductList('1');">
-                                검색
-                            </td>
-                            <td width="14" height="23">
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        </table>
+</body>
 
-
-
-
-        <c:if test="${prodCategory == 0}">
-            <h2>팝콘 정보 수정하기</h2>
-        </c:if>
-        <c:if test="${prodCategory == 2}">
-            <h2>저작권 정보 수정하기</h2>
-        </c:if>
-        <form name="updateProduct" enctype="multipart/form-data">
-            <input type="hidden" name="prodCategory" value="${product.prodCategory}">
-            <input type="hidden" name="prodNo" value="${product.prodNo}">
-
-            <c:if test="${product.prodCategory == 0}">
-                <label>팝콘 수량: </label>
-                <input type="number" min="1" value="${product.prodCnt}" name="prodCnt" required> 개
-                <br><br>
-
-                <label>팝콘 가격: </label><br>
-                <input type="number" min="100" value="${product.prodPrice}" name="prodPrice" required> 원<br><br>
-
-                <p>* 파일 용량 1MB 이하</p>
-                <p>* JPG만 업로드 가능</p>
-                <label>팝콘 이미지: </label>
-                <img width="300px" height="300px" src="/file/product/${product.prodImage}"><br>
-                <input type="file" name="file" value="${product.prodImage}"><br><br>
-            </c:if>
-
-            <c:if test="${product.prodCategory == 2}">
-                <input type="file" name="file" style="display: none;">
-                <input type="hidden" name="workNo" value="">
-
-                <label>저작권 이름: </label><br>
-                <div>${product.prodName}</div><br><br>
-
-                <label>저작권 가격: </label><br>
-                <input type="number" min="100" value="100" name="prodPrice" required> 개<br><br>
-            </c:if>
-
-            <input type="submit" value="수정">
-        </form>
-
-    </body>
 </html>

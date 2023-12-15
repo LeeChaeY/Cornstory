@@ -15,11 +15,12 @@
 		<result property="tranCategory" column="tran_category" jdbcType="INTEGER"/>
 		<result property="tranMethod" column="tran_method" jdbcType="INTEGER"/>
 		<result property="tranCnt" column="tran_cnt" jdbcType="INTEGER"/>
+		<result property="prodCnt" column="prod_cnt" jdbcType="INTEGER"/>
 		<result property="bfPopcornCnt" column="bf_popcorn_cnt" jdbcType="INTEGER"/>
 		<result property="afPopcornCnt" column="af_popcorn_cnt" jdbcType="INTEGER"/>
 		<result property="episodeOrder" column="episode_order" jdbcType="INTEGER"/>
 		<result property="prodPrice" column="prod_price" jdbcType="INTEGER"/>
-		<result property="prodDate" column="prod_date" jdbcType="DATE"/>
+		<result property="tranDate" column="tran_date" jdbcType="DATE"/>
 		<result property="category" column="category" jdbcType="INTEGER"/>
 		<result property="workName" column="work_name" jdbcType="VARCHAR"/>
 		<result property="nickname" column="nickname" jdbcType="VARCHAR"/>
@@ -58,63 +59,90 @@
 		SELECT COUNT(*) AS totalCount
 		FROM (SELECT tran_no, Pu.prod_no, seller_id, buyer_id, tran_category, tran_method, tran_cnt,
 					bf_popcorn_cnt, af_popcorn_cnt, Pu.episode_order, Pu.prod_price, tran_date,
-					W.work_no, work_name, category
-				FROM purchase Pu JOIN product P ON Pu.prod_no = P.prod_no JOIN work W ON P.work_no = W.work_no
-		<where>
-			buyer_id = #{userId}
-			<if test='search.searchCondition != null and !search.searchCondition.equals("")
-								and search.searchKeyword != null and !search.searchKeyword.equals("")'>
-				<if test='search.searchCondition.equals("0")'>
-					AND LOWER(work_name) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%'))
-				</if>
-				<if test='search.searchCondition.equals("1")'>
-					AND tran_category = 2
-				</if>
-			</if>
-		</where>
+					W.work_no, work_name, category, nickname
+				FROM purchase Pu JOIN product P ON Pu.prod_no = P.prod_no
+				    			JOIN work W ON P.work_no = W.work_no
+								JOIN user U ON W.user_id = U.user_id
+				<where>
+					<if test="role == 0">
+						buyer_id = #{userId}
+					</if>
+					<if test='search.searchKeyword != null and !search.searchKeyword.equals("")'>
+						AND LOWER(work_name) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%'))
+					</if>
+					<if test="tranCategory != 0">
+						AND tran_category = #{tranCategory}
+					</if>
+				</where>
 		) countTable
 	</select>
 
 	<select id="listPurchase" parameterType="map" resultMap="purchaseSelectMap">
-		SELECT *
-		FROM ( SELECT inner_table.*, @rownum := @rownum + 1 AS row_seq
-		FROM (SELECT tran_no, Pu.prod_no, seller_id, buyer_id, tran_category, tran_method, tran_cnt,
-					bf_popcorn_cnt, af_popcorn_cnt, Pu.episode_order, Pu.prod_price, tran_date,
-					W.work_no, work_name, category
-				FROM purchase Pu JOIN product P ON Pu.prod_no = P.prod_no JOIN work W ON P.work_no = W.work_no
-		<where>
-			buyer_id = #{userId}
-			<if test='search.searchCondition != null and !search.searchCondition.equals("0")'>
-				AND LOWER(work_name) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%'))
-			</if>
-		</where>
-		) inner_table, (SELECT @rownum := 0) r
-		LIMIT #{endRowNum}
-		) AS result
-		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
-	</select>
+        SELECT *
+        FROM ( SELECT inner_table.*, @rownum := @rownum + 1 AS row_seq
+				FROM (SELECT tran_no, Pu.prod_no, seller_id, buyer_id, tran_category, tran_method, tran_cnt,
+							bf_popcorn_cnt, af_popcorn_cnt, Pu.episode_order, Pu.prod_price, tran_date,
+							W.work_no, work_name, category, nickname
+						FROM purchase Pu JOIN product P ON Pu.prod_no = P.prod_no
+										JOIN work W ON P.work_no = W.work_no
+										JOIN user U ON W.user_id = U.user_id
+						<where>
+							<if test="role == 0">
+								buyer_id = #{userId}
+							</if>
+							<if test='search.searchKeyword != null and !search.searchKeyword.equals("")'>
+								AND LOWER(work_name) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%'))
+							</if>
+							<if test="tranCategory != 0">
+								AND tran_category = #{tranCategory}
+							</if>
+						</where>
+        		) inner_table, (SELECT @rownum := 0) r
+        		LIMIT #{endRowNum}
+        ) AS result
+        WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+    </select>
 
-	<select id="countWorkTotalPopcorn" parameterType="map" resultType="hashmap">
-		SELECT work_no, SUM(P.prod_price) as total_price, ROUND(AVG(P.prod_price), 0) as prod_price
+	<select id="countWorkTotalPopcorn" parameterType="map" resultType="map">
+		SELECT nickname, W.work_no, work_name, category, SUM(P.prod_price) as total_price,
+		       ROUND(AVG(P.prod_price), 0) as prod_price
 		FROM purchase Pu JOIN product P ON Pu.prod_no = P.prod_no
-		WHERE tran_category = #{tranCategory} and P.user_id = #{userId}
-		GROUP BY work_no;
+							JOIN work W ON P.work_no = W.work_no
+							JOIN user U ON W.user_id = U.user_id
+		WHERE tran_category = #{tranCategory} and W.user_id = #{userId}
+		GROUP BY W.work_no;
 	</select>
 
-	<select id="countPurchasePopcorn" parameterType="string" resultType="int">
+	<select id="countPurchasePopcorn" parameterType="map" resultType="int">
 		SELECT COUNT(*) AS totalCount
-		FROM (SELECT *
-				FROM purchase
-				WHERE tran_category = 0 AND buyer_id = #{userId}
+		FROM (SELECT Pu.prod_no, seller_id, buyer_id,
+					 tran_category, tran_method, tran_cnt,
+					 Pu.episode_order, bf_popcorn_cnt, af_popcorn_cnt,
+					 Pu.prod_price, tran_date, prod_cnt, nickname
+				FROM purchase Pu JOIN product P ON Pu.prod_no = P.prod_no JOIN user U ON Pu.buyer_id = U.user_id
+				<where>
+					tran_category = 0
+					<if test="role == 0">
+						AND buyer_id = #{userId}
+					</if>
+				</where>
 		) countTable
 	</select>
 
 	<select id="listPurchasePopcorn" parameterType="map" resultMap="purchaseSelectMap">
 		SELECT *
 		FROM ( SELECT inner_table.*, @rownum := @rownum + 1 AS row_seq
-				FROM (SELECT *
-						FROM purchase
-						WHERE tran_category = 0 AND buyer_id = #{userId}
+				FROM (SELECT Pu.prod_no, seller_id, buyer_id,
+				    		tran_category, tran_method, tran_cnt,
+				    		Pu.episode_order, bf_popcorn_cnt, af_popcorn_cnt,
+				    		Pu.prod_price, tran_date, prod_cnt, nickname
+						FROM purchase Pu JOIN product P ON Pu.prod_no = P.prod_no JOIN user U ON Pu.buyer_id = U.user_id
+						<where>
+							tran_category = 0
+							<if test="role == 0">
+								AND buyer_id = #{userId}
+							</if>
+						</where>
 				) inner_table, (SELECT @rownum := 0) r
 				LIMIT #{endRowNum}
 		) AS result

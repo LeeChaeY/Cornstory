@@ -30,4 +30,6 @@ public interface UserService {
 
     // 회원 NickName 중복 확인
     public boolean nickNameCheck(String nickname) throws Exception;
+
+    public int updateUserPopcornCnt(Map map) throws Exception;
 }

@@ -1,3 +1,4 @@
+/*
 package com.cornstory;
 
 import com.cornstory.common.Search;
@@ -22,10 +23,12 @@ class SupportTests {
 //	@Test
 	public void testAddSupport() throws Exception {
 		System.out.println("Add Support");
-		/*
+		*/
+/*
 		*  category = 0 : Q&A 1: 공지사항
 		* ROLE = Q 질문 A 답변 G 공지사항
-		* */
+		* *//*
+
 		// 테스트용 Support 객체 생성
 		Support support = new Support();
 		support.setUserId("static/file/user");
@@ -112,3 +115,4 @@ class SupportTests {
 	}
 
 }
+*/

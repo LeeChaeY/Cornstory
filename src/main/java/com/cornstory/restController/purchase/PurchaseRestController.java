@@ -1,20 +1,24 @@
 package com.cornstory.restController.purchase;
 
 
-import com.cornstory.domain.Product;
-import com.cornstory.domain.Purchase;
-import com.cornstory.domain.User;
-import com.cornstory.domain.Work;
+import com.cornstory.common.Search;
+import com.cornstory.domain.*;
 import com.cornstory.service.product.ProductService;
 import com.cornstory.service.purchase.PurchaseService;
 import com.cornstory.service.user.UserService;
 import com.cornstory.service.work.WorkService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpEntity;
+import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/purchase/*")
@@ -39,39 +43,56 @@ public class PurchaseRestController {
 
     public PurchaseRestController() { System.out.println("PurchaseRestController 진입"); }
 
-    @GetMapping("json/addPurchase")
-    public String addPurchase(@RequestParam("prodNo") int prodNo, @RequestParam("tranCnt") int tranCnt,
-                              HttpSession session) throws Exception {
-        System.out.println("/purchase/json/addPurchase : GET :: prodNo = " + prodNo + ", tranCnt = " + tranCnt);
 
-        User user = userService.getUser(((User)session.getAttribute("user")).getUserId());
+    @GetMapping("json/kakaopayReady")
+    @ResponseBody
+    public ReadyResponse kakaopayReady(@SessionAttribute("user") User user,
+                                       @RequestParam("prodNo") int prodNo, @RequestParam("tranCnt") int tranCnt,
+                                       Model model, HttpSession session) throws Exception {
+        System.out.println("/purchase/json/kakaopay : GET :: prodNo = " + prodNo + ", tranCnt = " + tranCnt);
         Product product = productService.getProduct(prodNo);
 
-        Purchase purchase = new Purchase();
-        purchase.setProdNo(prodNo);
-        purchase.setTranCnt(tranCnt);
-        purchase.setSellerId(product.getUserId());
-        purchase.setBuyerId(user.getUserId());
-        purchase.setTranCategory(product.getProdCategory());
-        if (product.getProdCategory() == 0) {
-            purchase.setTranMethod(0);
-            purchase.setAfPopcornCnt(user.getPopcornCnt() + product.getProdPrice() * tranCnt);
-        } else {
-            purchase.setTranMethod(0);
-            purchase.setAfPopcornCnt(user.getPopcornCnt() - product.getProdPrice() * tranCnt);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm");
+        String orderId = prodNo + "_" + user.getUserId() + "_" + dateFormat.format(new Timestamp(System.currentTimeMillis()));
+        String approval_url = "http://localhost:8088/purchase/kakaopayCompleted?orderId=" + orderId + "&prodNo=" + prodNo + "&tranCnt=" + tranCnt;
 
-            Work work = workService.getWork(product.getWorkNo());
-            purchase.setEpisodeOrder(product.getEpisodeOrder());
-            purchase.setCategory(work.getCategory());
-            purchase.setWorkName(work.getWorkName());
-        }
-        purchase.setBfPopcornCnt(user.getPopcornCnt());
-        purchase.setProdPrice(product.getProdPrice());
-        purchase.setNickname(user.getNickName());
+        // 카카오가 요구한 결제요청request값을 담아줍니다.
+        MultiValueMap<String, String> parameters = new LinkedMultiValueMap<String, String>();
+        parameters.add("cid", "TC0ONETIME");
+        parameters.add("partner_order_id", orderId);
+        parameters.add("partner_user_id", user.getUserId());
+        parameters.add("item_name", product.getProdName());
+        parameters.add("quantity", String.valueOf(tranCnt));
+        parameters.add("total_amount", String.valueOf(product.getProdPrice() * tranCnt));
+        parameters.add("tax_free_amount", "0");
+        parameters.add("approval_url", approval_url); // 결제승인시 넘어갈 url
+        parameters.add("cancel_url", "http://localhost:8088/product/listProduct"); // 결제취소시 넘어갈 url
+        parameters.add("fail_url", "http://localhost:8088/product/listProduct"); // 결제 실패시 넘어갈 url
 
-        purchaseService.addPurchase(purchase);
+        MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
+        headers.add("Authorization", "KakaoAK 34178778d3ef4a8aad68e39b028d4864");
+        headers.add("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
 
-        return "구매가 완료되었습니다.";
+        HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(parameters, headers);
+
+        // 외부url요청 통로 열기.
+        RestTemplate template = new RestTemplate();
+        String url = "https://kapi.kakao.com/v1/payment/ready";
+        // template으로 값을 보내고 받아온 ReadyResponse값 readyResponse에 저장.
+        ReadyResponse readyResponse = template.postForObject(url, requestEntity, ReadyResponse.class);
+        System.out.println("readyResponse : " + readyResponse.toString());
+
+        model.addAttribute("tid", readyResponse.getTid());
+        session.setAttribute("tid", readyResponse.getTid());
+        model.addAttribute("orderId", orderId);
+        model.addAttribute("prodNo", prodNo);
+        model.addAttribute("tranCnt", tranCnt);
+
+        // Order정보를 모델에 저장
+//        model.addAttribute("order",order);
+
+        // 받아온 값 return
+        return readyResponse;
     }
 
     @GetMapping("json/deletePurchase")

@@ -31,7 +31,7 @@ public class ChatController {
 //    @Value("${pageUnit}")
     int pageUnit = 5;
 //    @Value("${pageSize}")
-    int pageSize = 3;
+    int pageSize = 100;
 
     public ChatController() {
         System.out.println("ChatController 진입");
@@ -165,9 +165,9 @@ public class ChatController {
         System.out.println("/chat/listChatSpace : GET/POST :: enterUserId : " + enterUserId);
         System.out.println("/chat/listChatSpace : GET/POST :: genre : " + genre);
 
-        if (search.getSearchCondition() == null) {
-            search.setSearchCondition("");
-        }
+//        if (search.getSearchCondition() == null) {
+//            search.setSearchCondition("");
+//        }
 
         if(search.getCurrentPage() == 0 ){
             search.setCurrentPage(1);
@@ -189,6 +189,9 @@ public class ChatController {
         model.addAttribute("resultPage", resultPage);
         model.addAttribute("search", search);
         model.addAttribute("chatSpaceNo2", chatSpaceNo2);
+        model.addAttribute("userId", userId);
+        model.addAttribute("genre", genre);
+        model.addAttribute("enterUserId", enterUserId);
 
         System.out.println(map.get("list"));
         System.out.println(search);
