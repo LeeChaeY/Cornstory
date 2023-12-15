@@ -26,7 +26,7 @@ public class WebConfig implements WebMvcConfigurer {
         // URL Pattern 을 확인하고. interceptor 적용유무 등록함.
         System.out.println("WebConfig");
         String[] excludePatterns = {"/user/login", "/user/addUser",
-                "/work/listWork", "/work/getWork", "/work/getDetailWork", "/episode/getEpisode",
+                "/work/listWork", "/work/getDetailWork", "/episode/getEpisode",
                 "/support/listSupport", "/support/getSupport", "/product/listProduct",
                 "/story/listStory", "/story/getStory"};
         registry.addInterceptor( logonCheckInterceptor )
