@@ -59,12 +59,12 @@
               </a>
             </li>
             <li class="header-subitem">
-              <a class="header-sublink" href="/work/bookmark">
+              <a class="header-sublink" href="/work/listBookmark">
                 <span>찜 목록</span>
               </a>
             </li>
             <li class="header-subitem">
-              <a class="header-sublink" href="/work/listWork">
+              <a class="header-sublink" href="/work/getWork">
                 <span>나의 작품</span>
               </a>
             </li>

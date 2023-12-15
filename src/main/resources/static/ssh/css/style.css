@@ -7,7 +7,7 @@ header-left@charset "utf-8";
 .opilsol-N4 .visual-container .swiper-slide { width: 100%; height: 80%; background-position: center top; background-size: cover; background-repeat: no-repeat; }
 .opilsol-N4 .visual-container .swiper-slide .visual-bg { width: 100%; height: 100vh; object-fit: cover; }
 .opilsol-N4 .visual-container .visual-text-box { color: #000000; position: absolute; width: calc(100% - 3rem); max-width: 1280px; left: 50%; top: calc(50% - 2rem); transform: translate(-50%, -50%); -webkit-transform: translate(-50%, -50%); -moz-transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); -o-transform: translate(-50%, -50%); }
-.opilsol-N4 .visual-container .visual-text-box .visual-title { margin-bottom: 1.9rem; line-height: 1.3; font-family: var(--ff-ko); font-size: var(--vt-h1); font-weight: 700; color: #ffffff;  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);}
+.opilsol-N4 .visual-container .visual-text-box .visual-title { margin-bottom: 1.9rem; line-height: 1.3; font-family: var(--ff-ko); font-size: var(--vt-h1); font-weight: 700; color: #0d1505; }
 .opilsol-N4 .visual-container .visual-text-box .visual-subtitle { color: #000000; opacity: 0.8; max-width: 55rem; line-height: 1.5; font-family: var(--ff-ko); font-size: var(--vt-h2); font-weight: 400; letter-spacing: -0.1rem; color: var(--text-color5); }
 .opilsol-N4 .visual-container .visual-text-box .visual-subtitle .br { display: inline; color: Hex: #dad295; }
 .opilsol-N4 .visual-container .control-wrap { z-index: 10; position: absolute; left: 50%; top: calc(50% - 2rem); width: calc(100% - 3rem); height: 22rem; max-width: 1280px; transform: translate(-50%, -50%); transform-origin: center top; -webkit-transform: translate(-50%, -50%); -moz-transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); -o-transform: translate(-50%, -50%); }
@@ -29,8 +29,8 @@ header-left@charset "utf-8";
  .opilsol-N4 .visual-container .visual-text-box .visual-subtitle { max-width: 54rem; }
 }
 @media (max-width: 1024px) {
- .opilsol-N4 .visual-container { height: 50rem; }
- .opilsol-N4 .visual-container .swiper-slide { height: 50rem; }
+ .opilsol-N4 .visual-container { height: 80rem; }
+ .opilsol-N4 .visual-container .swiper-slide { height: 80rem; }
  .opilsol-N4 .visual-container .swiper-slide .visual-bg { height: 80rem; }
  .opilsol-N4 .visual-container .visual-text-box .visual-title .br { display: block; }
  .opilsol-N4 .visual-container .visual-text-box .visual-subtitle .br { display: block; }
@@ -84,26 +84,6 @@ header-left@charset "utf-8";
 }
 @media (max-width: 922px) {
  .opilsol-N5 .slide-container .swiper-slide .cardset .btnset { display: inline-flex; }
-}
-
-:root[color-theme='light'] {
- --background: #fff;
- --boxColor: #000;
-}
-
-:root[color-theme='dark'] {
- --background: #000;
- --boxColor: #fff;
-}
-html {
- background: var(--background);
-}
-.themed {
- display: block;
- width: 10em;
- height: 10em;
- background: var(--boxColor);
- color: var(--background);
 }
 
 /* opilsol-N2 [TzlpwCWk2A] */
