@@ -54,17 +54,17 @@
           </a>
           <ul class="header-sublist">
             <li class="header-subitem">
-              <a class="header-sublink" href="work/listWork">
+              <a class="header-sublink" href="/work/listWork">
                 <span>작품 목록</span>
               </a>
             </li>
             <li class="header-subitem">
-              <a class="header-sublink" href="work/bookmark">
+              <a class="header-sublink" href="/work/bookmark">
                 <span>찜 목록</span>
               </a>
             </li>
             <li class="header-subitem">
-              <a class="header-sublink" href="work/listWork">
+              <a class="header-sublink" href="/work/listWork">
                 <span>나의 작품</span>
               </a>
             </li>
@@ -141,25 +141,25 @@
           <ul class="header-sublist">
 
             <li class="header-subitem">
-              <a class="header-sublink" href="support/listSupport?category=0">
+              <a class="header-sublink" href="/support/listSupport?category=0">
                 <span>공지사항</span>
               </a>
             </li>
 
             <li class="header-subitem">
-              <a class="header-sublink" href="support/listSupport?category=1">
+              <a class="header-sublink" href="/support/listSupport?category=1">
                 <span>Q&amp;A​<br></span>
               </a>
             </li>
 
             <li class="header-subitem">
-              <a class="header-sublink" href="support/listSupport?category=2">
+              <a class="header-sublink" href="/support/listSupport?category=2">
                 <span>신고센터<br></span>
               </a>
             </li>
 
             <li class="header-subitem">
-              <a class="header-sublink" href="user/listUser">
+              <a class="header-sublink" href="/user/listUser">
                 <span>회원목록<br></span>
               </a>
             </li>
