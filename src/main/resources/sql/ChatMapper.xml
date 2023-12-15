@@ -73,14 +73,14 @@
 						(LOWER(c_space_name) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%'))
 						OR LOWER(nickname) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%')))
 					</if>
-					<if test='userId != null and !userId.equals("")'>
+					<if test='userStatus == 1'>
 						AND U.user_id = #{userId}
 					</if>
 					<if test='genre != null and !genre.equals("")'>
 						AND genre = #{genre}
 					</if>
-					<if test='enterUserId != null and !enterUserId.equals("")'>
-						AND CE.user_id = #{enterUserId}
+					<if test='userStatus == 2'>
+						AND CE.user_id = #{userId}
 					</if>
 				</where>
 		) countTable
@@ -98,14 +98,14 @@
 								(LOWER(c_space_name) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%'))
 								OR LOWER(nickname) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%')))
 							</if>
-							<if test='userId != null and !userId.equals("")'>
+							<if test='userStatus == 1'>
 								AND U.user_id = #{userId}
 							</if>
 							<if test='genre != null and !genre.equals("")'>
 								AND genre = #{genre}
 							</if>
-							<if test='enterUserId != null and !enterUserId.equals("")'>
-								AND CE.user_id = #{enterUserId}
+							<if test='userStatus == 2'>
+								AND CE.user_id = #{userId}
 							</if>
 						</where>
 				) inner_table, (SELECT @rownum := 0) r

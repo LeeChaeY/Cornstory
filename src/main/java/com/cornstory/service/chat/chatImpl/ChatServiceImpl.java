@@ -53,13 +53,13 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public Map<String, Object> listChatSpace(Search search, String userId, String genre, String enterUserId) throws Exception {
+    public Map<String, Object> listChatSpace(Search search, String userId, String genre, int userStatus) throws Exception {
         Map<String,Object> map = new HashMap<String,Object>();
 
         map.put("search", search);
         map.put("userId", userId);
         map.put("genre", genre);
-        map.put("enterUserId", enterUserId);
+        map.put("userStatus", userStatus);
 
         int totalCount = chatDao.countChatSpace(map);
         System.out.println("ChatServiceImpl :: countChatSpace :: "+totalCount);

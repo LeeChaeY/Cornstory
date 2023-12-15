@@ -53,7 +53,7 @@
     <div class="opilsol-N24" data-bid="XZlQ1o5z61">
         <div class="content-container">
 
-            <c:if test="${userId == ''}">
+            <c:if test="${userStatus == 0}">
                 <div class="container-md">
                     <div class="tableset">
                         <div class="tableset-inner">
@@ -129,9 +129,7 @@
                     <div class="tableset">
                         <div class="tableset-inner">
                             <form name="form" method="post">
-                                <input type="hidden" name="userId" value="${userId}">
-                                <input type="hidden" name="sessionUserId" value="${sessionScope.user.userId}">
-                                <input type="hidden" name="prodCategory" value="">
+                                <input type="hidden" name="userStatus" value="${userStatus}">
                                 <input type="hidden" name="tranCategory" value="">
                                 <input type="hidden" name="condition" value="${condition}">
                                 <div class="listStoreSearch inputset inputset-line inputset-lg">

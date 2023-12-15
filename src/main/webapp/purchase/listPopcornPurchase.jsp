@@ -46,7 +46,6 @@
 
 <%@ include file="../product/listStoreTop.jsp" %>
 
-
 <!-- [E]opilsol-N26 -->
 <main class="th-layout-main ">
     <!-- [S]opilsol-N24 -->
@@ -54,16 +53,8 @@
         <div class="content-container">
             <div class="container-md">
                 <form name="form" method="post">
-                    <input type="hidden" name="userId" value="${userId}">
-                    <input type="hidden" name="sessionUserId" value="${sessionScope.user.userId}">
-                    <input type="hidden" name="prodCategory" value="">
-                    <input type="hidden" name="tranCategory" value="">
-                    <input type="hidden" name="condition" value="${condition}">
-                    <%--                <div class="inputset inputset-line inputset-lg">--%>
-                    <%--                    <button class="inputset-icon icon-right icon-search btn" type="button" aria-label="아이콘"></button>--%>
-                    <%--                    <input type="text" class="inputset-input form-control" placeholder="저작권 이름을 입력해 주세요."--%>
-                    <%--                           aria-label="내용">--%>
-                    <%--                </div>--%>
+                    <input type="hidden" name="tranCategory" value="${tranCategory}">
+                    <input type="hidden" name="userStatus" value="${userStatus}">
                 </form>
 
                 <div class="radioset-wrap">

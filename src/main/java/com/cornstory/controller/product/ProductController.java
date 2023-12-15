@@ -178,33 +178,28 @@ public class ProductController {
 
     @RequestMapping("listProduct")
     public String listProduct(Model model, @ModelAttribute("search") Search search,
-                              HttpServletRequest request) throws Exception {
-        System.out.println("/product/listProduct : GET / POST");
-
+                              @RequestParam(name="userStatus", defaultValue="0") int userStatus,
+                              HttpSession session) throws Exception {
+        System.out.println("/product/listProduct : GET / POST :: userStatus :: "+userStatus);
         String userId = "";
-        if (request.getParameter("userId") != null) userId = request.getParameter("userId");
-        System.out.println("/product/listProduct : GET / POST :: userId :: "+userId);
-
-//        if (search.getSearchCondition() == null) {
-//            search.setSearchCondition("");
-//        }
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            userId = user.getUserId();
+        }
 
         if (search.getCurrentPage() == 0) {
             search.setCurrentPage(1);
         }
         search.setPageSize(pageSize);
 
-        Map<String, Object> map = productService.listProduct(search, userId);
-//        Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
-//        System.out.println("/product/listProduct :: " + resultPage);
+        Map<String, Object> map = productService.listProduct(search, userId, userStatus);
 
         model.addAttribute("totalCountPopcorn", map.get("totalCountPopcorn"));
         model.addAttribute("totalCountCopyright", map.get("totalCountCopyright"));
         model.addAttribute("popcornList", map.get("popcornList"));
         model.addAttribute("copyrightList", map.get("copyrightList"));
-//        model.addAttribute("resultPage", resultPage);
         model.addAttribute("search", search);
-        model.addAttribute("userId", userId);
+        model.addAttribute("userStatus", userStatus);
 
         System.out.println(map);
         System.out.println(search);

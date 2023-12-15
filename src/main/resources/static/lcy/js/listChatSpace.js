@@ -1,9 +1,9 @@
 $(function() {
-    if($("input[name='enterUserId']").val() === "" && $("input[name='userId']").val() === "") {
+    if($("input[name='userStatus']").val() === "0") {
         $("input[id='checkset-e-4-1']").attr("checked", "");
-    } else if($("input[name='enterUserId']").val() === "") {
+    } else if($("input[name='userStatus']").val() === "1") {
         $("input[id='checkset-e-4-2']").attr("checked", "");
-    } else if($("input[name='userId']").val() === "") {
+    } else if($("input[name='userStatus']").val() === "2") {
         $("input[id='checkset-e-4-3']").attr("checked", "");
     }
 
@@ -76,15 +76,13 @@ function fncGetChatList(currentPage) {
         "일상", "추리", "스릴러", "무협", "기타"];
 
     $("input[name='currentPage']").val(currentPage);
-    let sessionUserId = $("input[name='sessionUserId']").val();
 
     if (genreList.indexOf(spanText) !== -1) {
         $("input[name='genre']").val(spanText);
         $("form[name='form']").attr("method", "post").attr("action", "/chat/listChatSpace").submit();
     }
     else if (spanText === "전체" || spanText === "채팅방 목록") {
-        $("input[name='userId']").val("");
-        $("input[name='enterUserId']").val("");
+        // $("input[name='userStatus']").val(0);
         $("input[name='genre']").val("");
         $("input[name='searchKeyword']").val("");
         $("form[name='form']").attr("method", "post").attr("action", "/chat/listChatSpace").submit();
@@ -92,12 +90,10 @@ function fncGetChatList(currentPage) {
 
 
     if (spanText === "개설한 채팅방") {
-        $("input[name='userId']").val(sessionUserId);
-        $("input[name='enterUserId']").val("");
+        $("input[name='userStatus']").val(1);   //0: 전체, 1: 개설, 2: 입장
         $("form[name='form']").attr("method", "post").attr("action", "/chat/listChatSpace").submit();
     } else if (spanText === "입장한 채팅방") {
-        $("input[name='userId']").val("");
-        $("input[name='enterUserId']").val(sessionUserId);
+        $("input[name='userStatus']").val(2);   //0: 전체, 1: 개설, 2: 입장
         $("form[name='form']").attr("method", "post").attr("action", "/chat/listChatSpace").submit();
     } else if (spanText === '채팅방 추가하기') {
         $(self.location).attr("href", "/chat/addChatSpace");
@@ -110,7 +106,6 @@ function enterChatSpace(chatSpaceNo) {
 }
 
 function updateChatSpace(chatSpaceNo) {
-
     $(self.location).attr("href", "/chat/updateChatSpace?chatSpaceNo=" + chatSpaceNo);
 }
 

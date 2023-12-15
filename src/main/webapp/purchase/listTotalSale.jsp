@@ -54,11 +54,9 @@
         <div class="content-container">
             <div class="container-md">
                 <form name="form" method="post">
-                    <input type="hidden" name="userId" value="${userId}">
-                    <input type="hidden" name="sessionUserId" value="${sessionScope.user.userId}">
-                    <input type="hidden" name="prodCategory" value="">
                     <input type="hidden" name="tranCategory" value="${tranCategory}">
                     <input type="hidden" name="condition" value="${condition}">
+                    <input type="hidden" name="userStatus" value="${userStatus}">
                 </form>
                 <br>
                 <br><br>

@@ -21,7 +21,7 @@ public interface ProductService {
 
 	public int deleteProduct(int prodNo) throws Exception;
 
-	public Map<String,Object> listProduct(Search search, String userId) throws Exception;
+	public Map<String,Object> listProduct(Search search, String userId, int userStatus) throws Exception;
 
 	public int prodNameCheck(int prodCnt) throws Exception;
 

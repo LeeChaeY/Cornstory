@@ -88,9 +88,7 @@
 
 <form name="form">
     <input type="hidden" name="genre" value="${genre}">
-    <input type="hidden" name="userId" value="${userId}">
-    <input type="hidden" name="enterUserId" value="${enterUserId}">
-    <input type="hidden" name="sessionUserId" value="${sessionScope.user.userId}">
+    <input type="hidden" name="userStatus" value="${userStatus}">
 </form>
 
 <!-- [E]opilsol-N26 -->

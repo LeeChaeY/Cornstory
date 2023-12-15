@@ -4,7 +4,6 @@ $(function() {
     $("input[id='checkset-e-5-5']").attr("checked", "");
 
     $(".listStoreSearchButton").on("click", function() {
-        // $("input[name='searchCondition']").val("0");
         $("form[name='form']").attr("method", "post").attr("action", "/purchase/listPurchase").submit();
     });
     $(".viewWork").on("click", function() {

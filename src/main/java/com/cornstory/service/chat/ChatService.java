@@ -22,7 +22,7 @@ public interface ChatService {
     public int deleteChatSpace(int chatSpaceNo) throws Exception;
 
     // 채팅방 목록
-    public Map<String, Object> listChatSpace(Search search, String userId, String genre, String enterUserId) throws Exception;
+    public Map<String, Object> listChatSpace(Search search, String userId, String genre, int userStatus) throws Exception;
 
     //채팅방 입장
     public int addChatEnter(String userId, int chatSpaceNo) throws Exception;

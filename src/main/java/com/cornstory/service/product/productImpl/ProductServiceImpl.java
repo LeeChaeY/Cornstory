@@ -52,7 +52,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Map<String, Object> listProduct(Search search, String userId) throws Exception {
+	public Map<String, Object> listProduct(Search search, String userId, int userStatus) throws Exception {
 		Map<String,Object> map = new HashMap<String,Object>();
 
 		int totalCountPopcorn = productDao.countProductPopCorn(search);
@@ -65,6 +65,7 @@ public class ProductServiceImpl implements ProductService {
 
 		map.put("search", search);
 		map.put("userId", userId);
+		map.put("userStatus", userStatus);
 
 		int totalCountCopyright = productDao.countProductCopyright(map);
 		System.out.println("ProductServiceImpl :: totalCountCopyright :: "+totalCountCopyright);

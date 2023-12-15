@@ -79,8 +79,8 @@ public class PurchaseController {
     }
 
     @GetMapping("addPurchase")
-    public String addPurchase(@RequestParam("prodNo") int prodNo, @RequestParam("tranCnt") int tranCnt,
-                              @RequestParam("tranMethod") int tranMethod, @SessionAttribute("user") User user) throws Exception {
+    public String addPurchase(@RequestParam("prodNo") int prodNo, @RequestParam(name="tranCnt", defaultValue="1") int tranCnt,
+                              @RequestParam(name="tranMethod", defaultValue="0") int tranMethod, @SessionAttribute("user") User user) throws Exception {
         System.out.println("/purchase/json/addPurchase : GET :: prodNo = " + prodNo + ", tranCnt = " + tranCnt);
 
         Product product = productService.getProduct(prodNo);
@@ -125,13 +125,10 @@ public class PurchaseController {
 
     @RequestMapping("listPurchase")
     public String listPurchase(Model model, @ModelAttribute("search") Search search,
-                               @SessionAttribute("user") User user, @RequestParam("tranCategory") int tranCategory) throws Exception {
+                               @SessionAttribute("user") User user,
+                               @RequestParam(name="tranCategory", defaultValue="0") int tranCategory) throws Exception {
         System.out.println("/purchase/listPurchase : GET/POST :: search = " + search);
         System.out.println("/purchase/listPurchase : GET/POST :: tranCategory = " + tranCategory);
-
-        if (search.getSearchCondition() == null) {
-            search.setSearchCondition("");
-        }
 
         if (search.getCurrentPage() == 0) {
             search.setCurrentPage(1);
@@ -139,10 +136,7 @@ public class PurchaseController {
         search.setPageSize(pageSize);
 
         Map<String, Object> map = purchaseService.listPurchase(search, user.getUserId(), user.getRole(), tranCategory);
-//        Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
-//        System.out.println("/purchase/listPurchase :: " + resultPage);
 
-//        model.addAttribute("resultPage", resultPage);
         model.addAttribute("totalCount", map.get("totalCount"));
         model.addAttribute("list", map.get("list"));
         model.addAttribute("search", search);
@@ -162,11 +156,6 @@ public class PurchaseController {
     public String listSale(Model model, @ModelAttribute("search") Search search,
                                @SessionAttribute("user") User user) throws Exception {
         System.out.println("/purchase/listSale : GET/POST :: search = " + search);
-//        System.out.println("/purchase/listSale : GET/POST :: tranCategory = " + tranCategory);
-
-        if (search.getSearchCondition() == null) {
-            search.setSearchCondition("");
-        }
 
         if (search.getCurrentPage() == 0) {
             search.setCurrentPage(1);
@@ -174,15 +163,11 @@ public class PurchaseController {
         search.setPageSize(pageSize);
 
         Map<String, Object> map = purchaseService.countWorkTotalPopcorn(search, user.getUserId(), user.getRole());
-//        Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
-//        System.out.println("/purchase/listPurchase :: " + resultPage);
 
-//        model.addAttribute("resultPage", resultPage);
         model.addAttribute("workList", map.get("workList"));
         model.addAttribute("totalCount", map.get("totalCount"));
         model.addAttribute("search", search);
         model.addAttribute("userId", user.getUserId());
-//        model.addAttribute("tranCategory", tranCategory);
 
         System.out.println(map);
         System.out.println(search);
@@ -191,31 +176,16 @@ public class PurchaseController {
     }
 
     @PostMapping("listTotalSale")
-    public String listTotalSale(Model model, int condition) throws Exception {
+    public String listTotalSale(Model model, @RequestParam(name="condition", defaultValue="0") int condition) throws Exception {
         System.out.println("/purchase/listTotalSale : GET :: condition = " + condition);
-//        System.out.println("/purchase/listSale : GET/POST :: tranCategory = " + tranCategory);
-
-//        if (search.getSearchCondition() == null) {
-//            search.setSearchCondition("");
-//        }
-//
-//        if (search.getCurrentPage() == 0) {
-//            search.setCurrentPage(1);
-//        }
-//        search.setPageSize(pageSize);
 
         Map<String, Object> map = purchaseService.listTotalSale(condition);
 
-//        model.addAttribute("purchasePopcornCnt", map.get("purchasePopcornCnt"));
-//        model.addAttribute("purchasePrice", map.get("purchasePrice"));
-//        model.addAttribute("usePopcornCnt", map.get("usePopcornCnt"));
         model.addAttribute("list", map.get("list"));
         model.addAttribute("totalCount", map.get("totalCount"));
         model.addAttribute("condition", condition);
-//        model.addAttribute("tranCategory", tranCategory);
 
         System.out.println(map);
-//        System.out.println(search);
 
         return "purchase/listTotalSale";
     }

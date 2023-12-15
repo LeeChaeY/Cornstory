@@ -63,8 +63,7 @@
                 </div>
 
                 <form name="form" method="post">
-                    <input type="hidden" name="userId" value="${userId}">
-                    <input type="hidden" name="sessionUserId" value="${sessionScope.user.userId}">
+                    <input type="hidden" name="userStatus" value="${userStatus}">
                     <input type="hidden" name="tranCategory" value="">
                     <input type="hidden" name="condition" value="${condition}">
                 </form>

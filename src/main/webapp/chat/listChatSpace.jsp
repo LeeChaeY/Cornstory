@@ -160,11 +160,9 @@
                                         value="${!empty search.searchKeyword ? search.searchKeyword:''}">
                             </div>
                             <br>
-                            <h3 contenteditable="true">채팅방 목록</h3> 전체 ${resultPage.totalCount} 개<br>
+                            <h3 contenteditable="true">채팅방 목록</h3> 전체 ${totalCount} 개<br>
                             <input type="hidden" name="genre" value="${genre}">
-                            <input type="hidden" name="userId" value="${userId}">
-                            <input type="hidden" name="enterUserId" value="${enterUserId}">
-                            <input type="hidden" name="sessionUserId" value="${sessionScope.user.userId}">
+                            <input type="hidden" name="userStatus" value="${userStatus}">
                         </form>
                         <table class="tableset-table table">
                             <colgroup>

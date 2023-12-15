@@ -105,6 +105,8 @@
 	<select id="countProductPopCorn" parameterType="search" resultType="int">
 		SELECT COUNT(*) AS totalCount
 		FROM product
+		WHERE prod_category = 0
+		ORDER BY prod_price
 	</select>
 
 	<select id="listProductPopcorn" parameterType="map" resultMap="productSelectMap">
@@ -126,7 +128,7 @@
 						AND LOWER(prod_name) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%'))
 						OR LOWER(nickname) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%'))
 					</if>
-					<if test='userId != null and !userId.equals("")'>
+					<if test='userStatus == 1'>
 						AND U.user_id = #{userId}
 					</if>
 				</where>
@@ -146,7 +148,7 @@
 						AND LOWER(prod_name) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%'))
 						OR LOWER(nickname) LIKE LOWER(CONCAT('%', #{search.searchKeyword},'%'))
 					</if>
-					<if test='userId != null and !userId.equals("")'>
+					<if test='userStatus == 1'>
 						AND U.user_id = #{userId}
 					</if>
 				</where>

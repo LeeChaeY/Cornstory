@@ -149,33 +149,20 @@ public class ChatController {
 
     @RequestMapping(value="listChatSpace")
     public String listChatSpace(Model model, @ModelAttribute("search") Search search,
-                                HttpServletRequest request, @SessionAttribute("user") User user) throws Exception {
-        String userId = "";
-        String enterUserId = "";
-        String genre = "";
-        int chatSpaceNo2 = 0;
-        if (request.getParameter("userId") != null) userId = request.getParameter("userId");
-        if (request.getParameter("enterUserId") != null) enterUserId = request.getParameter("enterUserId");
-        if (request.getParameter("genre") != null) genre = request.getParameter("genre");
-        if (request.getParameter("chatSpaceNo2") != null) chatSpaceNo2 = Integer.parseInt(request.getParameter("chatSpaceNo2"));
+                                @RequestParam(name="userStatus", defaultValue="0") int userStatus,
+                                @RequestParam(name="genre", required=false) String genre,
+                                @SessionAttribute("user") User user) throws Exception {
 
-        System.out.println("/chat/listChatSpace : GET/POST :: search : " + search);
-        System.out.println("/chat/listChatSpace : GET/POST :: userId : " + userId);
-        System.out.println("/chat/listChatSpace : GET/POST :: enterUserId : " + enterUserId);
+        System.out.println("/chat/listChatSpace : GET/POST :: userStatus : " + userStatus);
         System.out.println("/chat/listChatSpace : GET/POST :: genre : " + genre);
-
-//        if (search.getSearchCondition() == null) {
-//            search.setSearchCondition("");
-//        }
+        System.out.println("/chat/listChatSpace : GET/POST :: search : " + search);
 
         if(search.getCurrentPage() == 0 ){
             search.setCurrentPage(1);
         }
         search.setPageSize(pageSize);
 
-        Map<String, Object> map = chatService.listChatSpace(search, userId, genre, enterUserId);
-        Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-        System.out.println("/chat/listChatSpace ::"+resultPage);
+        Map<String, Object> map = chatService.listChatSpace(search, user.getUserId(), genre, userStatus);
 
         Map<String, Object> map01 = new HashMap<String, Object>();
         map01.put("userId", user.getUserId());
@@ -185,12 +172,10 @@ public class ChatController {
         }
 
         model.addAttribute("list", map.get("list"));
-        model.addAttribute("resultPage", resultPage);
+        model.addAttribute("totalCount", map.get("totalCount"));
         model.addAttribute("search", search);
-        model.addAttribute("chatSpaceNo2", chatSpaceNo2);
-        model.addAttribute("userId", userId);
+        model.addAttribute("userStatus", userStatus);
         model.addAttribute("genre", genre);
-        model.addAttribute("enterUserId", enterUserId);
 
         System.out.println(map.get("list"));
         System.out.println(search);

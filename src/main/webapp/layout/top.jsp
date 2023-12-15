@@ -25,8 +25,46 @@
 
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script>
+    $(function() {
+
+      // $("span").on("click", function () {
+      //   myChatSpace();
+      // });
+
+      $("span:contains('상품 등록')").on("click", function () {
+        addProduct();
+      });
+
+    });
+
     function redirectToIndex() {
-      window.location.href = "../index.jsp";
+      $(self.location).attr("href", "/");
+    }
+
+    function myChatSpace() {
+      var form = document.createElement('form');
+
+      form.method = 'post';
+      form.action = '/chat/listChatSpace'; // Replace with your actual endpoint URL
+
+      addHiddenField(form, 'userStatus', 1);
+
+      form.submit();
+    }
+
+    function addHiddenField(form, name, value) {
+      var hiddenInput = document.createElement('input');
+      hiddenInput.type = 'hidden';
+      hiddenInput.name = name;
+      hiddenInput.value = value;
+      form.appendChild(hiddenInput);
+    }
+
+    function addProduct() {
+      if ("${empty sessionScope.user}") {
+        $(self.location).attr("href", "/user/login");
+      }
+      $(self.location).attr("href", "/product/addProduct?prodCategory=${sessionScope.user.role == 0 ? 2 : 0}");
     }
   </script>
 </head>
@@ -40,7 +78,7 @@
 
     <div class="header-left">
       <h1 class="header-title">
-        <a href="../index.jsp">
+        <a href="/">
           <img src="../ssh/images/logo.png" alt="로고">
         </a>
       </h1>
@@ -64,7 +102,7 @@
               </a>
             </li>
             <li class="header-subitem">
-              <a class="header-sublink" href="/work/listWork">
+              <a class="header-sublink" href="javascript:void(0)">
                 <span>나의 작품</span>
               </a>
             </li>
@@ -114,20 +152,11 @@
                 <span>상품 조회</span>
               </a>
             </li>
-            <c:if test="${sessionScope.user.role eq 0}">
-              <li class="header-subitem">
-                <a class="header-sublink" href="/product/listProduct?prodCategory=2">
-                  <span>저작권 등록</span>
-                </a>
-              </li>
-            </c:if>
-            <c:if test="${sessionScope.user.role eq 1}">
-              <li class="header-subitem">
-                <a class="header-sublink" href="/product/listProduct?prodCategory=0">
-                  <span>팝콘 등록</span>
-                </a>
-              </li>
-            </c:if>
+            <li class="header-subitem">
+              <a class="header-sublink" href="javascript:void(0)">
+                <span>상품 등록</span>
+              </a>
+            </li>
           </ul>
         </li>
 
@@ -311,15 +340,15 @@
             </li>
             <c:if test="${sessionScope.user.role eq 0}">
               <li class="fullmenu-subitem">
-                <a class="fullmenu-sublink" href="/product/listProduct?prodCategory=2">
-                  <span>저작권 등록</span>
+                <a class="fullmenu-sublink" href="/product/addProduct?prodCategory=2">
+                  <span>상품 등록</span>
                 </a>
               </li>
             </c:if>
             <c:if test="${sessionScope.user.role eq 1}">
               <li class="fullmenu-subitem">
-                <a class="fullmenu-sublink" href="/product/listProduct?prodCategory=0">
-                  <span>팝콘 등록</span>
+                <a class="fullmenu-sublink" href="/product/addProduct?prodCategory=0">
+                  <span>상품 등록</span>
                 </a>
               </li>
             </c:if>
