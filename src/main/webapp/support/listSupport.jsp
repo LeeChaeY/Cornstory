@@ -152,7 +152,7 @@
   <script src="../ssh/js/template.js"></script>
   <script src="../ssh/js/common.js"></script>
   <script src="../ssh/js/script.js"></script>
-<%@ include file="../layout/bottom.jsp" %>
-</body>
 
+</body>
+<%@ include file="../layout/bottom.jsp" %>
 
