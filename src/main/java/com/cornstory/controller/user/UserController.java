@@ -90,7 +90,7 @@ public class UserController {
             File dest = new File(filePath);
 
             // 파일을 저장
-            filename.transferTo(dest);
+//            filename.transferTo(dest);
             user.setUserImage(originalFilename);
         }
 

@@ -81,9 +81,11 @@
         <div class="textset content-top">
             <div class="container-md">
                 <h2 class="textset-tit">회원정보조회</h2>
+
+                <h2>
+                <img class="textset-tit" src="../file/user/${sessionScope.user.userImage}" width="100" style="border-radius: 100%; max-width: 100%;" alt=""/>
+                </h2>
             </div>
-            <div class="container-md">
-                <img src="../file/user/${sessionScope.user.userImage}" width="100" style="border-radius: 100%; max-width: 100%;" alt=""/>
         </div>
         <div class="contents-form">
             <div class="container-md">

@@ -104,38 +104,39 @@ public class UserRestController {
 
 
     @PostMapping("/kakaoLogin")
-    public String kakaoLogin(@RequestParam("userId") String userId,
-                             @RequestParam("nickName") String nickName,
-                             @RequestParam("email") String email) {
+    @ResponseBody
+    public Map<String, Object> kakaoLogin(@RequestParam("userId") String userId,
+                                          @RequestParam("nickName") String nickName,
+                                          @RequestParam("email") String email) {
+        Map<String, Object> response = new HashMap<>();
 
-
-            try {
+        try {
             // 카카오로부터 받은 정보로 유저를 찾거나 생성
             Map<String, String> kakaoInfo = new HashMap<>();
             kakaoInfo.put("userId", userId);
             kakaoInfo.put("nickName", nickName);
             kakaoInfo.put("email", email);
 
-            User user = userService.processKakaoLogin(kakaoInfo);
+            // 서비스 단에서 String으로 반환
+            String loginResult = userService.processKakaoLogin(kakaoInfo);
 
             // 성공적으로 처리되었을 경우
-            if (user != null) {
-                // 가입 여부에 따라 처리
-                if (user.getrDate() == null) {
-                    // 가입된 정보가 없으면 회원가입 처리
-                    userService.addUser(user);
-                }
-
-                // 로그인 성공 후, 추가적인 정보를 반환 (예: 유저 아이디 등)
-                return "success";
+            if ("success".equals(loginResult)) {
+                response.put("success", true);
+                response.put("message", "로그인 성공");
             } else {
                 // 실패했을 경우
-                return "fail";
+                response.put("success", false);
+                response.put("message", "로그인 실패");
             }
         } catch (Exception e) {
             // 에러가 발생한 경우
-            return "error";
+            response.put("success", false);
+            response.put("message", "서버 오류");
+            e.printStackTrace();  // 실제 프로덕션 환경에서는 로깅 라이브러리를 사용하는 것이 좋습니다.
         }
+
+        return response;
     }
 
 

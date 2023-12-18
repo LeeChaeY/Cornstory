@@ -126,7 +126,7 @@
                       <td>${support.userId}</td>
                       <td>${support.supId}</td>
                       <td>${support.supContent}</td>
-                      <td>${support.supPluscon}</td>
+                      <td><a href="${support.supPluscon}">URL</a></td>
                       <td>${support.supImage}</td>
                       <td>${support.supBan}일</td>
                       <td class="last-child">${support.supDate}</td>
