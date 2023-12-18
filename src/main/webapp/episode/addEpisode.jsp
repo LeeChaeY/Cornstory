@@ -116,7 +116,7 @@
                 </div>
             </div>
             <div class="contents-form">
-                <form action="../episode/addEpisode" method="post" enctype="multipart/form-data" >
+                <form action="../episode/addEpisode" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
                     <!-- 작품 회차 No(hidden으로 숨겨진 필드로 추가) -->
                     <input type="hidden" name="workNo" value="${work.workNo}" />
 
@@ -148,6 +148,7 @@
                     <div class="inputset inputset-lg inputset-group" for="thumbnailFile">
                         <label class="inputset-label">회차 대표 썸네일</label>
                         <input type="file" name="thumbnailFile" id="thumbnailFile" accept="image/*" onchange="setThumbnailPreview(event);" accept=".jpg" required>
+                        <div id="thumbnailPreviewContainer"></div>
                     </div>
 
                     <!-- 파일 업로드 필드 -->
@@ -173,15 +174,14 @@
                     <div class="inputset inputset-lg inputset-group">
                         <label class="inputset-label">운영 원칙 동의</label>
                         <div class="checkset checkset-sm">
-                            <input id="checkset-c-6-1" class="checkset-input input-round" type="checkbox" name="termsAgreement" required>
-                            <label class="checkset-label" for="checkset-c-6-1"></label>
+                            <input id="matters" class="checkset-input input-round" type="checkbox" name="termsAgreement">
+                            <label class="checkset-label" for="matters"></label>
                             <span class="checkset-text" style="font-size: 12px; line-height: 1.5; overflow: auto;">
-                                저작권 등 다른 사람의 권리를 침해하거나 명예를 훼손하는 게시물은 이용약관 및 관련 법률에 의해 제재를 받으실 수 있습니다.
-                                <br>성인물, 폭력물 등의 게시물은 통보 없이 삭제될 수 있습니다.
+                                불법 게시물을 등록할 경우, 게시 중단 및 삭제될 수 있으며 형사 처분 대상이 될 수 있습니다.
                             </span>
                         </div>
                     </div>
-
+                    <div id="termsError" style="color: red; display: none;">운영 원칙에 동의해야 합니다.</div>
                     <div class="bottom-btn">
                         <button type="reset" class="btnset btnset-lg btnset-dark">취소</button>
                         <button type="submit" class="btnset btnset-lg btnset-dark">등록</button>
@@ -263,6 +263,21 @@
 
 </body>
 <script>
+
+    function validateForm() {
+        // 운영 원칙 동의 체크박스 검사
+        var termsAgreement = document.getElementById('matters');
+        var termsError = document.getElementById('termsError');
+        if (!termsAgreement.checked) {
+            termsError.style.display = 'block';
+            return false;
+        }else{
+            termsError.style.display = 'none';
+        }
+
+        return true; // 모든 검증 통과 시
+    }
+
     // 이미지 미리보기 함수
     function setThumbnailPreview(event) {
         var fileInput = event.target;

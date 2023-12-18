@@ -1,38 +1,164 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>List of Stories</title>
+    <title>cornstory</title>
+    <link rel="stylesheet" href="/ssh/css/setting.css">
+    <link rel="stylesheet" href="/ssh/css/plugin.css">
+    <link rel="stylesheet" href="/ssh/css/template.css">
+    <link rel="stylesheet" href="/ssh/css/common.css">
+    <link rel="stylesheet" href="/ssh/css/style.css">
     <style>
-        .story-container {
-            border: 1px solid #ccc;
-            margin-bottom: 20px;
-            padding: 10px;
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
         }
 
-        .comment-form,
-        .comment-list {
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 24px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .container-md {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .story-container {
+            background: #ffffff;
+            border: 1px solid #e1e1e1;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .story-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .story-container h3 {
+            font-size: 24px;
+            margin-top: 15px;
+        }
+
+        .story-container p {
+            font-size: 16px;
             margin-top: 10px;
+        }
+
+        .story-container strong {
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .comments-section {
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 8px;
             display: none;
         }
 
         .comment-item {
-            border: 1px solid #eee;
-            margin-top: 10px;
+            background: white;
             padding: 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+        }
+
+        .comment-item strong {
+            font-weight: bold;
+        }
+
+        .comment-item span {
+            color: #888;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+
+        .comment-item p {
+            margin-top: 5px;
+        }
+
+        .comment-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .comment-form button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 20px;
+            border-radius: 4px;
+            width: 80%;
+        }
+
+        .close {
+            color: #888;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
         }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
 
-<h2>스토리 목록</h2>
-<a href="/story/add">스토리 추가</a>
+<!--top start-->
+<%@ include file="../layout/top.jsp" %>
+<!--top end-->
 
+
+
+<h2>스토리 목록</h2>
+<main class="th-layout-main">
+    <div class="opilsol-N30" data-bid="raLq4sT3lu">
+        <div class="content-container">
+            <div class="contents-form container-md">
 <c:if test="${not empty story}">
     <c:forEach var="story" items="${story}">
         <div class="story-container">
@@ -64,8 +190,15 @@
         </div>
     </c:forEach>
 </c:if>
-
+</div>
+</div>
+</div>
+</main>
 <br/>
+<!-- 하단 푸터 -->
+<%@ include file="../layout/bottom.jsp" %>
+
+</body>
 
 <script>
     function confirmAndSubmit(storyNo) {
@@ -225,6 +358,4 @@
         });
     }
 </script>
-
-</body>
 </html>
