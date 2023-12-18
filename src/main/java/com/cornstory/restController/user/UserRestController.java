@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user/*")
@@ -34,6 +36,7 @@ public class UserRestController {
 
     @Value("${kakao.api.admin-key}")
     private String kakaoAdminKey;
+
 
     public UserRestController() {
         System.out.println("UserRestController 진입");
@@ -99,6 +102,42 @@ public class UserRestController {
 
 
 
+
+    @PostMapping("/kakaoLogin")
+    @ResponseBody
+    public Map<String, Object> kakaoLogin(@RequestParam("userId") String userId,
+                                          @RequestParam("nickName") String nickName,
+                                          @RequestParam("email") String email) {
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            // 카카오로부터 받은 정보로 유저를 찾거나 생성
+            Map<String, String> kakaoInfo = new HashMap<>();
+            kakaoInfo.put("userId", userId);
+            kakaoInfo.put("nickName", nickName);
+            kakaoInfo.put("email", email);
+
+            // 서비스 단에서 String으로 반환
+            String loginResult = userService.processKakaoLogin(kakaoInfo);
+
+            // 성공적으로 처리되었을 경우
+            if ("success".equals(loginResult)) {
+                response.put("success", true);
+                response.put("message", "로그인 성공");
+            } else {
+                // 실패했을 경우
+                response.put("success", false);
+                response.put("message", "로그인 실패");
+            }
+        } catch (Exception e) {
+            // 에러가 발생한 경우
+            response.put("success", false);
+            response.put("message", "서버 오류");
+            e.printStackTrace();  // 실제 프로덕션 환경에서는 로깅 라이브러리를 사용하는 것이 좋습니다.
+        }
+
+        return response;
+    }
 
 
 

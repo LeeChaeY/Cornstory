@@ -313,8 +313,10 @@
                     </div>
                 </div>
                 <div class="bottom-btn">
+
                     <button class="btnset btnset-lg btnset-dark btnset-rect">취소</button>
-                    <a class="btnset btnset-lg btnset-rect" href="addEnd.jsp">회원가입</a>
+
+                    <button class="btnset btnset-lg btnset-rect" type="submit">회원가입</button>
                 </div>
 
             </div>

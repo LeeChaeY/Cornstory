@@ -90,7 +90,7 @@ public class UserController {
             File dest = new File(filePath);
 
             // 파일을 저장
-            filename.transferTo(dest);
+//            filename.transferTo(dest);
             user.setUserImage(originalFilename);
         }
 
@@ -100,7 +100,7 @@ public class UserController {
 
         // 회원가입이 성공하면 회원 정보 페이지로 이동
         model.addAttribute("user", user);
-        return "user/getUser";
+        return "user/addEnd";
     }
 
 
