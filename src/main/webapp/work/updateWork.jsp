@@ -86,13 +86,14 @@
                             <label class="inputset-label" style="font-size: var(--fs-h4);" >창작여부</label>
                             <div class="radioset-wrap">
                                 <div class="radioset">
-                                    <input id="status0" name="status" class="visually-hidden" type="radio" value="0" ${work.status == 0 ? 'checked' : ''} onclick="toggleSelectBox();">
+                                    <input id="status0" name="status" class="visually-hidden" type="radio" value="0" ${work.status == 0 ? 'checked' : ''} >
                                     <label class="radioset-thumb thumb-round" for="status0">원작</label>
                                 </div>
                                 <div class="radioset">
-                                    <input id="status1" name="status" class="visually-hidden" type="radio" value="1" ${work.status == 1 ? 'checked' : ''} onclick="toggleSelectBox();">
+                                    <input id="status1" name="status" class="visually-hidden" type="radio" value="1" ${work.status == 1 ? 'checked' : ''}>
                                     <label class="radioset-thumb thumb-round" for="status1">창작</label>
                                 </div>
+                                <div id="creationMessage" style="color: red;"></div>
                             </div>
                         </div>
                         <div class="selectset selectset-lg" id="copylight" name="copylight">
@@ -117,21 +118,22 @@
                             <input type="text" class="inputset-input form-control" id="workName" name="workName" maxlength="30" value="${work.workName}">
                             <div id="workNameCount">글자 수: 0/30</div>
                         </div>
+                        <div id="workNameMessage" style="color: red;"></div>
 
                         <!-- 카테고리 -->
                         <div class="inputset inputset-lg inputset-group">
                             <label class="inputset-label" style="font-size: var(--fs-h4);">카테고리</label>
                             <div class="radioset-wrap">
                                 <div class="radioset">
-                                    <input id="category0" name="category" class="visually-hidden" type="radio" value="0" onclick="updatePopcornCount(2)">
+                                    <input id="category0" name="category" class="visually-hidden" type="radio" value="0" ${work.category == '0'? 'checked':''}>
                                     <label class="radioset-thumb thumb-round" for="category0" >웹소설</label>
                                 </div>
                                 <div class="radioset">
-                                    <input id="category1" name="category" class="visually-hidden" type="radio" value="1" onclick="updatePopcornCount(3)">
+                                    <input id="category1" name="category" class="visually-hidden" type="radio" value="1" ${work.category == '1'? 'checked':''}>
                                     <label class="radioset-thumb thumb-round" for="category1" >웹툰</label>
                                 </div>
                                 <div class="radioset">
-                                    <input id="category2" name="category" class="visually-hidden" type="radio" value="2" onclick="updatePopcornCount(3)">
+                                    <input id="category2" name="category" class="visually-hidden" type="radio" value="2" ${work.category == '2'? 'checked':''}>
                                     <label class="radioset-thumb thumb-round" for="category2">웹드라마</label>
                                 </div>
                             </div>
@@ -213,6 +215,7 @@
                                     <label class="checkset-label" for="genreOthers"></label>
                                     <span class="checkset-text">기타</span>
                                 </div>
+                                <div id="genreMessage" style="color: red;"></div>
                             </div>
 
                         </div>
@@ -220,14 +223,14 @@
                         <!-- 작가 노트 -->
                         <div class="inputset inputset-lg inputset-group">
                             <label class="inputset-label" style="font-size: var(--fs-h4);" for="note">작가 노트</label>
-                            <textarea class="inputset-textarea inputset-input form-control textarea" id="note" name="note" maxlength="100"oninput=" updateCharCount('note', 'noteCount')">${work.note}</textarea>
+                            <textarea class="inputset-textarea inputset-input form-control textarea" id="note" name="note" maxlength="100">${work.note}</textarea>
                             <div id="noteCount">${fn:length(work.note)}/100</div>
                         </div>
 
                         <!-- 작품 소개 -->
                         <div class="inputset inputset-lg inputset-group">
                             <label class="inputset-label" style="font-size: var(--fs-h4);" for="workDesc">작품 소개</label>
-                            <textarea class="inputset-textarea inputset-input form-control textarea" id="workDesc" name="workDesc" maxlength="400" oninput="updateCharCount('workDesc', 'charCount')">${work.workDesc}</textarea>
+                            <textarea class="inputset-textarea inputset-input form-control textarea" id="workDesc" name="workDesc" maxlength="400">${work.workDesc}</textarea>
                             <div id="charCount">글자 수: ${fn:length(work.workDesc)}/400</div>
                         </div>
 
@@ -236,6 +239,7 @@
                             <label class="inputset-label" style="font-size: var(--fs-h4);">썸네일</label>
                             <div id="image_container"><img src="<c:out value='${work.thumbnail}' />" alt="Thumbnail" style="max-width: 150px; max-height: 200px; display: block;"></div>
                             <input type="file" id="thumbnailFile" name="thumbnailFile" accept="image/*" onchange="setThumbnail(event)">
+                            <div id="thumbnailMessage" style="color: red;"></div>
                         </div>
 
                         <!-- 유료/무료 선택 -->
@@ -243,24 +247,24 @@
                             <label class="inputset-label" style="font-size: var(--fs-h4);">유료/무료 선택</label>
                             <div class="radioset-wrap">
                                 <div class="radioset">
-                                    <input id="fap0" class="radioset-input input-line" name="fap" type="radio" value="0" ${work.fap == 0 ? 'checked' : ''} onclick="updatePopcornCount(0)">
+                                    <input id="fap0" class="radioset-input input-line" name="fap" type="radio" value="0" ${work.fap == 0 ? 'checked' : ''} >
                                     <label class="radioset-thumb thumb-round" for="fap0">무료</label>
                                 </div>
                                 <div class="radioset">
-                                    <input id="fap1" class="radioset-input input-line" name="fap" type="radio" value="1" ${work.fap == 1 ? 'checked' : ''}onclick="updatePopcornCount(2)" >
+                                    <input id="fap1" class="radioset-input input-line" name="fap" type="radio" value="1" ${work.fap == 1 ? 'checked' : ''} >
                                     <label class="radioset-thumb thumb-round" for="fap1">유료</label>
                                     <p id="popcornCountText"></p>
 
                                 </div>
                             </div>
                         </div>
-                        <div class="inputset inputset-lg inputset-group" for="Mobile">
+                        <div class="inputset inputset-lg inputset-group">
                             <label class="inputset-label" style="font-size: var(--fs-h4);">완결여부</label>
                             <div class="checkset-wrap">
                                 <div class="checkset">
                                     <input id="checkset-a-1-1" class="checkset-input input-fill" type="checkbox" value="">
                                     <label class="checkset-label" for="checkset-a-1-1"></label>
-                                    <span class="checkset-text"></span>
+                                    <span class="checkset-text">작품을 완결되었다면 체크해주시기 바랍니다.</span>
                                 </div>
                             </div>
                         </div>
@@ -290,7 +294,6 @@
 <script>
     window.onload = function() {
         toggleSelectBox();
-        updatePopcornCount(0);
         checkWorkName();
 
         var workNameInput = document.getElementById('workName');
@@ -305,6 +308,14 @@
                 updatePopcornCountBasedOnCategory();
             });
         });
+        // 유료/무료 선택 변경 이벤트 리스너 추가
+        document.querySelectorAll('input[name="fap"]').forEach(function(radio) {
+            radio.addEventListener('change', function() {
+                updatePopcornCountBasedOnCategory();
+            });
+        });
+
+        updatePopcornCountBasedOnCategory();
     };
 
     function updatePopcornCount(popcornCount) {
@@ -348,15 +359,23 @@
             }
         }
 
+        var genreMessageElement = document.getElementById('genreMessage');
         if (checkedCount > 3) {
             checkbox.checked = false;
-            alert("장르는 최대 3개까지 선택 가능합니다.");
+            genreMessageElement.textContent = "장르는 최대 3개까지 선택 가능합니다.";
+        } else if(checkedCount<1){
+            genreMessageElement.textContent = "장르는 최소 1개는 선택하셔야 합니다.";
+        }else {
+            genreMessageElement.textContent = ""; // 메시지 지우기
         }
     }
 
     function validateForm() {
         var fileInput = document.getElementById('thumbnailFile');
         var checkboxes = document.getElementsByName("genre");
+        var genreMessageElement = document.getElementById('genreMessage');
+        var thumbnailMessage = document.getElementById('thumbnailMessage');
+        var operationMessage = document.getElementById('operationMessage');
         var checkedCount = 0;
 
         var genre1 = "";
@@ -377,14 +396,17 @@
         }
 
         if (checkedCount < 1 || checkedCount > 3) {
-            alert("장르는 최소 1개 이상, 최대 3개까지 선택해야 합니다.");
+            genreMessageElement.textContent = "장르는 최소 1개 이상, 최대 3개까지 선택해야 합니다.";
             return false;
         }
 
+
         // 파일이 선택되었는지 확인
         if (fileInput.files.length === 0) {
-            alert('이미지 파일을 선택해주세요.');
+            thumbnailMessage.textContent = '이미지 파일을 선택해주세요.';
             return false; // submit 막기
+        }else{
+            thumbnailMessage.textContent = '';
         }
 
         // 선택된 장르 값을 각각의 input에 할당
@@ -392,24 +414,35 @@
         document.getElementsByName("genre2")[0].value = genre2;
         document.getElementsByName("genre3")[0].value = genre3;
 
+<%--        var operationCheckbox = document.getElementById('matters');--%>
+<%--        if (!operationCheckbox.checked) {--%>
+<%--            operationMessage.textContent = "운영사항에 동의해야 합니다.";--%>
+<%--            return false; // 제출 막기--%>
+<%--        } else {--%>
+<%--            operationMessage.textContent = ''; // 메시지 지우기--%>
+<%--        }--%>
+
         return true;
     }
 
     function setThumbnail(event){
         var fileInput = event.target;
         var fileName = fileInput.value.toLowerCase();
-
+        var thumbnailMessage = document.getElementById('thumbnailMessage');
         // 파일이 선택되지 않았을 경우 처리
         if (!fileInput.files || !fileInput.files[0]) {
             var imageContainer = document.querySelector("div#image_container");
             imageContainer.innerHTML = "";
+            thumbnailMessage.textContent = '';
             return;
         }
 
         if (!fileName.endsWith('.jpg')) {
-            alert('jpg 파일만 됩니다');
+            thumbnailMessage.textContent = 'jpg 파일만 됩니다';
             fileInput.value = "";
             return;
+        }else{
+            thumbnailMessage.textContent = '';
         }
 
         var reader = new FileReader();
@@ -419,16 +452,22 @@
             var imageContainer = document.querySelector("div#image_container");
             imageContainer.innerHTML = "";
 
-            var img = document.createElement("img");
-            img.setAttribute("src", event.target.result);
-            img.setAttribute("class", "col-lg-6");
+            var img = new Image();
+            img.src = event.target.result;
 
-            // 이미지 크기를 150px x 200px로 설정
-            img.style.width = "150px";
-            img.style.height = "200px";
-            img.style.display = "block";
+            img.onload = function() {
+                // var maxWidth = 300; // 원하는 가로 크기
+                // var maxHeight = 400; // 원하는 세로 크기
+                // var width = img.width;
+                // var height = img.height;
 
-            imageContainer.appendChild(img);
+                img.width = 150;
+                img.height = 200;
+
+                img.style.display = "block";
+
+                imageContainer.appendChild(img);
+            };
         };
 
         reader.readAsDataURL(event.target.files[0]);
@@ -471,38 +510,58 @@
 
     function toggleSelectBox() {
         var status = document.querySelector('input[name="status"]:checked').value;
-        var selectBox = document.getElementById('copyright');
-        console.log();
-        // 창작이 선택되면 셀렉트 박스를 보이게 함
+        var selectBox = document.getElementById('copylight');
+        var buttons = selectBox.getElementsByTagName('button');
+
         if (status === '1') {
-            // 셀렉트 박스의 옵션 개수가 0이면 창작 선택을 막음
-            if (selectBox.options.length === 0) {
+            if (buttons.length <= 1) { // '템플릿을 선택하세요' 버튼을 포함하여 계산
                 document.querySelector('input[name="status"][value="0"]').checked = true;
                 selectBox.style.display = 'none';
-                alert('창작을 선택할 수 없습니다. 저작권을 먼저 등록해주세요.');
+                creationMessage.textContent = '창작을 선택할 수 없습니다. 저작권을 먼저 등록해주세요.';
             } else {
                 selectBox.style.display = 'block';
+                creationMessage.textContent = '';
+                creationMessage.textContent = '';
             }
         } else {
             selectBox.style.display = 'none';
         }
     }
 
+    document.querySelectorAll('input[name="status"]').forEach(function(radio) {
+        radio.addEventListener('change', toggleSelectBox);
+    });
+
+
     function checkWorkName() {
         var workName = $('#workName').val();
-        var userId = "${userId}";
+        var userId = "${user.userId}";
+        if (!workName) {
+            // 작품명이 비어있는 경우에 대한 처리
+            $('#workNameMessage').text('작품명을 입력해주세요.').css('color', 'red');
+            return false; // 여기에 return false를 추가
+        }
         $.get( '/work/json/checkWorkName',
             {
                 userId: userId,
                 workName: workName
             }).done(function (response) {
+            console.log(response.toString());
             var messageDiv = $('#workNameMessage');
             if (response === 0) { // 또는 if (parseInt(response) === 0)
                 messageDiv.text('등록된 작품이 없습니다.');
                 messageDiv.css('color', 'green');
             } else {
-                messageDiv.text('등록된 작품이 있습니다. 다른 작품명으로 적어주세요.');
-                messageDiv.css('color', 'red');
+
+                if(response.workName === workName){
+                    messageDiv.text('지금 작품명입니다.');
+                    messageDiv.css('color', 'green');
+                }else{
+                    messageDiv.text('등록된 작품이 있습니다. 다른 작품명으로 적어주세요.');
+                    messageDiv.css('color', 'red');
+                    return false;
+                }
+
             }
         })
             .fail(function (){
@@ -510,5 +569,6 @@
             });
     }
 </script>
+
 
 </html>

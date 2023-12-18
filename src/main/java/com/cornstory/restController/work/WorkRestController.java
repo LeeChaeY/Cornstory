@@ -28,25 +28,25 @@ public class WorkRestController {
     }
 
     @GetMapping("json/checkWorkName")
-    public int checkWorkName(@RequestParam String userId, @RequestParam String workName) throws Exception {
+    public Work checkWorkName(@RequestParam String userId, @RequestParam String workName) throws Exception {
         System.out.println("checkWorkName()");
         Work work = new Work();
         work.setUserId(userId);
         work.setWorkName(workName);
         Work workNameCheck = workService.getDuplication(work);
 
-        return (workNameCheck == null) ? 0 : 1;
+        return workNameCheck;
     }
 
     @GetMapping("json/listWork")
     public Map<String, Object> listWorksPaged(@RequestParam(required = false) String searchCondition,
                                               @RequestParam(required = false) String orderKeyword,
                                               @RequestParam(required = false) String orderCondition,
-                                              @RequestParam(required = false) String searchKetword,
+                                              @RequestParam(required = false) String searchKeyword,
                                               @RequestParam int currentPage,
                                               @RequestParam int pageSize) throws Exception {
         Search search = new Search();
-        search.setSearchKeyword(searchKetword);
+        search.setSearchKeyword(searchKeyword);
         search.setSearchCondition(searchCondition);
         search.setOrderKeyword(orderKeyword);
         search.setOrderCondition(orderCondition);

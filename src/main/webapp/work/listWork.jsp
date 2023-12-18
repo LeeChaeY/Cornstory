@@ -349,7 +349,7 @@
                         orderCondition: $("input[name='orderCondition']:checked").val(),
                         searchKeyword: $("#searchKeyword").val(),
                         currentPage: currentPage,
-                        pageSize: 4
+                        pageSize: 5
                     },
                     dataType: "json",
                     success: function (response) {
@@ -383,7 +383,7 @@
                     orderCondition: orderCondition,
                     searchKeyword: searchKeyword,
                     currentPage: currentPage,
-                    pageSize: 4
+                    pageSize: 5
                 },
                 dataType: "json",
                 success: function(response) {

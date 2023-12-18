@@ -87,7 +87,7 @@ public class WorkController {
 
          workService.addWork(work);
 
-        return "work/getWork";
+        return "redirect:/work/getWork";
     }
 
     @GetMapping("updateWork")
@@ -140,7 +140,7 @@ public class WorkController {
         } catch (Exception e) {
             e.printStackTrace(); // 에러 로깅 또는 예외 처리
         }
-        return "work/getWork";
+        return "redirect:/work/getWork";
     }
     @RequestMapping("listWork")
     public String listWork(@ModelAttribute("search") Search search, Model model) throws Exception {
