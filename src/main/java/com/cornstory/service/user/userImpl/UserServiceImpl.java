@@ -90,4 +90,25 @@ public class UserServiceImpl implements UserService {
 	public int updateUserPopcornCnt(Map map) throws Exception {
 		return userDao.updateUserPopcornCnt(map);
 	}
+
+	@Override
+	public User processKakaoLogin(Map<String, String> kakaoInfo) throws Exception {
+		// 카카오로부터 받은 정보로 유저를 찾거나 생성
+		User user = userDao.getUser(kakaoInfo.get("userId"));
+
+		// 가입 여부에 따라 처리
+		if (user == null) {
+			// 가입된 정보가 없으면 회원가입 처리
+			user = new User();
+			user.setUserId(kakaoInfo.get("userId"));
+			user.setNickName(kakaoInfo.get("nickName"));
+			user.setEmail(kakaoInfo.get("email"));
+			// ... 다른 정보들을 업데이트
+			userDao.addUser(user);
+		} else {
+			// 기존 정보 업데이트 등의 로직이 필요하다면 추가
+		}
+
+		return user;
+	}
 }

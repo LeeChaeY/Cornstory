@@ -22,12 +22,14 @@
   <link rel="stylesheet" href="../ssh/css/template.css">
   <link rel="stylesheet" href="../ssh/css/common.css">
   <link rel="stylesheet" href="../ssh/css/style.css">
+
+  <link rel="stylesheet" href="/lcy/css/style.css">
 </head>
 <body>
 <main class="th-layout-main ">
   <%@ include file="../layout/top.jsp" %>
   <!-- [S]opilsol-N24 -->
-  <div class="opilsol-N24" data-bid="Lzlq4mb3O6">
+  <div class="opilsol-N26" data-bid="dL11fYz8S6T" id="">
     <div class="content-container">
       <div class="container-md">
         <div class="tableset">

@@ -82,10 +82,16 @@
             <div class="container-md">
                 <h2 class="textset-tit">회원정보조회</h2>
             </div>
+            <div class="container-md">
+                <img src="../file/user/${sessionScope.user.userImage}" width="100" style="border-radius: 100%; max-width: 100%;" alt=""/>
         </div>
         <div class="contents-form">
             <div class="container-md">
                 <div class="contents-form-top">
+
+
+
+
                 </div>
                 <div class="inputset inputset-lg inputset-group" for="userName">
                     <label class="inputset-label">성명</label>
@@ -120,11 +126,7 @@
                     <label class="inputset-label">${user.birthday}</label>
                 </div>
 
-                <div class="inputset inputset-lg inputset-group" for="userImage">
-                    <label class="inputset-label">회원사진</label>
-                    <img src="../file/user/${user.userImage}" width="100" alt=""/>
-                    <label class="inputset-label">${user.userImage}</label>
-                </div>
+
             </div>
             <div class="bottom-btn">
                 <a href="../index.jsp"><button class="btnset btnset-lg btnset-dark btnset-rect">확인</button></a>

@@ -100,7 +100,7 @@ public class UserController {
 
         // 회원가입이 성공하면 회원 정보 페이지로 이동
         model.addAttribute("user", user);
-        return "user/getUser";
+        return "user/addEnd";
     }
 
 

@@ -32,4 +32,7 @@ public interface UserService {
     public boolean nickNameCheck(String nickname) throws Exception;
 
     public int updateUserPopcornCnt(Map map) throws Exception;
+
+    User processKakaoLogin(Map<String, String> kakaoInfo) throws Exception;
+
 }
