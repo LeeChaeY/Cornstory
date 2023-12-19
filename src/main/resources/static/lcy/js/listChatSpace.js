@@ -102,7 +102,69 @@ function fncGetChatList(currentPage) {
 
 function enterChatSpace(chatSpaceNo) {
     // $(self.location).attr("href", "/chat/enterChatSpace?chatSpaceNo="+chatSpaceNo);
-    popWin = window.open("/chat/enterChatSpace?chatSpaceNo=" + chatSpaceNo, "popWin", "scrollbars=yes");
+    // popWin = window.open("/chat/enterChatSpace?chatSpaceNo=" + chatSpaceNo, "popWin", "scrollbars=yes");
+
+    // fetch("/chat/json/enterChatSpace?chatSpaceNo=" + chatSpaceNo)
+    //     // .then(response => response.json())
+    //     .then(data => {
+    //         // alert(data.text());
+    //         // Open a new window or tab with the specified URL
+    //         window.open("http://127.0.0.1:3000", '_blank');
+    //     })
+    //     .catch(error => console.error('Error:', error));
+
+
+    $.ajax({
+        url: "/chat/json/enterChatSpace?chatSpaceNo=" + chatSpaceNo + "",
+        method: "GET",
+        dataType: "json",
+        success: function(JSONData, status) {
+            const postData  = {
+                chatSpace: JSONData.chatSpace,
+                list: JSONData.list,
+                userList: JSONData.userList,
+                totalCount: JSONData.totalCount
+                // 추가 데이터...
+            };
+
+            const form = document.createElement('form');
+            form.method = 'post';
+            form.action = 'http://localhost:3000/receive-post';  // Replace with your server URL
+            form.enctype = 'application/json';  // Set content type to JSON
+
+            addJsonDataToForm(form, JSONData.chatSpace, 'chatSpace');
+            addJsonDataToForm(form, JSONData.list, 'list');
+            addJsonDataToForm(form, JSONData.userList, 'userList');
+            addJsonDataToForm(form, JSONData.totalCount, 'totalCount');
+            addJsonDataToForm(form, JSONData.user, 'user');
+
+            const newWindow = window.open('', '_blank');
+
+            // Check if the new window/tab is opened successfully
+            if (newWindow) {
+                // Set the HTML content of the new window to the form
+                newWindow.document.body.appendChild(form);
+
+                // Submit the form
+                form.submit();
+            } else {
+                console.error('Failed to open a new window.');
+            }
+        },
+        error: function(status) {
+
+            //Debug...
+            alert("error");
+        }
+    });
+}
+
+function addJsonDataToForm(form, postData, name) {
+    const jsonDataInput = document.createElement('input');
+    jsonDataInput.type = 'hidden';
+    jsonDataInput.name = name;
+    jsonDataInput.value = JSON.stringify(postData);
+    form.appendChild(jsonDataInput);
 }
 
 function updateChatSpace(chatSpaceNo) {

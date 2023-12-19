@@ -1,12 +1,14 @@
 package com.cornstory.restController.chat;
 
 import com.cornstory.domain.Chat;
+import com.cornstory.domain.ChatSpace;
 import com.cornstory.domain.User;
 import com.cornstory.service.chat.ChatService;
 import com.cornstory.service.user.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
@@ -72,6 +74,56 @@ public class ChatRestController {
         return "삭제가 완료되었습니다.";
     }
 
+
+
+    @GetMapping(value="json/enterChatSpace")
+    public Map enterChatSpace(@RequestParam("chatSpaceNo") int chatSpaceNo,
+                                 @SessionAttribute("user") User user, Model model) throws Exception {
+        System.out.println("/chat/json/enterChatSpace : GET/POST :: userId : " + user.getUserId() + ", chatSpaceNo : " + chatSpaceNo);
+
+        ChatSpace chatSpace = chatService.getChatSpace(chatSpaceNo);
+        chatSpace.setUserId(user.getUserId());
+
+        Map<String, Object> map01 = new HashMap<String, Object>();
+        map01.put("userId", user.getUserId());
+        map01.put("chatSpaceNo", chatSpaceNo);
+
+        if (chatService.countChatEnterCheck(map01) == 0)
+            chatService.addChatEnter(user.getUserId(), chatSpaceNo);
+
+        chatSpace = chatService.getChatSpace(chatSpaceNo);
+        User createUser = userService.getUser(chatSpace.getUserId());
+        chatSpace.setNickname(createUser.getNickName());
+        chatSpace.setUserImage(createUser.getUserImage());
+
+        System.out.println("/chat/enterChatSpace : GET :: " + chatSpace);
+        model.addAttribute("chatSpace", chatSpace);
+
+        String startDate = chatService.getChatEnter(user.getUserId(), chatSpaceNo).getChatEnterDate().toString();
+
+        Map <String, Object> map = chatService.listChat(chatSpace.getChatSpaceNo(), startDate, "");
+        System.out.println("/chat/enterChatSpace : GET :: " + map.get("list"));
+        model.addAttribute("list", map.get("list"));
+
+        Map<String, Object> map02 = chatService.listChatEnterUser(chatSpaceNo);
+
+        model.addAttribute("userList", map02.get("list"));
+        model.addAttribute("totalCount", map02.get("totalCount"));
+
+        System.out.println(map02.get("list"));
+
+        String url = "http://127.0.0.1:3000";
+
+        Map<String, Object> returnMap = new HashMap<String, Object>();
+        returnMap.put("url", url);
+        returnMap.put("chatSpace", chatSpace);
+        returnMap.put("list", map.get("list"));
+        returnMap.put("userList", map02.get("list"));
+        returnMap.put("totalCount", map02.get("totalCount"));
+        returnMap.put("user", user);
+        return returnMap;
+    }
+
     @GetMapping(value="json/deleteChatEnter")
     public String deleteChatEnter(@RequestParam("chatSpaceNo") int chatSpaceNo, @SessionAttribute("user") User user) throws Exception {
         System.out.println("/chat/json/deleteChatEnter : GET ::: userId : " + user.getUserId() + "chatSpaceNo : " + chatSpaceNo);
@@ -84,6 +136,7 @@ public class ChatRestController {
 
         return "삭제가 완료되었습니다.";
     }
+
 
 
 

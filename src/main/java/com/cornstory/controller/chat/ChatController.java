@@ -2,20 +2,24 @@ package com.cornstory.controller.chat;
 
 import com.cornstory.common.Page;
 import com.cornstory.common.Search;
-import com.cornstory.domain.Chat;
-import com.cornstory.domain.ChatSpace;
-import com.cornstory.domain.User;
+import com.cornstory.domain.*;
 import com.cornstory.service.chat.ChatService;
 import com.cornstory.service.user.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -186,45 +190,45 @@ public class ChatController {
 
 
 
-    @RequestMapping(value="enterChatSpace")
-    public String enterChatSpace(@RequestParam("chatSpaceNo") int chatSpaceNo,
-                                 @SessionAttribute("user") User user, Model model) throws Exception {
-        System.out.println("/chat/enterChatSpace : GET/POST :: userId : " + user.getUserId() + ", chatSpaceNo : " + chatSpaceNo);
-
-        ChatSpace chatSpace = chatService.getChatSpace(chatSpaceNo);
-        chatSpace.setUserId(user.getUserId());
-
-        Map<String, Object> map01 = new HashMap<String, Object>();
-        map01.put("userId", user.getUserId());
-        map01.put("chatSpaceNo", chatSpaceNo);
-
-        if (chatService.countChatEnterCheck(map01) == 0)
-            chatService.addChatEnter(user.getUserId(), chatSpaceNo);
-
-        chatSpace = chatService.getChatSpace(chatSpaceNo);
-        User createUser = userService.getUser(chatSpace.getUserId());
-        chatSpace.setNickname(createUser.getNickName());
-        chatSpace.setUserImage(createUser.getUserImage());
-
-        System.out.println("/chat/enterChatSpace : GET :: " + chatSpace);
-        model.addAttribute("chatSpace", chatSpace);
-
-        String startDate = chatService.getChatEnter(user.getUserId(), chatSpaceNo).getChatEnterDate().toString();
-
-        Map <String, Object> map = chatService.listChat(chatSpace.getChatSpaceNo(), startDate, "");
-        System.out.println("/chat/enterChatSpace : GET :: " + map.get("list"));
-        model.addAttribute("list", map.get("list"));
-
-        Map<String, Object> map02 = chatService.listChatEnterUser(chatSpaceNo);
-
-        model.addAttribute("userList", map02.get("list"));
-        model.addAttribute("totalCount", map02.get("totalCount"));
-
-        System.out.println(map02.get("list"));
-
-
-        return "chat/enterChatSpace";
-    }
+//    @RequestMapping(value="enterChatSpace")
+//    public String enterChatSpace(@RequestParam("chatSpaceNo") int chatSpaceNo,
+//                                 @SessionAttribute("user") User user, Model model) throws Exception {
+//        System.out.println("/chat/enterChatSpace : GET/POST :: userId : " + user.getUserId() + ", chatSpaceNo : " + chatSpaceNo);
+//
+//        ChatSpace chatSpace = chatService.getChatSpace(chatSpaceNo);
+//        chatSpace.setUserId(user.getUserId());
+//
+//        Map<String, Object> map01 = new HashMap<String, Object>();
+//        map01.put("userId", user.getUserId());
+//        map01.put("chatSpaceNo", chatSpaceNo);
+//
+//        if (chatService.countChatEnterCheck(map01) == 0)
+//            chatService.addChatEnter(user.getUserId(), chatSpaceNo);
+//
+//        chatSpace = chatService.getChatSpace(chatSpaceNo);
+//        User createUser = userService.getUser(chatSpace.getUserId());
+//        chatSpace.setNickname(createUser.getNickName());
+//        chatSpace.setUserImage(createUser.getUserImage());
+//
+//        System.out.println("/chat/enterChatSpace : GET :: " + chatSpace);
+//        model.addAttribute("chatSpace", chatSpace);
+//
+//        String startDate = chatService.getChatEnter(user.getUserId(), chatSpaceNo).getChatEnterDate().toString();
+//
+//        Map <String, Object> map = chatService.listChat(chatSpace.getChatSpaceNo(), startDate, "");
+//        System.out.println("/chat/enterChatSpace : GET :: " + map.get("list"));
+//        model.addAttribute("list", map.get("list"));
+//
+//        Map<String, Object> map02 = chatService.listChatEnterUser(chatSpaceNo);
+//
+//        model.addAttribute("userList", map02.get("list"));
+//        model.addAttribute("totalCount", map02.get("totalCount"));
+//
+//        System.out.println(map02.get("list"));
+//
+//        String url = "http://127.0.0.1:3000";
+//        return url;
+//    }
 
 
 }
