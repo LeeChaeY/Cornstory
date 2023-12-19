@@ -18,8 +18,8 @@
 	</resultMap>
 
 	<insert id="addSupport" parameterType="support">
-		INSERT INTO support(user_id, sup_category, sup_content, sup_pluscon, sup_date)
-		VALUES (#{userId}, #{supCategory}, #{supContent}, #{supPluscon}, NOW())
+		INSERT INTO support(user_id, sup_id, sup_category, sup_content, sup_pluscon,sup_image,sup_ban, sup_date)
+		VALUES (#{userId},#{supId}, #{supCategory}, #{supContent}, #{supPluscon}, #{supImage},#{supBan}, NOW())
 	</insert>
 
 	<select id="getSupport" parameterType="int" resultMap="supportSelectMap">

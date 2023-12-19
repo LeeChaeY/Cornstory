@@ -69,6 +69,7 @@ public class EpisodeController {
                 Files.write(Path.of(filePath), thumbnailFile.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 
                 // 파일 경로를 Work 객체에 저장
+                filePath ="..\\file\\episode"+ File.separator + fileName;
                 episode.setThumbnail(filePath);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -102,9 +103,6 @@ public class EpisodeController {
         }
         System.out.println(episode.toString());
 
-       episodeService.addEpisode(episode);
-
-
         //System.out.println("작품 회차 팝콘 : "+episodeService.getLatestEpisode(work.getWorkNo()).toString());
         Episode episode1=episodeService.getLatestEpisode(episode);
 
@@ -133,11 +131,11 @@ public class EpisodeController {
 
         product.setProdCnt(1);
 
-        System.out.println(" 상품 등록 가능??????"+product.toString());
+
         productService.addProduct(product);
 
 
-        return "index";
+        return "redirect:/work/getDetailWork?workNo="+workNo;
     }
 
     @GetMapping("updateEpisode")
@@ -190,17 +188,18 @@ public class EpisodeController {
 
         episodeService.updateEpisode(episode);
 
-        return "index";
+        return "redirect:/work/getDetailWork?workNo="+episode.getWorkNo();
     }
 
     @PostMapping("deleteEpisode")
     public String deleteEpisode(@RequestParam("episodeNo") int episodeNo) {
+        Episode episode=episodeService.getEpisode(episodeNo);
         try {
             episodeService.deleteEpisode(episodeNo);
         } catch (Exception e) {
             e.printStackTrace(); // 에러 로깅 또는 예외 처리
         }
-        return "index";
+        return "redirect:/work/getDetailWork?workNo="+episode.getWorkNo();
     }
 
     @GetMapping("getEpisode")

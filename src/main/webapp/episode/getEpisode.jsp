@@ -112,21 +112,21 @@
     <div class="opilsol-N17" data-bid="GkLq5I7z1g">
         <div class="content-container">
             <c:choose>
-                <!-- 텍스트 에피소드의 경우 -->
+
                 <c:when test="${work.category eq '0'}">
                     <div class="text-content">
                         <p>${textContent}</p>
                     </div>
                 </c:when>
 
-                <!-- 이미지 에피소드의 경우 -->
+
                 <c:when test="${work.category eq '1'}">
                     <div class="image-content">
                         <img src="${files}" alt="Episode Image" style="max-width: 300px; max-height: 300px; display: block;">
                     </div>
                 </c:when>
 
-                <!-- 비디오 에피소드의 경우 -->
+
                 <c:when test="${work.category eq '2'}">
                     <div class="video-content">
                         <video controls style="width: 100%; height: auto;">

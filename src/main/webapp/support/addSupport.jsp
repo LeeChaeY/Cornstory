@@ -23,9 +23,10 @@
     <link rel="stylesheet" href="../ssh/css/common.css">
     <link rel="stylesheet" href="../ssh/css/style.css">
 </head>
-<body>
+
 <%@ include file="../layout/top.jsp" %>
 <main class="th-layout-main ">
+    <body>
     <div class="opilsol-N24" data-bid="raLq4sT3lu">
         <div class="content-container">
             <div class="contents-form container-md">
@@ -88,7 +89,7 @@
                                                     </div>
                                                 </th>
                                                 <td colspan="3">
-                                                    <textarea class="inputset-input form-control textarea" id="supPluscon" name="supPluscon" rows="4" required></textarea>
+                                                    <textarea class="inputset-input form-control textarea" id="supPluscon" name="supPluscon" rows="4" required style="height: 286px;"></textarea>
                                                 </td>
                                             </tr>
                                         </div>
@@ -178,9 +179,10 @@
             </div>
         </div>
     </div>
-</main>
+
 
 </body>
+</main>
 </html>
 <script src="../ssh/js/setting.js"></script>
 <script src="../ssh/js/plugin.js"></script>

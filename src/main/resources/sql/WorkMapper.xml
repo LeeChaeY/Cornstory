@@ -63,8 +63,8 @@
 	<select id="listWork" parameterType="search" resultMap="workSelectMap">
 		SELECT * FROM work
 		<where>
-			<if test="searchKeyword != null">
-				AND work_name LIKE CONCAT('%',#{searchKeyword},'%') OR user_id LIKE CONCAT('%',#{searchKeyword},'%')
+			<if test="searchKeyword != null and searchKeyword != ''">
+				work_name LIKE CONCAT('%',#{searchKeyword},'%') OR user_id LIKE CONCAT('%',#{searchKeyword},'%')
 			</if>
 				<choose>
 					<when test="searchCondition == 0">

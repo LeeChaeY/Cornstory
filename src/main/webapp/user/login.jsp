@@ -10,15 +10,40 @@
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <script>
         // 카카오 초기화
-        Kakao.init('${kakao.api.js-key}');
+        Kakao.init('b0bd84c71b068376094579f78dcd6af0');
+
 
         // 카카오 로그인 버튼 생성
         function createKakaoLoginButton() {
             Kakao.Auth.createLoginButton({
-                container: '#kakao-login-btn', // 수정된 부분
+                scope: 'profile_nickname, profile_image, account_email, birthday',
+                container: '#kakao-login-btn',
                 success: function (authObj) {
+                    console.log(authObj);
                     // 카카오 로그인 성공 시 서버로 전송
-                    callServerLogin({ accessToken: authObj.access_token, provider: 'kakao' });
+                    Kakao.API.request({
+                        url: '/user/kakaoLogin',
+                        redirectUri: 'http://localhost:8088',  // 여기 수정
+                        method: 'post',
+                        data: {
+                            userId: authObj.access_token,
+                            nickName: authObj.properties ? authObj.properties.nickname : '카카오에서 받아온 닉네임',
+                            email: authObj.kakao_account ? authObj.kakao_account.email : '카카오에서 받아온 이메일',
+
+                        },
+                        success: function (res) {
+                            if (res.result === 'success') {
+                                console.log('로그인 성공');
+                                // 로그인 성공 시 추가적인 처리 (예: 리다이렉트 등)
+                                window.location.href = '/index';  // 로그인 성공 후 이동할 페이지 설정
+                            } else {
+                                console.log('로그인 실패');
+                            }
+                        },
+                        fail: function (error) {
+                            console.error('서버 오류:', error);
+                        }
+                    });
                 },
                 fail: function (err) {
                     console.log(err);
@@ -26,11 +51,6 @@
             });
         }
 
-        // 서버에 로그인 요청
-        function callServerLogin(loginData) {
-            // 여기에서 서버로 로그인 데이터를 전송하고, 서버에서는 해당 데이터로 로그인 처리를 구현
-            // 예: axios.post('/user/json/login', loginData).then(response => { ... });
-        }
     </script>
     <script>
         function submitLoginForm() {
@@ -103,17 +123,17 @@
         }
 
     </script>
-
     <style>
         #kakao-login-btn {
-            background-image: url('C:/workspaceIntellij/Team/src/main/resources/file/user/kakao_login_small.png'); /* 수정된 부분 */
-            width: 100px; /* 이미지의 크기에 따라 조절하세요 */
-            height: 23px; /* 이미지의 크기에 따라 조절하세요 */
+            background-image: url('../file/kakao_login_medium_narrow.png');
+            width: 100px;
+            height: 23px;
             background-size: cover;
             cursor: pointer;
             border: none;
         }
     </style>
+
 
 </head>
 
@@ -144,16 +164,12 @@
                         </div>
                         <a href="/user/addStart.jsp" >회원가입</a>
                         <div class="bottom-btn">
-                            <div id="errorMessage" style="color: red;"></div>
-                            <button type="submit" class="btnset btnset-lg btnset-rect" >로그인</button><br>
+                            <div id="kakao-login-btn"></div> <!-- 수정된 부분 -->
+                            <div id="errorMessage" style="color: #ff0000;"></div>
+                            <button type="submit" class="btnset btnset-lg btnset-rect">로그인</button><br>
                         </div>
                     </div>
                 </form>
-
-                <button id="kakao-login-btn">카카오 로그인</button>&nbsp
-
-
-
             </div>
         </div>
     </div>

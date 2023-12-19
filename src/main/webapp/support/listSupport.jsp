@@ -22,12 +22,14 @@
   <link rel="stylesheet" href="../ssh/css/template.css">
   <link rel="stylesheet" href="../ssh/css/common.css">
   <link rel="stylesheet" href="../ssh/css/style.css">
+
+  <link rel="stylesheet" href="/lcy/css/style.css">
 </head>
 <body>
 <main class="th-layout-main ">
   <%@ include file="../layout/top.jsp" %>
   <!-- [S]opilsol-N24 -->
-  <div class="opilsol-N24" data-bid="Lzlq4mb3O6">
+  <div class="opilsol-N26" data-bid="dL11fYz8S6T" id="">
     <div class="content-container">
       <div class="container-md">
         <div class="tableset">
@@ -124,7 +126,7 @@
                       <td>${support.userId}</td>
                       <td>${support.supId}</td>
                       <td>${support.supContent}</td>
-                      <td>${support.supPluscon}</td>
+                      <td><a href="${support.supPluscon}">URL</a></td>
                       <td>${support.supImage}</td>
                       <td>${support.supBan}일</td>
                       <td class="last-child">${support.supDate}</td>
@@ -152,7 +154,7 @@
   <script src="../ssh/js/template.js"></script>
   <script src="../ssh/js/common.js"></script>
   <script src="../ssh/js/script.js"></script>
-<%@ include file="../layout/bottom.jsp" %>
-</body>
 
+</body>
+<%@ include file="../layout/bottom.jsp" %>
 

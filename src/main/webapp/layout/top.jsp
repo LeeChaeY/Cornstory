@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -25,46 +26,8 @@
 
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script>
-    $(function() {
-
-      // $("span").on("click", function () {
-      //   myChatSpace();
-      // });
-
-      $("span:contains('상품 등록')").on("click", function () {
-        addProduct();
-      });
-
-    });
-
     function redirectToIndex() {
-      $(self.location).attr("href", "/");
-    }
-
-    function myChatSpace() {
-      var form = document.createElement('form');
-
-      form.method = 'post';
-      form.action = '/chat/listChatSpace'; // Replace with your actual endpoint URL
-
-      addHiddenField(form, 'userStatus', 1);
-
-      form.submit();
-    }
-
-    function addHiddenField(form, name, value) {
-      var hiddenInput = document.createElement('input');
-      hiddenInput.type = 'hidden';
-      hiddenInput.name = name;
-      hiddenInput.value = value;
-      form.appendChild(hiddenInput);
-    }
-
-    function addProduct() {
-      if ("${empty sessionScope.user}") {
-        $(self.location).attr("href", "/user/login");
-      }
-      $(self.location).attr("href", "/product/addProduct?prodCategory=${sessionScope.user.role == 0 ? 2 : 0}");
+      window.location.href = "../index.jsp";
     }
   </script>
 </head>
@@ -78,130 +41,207 @@
 
     <div class="header-left">
       <h1 class="header-title">
-        <a href="/">
+        <a href="../index.jsp">
           <img src="../ssh/images/logo.png" alt="로고">
         </a>
       </h1>
     </div>
     <div class="header-center">
+      <c:choose>
+        <c:when test="${empty sessionScope.user}">
+          <ul class="header-gnblist">
+            <li class="header-gnbitem">
+              <a class="header-gnblink" href="javascript:void(0)">
+                <span>작품</span>
+              </a>
+              <ul class="header-sublist">
+                <li class="header-subitem">
+                  <a class="header-sublink" href="/work/listWork">
+                    <span>작품 목록</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="header-gnbitem">
+              <a class="header-gnblink" href="javascript:void(0)">
+                <span>스토리</span>
+              </a>
+              <ul class="header-sublist">
+                <li class="header-subitem">
+                  <a class="header-sublink" href="javascript:void(0)">
+                    <span>스토리 목록</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
 
-      <ul class="header-gnblist">
-        <li class="header-gnbitem">
-          <a class="header-gnblink" href="javascript:void(0)">
-            <span>작품</span>
-          </a>
-          <ul class="header-sublist">
-            <li class="header-subitem">
-              <a class="header-sublink" href="/work/listWork">
-                <span>작품 목록</span>
+            <li class="header-gnbitem">
+              <a class="header-gnblink" href="/product/listProduct">
+                <span>스토어</span>
               </a>
-            </li>
-            <li class="header-subitem">
-              <a class="header-sublink" href="/work/listBookmark">
-                <span>찜 목록</span>
+              <ul class="header-sublist">
+                <li class="header-subitem">
+                  <a class="header-sublink" href="/product/listProduct">
+                    <span>상품 조회</span>
+                  </a>
+                </li>
+              </ul>
+            <li class="header-gnbitem">
+              <a class="header-gnblink" href="javascript:void(0)">
+                <span>고객센터</span>
               </a>
-            </li>
-            <li class="header-subitem">
-              <a class="header-sublink" href="/work/getWork">
-                <span>나의 작품</span>
-              </a>
+              <ul class="header-sublist">
+
+                <li class="header-subitem">
+                  <a class="header-sublink" href="/support/listSupport?category=0">
+                    <span>공지사항</span>
+                  </a>
+                </li>
+                <li class="header-subitem">
+                  <a class="header-sublink" href="/support/listSupport?category=1">
+                    <span>Q&amp;A​<br></span>
+                  </a>
+                </li>
+              </ul>
             </li>
           </ul>
-        </li>
-        <li class="header-gnbitem">
-          <a class="header-gnblink" href="javascript:void(0)">
-            <span>스토리</span>
-          </a>
-          <ul class="header-sublist">
-            <li class="header-subitem">
-              <a class="header-sublink" href="javascript:void(0)">
-                <span>스토리 목록</span>
+        </c:when>
+        <c:otherwise>
+          <ul class="header-gnblist">
+            <li class="header-gnbitem">
+              <a class="header-gnblink" href="javascript:void(0)">
+                <span>작품</span>
               </a>
+              <ul class="header-sublist">
+                <li class="header-subitem">
+                  <a class="header-sublink" href="/work/listWork">
+                    <span>작품 목록</span>
+                  </a>
+                </li>
+                <li class="header-subitem">
+                  <a class="header-sublink" href="/work/listBookmark">
+                    <span>찜 목록</span>
+                  </a>
+                </li>
+                <li class="header-subitem">
+                  <a class="header-sublink" href="/work/getWork">
+                    <span>나의 작품</span>
+                  </a>
+                </li>
+              </ul>
             </li>
-            <li class="header-subitem">
-              <a class="header-sublink" href="javascript:void(0)">
-                <span>나의 스토리</span>
+            <li class="header-gnbitem">
+              <a class="header-gnblink" href="javascript:void(0)">
+                <span>스토리</span>
               </a>
+              <ul class="header-sublist">
+                <li class="header-subitem">
+                  <a class="header-sublink" href="javascript:void(0)">
+                    <span>스토리 목록</span>
+                  </a>
+                </li>
+                <li class="header-subitem">
+                  <a class="header-sublink" href="javascript:void(0)">
+                    <span>나의 스토리</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="header-gnbitem">
+              <a class="header-gnblink" href="/chat/listChatSpace">
+                <span>채팅</span>
+              </a>
+              <ul class="header-sublist">
+                <li class="header-subitem">
+                  <a class="header-sublink" href="/chat/listChatSpace">
+                    <span>채팅방 목록</span>
+                  </a>
+                </li>
+                <li class="header-subitem">
+                  <a class="header-sublink" href="javascript:void(0)">
+                    <span>나의 채팅방</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="header-gnbitem">
+              <a class="header-gnblink" href="/product/listProduct">
+                <span>스토어</span>
+              </a>
+              <ul class="header-sublist">
+                <li class="header-subitem">
+                  <a class="header-sublink" href="/product/listProduct">
+                    <span>상품 조회</span>
+                  </a>
+                </li>
+                <c:if test="${sessionScope.user.role eq 0}">
+                  <li class="header-subitem">
+                    <a class="header-sublink" href="/product/listProduct?prodCategory=2">
+                      <span>저작권 등록</span>
+                    </a>
+                  </li>
+                </c:if>
+                <c:if test="${sessionScope.user.role eq 1}">
+                  <li class="header-subitem">
+                    <a class="header-sublink" href="/product/listProduct?prodCategory=0">
+                      <span>팝콘 등록</span>
+                    </a>
+                  </li>
+                </c:if>
+              </ul>
+            </li>
+
+
+
+            <li class="header-gnbitem">
+              <a class="header-gnblink" href="javascript:void(0)">
+                <span>고객센터</span>
+              </a>
+
+              <ul class="header-sublist">
+
+                <li class="header-subitem">
+                  <a class="header-sublink" href="/support/listSupport?category=0">
+                    <span>공지사항</span>
+                  </a>
+                </li>
+
+                <li class="header-subitem">
+                  <a class="header-sublink" href="/support/listSupport?category=1">
+                    <span>Q&amp;A​<br></span>
+                  </a>
+                </li>
+
+                <li class="header-subitem">
+                  <c:if test="${sessionScope.user.role eq 0}">
+                  <a class="header-sublink" href="/support/report.jsp">
+                    <span>신고센터<br></span>
+                  </a>
+                  </c:if>
+                  <c:if test="${sessionScope.user.role eq 1}">
+                    <a class="header-sublink" href="/support/listSupport?category=2">
+                      <span>신고센터<br></span>
+                    </a>
+                  </c:if>
+                </li>
+
+                <c:if test="${sessionScope.user.role eq 1}">
+                <li class="header-subitem">
+                  <a class="header-sublink" href="/user/listUser">
+                    <span>회원목록<br></span>
+                  </a>
+                </li>
+                </c:if>
+              </ul>
             </li>
           </ul>
-        </li>
-        <li class="header-gnbitem">
-          <a class="header-gnblink" href="/chat/listChatSpace">
-            <span>채팅</span>
-          </a>
-          <ul class="header-sublist">
-            <li class="header-subitem">
-              <a class="header-sublink" href="/chat/listChatSpace">
-                <span>채팅방 목록</span>
-              </a>
-            </li>
-            <li class="header-subitem">
-              <a class="header-sublink" href="javascript:void(0)">
-                <span>나의 채팅방</span>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li class="header-gnbitem">
-          <a class="header-gnblink" href="/product/listProduct">
-            <span>스토어</span>
-          </a>
-          <ul class="header-sublist">
-            <li class="header-subitem">
-              <a class="header-sublink" href="/product/listProduct">
-                <span>상품 조회</span>
-              </a>
-            </li>
-            <li class="header-subitem">
-              <a class="header-sublink" href="javascript:void(0)">
-                <span>상품 등록</span>
-              </a>
-            </li>
-          </ul>
-        </li>
+        </c:otherwise>
+      </c:choose>
 
-
-
-        <li class="header-gnbitem">
-          <a class="header-gnblink" href="javascript:void(0)">
-            <span>고객센터</span>
-          </a>
-
-          <ul class="header-sublist">
-
-            <li class="header-subitem">
-              <a class="header-sublink" href="/support/listSupport?category=0">
-                <span>공지사항</span>
-              </a>
-            </li>
-
-            <li class="header-subitem">
-              <a class="header-sublink" href="/support/listSupport?category=1">
-                <span>Q&amp;A​<br></span>
-              </a>
-            </li>
-
-            <li class="header-subitem">
-              <a class="header-sublink" href="/support/listSupport?category=2">
-                <span>신고센터<br></span>
-              </a>
-            </li>
-
-            <li class="header-subitem">
-              <a class="header-sublink" href="/user/listUser">
-                <span>회원목록<br></span>
-              </a>
-            </li>
-
-          </ul>
-        </li>
-      </ul>
     </div>
     <div class="header-right">
       <div class="header-utils">
-        <button class="btn-search" >
-          <img src="../ssh/icons/ico_search_white.svg" alt="검색">
-        </button>
+
         <c:choose>
           <c:when test="${empty sessionScope.user}">
             <!-- 로그인하지 않은 상태일 때 -->
@@ -215,24 +255,24 @@
           <c:otherwise>
             <!-- 로그인한 상태일 때 -->
 
-            <div class="btn-user" style="display: flex; align-items: center;">
-              <a href="/user/getUser?userId=${sessionScope.user.userId}" style="color: white; font-size: 15px; margin-left: 10px; display: inline-block; text-align: center;">
-                <img src="../file/user/${sessionScope.user.userImage}" width="30" style="border-radius: 50%; max-width: 100%;" alt=""/>
-                  ${sessionScope.user.nickName}
-              </a>
-              <form action="/user/logout" method="post">
-                <button type="submit" style="border: none; background: none; padding: 0; cursor: pointer;">
-                  <img src="../ssh/images/logout.png" alt="로고">
-                </button>
-              </form>
+
+              <div class="btn-user">
+                <img src="../file/user/${sessionScope.user.userImage}" width="25" style="border-radius: 50%; max-width: 100%;" alt=""/>
+                <a href="/user/getUser?userId=${sessionScope.user.userId}" style="margin-top: 3px; color: white; font-size: 13px;  text-align: center; text-decoration: none;">
+                    ${sessionScope.user.nickName}
+                </a>
+                <!-- 보유한 팝콘수 출력 -->
+
             </div>
+            <span style="margin-left: 5px; font-size: 10px; color: white; margin-top: 5px;">
+              | 보유한 팝콘수: <fmt:formatNumber value="${sessionScope.user.popcornCnt}" pattern="#,##0"/>개
 
-
-
-
-
-
-
+            </span>
+            <form action="/user/logout" method="post">
+              <button type="submit" style="border: none; background: none; padding: 0; cursor: pointer; display: inline-block;">
+                <img src="../ssh/images/logout.png" alt="로고">
+              </button>
+            </form>
           </c:otherwise>
         </c:choose>
 
@@ -241,9 +281,7 @@
         <button class="btn-allmenu">
           <img src="../ssh/icons/ico_menu3_white.svg" alt="PC메뉴">
         </button>
-        <button class="btn-momenu">
-          <img src="../ssh/icons/ico_menu3_white.svg" alt="모바일메뉴">
-        </button>
+
         <button class="btn-moclose">
           <img src="../ssh/icons/ico_close_black.svg" alt="닫기">
         </button>
@@ -256,14 +294,9 @@
     <div class="fullmenu-wrapper">
       <div class="fullmenu-head">
         <h4 class="fullmenu-title">
-          <a href="javascript:void(0)">
+          <a href="/index.jsp">
             <h1 class="header-title">
-              <form>
-                <button type="button" onclick="redirectToIndex()">
                   <img src="../ssh/images/logo.png" alt="로고">
-                </button>
-              </form>
-
             </h1>
           </a>
         </h4>
@@ -338,11 +371,20 @@
                 <span>상품 조회</span>
               </a>
             </li>
+            <c:if test="${sessionScope.user.role eq 0}">
               <li class="fullmenu-subitem">
-                <a class="fullmenu-sublink" href="/product/addProduct?prodCategory=2">
-                  <span>상품 등록</span>
+                <a class="fullmenu-sublink" href="/product/listProduct?prodCategory=2">
+                  <span>저작권 등록</span>
                 </a>
               </li>
+            </c:if>
+            <c:if test="${sessionScope.user.role eq 1}">
+              <li class="fullmenu-subitem">
+                <a class="fullmenu-sublink" href="/product/listProduct?prodCategory=0">
+                  <span>팝콘 등록</span>
+                </a>
+              </li>
+            </c:if>
           </ul>
         </li>
         <li class="fullmenu-gnbitem">
@@ -377,40 +419,6 @@
           </ul>
         </li>
       </ul>
-    </div>
-    <button class="fullmenu-close">
-      <img src="../ssh/icons/ico_close_black.svg" alt="닫기">
-    </button>
-  </div>
-  <div class="header-search fullmenu-top">
-    <div class="fullmenu-wrapper">
-      <div class="fullmenu-head">
-        <h4 class="fullmenu-title">
-          <a href="javascript:void(0)"> CornStory </a>
-        </h4>
-      </div>
-      <div class="header-search-wrap">
-        <div class="container-md">
-          <div class="header-search-form">
-            <div class="inputset inputset-line">
-              <button class="icon-right icon-search btn" type="button" aria-label="아이콘">
-              </button>
-              <input type="text" class="inputset-input form-control" placeholder="검색어를 입력해주세요." aria-label="내용">
-            </div>
-          </div>
-          <div class="recom-list">
-            <h5 class="recom-tit">추천 검색어</h5>
-            <ul>
-              <li class="on">
-                <a href="#n">작품등록</a>
-              </li>
-              <li>
-                <a href="#n">플랫폼</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
     </div>
     <button class="fullmenu-close">
       <img src="../ssh/icons/ico_close_black.svg" alt="닫기">
