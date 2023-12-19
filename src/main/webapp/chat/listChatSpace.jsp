@@ -45,54 +45,33 @@
 <%@ include file="../layout/top.jsp" %>
 
 
-<!-- [E]thwhole-lNlPW5z3lS -->
-<!-- [S]opilsol-N26 -->
-<div class="opilsol-N26" data-bid="dL11fYz8S6T" id="">
-    <div class="content-container">
-        <div class="contents-form container-md">
-            <div class="contents-form-top d-flex justify-content-between">
-                <h3 class="inputset-tit">채팅</h3>
-                <div class="dropset dropset-solid">
-                    <div class="dropset-head"></div>
-                </div>
-            </div>
-            <div class="checkset-wrap">
-                <div class="checkset">
-                    <input id="checkset-e-4-1" class="visually-hidden" type="radio" name="inquiryType" value="">
-                    <label class="checkset-thumb" for="checkset-e-4-1">
-                        <span>채팅방 목록</span>
-                    </label>
-                </div>
-                <div class="checkset">
-                    <input id="checkset-e-4-2" class="visually-hidden" type="radio" name="inquiryType" value="">
-                    <label class="checkset-thumb" for="checkset-e-4-2">
-                        <span>개설한 채팅방</span>
-                    </label>
-                </div>
-                <div class="checkset">
-                    <input id="checkset-e-4-3" class="visually-hidden" type="radio" name="inquiryType" value="">
-                    <label class="checkset-thumb" for="checkset-e-4-3">
-                        <span>입장한 채팅방</span>
-                    </label>
-                </div>
-                <div class="checkset">
-                    <input id="checkset-e-4-4" class="visually-hidden" type="radio" name="inquiryType" value="">
-                    <label class="checkset-thumb" for="checkset-e-4-4">
-                        <span>채팅방 추가하기</span>
-                    </label>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
 <!-- [E]opilsol-N26 -->
 <main class="th-layout-main ">
     <!-- [S]opilsol-N24 -->
     <div class="opilsol-N24" data-bid="El2cLoRe4L1" style="margin-left: 0px;">
         <div class="content-container">
             <div class="container-md">
+                <div class="textset content-tit">
+                    <p class="textset-eu">채팅</p>
+                    <c:if test="${userStatus == 2}"><h4 class="h4">나의 채팅방</h4></c:if>
+                    <c:if test="${userStatus != 2}"><h4 class="h4">채팅방 목록</h4></c:if>
+                    <a href="javascript:void(0)">채팅방 추가하기</a>
+                </div>
+
+                <form name="form">
+                    <div class="inputset inputset-line inputset-lg">
+                        <button class="listStoreSearchButton inputset-icon icon-right icon-search btn"
+                                type="button"
+                                aria-label="아이콘"></button>
+                        <input type="text" class="inputset-input form-control" name="searchKeyword"
+                               placeholder="채팅방 이름 또는 개설자 닉네임을 입력해 주세요." aria-label="내용"
+                               value="${!empty search.searchKeyword ? search.searchKeyword:''}">
+                    </div>
+                    <br>
+                    <input type="hidden" name="genre" value="${genre}">
+                    <input type="hidden" name="userStatus" value="${userStatus}">
+                </form>
+
                 <div class="radioset-wrap">
                     <div class="radioset">
                         <input id="radioset-c-1-1" name="radioset-c-1" class="visually-hidden" type="radio" value="">
@@ -147,23 +126,11 @@
                         <label class="radioset-thumb thumb-round" for="radioset-c-1-13">기타</label>
                     </div>
                 </div>
-                <br><br>
+
                 <div class="tableset">
                     <div class="tableset-inner">
-                        <form name="form">
-                            <div class="inputset inputset-line inputset-lg">
-                                <button class="listStoreSearchButton inputset-icon icon-right icon-search btn"
-                                        type="button"
-                                        aria-label="아이콘"></button>
-                                <input type="text" class="inputset-input form-control" name="searchKeyword"
-                                       placeholder="채팅방 이름 또는 개설자 닉네임을 입력해 주세요." aria-label="내용"
-                                        value="${!empty search.searchKeyword ? search.searchKeyword:''}">
-                            </div>
-                            <br>
-                            <h3 contenteditable="true">채팅방 목록</h3> 전체 ${totalCount} 개<br>
-                            <input type="hidden" name="genre" value="${genre}">
-                            <input type="hidden" name="userStatus" value="${userStatus}">
-                        </form>
+                        <br>
+                        전체 ${totalCount} 개<br>
                         <table class="tableset-table table">
                             <colgroup>
                                 <col>

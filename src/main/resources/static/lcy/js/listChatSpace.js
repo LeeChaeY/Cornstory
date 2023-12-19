@@ -1,12 +1,4 @@
 $(function() {
-    if($("input[name='userStatus']").val() === "0") {
-        $("input[id='checkset-e-4-1']").attr("checked", "");
-    } else if($("input[name='userStatus']").val() === "1") {
-        $("input[id='checkset-e-4-2']").attr("checked", "");
-    } else if($("input[name='userStatus']").val() === "2") {
-        $("input[id='checkset-e-4-3']").attr("checked", "");
-    }
-
     let genre = $("input[name='genre']").val();
     if (genre === "") {
         $("input[id='radioset-c-1-1']").attr("checked", "");
@@ -40,8 +32,8 @@ $(function() {
         $("form[name='form']").attr("method", "post").attr("action", "/chat/listChatSpace").submit();
     });
 
-    $("span").on("click", function() {
-        fncGetChatList('1');
+    $("a:contains('채팅방 추가하기')").on("click", function() {
+        $(self.location).attr("href", "/chat/addChatSpace");
     });
 
     $(".radioset-thumb").on("click", function() {
@@ -59,8 +51,11 @@ $(function() {
     });
 
     $("input[type='button'][value='삭제하기']").on("click", function() {
-        let chatSpaceNo = $(this).parents("tr").children("td").eq(0).children("input").val();
-        deleteChatSpace(chatSpaceNo);
+        const p = confirm("정말 삭제하시겠습니까?");
+        if (p) {
+            let chatSpaceNo = $(this).parents("tr").children("td").eq(0).children("input").val();
+            deleteChatSpace(chatSpaceNo);
+        }
     });
 
     $("input[type='button'][value='나가기']").on("click", function() {
@@ -81,7 +76,7 @@ function fncGetChatList(currentPage) {
         $("input[name='genre']").val(spanText);
         $("form[name='form']").attr("method", "post").attr("action", "/chat/listChatSpace").submit();
     }
-    else if (spanText === "전체" || spanText === "채팅방 목록") {
+    else if (spanText === "전체") {
         // $("input[name='userStatus']").val(0);
         $("input[name='genre']").val("");
         $("input[name='searchKeyword']").val("");
@@ -89,15 +84,15 @@ function fncGetChatList(currentPage) {
     } else $("input[name='genre']").val("");
 
 
-    if (spanText === "개설한 채팅방") {
-        $("input[name='userStatus']").val(1);   //0: 전체, 1: 개설, 2: 입장
-        $("form[name='form']").attr("method", "post").attr("action", "/chat/listChatSpace").submit();
-    } else if (spanText === "입장한 채팅방") {
-        $("input[name='userStatus']").val(2);   //0: 전체, 1: 개설, 2: 입장
-        $("form[name='form']").attr("method", "post").attr("action", "/chat/listChatSpace").submit();
-    } else if (spanText === '채팅방 추가하기') {
-        $(self.location).attr("href", "/chat/addChatSpace");
-    }
+    // if (spanText === "개설한 채팅방") {
+    //     $("input[name='userStatus']").val(1);   //0: 전체, 1: 개설, 2: 입장
+    //     $("form[name='form']").attr("method", "post").attr("action", "/chat/listChatSpace").submit();
+    // } else if (spanText === "입장한 채팅방") {
+    //     $("input[name='userStatus']").val(2);   //0: 전체, 1: 개설, 2: 입장
+    //     $("form[name='form']").attr("method", "post").attr("action", "/chat/listChatSpace").submit();
+    // } else if (spanText === '채팅방 추가하기') {
+    //     $(self.location).attr("href", "/chat/addChatSpace");
+    // }
 }
 
 function enterChatSpace(chatSpaceNo) {
@@ -119,14 +114,6 @@ function enterChatSpace(chatSpaceNo) {
         method: "GET",
         dataType: "json",
         success: function(JSONData, status) {
-            const postData  = {
-                chatSpace: JSONData.chatSpace,
-                list: JSONData.list,
-                userList: JSONData.userList,
-                totalCount: JSONData.totalCount
-                // 추가 데이터...
-            };
-
             const form = document.createElement('form');
             form.method = 'post';
             form.action = 'http://localhost:3000/receive-post';  // Replace with your server URL
@@ -138,12 +125,13 @@ function enterChatSpace(chatSpaceNo) {
             addJsonDataToForm(form, JSONData.totalCount, 'totalCount');
             addJsonDataToForm(form, JSONData.user, 'user');
 
-            const newWindow = window.open('', '_blank');
+            const chatWindow = window.open('','chatWindow', 'width=500,height=400,left:100,top:100');
 
             // Check if the new window/tab is opened successfully
-            if (newWindow) {
+            if (chatWindow) {
                 // Set the HTML content of the new window to the form
-                newWindow.document.body.appendChild(form);
+                chatWindow.document.body.appendChild(form);
+
 
                 // Submit the form
                 form.submit();

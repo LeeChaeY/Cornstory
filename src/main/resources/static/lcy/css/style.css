@@ -1,5 +1,34 @@
 @charset "utf-8";
 
+
+
+.th-layout-main {
+    margin: 5rem;
+}
+
+form[name="form"] .inputset {
+    width: 30%;
+    margin-left: auto;
+}
+
+.radioset-wrap {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.radioset {
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+/* 미디어 쿼리: 화면 폭이 600px 이하일 때 스타일 변경 */
+@media (max-width: 600px) {
+    .radioset {
+        width: 100%;
+        margin-right: 0;
+    }
+}
+
 /* opilsol-N26 [sblQ1o2joM] */
 .opilsol-N26 .content-container { padding-top: 8rem; }
 .opilsol-N26 .contents-form-top { align-items: flex-end; margin-bottom: 1.5rem; }

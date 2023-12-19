@@ -49,7 +49,7 @@ public class ChatController {
 
     @PostMapping(value="addChatSpace")
     public String addChatSpace(Model model, @ModelAttribute("chatSpace") ChatSpace chatSpace,
-                               @RequestParam("file") MultipartFile file, HttpServletRequest request,
+                               @RequestPart("file") MultipartFile file, HttpServletRequest request,
                                @SessionAttribute("user") User user) throws Exception {
         System.out.println("/chat/addChatSpace : POST");
         chatSpace.setUserId(user.getUserId());
@@ -82,9 +82,9 @@ public class ChatController {
         }
 
         //Business Logic
-        chatService.addChatSpace(chatSpace);
+        int chatSpaceNo = chatService.addChatSpace(chatSpace);
 
-        return "redirect:/chat/listChatSpace";
+        return "redirect:/chat/json/enterChatSpace?chatSpaceNo="+chatSpaceNo;
     }
 
     @GetMapping(value="updateChatSpace")
@@ -93,13 +93,14 @@ public class ChatController {
 
         System.out.println("/chat/updateChatSpace : GET :: "+chatSpace);
         model.addAttribute("chatSpace", chatSpace);
+        model.addAttribute("cSpaceNameCnt", chatSpace.getcSpaceName().length());
 
         return "chat/updateChatSpace";
     }
 
     @PostMapping(value="updateChatSpace")
     public String updateChatSpace(@ModelAttribute("chatSpace") ChatSpace chatSpace,
-                                  @RequestParam("file") MultipartFile file, HttpServletRequest request) throws Exception {
+                                  @RequestPart("file") MultipartFile file, HttpServletRequest request) throws Exception {
         System.out.println("/chat/updateChatSpace : POST");
         System.out.println("/chat/updateChatSpace : " + chatSpace);
 
@@ -148,7 +149,7 @@ public class ChatController {
         //Business Logic
         chatService.updateChatSpace(chatSpace);
 
-        return "redirect:/chat/listChatSpace";
+        return "redirect:/chat/json/enterChatSpace?chatSpaceNo="+chatSpace.getChatSpaceNo();
     }
 
     @RequestMapping(value="listChatSpace")

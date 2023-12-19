@@ -26,7 +26,8 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public int addChatSpace(ChatSpace chatSpace) throws Exception {
         chatDao.addChatSpace(chatSpace);
-        return chatDao.addChatEnter(chatSpace);
+        chatDao.addChatEnter(chatSpace);
+        return chatSpace.getChatSpaceNo();
     }
 
     @Override

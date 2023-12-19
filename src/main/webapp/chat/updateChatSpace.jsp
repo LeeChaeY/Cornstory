@@ -38,58 +38,12 @@
     <script src="/ssh/js/script.js"></script>
 
     <script src="/lcy/js/addChatSpace.js"></script>
+
 </head>
 
 <body>
 
 <%@ include file="../layout/top.jsp" %>
-
-<!-- [E]thwhole-lNlPW5z3lS -->
-<!-- [S]opilsol-N26 -->
-<div class="opilsol-N26" data-bid="Mr11fzPLNQx" id="">
-    <div class="content-container">
-        <div class="contents-form container-md">
-            <div class="contents-form-top d-flex justify-content-between">
-                <h3 class="inputset-tit">채팅</h3>
-                <div class="dropset dropset-solid">
-                    <div class="dropset-head"></div>
-                </div>
-            </div>
-            <div class="checkset-wrap">
-                <div class="checkset">
-                    <input id="checkset-e-4-1" class="visually-hidden" type="radio" name="inquiryType" value="">
-                    <label class="checkset-thumb" for="checkset-e-4-1">
-                        <span>채팅방 목록</span>
-                    </label>
-                </div>
-                <div class="checkset">
-                    <input id="checkset-e-4-2" class="visually-hidden" type="radio" name="inquiryType" value="">
-                    <label class="checkset-thumb" for="checkset-e-4-2">
-                        <span>개설한 채팅방</span>
-                    </label>
-                </div>
-                <div class="checkset">
-                    <input id="checkset-e-4-3" class="visually-hidden" type="radio" name="inquiryType" value="">
-                    <label class="checkset-thumb" for="checkset-e-4-3">
-                        <span>입장한 채팅방</span>
-                    </label>
-                </div>
-                <div class="checkset">
-                    <input id="checkset-e-4-4" class="visually-hidden" type="radio" name="inquiryType" value=""
-                           checked="">
-                    <label class="checkset-thumb" for="checkset-e-4-4">
-                        <span>채팅방 추가하기</span>
-                    </label>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<form name="form">
-    <input type="hidden" name="genre" value="${genre}">
-    <input type="hidden" name="userStatus" value="${userStatus}">
-</form>
 
 <!-- [E]opilsol-N26 -->
 <main class="th-layout-main ">
@@ -97,8 +51,12 @@
     <div class="opilsol-N27" data-bid="PNlQ32jk6H">
         <div class="content-container">
             <div class="contents-form container-md">
+                <div class="textset content-tit">
+                    <p class="textset-eu">채팅</p>
+                    <h4 class="h4">채팅방 수정하기</h4>
+                    <a href="javascript:void(0)">채팅방 추가하기</a>
+                </div>
                 <div class="contents-form-top d-flex justify-content-between">
-                    <h3 class="inputset-tit">채팅방 추가하기</h3>
                     <span class="req">필수 선택입니다.</span>
                 </div>
                 <div class="contents-form tableset">
@@ -130,7 +88,8 @@
                                     <td>
                                         <div class="inputset">
                                             <input type="text" class="inputset-input form-control" name="cSpaceName" id="Name"
-                                                   value="${chatSpace.cSpaceName}" aria-label="이름">
+                                                   value="${chatSpace.cSpaceName}" aria-label="이름" required maxlength="30">
+                                            <span class="cSpaceNameLength"> ${cSpaceNameCnt}/30</span>
                                         </div>
                                     </td>
                                 </tr>
@@ -139,6 +98,7 @@
                                         <span class="label">장르</span>
                                     </th>
                                     <td colspan="3">
+                                        <input type="hidden" name="genre2" value="${chatSpace.genre}">
                                         ${chatSpace.genre}
                                     </td>
                                 </tr>
@@ -148,16 +108,9 @@
                                     </th>
                                     <td colspan="2">
                                         <div class="fileset fileset-lg fileset-label">
-                                            <label>
-                                                <div class="fileset-body">
-                                                    <div class="fileset-group">
-                                                        <input type="file" class="fileset-input" name="file">
-                                                        <button class="fileset-cancel"></button>
-                                                    </div>
-                                                    <span class="btnset btnset-line btnset-mono btnset-lg btnset-rect fileset-upload">썸네일 첨부</span>
-                                                </div>
-                                            </label>
+                                            <input class="check-image" type="file" name="file" accept=".jpg"/>
                                         </div>
+                                        <br>
                                         <p class="p1 co-text3">이미지 형식의 jpg만 첨부 가능합니다.</p>
                                         <p class="p1 co-text3">첨부파일은 10MB를 초과할 수 없으며, 최대 1개까지 가능합니다.</p>
                                     </td>
