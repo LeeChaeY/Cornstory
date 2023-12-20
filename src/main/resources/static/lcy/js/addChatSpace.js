@@ -103,7 +103,7 @@ function addChatSpace() {
             // console.log('Received data:', data);
             const form = document.createElement('form');
             form.method = 'post';
-            form.action = 'http://localhost:3000/receive-post';  // Replace with your server URL
+            form.action = JSONData.url;
             form.enctype = 'application/json';  // Set content type to JSON
 
             addJsonDataToForm(form, JSONData.chatSpace, 'chatSpace');
@@ -154,7 +154,7 @@ function updateChatSpace() {
             // console.log('Received data:', data);
             const form = document.createElement('form');
             form.method = 'post';
-            form.action = 'http://localhost:3000/receive-post';  // Replace with your server URL
+            form.action = JSONData.url;
             form.enctype = 'application/json';  // Set content type to JSON
 
             addJsonDataToForm(form, JSONData.chatSpace, 'chatSpace');

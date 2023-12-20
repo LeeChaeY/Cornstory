@@ -112,7 +112,7 @@ public class ChatRestController {
 
         System.out.println(map02.get("list"));
 
-        String url = "http://127.0.0.1:3000";
+        String url = "http://101.79.8.55:3000/receive-post";
 
         Map<String, Object> returnMap = new HashMap<String, Object>();
         returnMap.put("url", url);
