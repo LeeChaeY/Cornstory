@@ -112,7 +112,8 @@ public class ChatRestController {
 
         System.out.println(map02.get("list"));
 
-        String url = "http://localhost:3000/receive-post";
+//        String url = "http://localhost:3000/receive-post";
+        String url = "http://101.79.8.55:3000/receive-post";
 
         Map<String, Object> returnMap = new HashMap<String, Object>();
         returnMap.put("url", url);
@@ -136,9 +137,6 @@ public class ChatRestController {
 
         return "삭제가 완료되었습니다.";
     }
-
-
-
 
     @PostMapping(value="json/addChat")
     public Chat addChat(@RequestBody Chat chat, @SessionAttribute("user") User user) throws Exception {
