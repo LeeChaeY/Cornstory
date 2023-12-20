@@ -43,9 +43,11 @@ $(function () {
         event.stopPropagation();
 
         if (event.originalEvent.dataTransfer.files.length === 1) {
-            const file = event.originalEvent.dataTransfer.files[0];
+            const files = event.originalEvent.dataTransfer.files;
+
             // Display the uploaded file
-            displayFile(file);
+            displayFile(files[0]);
+            $("input[name='file']")[0].files = files;
         } else {
             alert('Please drop only one file at a time.');
         }
@@ -84,6 +86,7 @@ function chatSpaceCheck() {
 
 function addChatSpace() {
     const formData = new FormData(document.forms.namedItem("addForm"));
+
     fetch('/chat/addChatSpace', {
         method: 'POST',
         headers: {
@@ -135,6 +138,7 @@ function addChatSpace() {
 
 function updateChatSpace() {
     const formData = new FormData(document.forms.namedItem("updateForm"));
+
     fetch('/chat/updateChatSpace', {
         method: 'POST',
         headers: {
@@ -237,7 +241,5 @@ function displayFile(file) {
     };
 
     reader.readAsDataURL(file);
-
     $(".file-list").empty().append(listItem);
-
 }

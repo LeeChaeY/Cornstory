@@ -48,8 +48,9 @@ public class ChatController {
     }
 
     @PostMapping(value="addChatSpace")
-    public String addChatSpace(Model model, @ModelAttribute("chatSpace") ChatSpace chatSpace,
-                               @RequestPart("file") MultipartFile file, HttpServletRequest request,
+    public String addChatSpace(@ModelAttribute("chatSpace") ChatSpace chatSpace,
+                               @RequestPart("file") MultipartFile file,
+                               HttpServletRequest request,
                                @SessionAttribute("user") User user) throws Exception {
         System.out.println("/chat/addChatSpace : POST");
         chatSpace.setUserId(user.getUserId());
@@ -61,6 +62,8 @@ public class ChatController {
 
         if (!file.isEmpty()) {
             try {
+                System.out.println("file : " + file.getOriginalFilename());
+
                 String savedName = user.getUserId()+"_"+chatSpace.getcSpaceName();
                 savedName = savedName.replaceAll("[^a-zA-Z0-9가-힣_]", "_");
                 savedName += ".jpg";
@@ -97,7 +100,8 @@ public class ChatController {
 
     @PostMapping(value="updateChatSpace")
     public String updateChatSpace(@ModelAttribute("chatSpace") ChatSpace chatSpace,
-                                  @RequestPart("file") MultipartFile file, HttpServletRequest request,
+                                  @RequestPart(value = "file") MultipartFile file,
+                                  HttpServletRequest request,
                                   @SessionAttribute("user") User user) throws Exception {
         System.out.println("/chat/updateChatSpace : POST");
         System.out.println("/chat/updateChatSpace : " + chatSpace);
@@ -108,6 +112,8 @@ public class ChatController {
 
         if (!file.isEmpty()) {
             try {
+                System.out.println("file : " + file.getOriginalFilename());
+
                 // 기존 파일 삭제
                 String deleteImg = chatService.getChatSpace(chatSpace.getChatSpaceNo()).getcSpaceImage();
                 if (!deleteImg.equals("chat.jpg")) {

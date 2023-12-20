@@ -119,7 +119,10 @@ function enterChatSpace(chatSpaceNo) {
         success: function(JSONData, status) {
             let cnt = parseInt($("input[value='" + chatSpaceNo + "']").parents("tr").children("td").eq(5).text()) + 1;
             $("input[value='" + chatSpaceNo + "']").parents("tr").children("td").eq(5).text(cnt);
-            $("input[value='" + chatSpaceNo + "']").parents("tr").children("td").eq(7).append("<input type='button' value='나가기''>");
+            let enter = $($("input[value='" + chatSpaceNo + "']").parents("tr").children("td").eq(7)).children("input").eq(1).val();
+            if (enter === undefined) {
+                $("input[value='" + chatSpaceNo + "']").parents("tr").children("td").eq(7).append("<input type='button' value='나가기''>");
+            }
 
             const form = document.createElement('form');
             form.method = 'post';
