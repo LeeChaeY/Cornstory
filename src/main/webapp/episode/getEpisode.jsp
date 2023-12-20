@@ -214,19 +214,30 @@
 
     // 댓글 목록을 화면에 표시하는 함수
     function displayCommentList(comments) {
+        var loggedInUserId = "${user.userId}";
         var commentListElement = document.getElementById("commentList");
         commentListElement.innerHTML = ""; // 댓글 목록 초기화
 
         comments.forEach(function (comment) {
             var listItem = document.createElement("div");
-            listItem.innerHTML =
-                '<div>' +
-                '<strong>' + comment.userId + '</strong> ' +
-                '<span>' + comment.commentDate + '</span>' +
-                '</div>' +
-                '<p>' + comment.content + '</p>' +
-                '<button onclick="openModal(\'' + comment.commentNo + '\', \'' + escapeHtml(comment.content) + '\')">수정</button>' +
-                '<button onclick="deleteComment(\'' + comment.commentNo + '\')">삭제</button>';
+            if(loggedInUserId === comment.userId){
+                listItem.innerHTML =
+                    '<div>' +
+                    '<strong>' + comment.userId + '</strong> ' +
+                    '<span>' + comment.commentDate + '</span>' +
+                    '</div>' +
+                    '<p>' + comment.content + '</p>'+
+                    '<button onclick="openModal(\'' + comment.commentNo + '\', \'' + escapeHtml(comment.content) + '\')">수정</button>' +
+                    '<button onclick="deleteComment(\'' + comment.commentNo + '\')">삭제</button>';
+
+            }else{
+                listItem.innerHTML =
+                    '<div>' +
+                    '<strong>' + comment.userId + '</strong> ' +
+                    '<span>' + comment.commentDate + '</span>' +
+                    '</div>' +
+                    '<p>' + comment.content + '</p>';
+            }
 
             commentListElement.appendChild(listItem);
         });
@@ -295,6 +306,13 @@
                 }
             });
         }
+    }
+    var loggedIn = ${not empty user};
+    if (loggedIn) {
+        document.getElementById("commentForm").style.display = "block";
+    } else {
+        document.getElementById("commentForm").style.display = "none";
+        document.getElementById("commentForm").text("로그인 후 댓글을 이용해 주세요");
     }
 </script>
 

@@ -81,7 +81,8 @@
                 </div>
                 <div class="contents-form" >
                     <div class="container-md">
-                        <!-- 창작여부 -->
+                        <input type="hidden" name="workNo" value="${work.workNo}">
+                        <input type="hidden" name="userId" value="${work.userId}">
                         <div class="inputset inputset-lg inputset-group">
                             <label class="inputset-label" style="font-size: var(--fs-h4);" >창작여부</label>
                             <div class="radioset-wrap">
@@ -238,7 +239,7 @@
                         <div class="inputset inputset-lg inputset-group" for="thumbnailFile">
                             <label class="inputset-label" style="font-size: var(--fs-h4);">썸네일</label>
                             <div id="image_container"><img src="<c:out value='${work.thumbnail}' />" alt="Thumbnail" style="max-width: 150px; max-height: 200px; display: block;"></div>
-                            <input type="file" id="thumbnailFile" name="thumbnailFile" accept="image/*" onchange="setThumbnail(event)">
+                            <input type="file" id="thumbnailFile" name="thumbnailFile" accept=".jpg" onchange="setThumbnail(event)">
                             <div id="thumbnailMessage" style="color: red;"></div>
                         </div>
 
@@ -548,15 +549,15 @@
             }).done(function (response) {
             console.log(response.toString());
             var messageDiv = $('#workNameMessage');
-            if (response === 0) { // 또는 if (parseInt(response) === 0)
+            if (response == null) { // 또는 if (parseInt(response) === 0)
                 messageDiv.text('등록된 작품이 없습니다.');
                 messageDiv.css('color', 'green');
             } else {
 
-                if(response.workName === workName){
+                if (response.workName === workName) {
                     messageDiv.text('지금 작품명입니다.');
                     messageDiv.css('color', 'green');
-                }else{
+                } else {
                     messageDiv.text('등록된 작품이 있습니다. 다른 작품명으로 적어주세요.');
                     messageDiv.css('color', 'red');
                     return false;

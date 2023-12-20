@@ -236,7 +236,7 @@
                     <div class="inputset inputset-lg inputset-group" for="thumbnailFile">
                         <label class="inputset-label" style="font-size: var(--fs-h4);">썸네일</label>
                         <div id="image_container"><img src="" alt="" width="150" height="200" placeholder="이미지가 여기에 나타납니다."></div>
-                        <input type="file" id="thumbnailFile" name="thumbnailFile" accept="image/*" onchange="setThumbnail(event)">
+                        <input type="file" id="thumbnailFile" name="thumbnailFile" accept=".jpg" onchange="setThumbnail(event)">
                         <div id="thumbnailMessage" style="color: red;"></div>
                     </div>
 
