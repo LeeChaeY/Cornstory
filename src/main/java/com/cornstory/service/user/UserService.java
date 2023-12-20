@@ -33,6 +33,6 @@ public interface UserService {
 
     public int updateUserPopcornCnt(Map map) throws Exception;
 
-    String processKakaoLogin(Map<String, String> kakaoInfo) throws Exception;
+    User processKakaoLogin(Map<String, String> kakaoInfo) throws Exception;
 
 }

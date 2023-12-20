@@ -89,7 +89,7 @@
                                 <c:set var="i" value="${i + 1}"/>
                                 <tr class="ct_list_pop">
                                     <td>${i}</td>
-                                    <td>${user.userId}</td>
+                                    <td><img src="../file/user/${user.userImage}" width="25" style="border-radius: 50%; max-width: 100%;" alt=""/>&nbsp;${user.userId}</td>
                                     <td>${user.nickName}</td>
                                     <td>${user.userName}</td>
                                     <td>${user.phone}</td>
