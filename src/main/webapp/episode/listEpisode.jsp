@@ -31,7 +31,45 @@
         .btnset:hover { background-color: #004494; }
         .btn-delete { background-color: #ff0000; }
         .btn-delete:hover { background-color: #cc0000; }
+
+        /* 모달 스타일 */
+        .modal {
+            display: none; /* 초기에는 모달 창을 숨깁니다. */
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 300px;
+            text-align: center;
+        }
+
+        /* 버튼 스타일 */
+        #confirmBtn, #cancelBtn {
+            margin-top: 10px;
+            padding: 8px 15px;
+            background-color: #0056b3;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #confirmBtn:hover, #cancelBtn:hover {
+            background-color: #004494;
+        }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 
@@ -109,11 +147,16 @@
                                     <td><fmt:formatDate value="${episode.episodeDate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
                                     <td>${work.fap == 0 ? '무료' : '유료'}</td>
                                     <c:if test="${work.fap == 1}">
-                                        <td>팝콘 <c:choose>
+
+                                        <td>
+                                            <span onclick="openModalWithInfo('${work.workName}', '${episode.episodeOrder}', '${episode.episodeName}', '${episode.episodeNo}')" style="cursor: pointer; text-decoration: underline;" style="cursor: pointer; text-decoration: underline;">
+                                            팝콘 <c:choose>
                                             <c:when test="${work.category eq '0'}">2</c:when>
                                             <c:when test="${work.category eq '1'}">3</c:when>
                                             <c:when test="${work.category eq '2'}">5</c:when>
-                                        </c:choose> 소비하고 시청하기</td>
+                                        </c:choose> 소비하고 시청하기
+                                            </span>
+                                        </td>
                                     </c:if>
                                     <c:if test="${user.userId eq work.userId}">
                                         <td><a href="../episode/updateEpisode?episodeNo=${episode.episodeNo}">수정</a></td>
@@ -135,8 +178,55 @@
     </div>
 </main>
 
+<!-- 모달 창 -->
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <h3> <div id="modalContent"></div></h3>
+        <button id="confirmBtn">소비하기</button>
+        <button id="cancelBtn">취소하기</button>
+    </div>
+</div>
+
 <%@ include file="../layout/bottom.jsp" %>
 
 </body>
+<script>
+    // 모달 창을 열기 위한 함수
+    function openModal(workName, episodeOrder, episodeName) {
+        var modal = document.getElementById("myModal");
+        modal.style.display = "block";
+
+        var modalContent = document.getElementById("modalContent");
+        modalContent.innerHTML = workName+' : '+episodeOrder+'회 '+episodeName+'를 시청하시겠습니까?'
+    }
+
+    // 모달 창을 닫기 위한 함수
+    function closeModal() {
+        var modal = document.getElementById("myModal");
+        modal.style.display = "none";
+    }
+
+    // 모달 창 열기 버튼을 클릭했을 때 해당 정보를 전달하고 모달 창을 열도록 설정
+    function openModalWithInfo(workName, episodeOrder, episodeName, episodeNo) {
+        openModal(workName, episodeOrder, episodeName);
+
+        // "소비하기" 버튼에 이벤트 리스너를 등록하여 페이지 이동 로직을 처리
+        document.getElementById("confirmBtn").addEventListener("click", function() {
+            consumeAndWatch(episodeNo);
+        });
+    }
+
+    // "소비하기" 버튼을 클릭했을 때 페이지로 이동하는 함수
+    function consumeAndWatch(episodeNo) {
+        // 여기에서 원하는 페이지 URL로 이동하도록 설정합니다.
+        var url = '/purchase/addPurchase?episodeNo=' + episodeNo; // 예시 URL
+        window.location.href = url; // 페이지 이동
+    }
+
+    // "취소하기" 버튼을 클릭했을 때 모달 창을 닫기 위한 이벤트 리스너 등록
+    document.getElementById("cancelBtn").addEventListener("click", function() {
+        closeModal();
+    });
+</script>
 </html>
 
