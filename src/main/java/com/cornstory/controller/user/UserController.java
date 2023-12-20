@@ -2,6 +2,10 @@ package com.cornstory.controller.user;
 
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.Map;
 
 import com.cornstory.common.Search;
@@ -74,24 +78,32 @@ public class UserController {
     }
 
     @RequestMapping(value = "addUser", method = RequestMethod.POST)
-    public String addUser(@ModelAttribute("user") @Validated User user,
-                          @RequestParam(name = "filename", required = false) MultipartFile filename, Model model) throws Exception {
+    public String addUser(@ModelAttribute("user") @Validated User user, HttpServletRequest request,
+                          @RequestParam("userfile") MultipartFile file, Model model) throws Exception {
         System.out.println("user/addUser : POST");
 
         // 유효성 검사 실패 시
         System.out.println(user + "들어온 정보 확인 하기 ");
 
-        // 파일 업로드 처리 (파일이 있을 때만 수행)
-        if (filename != null && !filename.isEmpty()) {
-            String originalFilename = filename.getOriginalFilename();
-            // 파일을 업로드할 상대 경로 설정
-            String uploadDir = "C:\\CornStory\\src\\main\\resources\\static\\file\\user";
-            String filePath = uploadDir + File.separator +originalFilename;
-            File dest = new File(filePath);
+        String fileName = user.getUserId() + "_user" ;
+        fileName = fileName.replaceAll("[^a-zA-Z0-9가-힣_]", "_");
+        fileName += ".jpg";
 
-            // 파일을 저장
-//            filename.transferTo(dest);
-            user.setUserImage(originalFilename);
+        if (!file.isEmpty()) {
+            try {
+                String uploadDir = request.getServletContext().getRealPath("")+"\\..\\resources\\static\\file\\user\\";
+                String filePath = uploadDir + File.separator + fileName;
+
+
+                Files.write(Path.of(filePath), file.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+
+                // 파일 경로를 Work 객체에 저장
+
+                user.setUserImage(filePath);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
 
         // 나머지 비즈니스 로직 처리
