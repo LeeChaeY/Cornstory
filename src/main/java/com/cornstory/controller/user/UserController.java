@@ -6,12 +6,16 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.HashMap;
 import java.util.Map;
 
 import com.cornstory.common.Search;
+import com.cornstory.domain.KakaoAPI;
 import com.cornstory.domain.User;
 import com.cornstory.service.user.UserService;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -21,6 +25,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/user/*")
@@ -41,6 +46,79 @@ public class UserController {
     public String login() throws Exception{
         System.out.println("user/login : GET");
         return "user/login";
+    }
+    KakaoAPI kakaoApi = new KakaoAPI();
+
+    @RequestMapping(value = "/slogin")
+    public ModelAndView slogin(@ModelAttribute("user") User user, @RequestParam("code") String code, HttpSession session) throws Exception {
+        ModelAndView mav = new ModelAndView();
+
+        // 1. 카카오 로그인 처리
+        String accessToken = kakaoApi.getAccessToken(code);
+        HashMap<String, Object> userInfo = kakaoApi.getUserInfo(accessToken);
+
+        System.out.println("카카오 토큰 정보 : " + accessToken);
+        System.out.println("카카오 로그인 정보: " + userInfo.toString());
+        String userId = userInfo.get("id").toString();
+
+        // 2. 사용자가 이미 회원인지 확인
+        User dbUser = userService.getUser(userId);
+
+        if (dbUser != null) {
+            // 이미 회원인 경우
+            System.out.println("카카오 로그인 정보를 가져왔으며 이미 회원인 경우");
+
+            // 세션에 사용자 정보 저장
+            session.setAttribute("accessToken", accessToken);
+            System.out.println("2222 카카오 토큰 정보 : " + accessToken);
+            session.setAttribute("user", dbUser);
+            //session.setAttribute("accessToken", accessToken);
+
+            //mav.addObject("userId", userId);
+            mav.setViewName("redirect:/index.jsp");  // 로그인 후 이동할 페이지를 지정하세요.
+        } else {
+            // 회원이 아닌 경우
+            System.out.println("카카오 로그인 정보를 가져왔으며 비회원인 경우");
+
+            // 회원가입 페이지로 이동
+            mav.addObject("social", 1);
+            mav.addObject("userId", userId);
+            mav.addObject("kakaoUserInfo", userInfo);
+
+            mav.setViewName("forward:/user/addUser");  // 회원가입 페이지 경로를 지정하세요.0
+            System.out.println("mav 값 출력: " + mav);
+        }
+
+        return mav;
+    }
+
+    @RequestMapping(value = "/slogout", method = RequestMethod.POST)
+    public ModelAndView slogout(HttpSession session, HttpServletResponse response) throws Exception {
+        ModelAndView mav = new ModelAndView();
+        System.out.println("user/slogout : POST");
+
+        String accessToken = (String) session.getAttribute("accessToken");
+        System.out.println("accessToken: " + accessToken);
+
+        if (accessToken != null) {
+            // 토큰이 존재할 경우에만 로그아웃 시도
+            kakaoApi.kakaoLogout(accessToken);
+            session.removeAttribute("accessToken");
+            session.removeAttribute("userId");
+            session.removeAttribute("user");
+
+            // 쿠키 삭제를 위한 코드
+            Cookie accessTokenCookie = new Cookie("accessToken", null);
+            accessTokenCookie.setMaxAge(0); // 쿠키 유효시간을 0으로 설정하여 삭제
+            response.addCookie(accessTokenCookie);
+
+            System.out.println("Logout successful");
+        } else {
+            System.out.println("No access token found in session");
+        }
+
+        mav.setViewName("redirect:/index.jsp");
+        return mav;
     }
 
     @RequestMapping(value = "login", method = RequestMethod.POST)

@@ -1,10 +1,8 @@
 package com.cornstory.domain;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 
@@ -108,27 +106,36 @@ public class KakaoAPI {
     }
 
 
-    public void kakaoLogout(String accessToken) {
-        String reqURL = "http://kapi.kakao.com/v1/user/logout";
+    public void kakaoLogout(String accessToken) throws Exception {
+        String reqURL = "https://kapi.kakao.com/v1/user/logout";
         try {
             URL url = new URL(reqURL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded"); // 추가: Content-Type 설정
             int responseCode = conn.getResponseCode();
             System.out.println("responseCode = " + responseCode);
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                // 정상적으로 로그아웃 처리된 경우
+                System.out.println("Logout successful");
+            } else {
+                // 에러 응답 처리
+                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+                StringBuilder errorResponse = new StringBuilder();
+                String line;
 
-            String result = "";
-            String line = "";
+                while ((line = br.readLine()) != null) {
+                    errorResponse.append(line);
+                }
 
-            while((line = br.readLine()) != null) {
-                result+=line;
+                br.close();
+                System.out.println("Error response: " + errorResponse.toString());
             }
-            System.out.println(result);
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("Error during logout: " + e.getMessage());
         }
     }
 }

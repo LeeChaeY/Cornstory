@@ -37,57 +37,7 @@ public class UserRestController {
     }
 
 
-    KakaoAPI kakaoApi = new KakaoAPI();
 
-    @RequestMapping(value = "/slogin")
-    public ModelAndView slogin(@ModelAttribute("user") User user, @RequestParam("code") String code, HttpSession session) throws Exception {
-        ModelAndView mav = new ModelAndView();
-
-        // 1. 카카오 로그인 처리
-        String accessToken = kakaoApi.getAccessToken(code);
-        HashMap<String, Object> userInfo = kakaoApi.getUserInfo(accessToken);
-
-        System.out.println("카카오 로그인 정보: " + userInfo.toString());
-        String userId = userInfo.get("id").toString();
-
-        // 2. 사용자가 이미 회원인지 확인
-        User dbUser = userService.getUser(userId);
-
-        if (dbUser != null) {
-            // 이미 회원인 경우
-            System.out.println("카카오 로그인 정보를 가져왔으며 이미 회원인 경우");
-
-            // 세션에 사용자 정보 저장
-            session.setAttribute("user", dbUser);
-            //session.setAttribute("accessToken", accessToken);
-
-            //mav.addObject("userId", userId);
-            mav.setViewName("redirect:/index.jsp");  // 로그인 후 이동할 페이지를 지정하세요.
-        } else {
-            // 회원이 아닌 경우
-            System.out.println("카카오 로그인 정보를 가져왔으며 비회원인 경우");
-
-            // 회원가입 페이지로 이동
-            mav.addObject("social", 1);
-            mav.addObject("userId", userId);
-            mav.addObject("kakaoUserInfo", userInfo);
-            mav.setViewName("forward:/user/addUser");  // 회원가입 페이지 경로를 지정하세요.
-            System.out.println("mav 값 출력: " + mav);
-        }
-
-        return mav;
-    }
-
-    @RequestMapping(value="/slogout")
-    public ModelAndView slogout(HttpSession session) {
-        ModelAndView mav = new ModelAndView();
-
-        kakaoApi.kakaoLogout((String)session.getAttribute("accessToken"));
-        session.removeAttribute("accessToken");
-        session.removeAttribute("userId");
-        mav.setViewName("index");
-        return mav;
-    }
 
         @RequestMapping(value = "json/login", method = RequestMethod.POST)
         public String login(@RequestParam("userId") String userId,

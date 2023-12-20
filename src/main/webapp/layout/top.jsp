@@ -268,11 +268,24 @@
               | 보유한 팝콘수: <fmt:formatNumber value="${sessionScope.user.popcornCnt}" pattern="#,##0"/>개
 
             </span>
-            <form action="/user/logout" method="post">
-              <button type="submit" style="border: none; background: none; padding: 0; cursor: pointer; display: inline-block;">
-                <img src="../ssh/images/logout.png" alt="로고">
-              </button>
-            </form>
+            <c:choose>
+              <c:when test="${sessionScope.user.social eq 0}">
+                <form action="/user/logout" method="post">
+                  <button type="submit" class="normal-logout-btn">
+                    <img src="../ssh/images/logout.png" alt="로고">
+                  </button>
+                </form>
+              </c:when>
+              <c:when test="${sessionScope.user.social eq 1}">
+                <form action="/user/slogout" method="post">
+                  <button type="submit" class="special-logout-btn">
+                    <img src="../ssh/images/kakao.jpg" alt="로고">
+                    <img src="../ssh/images/logout.png" alt="로고">
+                  </button>
+                </form>
+              </c:when>
+            </c:choose>
+
           </c:otherwise>
         </c:choose>
 
