@@ -81,24 +81,20 @@
         <div class="textset content-top">
             <div class="container-md">
                 <h2 class="textset-tit">회원정보조회</h2>
-
-                <h2>
-                <img class="textset-tit" src="../file/user/${sessionScope.user.userImage}" width="100" style="border-radius: 100%; max-width: 100%;" alt=""/>
-                </h2>
             </div>
         </div>
         <div class="contents-form">
+            <div style="text-align: center;">
+                <img class="textset-tit" src="../file/user/${sessionScope.user.userImage}" width="100" style="border-radius: 100%; max-width: 100%;" alt=""/>
+            </div>
             <div class="container-md">
-                <div class="contents-form-top">
+                <div class="contents-form-top"></div>
 
-
-
-
-                </div>
                 <div class="inputset inputset-lg inputset-group" for="userName">
                     <label class="inputset-label">성명</label>
                     <label class="inputset-label">${user.userName}</label>
                 </div>
+
                 <div class="inputset inputset-lg inputset-group" for="userId">
                     <label class="inputset-label">아이디</label>
                     <label class="inputset-label">${user.userId}</label>
@@ -127,8 +123,7 @@
                     <label class="inputset-label">생년월일</label>
                     <label class="inputset-label">${user.birthday}</label>
                 </div>
-
-
+                <div class="contents-form-top"></div>
             </div>
             <div class="bottom-btn">
                 <a href="../index.jsp"><button class="btnset btnset-lg btnset-dark btnset-rect">확인</button></a>

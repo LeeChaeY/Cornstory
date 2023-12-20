@@ -1,9 +1,11 @@
 package com.cornstory.restController.user;
 
+import com.cornstory.domain.KakaoAPI;
 import com.cornstory.domain.User;
 import com.cornstory.service.user.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +14,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+
 
 import java.io.File;
 import java.util.HashMap;
@@ -25,23 +32,62 @@ public class UserRestController {
     @Qualifier("userServiceImpl")
     private UserService userService;
 
-    @Value("${kakao.api.native-app-key}")
-    private String kakaoNativeAppKey;
-
-    @Value("${kakao.api.rest-key}")
-    private String kakaoRestKey;
-
-    @Value("${kakao.api.js-key}")
-    private String kakaoJsKey;
-
-    @Value("${kakao.api.admin-key}")
-    private String kakaoAdminKey;
-
-
     public UserRestController() {
         System.out.println("UserRestController 진입");
     }
 
+
+    KakaoAPI kakaoApi = new KakaoAPI();
+
+    @RequestMapping(value = "/slogin")
+    public ModelAndView slogin(@ModelAttribute("user") User user, @RequestParam("code") String code, HttpSession session) throws Exception {
+        ModelAndView mav = new ModelAndView();
+
+        // 1. 카카오 로그인 처리
+        String accessToken = kakaoApi.getAccessToken(code);
+        HashMap<String, Object> userInfo = kakaoApi.getUserInfo(accessToken);
+
+        System.out.println("카카오 로그인 정보: " + userInfo.toString());
+        String userId = userInfo.get("id").toString();
+
+        // 2. 사용자가 이미 회원인지 확인
+        User dbUser = userService.getUser(userId);
+
+        if (dbUser != null) {
+            // 이미 회원인 경우
+            System.out.println("카카오 로그인 정보를 가져왔으며 이미 회원인 경우");
+
+            // 세션에 사용자 정보 저장
+            session.setAttribute("user", dbUser);
+            //session.setAttribute("accessToken", accessToken);
+
+            //mav.addObject("userId", userId);
+            mav.setViewName("redirect:/index.jsp");  // 로그인 후 이동할 페이지를 지정하세요.
+        } else {
+            // 회원이 아닌 경우
+            System.out.println("카카오 로그인 정보를 가져왔으며 비회원인 경우");
+
+            // 회원가입 페이지로 이동
+            mav.addObject("social", 1);
+            mav.addObject("userId", userId);
+            mav.addObject("kakaoUserInfo", userInfo);
+            mav.setViewName("forward:/user/addUser");  // 회원가입 페이지 경로를 지정하세요.
+            System.out.println("mav 값 출력: " + mav);
+        }
+
+        return mav;
+    }
+
+    @RequestMapping(value="/slogout")
+    public ModelAndView slogout(HttpSession session) {
+        ModelAndView mav = new ModelAndView();
+
+        kakaoApi.kakaoLogout((String)session.getAttribute("accessToken"));
+        session.removeAttribute("accessToken");
+        session.removeAttribute("userId");
+        mav.setViewName("index");
+        return mav;
+    }
 
         @RequestMapping(value = "json/login", method = RequestMethod.POST)
         public String login(@RequestParam("userId") String userId,
@@ -58,7 +104,6 @@ public class UserRestController {
                 return "fail";
             }
         }
-
 
     @RequestMapping(value = "json/addUser", method = RequestMethod.POST)
     public String addUser(@ModelAttribute("user") @Validated User user,
@@ -97,50 +142,6 @@ public class UserRestController {
         // 가입 성공 시 "success" 반환
         return "success";
     }
-
-
-
-
-
-
-    @PostMapping("/kakaoLogin")
-    @ResponseBody
-    public Map<String, Object> kakaoLogin(@RequestParam("userId") String userId,
-                                          @RequestParam("nickName") String nickName,
-                                          @RequestParam("email") String email) {
-        Map<String, Object> response = new HashMap<>();
-
-        try {
-            // 카카오로부터 받은 정보로 유저를 찾거나 생성
-            Map<String, String> kakaoInfo = new HashMap<>();
-            kakaoInfo.put("userId", userId);
-            kakaoInfo.put("nickName", nickName);
-            kakaoInfo.put("email", email);
-
-            // 서비스 단에서 String으로 반환
-            String loginResult = userService.processKakaoLogin(kakaoInfo);
-
-            // 성공적으로 처리되었을 경우
-            if ("success".equals(loginResult)) {
-                response.put("success", true);
-                response.put("message", "로그인 성공");
-            } else {
-                // 실패했을 경우
-                response.put("success", false);
-                response.put("message", "로그인 실패");
-            }
-        } catch (Exception e) {
-            // 에러가 발생한 경우
-            response.put("success", false);
-            response.put("message", "서버 오류");
-            e.printStackTrace();  // 실제 프로덕션 환경에서는 로깅 라이브러리를 사용하는 것이 좋습니다.
-        }
-
-        return response;
-    }
-
-
-
 
     @RequestMapping(value="json/checkUserId", method=RequestMethod.GET)
     public String checkUserId(@RequestParam("userId") String userId) throws Exception {
