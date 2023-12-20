@@ -61,12 +61,9 @@ public class ChatController {
 
         if (!file.isEmpty()) {
             try {
-                // uuid 생성
-                UUID uuid = UUID.randomUUID();
-                System.out.println(file.getOriginalFilename());
-
-                //savedName 변수에 uuid + 원래 이름 추가
-                String savedName = uuid + "_" + file.getOriginalFilename();
+                String savedName = user.getUserId()+"_"+chatSpace.getcSpaceName();
+                savedName = savedName.replaceAll("[^a-zA-Z0-9가-힣_]", "_");
+                savedName += ".jpg";
                 File uploadFile = new File(uploadDir, savedName);
                 file.transferTo(uploadFile);
                 chatSpace.setcSpaceImage(savedName);
@@ -100,7 +97,8 @@ public class ChatController {
 
     @PostMapping(value="updateChatSpace")
     public String updateChatSpace(@ModelAttribute("chatSpace") ChatSpace chatSpace,
-                                  @RequestPart("file") MultipartFile file, HttpServletRequest request) throws Exception {
+                                  @RequestPart("file") MultipartFile file, HttpServletRequest request,
+                                  @SessionAttribute("user") User user) throws Exception {
         System.out.println("/chat/updateChatSpace : POST");
         System.out.println("/chat/updateChatSpace : " + chatSpace);
 
@@ -126,12 +124,10 @@ public class ChatController {
                     }
                 }
 
-                // uuid 생성
-                UUID uuid = UUID.randomUUID();
-                System.out.println(file.getOriginalFilename());
-
                 //savedName 변수에 uuid + 원래 이름 추가
-                String savedName = uuid + "_" + file.getOriginalFilename();
+                String savedName = user.getUserId()+"_"+chatSpace.getcSpaceName();
+                savedName = savedName.replaceAll("[^a-zA-Z0-9가-힣_]", "_");
+                savedName += ".jpg";
                 File uploadFile = new File(uploadDir, savedName);
                 file.transferTo(uploadFile);
                 chatSpace.setcSpaceImage(savedName);

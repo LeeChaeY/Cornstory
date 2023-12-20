@@ -29,6 +29,29 @@ form[name="form"] .inputset {
     }
 }
 
+.drop-area {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.drop-text {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.file-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.file-list img {
+    width: 200px;
+    height: 200px;
+    margin: 5px;
+}
+
 /* opilsol-N26 [sblQ1o2joM] */
 .opilsol-N26 .content-container { padding-top: 8rem; }
 .opilsol-N26 .contents-form-top { align-items: flex-end; margin-bottom: 1.5rem; }

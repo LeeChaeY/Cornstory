@@ -16,7 +16,7 @@ $(function () {
 
     $("input[type='button'][value='수정']").on("click", function () {
         let p = chatSpaceCheck();
-        if(p) updateChatSpace();
+        if (p) updateChatSpace();
     });
 
     $("input[name='cSpaceName']").on("input", function () {
@@ -27,23 +27,56 @@ $(function () {
     $("a:contains('채팅방 추가하기')").on("click", function () {
         $(self.location).attr("href", "/chat/addChatSpace");
     });
+
+    $('.drop-area').on('drag dragstart dragend dragover dragenter dragleave drop', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+    });
+    $(".drop-area").on("dragover", function (event) {
+        $(this).addClass('drag-over');
+    });
+    $(".drop-area").on("dragleave dragend drop", function (event) {
+        $(this).removeClass('drag-over');
+    });
+    $(".drop-area").on("drop", function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        if (event.originalEvent.dataTransfer.files.length === 1) {
+            const file = event.originalEvent.dataTransfer.files[0];
+            // Display the uploaded file
+            displayFile(file);
+        } else {
+            alert('Please drop only one file at a time.');
+        }
+
+        // Remove highlight from drop area
+        $(this).removeClass('drag-over');
+    });
+    $("input[type='file']").on("change", function (event) {
+        const file = this.files[0];
+        displayFile(file);
+    });
 });
 
 
 function chatSpaceCheck() {
     if ($("input[name='cSpaceName']").val() === "") {
         event.preventDefault();
-        alert("채팅방 제목을 입력해주세요.");
+        // alert("채팅방 제목을 입력해주세요.");
+        displayErrorMessageWithCountdown('채팅방 제목을 입력해주세요.', 3, document.querySelector('.cSpaceNameCheck'));
         return false;
     }
     if (!$("input[name='genre2']").val() && !$("input[name='genre']:checked").val()) {
         event.preventDefault();
-        alert("장르를 선택해주세요.");
+        // alert("장르를 선택해주세요.");
+        displayErrorMessageWithCountdown('장르를 선택해주세요.', 3, document.querySelector('.genreCheck'));
         return false;
     }
     if ($("input[name='file']").val() && !$("input[name='file']").val().endsWith(".jpg")) {
         event.preventDefault();
-        alert("jpg 파일만 업로드 가능합니다.");
+        // alert("jpg 파일만 업로드 가능합니다.");
+        displayErrorMessageWithCountdown('jpg 파일만 업로드 가능합니다.', 3, document.querySelector('.fileCheck'));
         return false;
     }
     return true;
@@ -79,7 +112,7 @@ function addChatSpace() {
             addJsonDataToForm(form, JSONData.totalCount, 'totalCount');
             addJsonDataToForm(form, JSONData.user, 'user');
 
-            const chatWindow = window.open('','chatWindow', 'width=500,height=400,left:100,top:100');
+            const chatWindow = window.open('', 'chatWindow', 'width=500,height=400,left:100,top:100');
 
             // Check if the new window/tab is opened successfully
             if (chatWindow) {
@@ -130,7 +163,7 @@ function updateChatSpace() {
             addJsonDataToForm(form, JSONData.totalCount, 'totalCount');
             addJsonDataToForm(form, JSONData.user, 'user');
 
-            const chatWindow = window.open('','chatWindow', 'width=500,height=400,left:100,top:100');
+            const chatWindow = window.open('', 'chatWindow', 'width=500,height=400,left:100,top:100');
 
             // Check if the new window/tab is opened successfully
             if (chatWindow) {
@@ -172,4 +205,39 @@ function addJsonDataToForm(form, postData, name) {
     jsonDataInput.name = name;
     jsonDataInput.value = JSON.stringify(postData);
     form.appendChild(jsonDataInput);
+}
+
+function displayErrorMessageWithCountdown(message, seconds, errorMessageContainer) {
+    errorMessageContainer.innerText = message + ' ' + seconds + '초 후에 사라집니다.';
+
+    let countdown = seconds;
+    let countdownInterval = setInterval(function () {
+        countdown--;
+        errorMessageContainer.innerText = message + ' ' + countdown + '초 후에 사라집니다.';
+
+        if (countdown <= 0) {
+            clearInterval(countdownInterval);
+            errorMessageContainer.style.display = 'none'; // 타이머 종료 후에 'none'으로 설정
+            // 타이머 종료 후에 다시 초기화
+            setTimeout(function () {
+                errorMessageContainer.style.display = 'block'; // 또는 'inline' 등으로 적절한 값으로 설정
+                errorMessageContainer.innerText = ''; // 초기화
+            }, 500); // 적절한 시간(ms)을 지정
+        }
+    }, 1000);
+}
+
+
+function displayFile(file) {
+    const listItem = $("<li>");
+    let reader = new FileReader();
+
+    reader.onload = function (e) {
+        listItem.html('<img src="' + e.target.result + '" alt="your image"/>');
+    };
+
+    reader.readAsDataURL(file);
+
+    $(".file-list").empty().append(listItem);
+
 }

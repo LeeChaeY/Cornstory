@@ -90,6 +90,7 @@
                                             <input type="text" class="inputset-input form-control" name="cSpaceName" id="Name"
                                                    value="${chatSpace.cSpaceName}" aria-label="이름" required maxlength="30">
                                             <span class="cSpaceNameLength"> ${cSpaceNameCnt}/30</span>
+                                            <p class="cSpaceNameCheck" style="color: red; display: none;">
                                         </div>
                                     </td>
                                 </tr>
@@ -106,17 +107,20 @@
                                     <th>
                                         <span class="label">썸네일 첨부</span>
                                     </th>
-                                    <td colspan="2">
-                                        <div class="fileset fileset-lg fileset-label">
+                                    <td colspan="1">
+                                        <div id="dropArea" class="drop-area">
+                                            <span class="drop-text">Drag and drop files here or click to upload</span>
                                             <input class="check-image" type="file" name="file" accept=".jpg"/>
+                                            <ul id="fileList" class="file-list"></ul>
                                         </div>
                                         <br>
                                         <p class="p1 co-text3">이미지 형식의 jpg만 첨부 가능합니다.</p>
                                         <p class="p1 co-text3">첨부파일은 10MB를 초과할 수 없으며, 최대 1개까지 가능합니다.</p>
+                                        <p class="fileCheck" style="color: red; display:none;">
                                     </td>
                                     <td colspan="1">
                                         * 기존 썸네일<br><br>
-                                        <img width="100px" height="100px" src="/file/chat/${chatSpace.cSpaceImage}">
+                                        <img width="200px" height="200px" src="/file/chat/${chatSpace.cSpaceImage}">
                                     </td>
                                 </tr>
                                 </tbody>

@@ -38,6 +38,7 @@
     <script src="/ssh/js/script.js"></script>
 
     <script src="/lcy/js/addChatSpace.js"></script>
+<%--    <script src="/lcy/js/fileDragAndDrop.js"></script>--%>
 </head>
 
 <body>
@@ -88,6 +89,8 @@
                                                    placeholder="채팅방 제목을 입력해주세요" aria-label="이름" required maxlength="30">
                                             <span class="cSpaceNameLength">0/30</span>
                                         </div>
+                                        <p class="cSpaceNameCheck" style="color: red; display: none;">
+                                        </p>
                                     </td>
                                 </tr>
                                 <tr>
@@ -183,6 +186,8 @@
                                                 <span class="radioset-text">기타</span>
                                             </div>
                                         </div>
+                                        <p class="genreCheck" style="color: red; display: none;">
+                                        </p>
                                     </td>
                                 </tr>
                                 <tr>
@@ -190,16 +195,20 @@
                                         <span class="label">썸네일 첨부</span>
                                     </th>
                                     <td colspan="2">
-                                        <div class="fileset fileset-lg fileset-label">
+                                        <div id="dropArea" class="drop-area">
+                                            <span class="drop-text">Drag and drop files here or click to upload</span>
                                             <input class="check-image" type="file" name="file" accept=".jpg"/>
+                                            <ul id="fileList" class="file-list"></ul>
                                         </div>
                                         <br>
                                         <p class="p1 co-text3">이미지 형식의 jpg만 첨부 가능합니다.</p>
                                         <p class="p1 co-text3">첨부파일은 10MB를 초과할 수 없으며, 최대 1개까지 가능합니다.</p>
+                                        <p class="fileCheck" style="color: red; display:none;">
+                                        </p>
                                     </td>
                                     <td colspan="1">
                                         * 기본 썸네일<br><br>
-                                        <img width="100px" height="100px" src="/file/chat/chat.jpg">
+                                        <img width="200px" height="200px" src="/file/chat/chat.jpg">
                                     </td>
                                 </tr>
                                 </tbody>

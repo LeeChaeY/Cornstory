@@ -84,12 +84,9 @@ public class ProductController {
         if (product.getProdCategory() == 0) {
             if (!file.isEmpty()) {
                 try {
-                    // uuid 생성
-                    UUID uuid = UUID.randomUUID();
-                    System.out.println(file.getOriginalFilename());
-
-                    //savedName 변수에 uuid + 원래 이름 추가
-                    String savedName = uuid + "_" + file.getOriginalFilename();
+                    String savedName = user.getUserId()+"_"+product.getProdName();
+                    savedName = savedName.replaceAll("[^a-zA-Z0-9가-힣_]", "_");
+                    savedName += ".jpg";
                     File uploadFile = new File(uploadDir, savedName);
                     file.transferTo(uploadFile);
                     product.setProdImage(savedName);
@@ -152,12 +149,9 @@ public class ProductController {
                         }
                     }
 
-                    // uuid 생성
-                    UUID uuid = UUID.randomUUID();
-                    System.out.println(file.getOriginalFilename());
-
-                    //savedName 변수에 uuid + 원래 이름 추가
-                    String savedName = uuid + "_" + file.getOriginalFilename();
+                    String savedName = user.getUserId()+"_"+product.getProdName();
+                    savedName = savedName.replaceAll("[^a-zA-Z0-9가-힣_]", "_");
+                    savedName += ".jpg";
                     File uploadFile = new File(uploadDir, savedName);
                     file.transferTo(uploadFile);
                     product.setProdImage(savedName);

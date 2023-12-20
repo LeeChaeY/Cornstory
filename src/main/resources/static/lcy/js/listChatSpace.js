@@ -59,8 +59,11 @@ $(function() {
     });
 
     $("input[type='button'][value='나가기']").on("click", function() {
-        let chatSpaceNo = $(this).parents("tr").children("td").eq(0).children("input").val();
-        deleteChatEnter(chatSpaceNo);
+        const p = confirm("정말 나가시겠습니까?");
+        if (p) {
+            let chatSpaceNo = $(this).parents("tr").children("td").eq(0).children("input").val();
+            deleteChatEnter(chatSpaceNo);
+        }
     });
 });
 
@@ -114,6 +117,10 @@ function enterChatSpace(chatSpaceNo) {
         method: "GET",
         dataType: "json",
         success: function(JSONData, status) {
+            let cnt = parseInt($("input[value='" + chatSpaceNo + "']").parents("tr").children("td").eq(5).text()) + 1;
+            $("input[value='" + chatSpaceNo + "']").parents("tr").children("td").eq(5).text(cnt);
+            $("input[value='" + chatSpaceNo + "']").parents("tr").children("td").eq(7).append("<input type='button' value='나가기''>");
+
             const form = document.createElement('form');
             form.method = 'post';
             form.action = 'http://localhost:3000/receive-post';  // Replace with your server URL
@@ -184,7 +191,7 @@ function deleteChatEnter(chatSpaceNo) {
             // alert(returnMessage);
             let cnt = $("input[value='" + chatSpaceNo + "']").parents("tr").children("td").eq(5).text() - 1;
             $("input[value='" + chatSpaceNo + "']").parents("tr").children("td").eq(5).text(cnt);
-            $("input[value='" + chatSpaceNo + "']").parents("tr").children("td").eq(14).children("input").eq(1).remove();
+            $($("input[value='" + chatSpaceNo + "']").parents("tr").children("td").eq(7)).children("input").eq(1).remove();
         },
         error: function(status) {
 

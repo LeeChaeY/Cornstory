@@ -79,11 +79,20 @@ public class PurchaseController {
     }
 
     @GetMapping("addPurchase")
-    public String addPurchase(@RequestParam("prodNo") int prodNo, @RequestParam(name="tranCnt", defaultValue="1") int tranCnt,
+    public String addPurchase(@RequestParam(value = "episodeNo", required = false, defaultValue = "0") int episodeNo,
+                              @RequestParam(value = "prodNo", required = false, defaultValue = "0") int prodNo,
+                              @RequestParam(name="tranCnt", defaultValue="1") int tranCnt,
                               @RequestParam(name="tranMethod", defaultValue="0") int tranMethod, @SessionAttribute("user") User user) throws Exception {
         System.out.println("/purchase/json/addPurchase : GET :: prodNo = " + prodNo + ", tranCnt = " + tranCnt);
 
-        Product product = productService.getProduct(prodNo);
+        Product product = null;
+        if (episodeNo != 0) {
+            product = productService.getProductByEpisodeNo(episodeNo);
+            prodNo = product.getProdNo();
+        }
+        if (prodNo != 0) {
+            product = productService.getProduct(prodNo);
+        }
 
         Purchase purchase = new Purchase();
         purchase.setProdNo(prodNo);
@@ -95,8 +104,6 @@ public class PurchaseController {
             purchase.setTranMethod(tranMethod);
             purchase.setAfPopcornCnt(user.getPopcornCnt() + product.getProdCnt() * tranCnt);
         } else {
-            purchase.setTranMethod(0);
-            purchase.setTranCnt(1);
             purchase.setAfPopcornCnt(user.getPopcornCnt() - product.getProdPrice() * tranCnt);
 
             Work work = workService.getWork(product.getWorkNo());
@@ -119,8 +126,11 @@ public class PurchaseController {
         map.put("userId", user.getUserId());
         map.put("popcornCnt", user.getPopcornCnt());
         userService.updateUserPopcornCnt(map);
-
-        return "redirect:/purchase/listPurchase?tranCategory=" + product.getProdCategory();
+        if (product.getProdCategory() == 1) {
+            return "redirect:/episode/getEpisode?episodeNo=" + episodeNo;
+        } else {
+            return "redirect:/purchase/listPurchase?tranCategory=" + product.getProdCategory();
+        }
     }
 
     @RequestMapping("listPurchase")
