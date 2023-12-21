@@ -35,19 +35,9 @@ public class UserController {
     @Autowired
     @Qualifier("userServiceImpl")
     private UserService userService;
-
     public UserController(){
         System.out.println("UserController 진입 ");
     }
-
-
-
-    @RequestMapping( value="login", method=RequestMethod.GET )
-    public String login() throws Exception{
-        System.out.println("user/login : GET");
-        return "user/login";
-    }
-    KakaoAPI kakaoApi = new KakaoAPI();
 
     @RequestMapping(value = "/slogin")
     public ModelAndView slogin(@ModelAttribute("user") User user, @RequestParam("code") String code, HttpSession session) throws Exception {
@@ -93,8 +83,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/slogout", method = RequestMethod.POST)
-    public ModelAndView slogout(HttpSession session, HttpServletResponse response) throws Exception {
-        ModelAndView mav = new ModelAndView();
+    public String slogout(HttpSession session) throws Exception {
         System.out.println("user/slogout : POST");
 
         String accessToken = (String) session.getAttribute("accessToken");
@@ -107,19 +96,20 @@ public class UserController {
             session.removeAttribute("userId");
             session.removeAttribute("user");
 
-            // 쿠키 삭제를 위한 코드
-            Cookie accessTokenCookie = new Cookie("accessToken", null);
-            accessTokenCookie.setMaxAge(0); // 쿠키 유효시간을 0으로 설정하여 삭제
-            response.addCookie(accessTokenCookie);
-
             System.out.println("Logout successful");
         } else {
             System.out.println("No access token found in session");
         }
 
-        mav.setViewName("redirect:/index.jsp");
-        return mav;
+        return "redirect:/index.jsp";
     }
+
+    @RequestMapping( value="login", method=RequestMethod.GET )
+    public String login(HttpServletResponse response) throws Exception{
+        System.out.println("user/login : GET");
+        return "user/login";
+    }
+    KakaoAPI kakaoApi = new KakaoAPI();
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public String login(@ModelAttribute("user") User user, HttpSession session, Model model) throws Exception {

@@ -244,7 +244,7 @@ progress { vertical-align: baseline; }
 /* ========== */
 /* Layout */
 .container-lg { max-width: 1920px; margin: 0 auto; } 
-.container-md { max-width: 1920px; margin: 0 auto; }
+.container-md { max-width: 1280px; margin: 0 auto; } 
 .container-sm { max-width: 1024px; margin: 0 auto; } 
 /* ========== */
 /* Grid */
@@ -435,8 +435,8 @@ progress { vertical-align: baseline; }
 
 /* ========== */
 /* Input : Inputset */
-.inputset-group { display: flex; justify-content: flex-start; align-items: center; white-space: nowrap;}
-.inputset-group .inputset-label { flex: 0 0 9rem; margin-right: 4rem; font-weight: 600; }
+.inputset-group { display: flex; justify-content: flex-start; align-items: center; } 
+.inputset-group .inputset-label { flex: 0 0 9rem; margin-right: 4rem; font-weight: 600; } 
 .inputset { position: relative; } 
 .inputset .inputset-textarea { min-height: 10rem; } 
 .inputset .inputset-input { border-color: var(--border-color); border-radius: 0; color: var(--body-color); height: var(--ht-md); padding: 0 1.6rem; font-size: var(--fs-p1); } 
@@ -976,4 +976,3 @@ progress { vertical-align: baseline; }
  .videoset .videoset-tit { margin-bottom: 2.4rem; font-size: 2.4rem; line-height: 3.4rem; } 
  .videoset .videoset-play { width: 6rem; height: 6rem; } 
  }
-

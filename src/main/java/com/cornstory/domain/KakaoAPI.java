@@ -108,6 +108,8 @@ public class KakaoAPI {
 
     public void kakaoLogout(String accessToken) throws Exception {
         String reqURL = "https://kapi.kakao.com/v1/user/logout";
+
+        //https://kauth.kakao.com/oauth/logout 카카오 계정과 함께 로그아웃
         try {
             URL url = new URL(reqURL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
