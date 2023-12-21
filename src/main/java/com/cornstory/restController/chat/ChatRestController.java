@@ -102,8 +102,8 @@ public class ChatRestController {
         model.addAttribute("totalCount", map02.get("totalCount"));
         System.out.println(map02.get("list"));
 
-        String url = "http://localhost:3000/";
-//        String url = "http://101.79.8.55:3000/";
+//        String url = "http://localhost:3000/";
+        String url = "http://101.79.8.55:3000/";
 
         Map<String, Object> returnMap = new HashMap<String, Object>();
         returnMap.put("url", url);
