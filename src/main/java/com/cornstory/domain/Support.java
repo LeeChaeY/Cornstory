@@ -4,6 +4,7 @@ import java.sql.Date;
 
 public class Support {
     private int supNo;
+    private String supName;
     private String userId;
     private String supId;
     private int supCategory;
@@ -13,12 +14,23 @@ public class Support {
     private Date supDate;
     private int supBan;
 
+    public Support() {
+    }
+
     public int getSupNo() {
         return supNo;
     }
 
     public void setSupNo(int supNo) {
         this.supNo = supNo;
+    }
+
+    public String getSupName() {
+        return supName;
+    }
+
+    public void setSupName(String supName) {
+        this.supName = supName;
     }
 
     public String getUserId() {
@@ -89,6 +101,7 @@ public class Support {
     public String toString() {
         return "Support{" +
                 "supNo=" + supNo +
+                ", supName='" + supName + '\'' +
                 ", userId='" + userId + '\'' +
                 ", supId='" + supId + '\'' +
                 ", supCategory=" + supCategory +

@@ -91,7 +91,12 @@
                     <div class="textset">
                         <h2 class="textset-tit"> 작품명 : ${work.workName}</h2>
                         <p class="textset-desc">작가명 : ${work.userId}</p>
-                        <p class="textset-desc">카테고리 : ${work.category}</p>
+                        <p class="textset-desc">카테고리 : <c:choose>
+                            <c:when test="${work.category eq '0'}">웹소설</c:when>
+                            <c:when test="${work.category eq '1'}">웹툰</c:when>
+                            <c:when test="${work.category eq '2'}">웹드라마</c:when>
+                            <c:otherwise>기타</c:otherwise>
+                        </c:choose></p>
                         <p class="textset-desc">작품 소개 : ${work.workDesc}</p>
                         <p class="textset-desc">장르 : ${work.genre1}
                             <c:if test="${not empty work.genre2}">, ${work.genre2}</c:if>
@@ -99,7 +104,18 @@
                         <p class="textset-desc">등록일 : ${work.workDate}</p>
                         <p class="textset-desc">${work.fap == 0 ? '무료' : '유료'}</p>
                         <p class="info-item"><a href="../episode/addEpisode?workNo=${work.workNo}">작품 회차 추가</a></p>
-                        <p class="info-item"><a href="../work/addBookmark?workNo=${work.workNo}">찜하기</a></p>
+                        <p class="info-item">
+                            <c:choose>
+                                <c:when test="${not empty bookmark and fn:contains(bookmark, work.workNo)}">
+                                    <span>찜한 작품입니다.</span>
+                                </c:when>
+                                <c:otherwise>
+                                    <!-- 북마크에 없는 경우 -->
+                                    <a href="../work/addBookmark?workNo=${work.workNo}">찜하기</a>
+                                </c:otherwise>
+                            </c:choose>
+                        <p class="textset-desc">조회수 : ${work.viewCnt}</p>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -123,7 +139,6 @@
                                 <th scope="col">회차 이미지</th>
                                 <th scope="col">회차명</th>
                                 <th class="" scope="col">등록일</th>
-                                <th scope="col">유료 / 무료</th>
                                 <c:if test="${work.fap eq 1}">
                                     <th scope="col">조회여부</th>
                                 </c:if>
@@ -145,17 +160,30 @@
                                         <td><a href="../episode/getEpisode?episodeNo=${episode.episodeNo}">${episode.episodeName}</a></td>
                                     </c:if>
                                     <td><fmt:formatDate value="${episode.episodeDate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
-                                    <td>${work.fap == 0 ? '무료' : '유료'}</td>
+                                    <c:set var="purchased" value="false" />
+                                    <c:forEach var="purchaseEpisode" items="${purchase}">
+                                        <c:if test="${purchaseEpisode.episodeNo == episode.episodeNo}">
+                                            <c:set var="purchased" value="true" />
+                                        </c:if>
+                                    </c:forEach>
                                     <c:if test="${work.fap == 1}">
-
                                         <td>
-                                            <span onclick="openModalWithInfo('${work.workName}', '${episode.episodeOrder}', '${episode.episodeName}', '${episode.episodeNo}')" style="cursor: pointer; text-decoration: underline;" style="cursor: pointer; text-decoration: underline;">
-                                            팝콘 <c:choose>
-                                            <c:when test="${work.category eq '0'}">2</c:when>
-                                            <c:when test="${work.category eq '1'}">3</c:when>
-                                            <c:when test="${work.category eq '2'}">5</c:when>
-                                        </c:choose> 소비하고 시청하기
-                                            </span>
+                                            <c:choose>
+                                                <c:when test="${purchased}">
+                                                    <span>구매 완료</span>
+                                                </c:when>
+                                                <c:otherwise>
+                    <span onclick="openModalWithInfo('${work.workName}', '${episode.episodeOrder}', '${episode.episodeName}', '${episode.episodeNo}')" style="cursor: pointer; text-decoration: underline;">
+                        팝콘
+                        <c:choose>
+                            <c:when test="${work.category eq '0'}">2</c:when>
+                            <c:when test="${work.category eq '1'}">3</c:when>
+                            <c:when test="${work.category eq '2'}">5</c:when>
+                        </c:choose>
+                        소비하고 시청하기
+                    </span>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </td>
                                     </c:if>
                                     <c:if test="${user.userId eq work.userId}">
@@ -191,6 +219,8 @@
 
 </body>
 <script>
+
+
     // 모달 창을 열기 위한 함수
     function openModal(workName, episodeOrder, episodeName) {
         var modal = document.getElementById("myModal");
@@ -211,9 +241,10 @@
         openModal(workName, episodeOrder, episodeName);
 
         // "소비하기" 버튼에 이벤트 리스너를 등록하여 페이지 이동 로직을 처리
-        document.getElementById("confirmBtn").addEventListener("click", function() {
+        var confirmBtn = document.getElementById("confirmBtn");
+        confirmBtn.onclick = function() {
             consumeAndWatch(episodeNo);
-        });
+        };
     }
 
     // "소비하기" 버튼을 클릭했을 때 페이지로 이동하는 함수

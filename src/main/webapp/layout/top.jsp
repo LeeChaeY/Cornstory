@@ -114,13 +114,13 @@
           </a>
           <ul class="header-sublist">
             <li class="header-subitem">
-              <a class="header-sublink" href="javascript:void(0)">
+              <a class="header-sublink" href="/story/listStory">
                 <span>스토리 목록</span>
               </a>
             </li>
             <c:if test="${!empty sessionScope.user}">
               <li class="header-subitem">
-                <a class="header-sublink" href="javascript:void(0)">
+                <a class="header-sublink" href="/story/getStory">
                   <span>나의 스토리</span>
                 </a>
               </li>
@@ -325,13 +325,13 @@
           </a>
           <ul class="fullmenu-sublist">
             <li class="fullmenu-subitem">
-              <a class="fullmenu-sublink" href="javascript:void(0)">
+              <a class="fullmenu-sublink" href="/story/listStory">
                 <span>스토리 목록</span>
               </a>
             </li>
             <c:if test="${!empty sessionScope.user}">
               <li class="fullmenu-subitem">
-                <a class="fullmenu-sublink" href="javascript:void(0)">
+                <a class="fullmenu-sublink" href="/story/getStory">
                   <span>나의 스토리</span>
                 </a>
               </li>

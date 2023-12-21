@@ -1,8 +1,8 @@
 @charset "utf-8";
 
-/*.th-layout-main {*/
-/*    margin: 5rem;*/
-/*}*/
+
+
+
 
 form[name="form"] .inputset {
     width: 30%;
@@ -51,13 +51,13 @@ form[name="form"] .inputset {
 }
 
 /* opilsol-N26 [sblQ1o2joM] */
-/*.opilsol-N26 .content-container { padding-top: 8rem; }*/
+.opilsol-N26 .content-container { padding-top: 8rem; }
 .opilsol-N26 .contents-form-top { align-items: flex-end; margin-bottom: 1.5rem; }
 .opilsol-N26 .contents-form-top .inputset-tit { line-height: 3.6rem; font-size: var(--fs-h4); }
-.opilsol-N26 .contents-form-top .req { position: relative; font-size: var(--fs-p1); font-weight: 400; color: var(--primary); }
+.opilsol-N26 .contents-form-top .req { position: relative; font-size: var(--fs-p1); font-weight: 300; color: var(--primary); }
 .opilsol-N26 .contents-form-top .req::before { content: "*"; }
 .opilsol-N26 .checkset-wrap { justify-content: flex-start; flex-wrap: wrap; }
-.opilsol-N26 .checkset-wrap .checkset { width: calc(100% / 5); }
+.opilsol-N26 .checkset-wrap .checkset { width: calc(70% / 5); }
 .opilsol-N26 .checkset-wrap .checkset+.checkset { margin-left: 0; }
 .opilsol-N26 .checkset-wrap .checkset .checkset-thumb { width: 100%; height: var(--ht-lg); border: 1px solid var(--line-color1); }
 .opilsol-N26 .checkset-wrap .checkset:not(:first-child) .checkset-thumb { border-left: 0 none; }
@@ -84,7 +84,7 @@ form[name="form"] .inputset {
 
 
 /* opilsol-N27 [PNlQ32jk6H] */
-/*.opilsol-N27 .content-container { padding: 8rem 0; }*/
+.opilsol-N27 .content-container { padding: 8rem 0; }
 .opilsol-N27 .contents-form-top { align-items: flex-end; padding-bottom: 1.6rem; border-bottom: 1px solid var(--line-color3); }
 .opilsol-N27 .contents-form-top .inputset-tit { line-height: 3.6rem; font-size: var(--fs-h4); }
 .opilsol-N27 .contents-form-top .req { position: relative; font-size: var(--fs-p1); font-weight: 400; color: var(--primary); }

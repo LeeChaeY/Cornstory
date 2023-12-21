@@ -19,7 +19,7 @@
     <!-- 삭제 쿼리 -->
     <delete id="deleteBookmark" parameterType="bookmark">
         DELETE FROM bookmark
-        WHERE bookmark_no = #{bookmarkNo} AND user_id = #{userId}
+        WHERE work_no = #{workNo} AND user_id = #{userId}
     </delete>
 
     <!-- 조회 쿼리 by bookmark_no -->

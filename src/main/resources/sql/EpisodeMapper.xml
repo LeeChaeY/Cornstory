@@ -81,4 +81,9 @@
         LIMIT 1
     </select>
 
+    <!-- 작품의 회차 구매한것 가져오기 -->
+    <select id="getPurchaseEpisode" parameterType="String" resultMap="episodeResultMap">
+        select e.episode_no from purchase pu, product p, episode e where pu.prod_no= p.prod_no and p.episode_no=e.episode_no and buyer_id=#{userId}
+    </select>
+
 </mapper>

@@ -1,5 +1,7 @@
 header-left@charset "utf-8";
 
+
+
 /* opilsol-N4 [muLPW5z3N1] */
 .opilsol-N4 { margin-bottom: 7rem; }
 .opilsol-N4 .visual-container { overflow: hidden; position: relative; width: 100%; height: 100vh; }
@@ -66,7 +68,7 @@ header-left@charset "utf-8";
 .opilsol-N5 .cardset .cardset-body { padding: 3.2rem; width: 100%; }
 
 .opilsol-N5 .cardset .cardset-body .cardset-desc { overflow: hidden; margin: 2.4rem 0rem 0; width: 100%; height: 5rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; font-size: 1.6rem; font-weight: 400; color: var(--text-color3); }
-.opilsol-N5 .btnset { display: none; margin-top: 2.4rem; position: relative; font-size: var(--fs-p1); font-weight: 500; color: #da291c; }
+.opilsol-N5 .btnset { display: none; margin-top: 2.4rem; position: relative; font-size: var(--fs-p1); font-weight: 500; color: #949494; }
 .opilsol-N5 .swiper-control { position: absolute; right: 4rem; top: -7.5rem; }
 .opilsol-N5 .swiper-button-next::after,.opilsol-N5 .swiper-button-prev::after { display: none; }
 .opilsol-N5 .swiper-button-prev { left: -4rem; background: url("../icons/ico_slide_arrow_black.svg") center no-repeat; transform: rotate(180deg); filter: invert(50%); -webkit-filter: invert(50%); }
@@ -235,7 +237,7 @@ header-left@charset "utf-8";
 .opilsol-N30 .accordset .accordset-header .checkset { width: 100%; }
 .opilsol-N30 .accordset .accordset-header .checkset-text { font-size: var(--fs-p1); }
 .opilsol-N30 .accordset .accordset-button { position: relative; display: inline-block; margin-left: auto; padding: 0; width: auto; font-size: var(--fs-p1); color: var(--text-color3); }
-.opilsol-N30 .accordset .accordset-button::after { content: ""; position: absolute; left: 0; bottom: 2px; width: 100%; height: 1px; background-color: var(--text-color3); }
+.opilsol-N30 .accordset .accordset-button::after { content: ""; position: absolute; left: 0; bottom: 2px; width: 70%; height: 1px; background-color: var(--text-color3); }
 .opilsol-N30 .bottom-btn { margin-top: 8rem; text-align: center; }
 .opilsol-N30 .bottom-btn .btnset-lg { padding: 0 4.548rem; }
 @media (max-width: 1024px) {
@@ -288,8 +290,7 @@ header-left@charset "utf-8";
  .opilsol-N32 .bottom-btn .btnset-lg { padding: 0 5rem; width: 16rem; }
 }
 
-/* opilsol-N24 [jalq1OfX0E] */
-.opilsol-N24 .content-container { margin-bottom: 8rem; padding: 8rem 0; }
+/* opilsol-N24 [EWLQc7iXZf] */
 .opilsol-N24 table { table-layout: fixed; }
 .opilsol-N24 .tableset .tableset-table> :not(caption):not(colgroup)>*>* { padding: 1.3rem 2.4rem; }
 .opilsol-N24 .table .thead-border-top .number,.opilsol-N24 .table tbody .number { padding: 1.3rem; width: 10rem; min-width: 10rem; text-align: center; line-height: var(--lh-h6); font-size: var(--fs-p1); font-family: var(--ff-po); color: var(--text-color7); }
@@ -302,6 +303,16 @@ header-left@charset "utf-8";
 @media (max-width: 1366px) {
  .opilsol-N24 .container-md { padding: 0 1.6rem; }
 }
+.th-layout-main {
+
+
+ .th-layout-main {
+     display: flex;
+     justify-content: space-around;
+     align-items: stretch;
+     min-height: 100vh;
+ }
+
 @media (max-width: 1024px) {
  .opilsol-N24 .content-container { margin-bottom: 6rem; padding: 4rem 0; }
  .opilsol-N24 .table .thead-border-top, .opilsol-N24 .table .number { display: none; }

@@ -42,6 +42,7 @@
 	<update		id="updateUser"		parameterType="user" >
 		UPDATE user
 		<set>
+
 			password = #{password}, nickname = #{nickName}, email = #{email:VARCHAR},addr = #{addr:VARCHAR},
 			address = #{address:VARCHAR},phone = #{phone:VARCHAR} , user_image=#{userImage:VARCHAR}, social = #{social}
 		</set>

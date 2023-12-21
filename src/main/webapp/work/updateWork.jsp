@@ -58,6 +58,49 @@
             max-height: 200px; /* 최대 세로 크기 설정 */
             overflow: hidden; /* 크기를 넘어가는 부분을 숨김 */
         }
+        /* 파일드롭 */
+        .drop-area {
+            border: 2px dashed #ccc;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .drop-text {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .file-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .file-list img {
+            width: 200px;
+            height: 200px;
+            margin: 5px;
+        }
+
+        /* 예시: 버튼 스타일 개선 */
+        .btnset {
+            background-color: #4CAF50; /* 주요 색상 선택 */
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            transition-duration: 0.4s; /* 부드러운 전환 효과 */
+            cursor: pointer;
+        }
+
+        .btnset:hover {
+            background-color: white;
+            color: black;
+            border: 2px solid #4CAF50;
+        }
     </style>
     <%--    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>--%>
 </head>
@@ -116,7 +159,7 @@
                         <!-- 작품명 -->
                         <div class="inputset inputset-lg inputset-group">
                             <label class="inputset-label" style="font-size: var(--fs-h4);" for="workName" >작품명</label>
-                            <input type="text" class="inputset-input form-control" id="workName" name="workName" maxlength="30" value="${work.workName}">
+                            <input type="text" class="inputset-input form-control" id="workName" name="workName" maxlength="30" value="${work.workName}" required>
                             <div id="workNameCount">글자 수: 0/30</div>
                         </div>
                         <div id="workNameMessage" style="color: red;"></div>
@@ -238,10 +281,14 @@
                         <!-- 썸네일 업로드 -->
                         <div class="inputset inputset-lg inputset-group" for="thumbnailFile">
                             <label class="inputset-label" style="font-size: var(--fs-h4);">썸네일</label>
-                            <div id="image_container"><img src="<c:out value='${work.thumbnail}' />" alt="Thumbnail" style="max-width: 150px; max-height: 200px; display: block;"></div>
-                            <input type="file" id="thumbnailFile" name="thumbnailFile" accept=".jpg" onchange="setThumbnail(event)">
-                            <div id="thumbnailMessage" style="color: red;"></div>
+                            <div id="dropArea" class="drop-area">
+                                <div id="image_container"><img src="${work.thumbnail}" alt="" width="150" height="200" placeholder="이미지가 여기에 나타납니다."></div>
+                                <span class="drop-text">JPG 이미지를 추가해주세요</span>
+                                <input type="file" class="check-image" id="thumbnailFile" name="thumbnailFile" accept="image/jpeg" onchange="setThumbnail(event)" required/>
+                                <ul id="fileList" class="file-list"></ul>
+                            </div>
                         </div>
+                        <div id="thumbnailMessage" style="color: green;">지금 이미지로 하시려면 파일을 안올리셔도 됩니다.</div>
 
                         <!-- 유료/무료 선택 -->
                         <div class="inputset inputset-lg inputset-group">
@@ -415,63 +462,47 @@
         document.getElementsByName("genre2")[0].value = genre2;
         document.getElementsByName("genre3")[0].value = genre3;
 
-<%--        var operationCheckbox = document.getElementById('matters');--%>
-<%--        if (!operationCheckbox.checked) {--%>
-<%--            operationMessage.textContent = "운영사항에 동의해야 합니다.";--%>
-<%--            return false; // 제출 막기--%>
-<%--        } else {--%>
-<%--            operationMessage.textContent = ''; // 메시지 지우기--%>
-<%--        }--%>
-
         return true;
     }
 
-    function setThumbnail(event){
+    function setThumbnail(event) {
         var fileInput = event.target;
-        var fileName = fileInput.value.toLowerCase();
+        var file = fileInput.files[0]; // 선택된 파일
         var thumbnailMessage = document.getElementById('thumbnailMessage');
-        // 파일이 선택되지 않았을 경우 처리
-        if (!fileInput.files || !fileInput.files[0]) {
-            var imageContainer = document.querySelector("div#image_container");
-            imageContainer.innerHTML = "";
-            thumbnailMessage.textContent = '';
+        var imageContainer = document.getElementById('image_container');
+
+        // 파일 유형 및 크기 검증
+        if (!file.type.match('image/jpeg')) {
+            thumbnailMessage.textContent = 'JPG 이미지만 업로드 가능합니다.';
+            fileInput.value = ""; // 파일 입력 초기화
+            imageContainer.innerHTML = ""; // 이미지 컨테이너 초기화
             return;
         }
 
-        if (!fileName.endsWith('.jpg')) {
-            thumbnailMessage.textContent = 'jpg 파일만 됩니다';
+        if (file.size > 5242880) { // 5MB 제한
+            thumbnailMessage.textContent = '파일 크기는 5MB를 넘을 수 없습니다.';
             fileInput.value = "";
+            imageContainer.innerHTML = "";
             return;
-        }else{
-            thumbnailMessage.textContent = '';
         }
 
+        thumbnailMessage.textContent = ''; // 메시지 초기화
+        displayFile(file); // 이미지 미리보기
+    }
+    // 이미지 미리보기 함수
+    function displayFile(file) {
         var reader = new FileReader();
-
         reader.onload = function(event) {
-            // 기존 이미지를 모두 지우기
-            var imageContainer = document.querySelector("div#image_container");
-            imageContainer.innerHTML = "";
-
             var img = new Image();
             img.src = event.target.result;
+            img.style.width = "150px";
+            img.style.height = "200px";
 
-            img.onload = function() {
-                // var maxWidth = 300; // 원하는 가로 크기
-                // var maxHeight = 400; // 원하는 세로 크기
-                // var width = img.width;
-                // var height = img.height;
-
-                img.width = 150;
-                img.height = 200;
-
-                img.style.display = "block";
-
-                imageContainer.appendChild(img);
-            };
+            var imageContainer = document.getElementById('image_container');
+            imageContainer.innerHTML = ""; // 기존 이미지 제거
+            imageContainer.appendChild(img); // 새 이미지 추가
         };
-
-        reader.readAsDataURL(event.target.files[0]);
+        reader.readAsDataURL(file);
     }
 
     function updateCharCount(inputId, countId) {
@@ -537,11 +568,14 @@
     function checkWorkName() {
         var workName = $('#workName').val();
         var userId = "${user.userId}";
-        if (!workName) {
-            // 작품명이 비어있는 경우에 대한 처리
-            $('#workNameMessage').text('작품명을 입력해주세요.').css('color', 'red');
-            return false; // 여기에 return false를 추가
+        var existingWorkName = "${work.workName}";
+
+        if (workName === existingWorkName) {
+            // 현재 작품명과 같으면 중복 검사를 하지 않음
+            $('#workNameMessage').text('현재 작품명입니다.').css('color', 'green');
+            return true;
         }
+
         $.get( '/work/json/checkWorkName',
             {
                 userId: userId,
@@ -552,23 +586,30 @@
             if (response == null) { // 또는 if (parseInt(response) === 0)
                 messageDiv.text('등록된 작품이 없습니다.');
                 messageDiv.css('color', 'green');
+                return false;
             } else {
-
-                if (response.workName === workName) {
-                    messageDiv.text('지금 작품명입니다.');
-                    messageDiv.css('color', 'green');
-                } else {
-                    messageDiv.text('등록된 작품이 있습니다. 다른 작품명으로 적어주세요.');
-                    messageDiv.css('color', 'red');
-                    return false;
-                }
-
+                messageDiv.text('등록된 작품이 있습니다. 다른 작품명으로 적어주세요.');
+                messageDiv.css('color', 'red');
+                return false;
             }
         })
             .fail(function (){
                 console.error('Ajax 요청 실패');
             });
     }
+
+    $('.drop-area').on('drag dragstart dragend dragover dragenter dragleave drop', function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+    }).on('dragover', function(event) {
+        $(this).addClass('drag-over');
+    }).on('dragleave dragend drop', function(event) {
+        $(this).removeClass('drag-over');
+    }).on('drop', function(event) {
+        var file = event.originalEvent.dataTransfer.files[0];
+        $("#thumbnailFile").prop("files", event.originalEvent.dataTransfer.files); // 입력 필드에 파일 설정
+        setThumbnail({ target: { files: [file] } }); // 이미지 처리
+    });
 </script>
 
 
