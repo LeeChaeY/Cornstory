@@ -7,7 +7,6 @@ $(function() {
     });
     $("input[type='button'][value='인원보기']").on("click", function() {
         $("#slideMenu").addClass('on'); //슬라이드 메뉴 감춤
-
     });
     $("#closeSlideMenu").on("click", function() {
         $("#slideMenu").removeClass('on'); //슬라이드 메뉴 감춤

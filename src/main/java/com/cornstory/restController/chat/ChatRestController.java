@@ -112,8 +112,8 @@ public class ChatRestController {
 
         System.out.println(map02.get("list"));
 
-//        String url = "http://localhost:3000/receive-post";
-        String url = "http://101.79.8.55:3000/receive-post";
+//        String url = "http://localhost:3000/";
+        String url = "http://101.79.8.55:3000/";
 
         Map<String, Object> returnMap = new HashMap<String, Object>();
         returnMap.put("url", url);

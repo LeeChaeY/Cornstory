@@ -117,10 +117,10 @@ function enterChatSpace(chatSpaceNo) {
         method: "GET",
         dataType: "json",
         success: function(JSONData, status) {
-            let cnt = parseInt($("input[value='" + chatSpaceNo + "']").parents("tr").children("td").eq(5).text()) + 1;
-            $("input[value='" + chatSpaceNo + "']").parents("tr").children("td").eq(5).text(cnt);
             let enter = $($("input[value='" + chatSpaceNo + "']").parents("tr").children("td").eq(7)).children("input").eq(1).val();
             if (enter === undefined) {
+                let cnt = parseInt($("input[value='" + chatSpaceNo + "']").parents("tr").children("td").eq(5).text()) + 1;
+                $("input[value='" + chatSpaceNo + "']").parents("tr").children("td").eq(5).text(cnt);
                 $("input[value='" + chatSpaceNo + "']").parents("tr").children("td").eq(7).append("<input type='button' value='나가기''>");
             }
 
@@ -135,7 +135,7 @@ function enterChatSpace(chatSpaceNo) {
             addJsonDataToForm(form, JSONData.totalCount, 'totalCount');
             addJsonDataToForm(form, JSONData.user, 'user');
 
-            const chatWindow = window.open('','chatWindow', 'width=500,height=400,left:100,top:100');
+            const chatWindow = window.open('',chatSpaceNo, 'width=500,height=400,left:100,top:100');
 
             // Check if the new window/tab is opened successfully
             if (chatWindow) {
@@ -170,6 +170,22 @@ function updateChatSpace(chatSpaceNo) {
 }
 
 function deleteChatSpace(chatSpaceNo) {
+    let url2 = "http://101.79.8.55:3000/delete_chats?chatSpaceNo=" + chatSpaceNo + "";
+    // let url2 = "http://localhost:3000/delete_chats?chatSpaceNo=" + chatSpaceNo + "";
+
+    $.ajax({
+        url: url2,
+        method: "GET",
+        success: function(JSONData, status) {
+            // $("input[value='" + chatSpaceNo + "']").parents("tr").children("td").remove();
+        },
+        error: function(status) {
+
+            //Debug...
+            alert("error");
+        }
+    });
+
     $.ajax({
         url: "/chat/json/deleteChatSpace/" + chatSpaceNo + "",
         method: "GET",

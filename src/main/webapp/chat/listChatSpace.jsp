@@ -41,9 +41,7 @@
 </head>
 
 <body>
-
 <%@ include file="../layout/top.jsp" %>
-
 
 <!-- [E]opilsol-N26 -->
 <main class="th-layout-main ">

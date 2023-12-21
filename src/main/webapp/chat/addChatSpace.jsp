@@ -98,6 +98,11 @@
                                         <span class="req label">장르 선택</span>
                                     </th>
                                     <td colspan="3">
+                                        <p style="color: red;">
+                                            * 장르는 1개만 선택 가능합니다.<br>
+                                            * 장르는 등록 후 수정이 불가능합니다.
+                                        </p>
+                                        <br>
                                         <div class="radioset-wrap">
                                             <div class="radioset">
                                                 <input id="genre-1" name="genre"
