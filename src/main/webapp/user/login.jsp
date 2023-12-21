@@ -109,7 +109,7 @@
                         <div class="bottom-btn">
                             <div id="errorMessage" style="color: #ff0000;"></div>
                             <button type="submit" class="btnset btnset-lg btnset-rect">로그인</button><br>
-                            <a href="https://kauth.kakao.com/oauth/authorize?client_id=b0bd84c71b068376094579f78dcd6af0&redirect_uri=http://localhost:8088/user/slogin&response_type=code">
+                            <a href="https://kauth.kakao.com/oauth/authorize?client_id=b0bd84c71b068376094579f78dcd6af0&redirect_uri=http://cornstory.com/user/slogin&response_type=code">
                                 <img src="../file/user/kakao_login_medium_narrow.png">
                             </a>
                         </div>
