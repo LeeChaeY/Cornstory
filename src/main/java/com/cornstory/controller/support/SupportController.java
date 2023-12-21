@@ -2,7 +2,6 @@ package com.cornstory.controller.support;
 
 import com.cornstory.common.Search;
 import com.cornstory.domain.Support;
-import com.cornstory.domain.Support;
 import com.cornstory.domain.User;
 import com.cornstory.service.support.SupportService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.File;
-import java.util.List;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.Map;
 
 @Controller
@@ -38,74 +39,37 @@ public class SupportController {
     }
 
     @RequestMapping(value = "/addSupport", method = RequestMethod.POST)
-    public String addSupport(@ModelAttribute Support support,
-                             @RequestParam(name = "supImage", required = false) MultipartFile supImage,
-                             Model model, HttpServletRequest request, HttpSession session) throws Exception {
+    public String addSupport(@ModelAttribute("support") @Validated Support support, HttpServletRequest request,
+                             @RequestParam("supfile") MultipartFile file, Model model, HttpSession session) throws Exception {
         System.out.println("support/add : POST");
         String userId = ((User) session.getAttribute("user")).getUserId();
         support.setUserId(userId);
         System.out.println("support/add" +support);
 
         int category = support.getSupCategory();
+        String supContent = request.getParameter("supContent");
 
-        switch (category) {
-            case 0:
-                // 공지사항 등록
-                String supContent = request.getParameter("supContent");
+        System.out.println(support + "들어온 정보 확인 하기 ");
 
-                // 파일 업로드 처리 (파일이 있을 때만 수행)
-                if (supImage != null && !supImage.isEmpty()) {
-                    String originalFilename = supImage.getOriginalFilename();
-                    // 파일을 업로드할 상대 경로 설정
-                    String uploadDir = "C:\\workspaceIntellij\\Team\\src\\main\\resources\\supportImage";
-                    String filePath = uploadDir + originalFilename;
-                    File dest = new File(filePath);
+        String fileName = support.getSupContent() + "_support" ;
+        fileName = fileName.replaceAll("[^a-zA-Z0-9가-힣_]", "_");
+        fileName += ".jpg";
 
-                    // 파일을 저장
-                    supImage.transferTo(dest);
-                    support.setSupImage(originalFilename);
-                }
-
-                try {
-                    // 공지사항 등록 로직 추가
-                    // 예시: supportService.addNotice(support, supContent);
-                } catch (Exception e) {
-                    // 파일 업로드 예외 처리
-                    e.printStackTrace();
-                }
-                break;
-
-            case 1:
-                // Q&A 등록
-                int userRole = (int) session.getAttribute("userRole");
-
-                if (userRole == 0) {
-                    // 일반 사용자가 질문 등록
-                    String questionContent = request.getParameter("supContent");
-                    // Q&A 등록 로직 추가
-                    // 예시: supportService.addQuestion(support, questionContent);
-                } else if (userRole == 1) {
-                    // 관리자가 답변 등록
-                    String questionContent = request.getParameter("supPluscon");
-                    String answerContent = request.getParameter("supContent");
-                    // Q&A 답변 등록 로직 추가
-                    // 예시: supportService.addAnswer(support, questionContent, answerContent);
-                }
-                break;
-            case 2:
-                // 신고 등록
-                String reportedSupportNick = request.getParameter("supContent");
-                String reportContent = request.getParameter("supPluscon");
+        if (!file.isEmpty()) {
+            try {
+                String uploadDir = request.getServletContext().getRealPath("")+"\\..\\resources\\static\\file\\support\\";
+                String filePath = uploadDir + File.separator + fileName;
 
 
-                try {
-                    // 신고 등록 로직 추가
-                    // 예시: supportService.addReport(support, reportedSupportNick, reportContent);
-                } catch (Exception e) {
-                    // 파일 업로드 예외 처리
-                    e.printStackTrace();
-                }
-                break;
+                Files.write(Path.of(filePath), file.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+
+                // 파일 경로를 Work 객체에 저장
+
+                support.setSupImage(fileName);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
 
         // 공통 처리

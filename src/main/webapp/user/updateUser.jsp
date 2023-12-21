@@ -29,7 +29,10 @@
 
 <%@ include file="../layout/top.jsp" %>
 
-<form action="/user/updateUser?${user.userId}" method="post">
+<form action="/user/updateUser?${user.userId}" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="userId" value="${user.userId}" />
+    <input type="hidden" name="userName" value="${user.userName}" />
+
     <div class="opilsol-N31" data-bid="pc4J773eI8y" id="">
         <div class="content-container">
             <div class="textset content-top">
@@ -113,66 +116,20 @@
                 </div>
                 <div class="bottom-btn">
                     <button class="btnset btnset-lg btnset-dark btnset-rect">취소</button>
-                    <button type="submit" class="btnset btnset-lg btnset-rect" contenteditable="true">수정 왼료</button>
+                    <button type="submit" class="btnset btnset-lg btnset-rect" contenteditable="true">수정 완료</button>
                 </div>
             </div>
         </div>
     </div>
-
+</form>
     <%@ include file="../layout/bottom.jsp" %>
 
-    <script>
-
-        $('.drop-area').on('drag dragstart dragend dragover dragenter dragleave drop', function (event) {
-            event.preventDefault();
-            event.stopPropagation();
-        });
-        $(".drop-area").on("dragover", function (event) {
-            $(this).addClass('drag-over');
-        });
-        $(".drop-area").on("dragleave dragend drop", function (event) {
-            $(this).removeClass('drag-over');
-        });
-        $(".drop-area").on("drop", function (event) {
-            event.preventDefault();
-            event.stopPropagation();
-
-            if (event.originalEvent.dataTransfer.files.length === 1) {
-                const files = event.originalEvent.dataTransfer.files;
-
-                // Display the uploaded file
-                displayFile(files[0]);
-                $("input[name='userfile']")[0].files = files;
-            } else {
-                alert('Please drop only one file at a time.');
-            }
-
-            // Remove highlight from drop area
-            $(this).removeClass('drag-over');
-        });
-
-        $("input[type='file']").on("change", function (event) {
-            const file = this.files[0];
-            displayFile(file);
-        });
-        function displayFile(file) {
-            const listItem = $("<li>");
-            let reader = new FileReader();
-            reader.onload = function (e) {
-                listItem.html('<img src="' + e.target.result + '" alt="your image"/>');
-            };
-            reader.readAsDataURL(file);
-            $(".file-list").empty().append(listItem);
-        }
-
-
-    </script>
     <script src="../ssh/js/setting.js"></script>
     <script src="../ssh/js/plugin.js"></script>
     <script src="../ssh/js/template.js"></script>
     <script src="../ssh/js/common.js"></script>
     <script src="../ssh/js/script.js"></script>
     <script src="../ssh/js/addUser.js"></script>
-</form>
+
 </body>
 </html>

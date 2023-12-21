@@ -96,9 +96,20 @@
                 <div class="contents-form-top"></div>
             </div>
             <div class="bottom-btn">
+
                 <a href="../index.jsp"><button class="btnset btnset-lg btnset-dark btnset-rect">확인</button></a>
+
+                <!-- 간격을 위한 빈 span 요소 추가 -->
+                <span class="button-gap"></span>
+
                 <a href="updateUser?userId=${sessionScope.user.userId}"><button class="btnset btnset-lg btnset-rect">수정하기</button></a>
+
+                <!-- 간격을 위한 빈 span 요소 추가 -->
+                <span class="button-gap"></span>
+
                 <a id="withdrawLink" href="#"><button class="btnset btnset-lg btnset-dark btnset-rect">탈퇴하기</button></a>
+
+
             </div>
 <!-- 탈퇴가 완료되면 표시할 메시지 -->
 <c:if test="${param.deleted eq 'true'}">
@@ -107,7 +118,13 @@
         </div>
     </div>
 </div>
-
+<style>
+    /* 간격을 위한 스타일 추가 */
+    .button-gap {
+        display: inline-block;
+        width: 10px; /* 원하는 간격 값으로 조정 */
+    }
+</style>
 <script src="../ssh/js/setting.js"></script>
 <script src="../ssh/js/plugin.js"></script>
 <script src="../ssh/js/template.js"></script>

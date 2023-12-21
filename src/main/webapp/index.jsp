@@ -61,7 +61,7 @@
                             document.write('<img class="visual-bg" src="' + images[i] + '" alt="">');
                             document.write('<div class="visual-text-box">');
                             document.write('<h2 class="visual-title" data-swiper-parallax="-700">');
-                            document.write('<span class="br">꿈과 창작을 펼치는</span>플렛폼 <br>');
+                            document.write('<span class="br">꿈과 창작을 펼치는</span>플랫폼 <br>');
                             document.write('<span class="br">고객 만족도 향상을 위한</span> 솔루션 제공');
                             document.write('</h2>');
                             document.write('<div class="visual-subtitle" data-swiper-parallax="-1000">');

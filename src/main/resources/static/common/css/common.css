@@ -124,6 +124,9 @@
 /* opilsol-N1 [kPLQc7iXvG] : 편집됨 */
 .opilsol-N1[data-bid=kPLQc7iXvG] .header-search-form .icon-search::after { background: url("../../resources/icons/ico_search_black.svg") no-repeat center right/cover; }
 
+/* opilsol-N1 [KOLqfhvaZH] : 편집됨 */
+.opilsol-N1[data-bid=KOLqfhvaZH] .header-search-form .icon-search::after { background: url("../../resources/icons/ico_search_black.svg") no-repeat center right/cover; }
+
 /* opilsol-N9 [pzlq69LM4F] */
 .opilsol-N9 .visual-container { position: relative; left: 0; top: 0; width: 100%; height: 54rem; }
 .opilsol-N9 .visual-container .visual-bg { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
@@ -163,6 +166,9 @@
 
 /* opilsol-N33 [rzlQc7ixYC] : 편집됨 */
 .opilsol-N33[data-bid=rzlQc7ixYC] .content-container .dropset-head::after { content: url("../../resources/icons/ico_home_black.svg"); }
+
+/* opilsol-N33 [vOLQFhvB4f] : 편집됨 */
+.opilsol-N33[data-bid=vOLQFhvB4f] .content-container .dropset-head::after { content: url("../../resources/icons/ico_home_black.svg"); }
 
 /* opilsol-N34 [ghLQ69LM5n] */
 .opilsol-N34 .content-container { margin: 8rem auto 0; }
