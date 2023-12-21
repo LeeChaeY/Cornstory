@@ -38,4 +38,6 @@ public interface EpisodeService {
     public void deleteEpisodeComment(int commentNo)throws Exception;
 
     public Episode getLatestEpisode(Episode episode)throws Exception;
+
+    public List<Episode> getPurchaseEpisode(String userId) throws  Exception;
 }

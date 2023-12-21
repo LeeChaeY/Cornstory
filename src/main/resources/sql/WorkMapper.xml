@@ -61,27 +61,28 @@
 	</delete>
 
 	<select id="listWork" parameterType="search" resultMap="workSelectMap">
-		SELECT * FROM work
+		SELECT DISTINCT w.* FROM work w LEFT JOIN episode e ON w.work_no = e.work_no
 		<where>
+			e.work_no IS NOT NULL
 			<if test="searchKeyword != null and searchKeyword != ''">
-				work_name LIKE CONCAT('%',#{searchKeyword},'%') OR user_id LIKE CONCAT('%',#{searchKeyword},'%')
+				AND w.work_name LIKE CONCAT('%',#{searchKeyword},'%') OR w.user_id LIKE CONCAT('%',#{searchKeyword},'%')
 			</if>
 				<choose>
 					<when test="searchCondition == 0">
-						AND category = 0
+						AND w.category = 0
 					</when>
 					<when test="searchCondition == 1">
-						AND category = 1
+						AND w.category = 1
 					</when>
 					<when test="searchCondition == 2">
-						AND category = 2
+						AND w.category = 2
 					</when>
 				</choose>
 				<if test="orderKeyword != null">
-					AND (genre1 = #{orderKeyword} OR genre2 = #{orderKeyword} OR genre3 = #{orderKeyword})
+					AND (w.genre1 = #{orderKeyword} OR w.genre2 = #{orderKeyword} OR w.genre3 = #{orderKeyword})
 				</if>
 		</where>
-		ORDER BY view_cnt
+		ORDER BY w.view_cnt
 		<if test="orderCondition == 0 or orderCondition == null">
 			desc
 		</if>
@@ -91,29 +92,29 @@
 	</select>
 
 	<select id="getTotalCount" parameterType="search" resultType="java.lang.Integer">
-		SELECT COUNT(*)
-		FROM work
+		SELECT  COUNT(DISTINCT w.work_no)
+		FROM work w LEFT JOIN episode e ON w.work_no = e.work_no
 		<where>
-			<if test="searchKeyword != null">
-				AND work_name LIKE CONCAT('%',#{searchKeyword},'%') OR user_id LIKE CONCAT('%',#{searchKeyword},'%')
+			e.work_no IS NOT NULL
+			<if test="searchKeyword != null and searchKeyword != ''">
+				AND w.work_name LIKE CONCAT('%',#{searchKeyword},'%') OR w.user_id LIKE CONCAT('%',#{searchKeyword},'%')
 			</if>
-				<choose>
-					<when test="searchCondition == 0">
-						AND category = 0
-					</when>
-					<when test="searchCondition == 1">
-						AND category = 1
-					</when>
-					<when test="searchCondition == 2">
-						AND category = 2
-					</when>
-				</choose>
-				<if test="orderKeyword != null">
-					AND (genre1 = #{orderKeyword} OR genre2 = #{orderKeyword} OR genre3 = #{orderKeyword})
-				</if>
-
+			<choose>
+				<when test="searchCondition == 0">
+					AND w.category = 0
+				</when>
+				<when test="searchCondition == 1">
+					AND w.category = 1
+				</when>
+				<when test="searchCondition == 2">
+					AND w.category = 2
+				</when>
+			</choose>
+			<if test="orderKeyword != null">
+				AND (w.genre1 = #{orderKeyword} OR w.genre2 = #{orderKeyword} OR w.genre3 = #{orderKeyword})
+			</if>
 		</where>
-		ORDER BY view_cnt
+		ORDER BY w.view_cnt
 		<if test="orderCondition == 0 or orderCondition == null">
 			desc
 		</if>

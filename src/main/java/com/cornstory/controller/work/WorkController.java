@@ -50,6 +50,23 @@ public class WorkController {
         System.out.println("WorkController 진입");
     }
 
+
+    public String getFileExtension(MultipartFile file) {
+        String fileName = file.getOriginalFilename();
+        if (fileName == null || fileName.isEmpty()) {
+            return null;
+        }
+
+        int dotIndex = fileName.lastIndexOf('.');
+        if (dotIndex >= 0) {
+            // 마지막 점 이후의 문자열을 확장자로 추출
+            return fileName.substring(dotIndex + 1);
+        } else {
+            // 확장자가 없는 경우
+            return null;
+        }
+    }
+
     @GetMapping("addWork")
     public String addWork(Model model, @SessionAttribute(name="user", required = false)User user) throws Exception {
         System.out.println("[ WorkController.addWork() start........]");
@@ -63,25 +80,29 @@ public class WorkController {
     public String addWork(@ModelAttribute("work") Work work, @RequestParam("thumbnailFile") MultipartFile file, @SessionAttribute(name="user", required = false)User user) throws Exception {
         System.out.println("[ WorkController.addWork() start........]");
         work.setUserId(user.getUserId());
-        String fileName = work.getUserId() + "_" + work.getWorkName();
-        fileName = fileName.replaceAll("[^a-zA-Z0-9가-힣_]", "_");
-        fileName += ".jpg";
-        if (!file.isEmpty()) {
-            try {
-                String uploadDir = "C:\\CornStory\\src\\main\\resources\\static\\file\\work";
-                String filePath = uploadDir + File.separator + fileName;
+
+        String extension = getFileExtension(file);
 
 
-                Files.write(Path.of(filePath), file.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+        if (extension != null && extension.equalsIgnoreCase("jpg")) {
+                try {
+                    String fileName = work.getUserId() + "_" + work.getWorkName();
+                    fileName = fileName.replaceAll("[^a-zA-Z0-9가-힣_]", "_");
+                    fileName += ".jpg";
+                    String uploadDir = "C:\\CornStory\\src\\main\\resources\\static\\file\\work";
+                    String filePath = uploadDir + File.separator + fileName;
 
-                // 파일 경로를 Work 객체에 저장
-                System.out.println(filePath);
-                work.setThumbnail("..\\file\\work"+ File.separator + fileName);
-                System.out.println(work.toString());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+                    Files.write(Path.of(filePath), file.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 
+                    // 파일 경로를 Work 객체에 저장
+                    System.out.println(filePath);
+                    work.setThumbnail("..\\file\\work"+ File.separator + fileName);
+                    System.out.println(work.toString());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+        }else{
+            work.setThumbnail("..\\khs\\images\\popcorn.jpg");
         }
         System.out.println(work.toString());
 
@@ -106,24 +127,29 @@ public class WorkController {
     public String updateWork(@ModelAttribute("work") Work work, @RequestParam("thumbnailFile") MultipartFile file) throws Exception{
         System.out.println("[ WorkController.updateWork() start........]");
         System.out.println(work.toString());
-        String fileName = work.getUserId() + "_" + work.getWorkName();
-        fileName = fileName.replaceAll("[^a-zA-Z0-9가-힣_]", "_");
-        fileName += ".jpg";
-        if (!file.isEmpty()) {
+
+        String extension = getFileExtension(file);
+
+        if (extension != null && extension.equalsIgnoreCase("jpg")) {
             try {
+                String fileName = work.getUserId() + "_" + work.getWorkName();
+                fileName = fileName.replaceAll("[^a-zA-Z0-9가-힣_]", "_");
+                fileName += ".jpg";
                 String uploadDir = "C:\\CornStory\\src\\main\\resources\\static\\file\\work";
                 String filePath = uploadDir + File.separator + fileName;
-
 
                 Files.write(Path.of(filePath), file.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 
                 // 파일 경로를 Work 객체에 저장
-
+                System.out.println(filePath);
                 work.setThumbnail("..\\file\\work"+ File.separator + fileName);
+                System.out.println(work.toString());
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }else{
 
+            work.setThumbnail(workService.getWork(work.getWorkNo()).getThumbnail());
         }
         System.out.println(work);
         workService.updateWork(work);
@@ -162,7 +188,6 @@ public class WorkController {
     public String getWork( Model model, @SessionAttribute(name="user", required = false)User user) throws Exception {
         System.out.println("[ WorkController.getWork() start........]");
 
-
         Map<String, Object> map=workService.getMyWork(user.getUserId());
         model.addAttribute("list",map.get("list"));
         model.addAttribute("myCount",map.get("myCount"));
@@ -178,6 +203,8 @@ public class WorkController {
         workService.updateViews(work);
 
         Map<String, Object> map=episodeService.listEpisode(workNo);
+        model.addAttribute("bookmark",workService.getBookmarksByUserId(user.getUserId()));
+        model.addAttribute("purchase",episodeService.getPurchaseEpisode(user.getUserId()));
         model.addAttribute("work",work);
         model.addAttribute("list",map.get("list"));
         model.addAttribute("totalCount",map.get("totalCount"));
@@ -213,7 +240,7 @@ public class WorkController {
         Bookmark bookmark = new Bookmark();
         bookmark.setUserId(user.getUserId());
         bookmark.setWorkNo(workNo);
-        workService.deleteBookmark(bookmark);;
+        workService.deleteBookmark(bookmark);
         model.addAttribute("list",workService.listBookmark(user.getUserId()));
         //model.addAttribute("list",map.get("list"));
         //model.addAttribute("totalCount",map.get("totalCount"));
