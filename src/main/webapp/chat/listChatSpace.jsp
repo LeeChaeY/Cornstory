@@ -19,7 +19,6 @@
     <meta property="og:image" content="https://웹사이트/images/opengraph.png">
     <meta property="og:url" content="https://웹사이트">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <title>listChatSpace</title>
     <link rel="stylesheet" href="/ssh/css/style.css">
     <link rel="stylesheet" href="/ssh/css/plugin.css">
@@ -38,6 +37,7 @@
     <script src="/ssh/js/script.js"></script>
 
     <script src="/lcy/js/listChatSpace.js"></script>
+    <script src="http://localhost:3000/socket.io/socket.io.js"></script>
 </head>
 
 <body>

@@ -103,19 +103,19 @@ function addChatSpace() {
             return response.json();
         })
         .then(JSONData => {
-            // console.log('Received data:', data);
             const form = document.createElement('form');
             form.method = 'post';
             form.action = JSONData.url;
             form.enctype = 'application/json';  // Set content type to JSON
-
+            let chatSpaceNo = JSONData.chatSpace.chatSpaceNo;
+            // alert(JSONData.chatSpace.chatSpaceNo);
             addJsonDataToForm(form, JSONData.chatSpace, 'chatSpace');
-            addJsonDataToForm(form, JSONData.list, 'list');
             addJsonDataToForm(form, JSONData.userList, 'userList');
             addJsonDataToForm(form, JSONData.totalCount, 'totalCount');
             addJsonDataToForm(form, JSONData.user, 'user');
+            addJsonDataToForm(form, JSONData.startDate, 'startDate');
 
-            const chatWindow = window.open('', 'chatWindow', 'width=500,height=400,left:100,top:100');
+            const chatWindow = window.open('',chatSpaceNo, 'width=500,height=400,left:100,top:100');
 
             // Check if the new window/tab is opened successfully
             if (chatWindow) {
@@ -138,7 +138,7 @@ function addChatSpace() {
 
 function updateChatSpace() {
     const formData = new FormData(document.forms.namedItem("updateForm"));
-
+    let chatSpaceNo = $("input[name='chatSpaceNo']").val();
     fetch('/chat/updateChatSpace', {
         method: 'POST',
         headers: {
@@ -155,19 +155,18 @@ function updateChatSpace() {
             return response.json();
         })
         .then(JSONData => {
-            // console.log('Received data:', data);
             const form = document.createElement('form');
             form.method = 'post';
             form.action = JSONData.url;
             form.enctype = 'application/json';  // Set content type to JSON
-
+            // alert(JSONData.startDate);
             addJsonDataToForm(form, JSONData.chatSpace, 'chatSpace');
-            addJsonDataToForm(form, JSONData.list, 'list');
             addJsonDataToForm(form, JSONData.userList, 'userList');
             addJsonDataToForm(form, JSONData.totalCount, 'totalCount');
             addJsonDataToForm(form, JSONData.user, 'user');
+            addJsonDataToForm(form, JSONData.startDate, 'startDate');
 
-            const chatWindow = window.open('', 'chatWindow', 'width=500,height=400,left:100,top:100');
+            const chatWindow = window.open('',chatSpaceNo, 'width=500,height=400,left:100,top:100');
 
             // Check if the new window/tab is opened successfully
             if (chatWindow) {

@@ -1,8 +1,6 @@
 package com.cornstory.service.chat;
 
-import com.cornstory.domain.Chat;
 import com.cornstory.domain.ChatSpace;
-import com.cornstory.domain.Product;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
