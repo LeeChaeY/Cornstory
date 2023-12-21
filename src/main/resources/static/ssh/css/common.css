@@ -217,24 +217,24 @@
 .opilsol-N29[data-bid=jPLQ1o4zG6] .contents-start-kakao::before { background: url("../icons/ico_kakao.svg") no-repeat center/contain; }
 
 /* opilsol-N29 [InLpwD1WuH] : 편집됨 */
-.opilsol-N29[data-bid=InLpwD1WuH] .dim { z-index: 300 position: fixed; width: 50 height: 100%; }
-.opilsol-N29[data-bid=InLpwD1WuH] .modal { z-index: 300 position: absolute; }
+.opilsol-N29[data-bid=InLpwD1WuH] .dim { z-index: 300; position: fixed; width: 50; height: 100%; }
+.opilsol-N29[data-bid=InLpwD1WuH] .modal { z-index: 300; position: absolute; }
 
 /* opilsol-N29 [KO4j777D68h] : 편집됨 */
-.opilsol-N29[data-bid=KO4j777D68h] .dim { z-index: 300 position: fixed; width: 50 height: 100%; }
-.opilsol-N29[data-bid=KO4j777D68h] .modal { z-index: 300 position: absolute; }
+.opilsol-N29[data-bid=KO4j777D68h] .dim { z-index: 300; position: fixed; width: 50; height: 100%; }
+.opilsol-N29[data-bid=KO4j777D68h] .modal { z-index: 300; position: absolute; }
 
 /* opilsol-N29 [pO4J777D8mh] : 편집됨 */
-.opilsol-N29[data-bid=pO4J777D8mh] .dim { z-index: 300 position: fixed; width: 50 height: 100%; }
-.opilsol-N29[data-bid=pO4J777D8mh] .modal { z-index: 300 position: absolute; }
+.opilsol-N29[data-bid=pO4J777D8mh] .dim { z-index: 300; position: fixed; width: 50; height: 100%; }
+.opilsol-N29[data-bid=pO4J777D8mh] .modal { z-index: 300; position: absolute; }
 
 /* opilsol-N29 [fa4J777lUV6] : 편집됨 */
-.opilsol-N29[data-bid=fa4J777lUV6] .dim { z-index: 300 position: fixed; width: 50 height: 100%; }
-.opilsol-N29[data-bid=fa4J777lUV6] .modal { z-index: 300 position: absolute; }
+.opilsol-N29[data-bid=fa4J777lUV6] .dim { z-index: 300; position: fixed; width: 50; height: 100%; }
+.opilsol-N29[data-bid=fa4J777lUV6] .modal { z-index: 300; position: absolute; }
 
 /* opilsol-N29 [Cy4J778jRsh] : 편집됨 */
-.opilsol-N29[data-bid=Cy4J778jRsh] .dim { z-index: 300 position: fixed; width: 50 height: 100%; }
-.opilsol-N29[data-bid=Cy4J778jRsh] .modal { z-index: 300 position: absolute; }
+.opilsol-N29[data-bid=Cy4J778jRsh] .dim { z-index: 300; position: fixed; width: 50; height: 100%; }
+.opilsol-N29[data-bid=Cy4J778jRsh] .modal { z-index: 300; position: absolute; }
 
 /* opilsol-N31 [vELq1mwLiX] */
 .opilsol-N31 .content-container { margin-bottom: 8rem; padding: 19rem 0 8rem; }
