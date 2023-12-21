@@ -9,7 +9,7 @@
 /* ========== */
 /* Variable */
 :root {
-  --primary: #BB1614;
+  --primary: #b9b6b6;
   --secondary: #6c757d;
   --success: #198754;
   --info: #0dcaf0;
@@ -28,7 +28,7 @@
   --black-rgb: 0, 0, 0;
   --white-rgb: 255, 255, 255;
   --body-bg: #fff;
-  --con-bg-gray: #FAFAFA;
+  --con-bg-gray: #ececec;
   --body-color: var(--text-color1);
   --border-width: 1px;
   --border-style: solid;
@@ -40,7 +40,7 @@
   --letter-spacing: -0.025rem;
   --text-color1: #111111;
   --text-color2: #505050;
-  --text-color3: #767676;
+  --text-color3: #1e4f3f;
   --text-color4: #999999;
   --text-color5: #ffffff;
   --text-color6: #777777;
@@ -80,6 +80,11 @@
   --vt-h1: 5.4rem;
   --vt-h2: 2rem;
   --lt-sp: -.25rem
+}
+
+form[name="form"] .inputset {
+    width: 30%;
+    margin-left: auto;
 }
 
 @media (max-width:1366px) {
@@ -436,7 +441,7 @@ progress { vertical-align: baseline; }
 /* ========== */
 /* Input : Inputset */
 .inputset-group { display: flex; justify-content: flex-start; align-items: center; white-space: nowrap;}
-.inputset-group .inputset-label { flex: 0 0 9rem; margin-right: 4rem; font-weight: 600; }
+.inputset-group .inputset-label { flex: 0 0 9rem; margin-right: 3rem; font-weight: 600; }
 .inputset { position: relative; } 
 .inputset .inputset-textarea { min-height: 10rem; } 
 .inputset .inputset-input { border-color: var(--border-color); border-radius: 0; color: var(--body-color); height: var(--ht-md); padding: 0 1.6rem; font-size: var(--fs-p1); } 
@@ -721,35 +726,35 @@ progress { vertical-align: baseline; }
 
 /* ========== */
 /* Table : Tableset */
-.tableset { position: relative; } 
-.tableset .tableset-table { width: 100%; margin-bottom: 0; } 
-.tableset .tableset-table>:not(caption):not(colgroup)>*>* { padding: 1.6rem 2.4rem; vertical-align: middle; border-bottom: 1px solid var(--border-color); } 
-.tableset .tableset-table>thead>*>* { font-weight: 500; background-color: transparent; } 
-.tableset .tableset-table>thead.thead-light>*>* { background-color: var(--bg-color); } 
-.tableset .tableset-table>thead.thead-dark>*>* { background-color: var(--text-color1); color: var(--white); } 
-.tableset .tableset-table>thead.thead-border-top>*>* { border-top: 1px solid var(--line-color3); } 
-.tableset .tableset-table>thead.thead-border-bottom>*>* { border-bottom: 1px solid var(--line-color3); } 
-.tableset .tableset-table>tbody>*>* { color: var(--text-color2); } 
-.tableset .tableset-table>tbody>*>th { background-color: var(--bg-color); color: var(--body-color); font-weight: 500; } 
-.tableset .tableset-table>tbody.tbody-bottom-border>*:last-child>* { border-bottom: 1px solid var(--line-color3); } 
-.tableset .tableset-table>tbody.tbody-bottom-borderless>*:last-child>* { border-bottom: none; } 
-.tableset .tableset-table>colgroup>.width-100 { width: 100px; } 
-.tableset .tableset-table>colgroup>.width-200 { width: 200px; } 
-.tableset .tableset-table>colgroup>.width-300 { width: 300px; } 
-.tableset.tableset-center .tableset-table>:not(caption):not(colgroup)>*>* { text-align: center; } 
-.tableset.tableset-valign-top .tableset-table>:not(caption):not(colgroup)>*>* { vertical-align: top; } 
-.tableset.tableset-valign-bottom .tableset-table>:not(caption):not(colgroup)>*>* { vertical-align: bottom; } 
-.tableset.tableset-divider .tableset-table>:not(caption):not(colgroup)>*>* { border-left: 1px solid var(--line-color1); } 
-.tableset.tableset-divider .tableset-table>:not(caption):not(colgroup)>*>*:first-child { border-left: none; } 
-.tableset.tableset-stripe .tableset-table>tbody>tr:nth-of-type(even)>* { background-color: var(--bg-color); } 
-.tableset.tableset-border .tableset-table>tbody>*:last-child>* { border-bottom: none; } 
-.tableset.tableset-border { border: 1px solid var(--border-color); } 
-.tableset.tableset-round { border-radius: .8rem; overflow: hidden; } 
+.tableset { position: relative; }
+.tableset .tableset-table { width: 100%; margin-bottom: 0; }
+.tableset .tableset-table>:not(caption):not(colgroup)>*>* { padding: 1.6rem 2.4rem; vertical-align: middle; border-bottom: 1px solid var(--border-color); }
+.tableset .tableset-table>thead>*>* { font-weight: 500; background-color: transparent; }
+.tableset .tableset-table>thead.thead-light>*>* { background-color: var(--bg-color); }
+.tableset .tableset-table>thead.thead-dark>*>* { background-color: var(--text-color1); color: var(--white); }
+.tableset .tableset-table>thead.thead-border-top>*>* { border-top: 1px solid var(--line-color3); }
+.tableset .tableset-table>thead.thead-border-bottom>*>* { border-bottom: 1px solid var(--line-color3); }
+.tableset .tableset-table>tbody>*>* { color: var(--text-color2); }
+.tableset .tableset-table>tbody>*>th { background-color: var(--bg-color); color: var(--body-color); font-weight: 500; }
+.tableset .tableset-table>tbody.tbody-bottom-border>*:last-child>* { border-bottom: 1px solid var(--line-color3); }
+.tableset .tableset-table>tbody.tbody-bottom-borderless>*:last-child>* { border-bottom: none; }
+.tableset .tableset-table>colgroup>.width-100 { width: 100px; }
+.tableset .tableset-table>colgroup>.width-200 { width: 200px; }
+.tableset .tableset-table>colgroup>.width-300 { width: 300px; }
+.tableset.tableset-center .tableset-table>:not(caption):not(colgroup)>*>* { text-align: center; }
+.tableset.tableset-valign-top .tableset-table>:not(caption):not(colgroup)>*>* { vertical-align: top; }
+.tableset.tableset-valign-bottom .tableset-table>:not(caption):not(colgroup)>*>* { vertical-align: bottom; }
+.tableset.tableset-divider .tableset-table>:not(caption):not(colgroup)>*>* { border-left: 1px solid var(--line-color1); }
+.tableset.tableset-divider .tableset-table>:not(caption):not(colgroup)>*>*:first-child { border-left: none; }
+.tableset.tableset-stripe .tableset-table>tbody>tr:nth-of-type(even)>* { background-color: var(--bg-color); }
+.tableset.tableset-border .tableset-table>tbody>*:last-child>* { border-bottom: none; }
+.tableset.tableset-border { border: 1px solid var(--border-color); }
+.tableset.tableset-round { border-radius: .8rem; overflow: hidden; }
 @media (max-width:992px){
- .tableset .tableset-inner { overflow: auto; } 
- .tableset .tableset-table { min-width: 360px; } 
- .tableset .tableset-table>colgroup>* { min-width: 7.6rem; } 
- }
+    .tableset .tableset-inner { overflow: auto; }
+    .tableset .tableset-table { min-width: 360px; }
+    .tableset .tableset-table>colgroup>* { min-width: 7.6rem; }
+}
 
 /* ========== */
 /* Accordion : Accordset */

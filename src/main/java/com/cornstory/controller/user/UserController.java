@@ -1,19 +1,10 @@
 package com.cornstory.controller.user;
 
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.cornstory.common.Search;
 import com.cornstory.domain.KakaoAPI;
 import com.cornstory.domain.User;
 import com.cornstory.service.user.UserService;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -21,11 +12,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/user/*")
@@ -167,11 +168,13 @@ public class UserController {
 
                 // 파일 경로를 Work 객체에 저장
 
-                user.setUserImage(filePath);
+                user.setUserImage(fileName);
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
+        }else{
+            user.setUserImage("user.jpg");
         }
 
         // 나머지 비즈니스 로직 처리
@@ -215,19 +218,45 @@ public class UserController {
         return "forward:/user/updateUser.jsp";
     }
 
+
+
+
     @RequestMapping( value="updateUser", method=RequestMethod.POST )
-    public String updateUser( @ModelAttribute("user") User user , Model model , HttpSession session) throws Exception{
+    public String updateUser(@ModelAttribute("user") @Validated User user, HttpServletRequest request,
+                             @RequestParam("userfile") MultipartFile file , HttpSession session) throws Exception{
 
         System.out.println("user/updateUser : POST");
         //Business Logic
-        userService.updateUser(user);
 
-        String sessionId=((User)session.getAttribute("user")).getUserId();
-        if(sessionId.equals(user.getUserId())){
-            session.setAttribute("user", user);
+
+        String fileName = user.getUserId() + "_user" ;
+        fileName = fileName.replaceAll("[^a-zA-Z0-9가-힣_]", "_");
+        fileName += ".jpg";
+        System.out.println("user/updateUser : jpg 변환후 들어오나 ");
+        if (!file.isEmpty()) {
+            System.out.println("user/updateUser : jpg 변환후 들어오긴하네 ");
+            try {
+                System.out.println("user/updateUser : jpg 변환중 ");
+                String uploadDir = request.getServletContext().getRealPath("")+"\\..\\resources\\static\\file\\user\\";
+                String filePath = uploadDir + File.separator + fileName;
+
+
+                Files.write(Path.of(filePath), file.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+                System.out.println("user/updateUser : jpg 변환후 경로 저장 완료 ");
+                // 파일 경로를 Work 객체에 저장
+
+                user.setUserImage(fileName);
+            } catch (IOException e) {
+                System.out.println("user/updateUser : jpg 변환실패 ");
+                e.printStackTrace();
+            }
+
         }
 
-        //return "user/getUser?userId="+user.getUserId();
+        userService.updateUser(user);
+        System.out.println(user);
+
+
         return "user/getUser";
     }
 

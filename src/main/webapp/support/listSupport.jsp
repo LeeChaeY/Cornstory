@@ -22,40 +22,74 @@
   <link rel="stylesheet" href="../ssh/css/template.css">
   <link rel="stylesheet" href="../ssh/css/common.css">
   <link rel="stylesheet" href="../ssh/css/style.css">
+  <link rel="stylesheet" href="../common/css/setting.css">
+  <link rel="stylesheet" href="../common/css/plugin.css">
+  <link rel="stylesheet" href="../common/css/template.css">
+  <link rel="stylesheet" href="../common/css/common.css">
+  <link rel="stylesheet" href="../common/css/style.css">
 
-  <link rel="stylesheet" href="/lcy/css/style.css">
+
 </head>
 <body>
 <main class="th-layout-main ">
   <%@ include file="../layout/top.jsp" %>
-  <!-- [S]opilsol-N24 -->
-  <div class="opilsol-N26" data-bid="dL11fYz8S6T" id="">
+  <div class="opilsol-N9" data-bid="jelQc7ixx3" >
+    <div class="visual-container">
+      <img class="visual-bg pc-img" src="../common/images/about-visual.jpg" alt="서브 비주얼 이미지">
+      <img class="visual-bg mobile-img" src="../common/images/about-m-visual.jpg" alt="서브 비주얼 이미지">
+      <div class="visual-txt-box container-md">
+        <h2 class="visual-title"> 고객센터</h2>
+        <p class="visual-description">회원과 관리자의 의사소통을 위한 공간</p>
+      </div>
+    </div>
+  </div>
+  <div class="opilsol-N33" data-bid="rzlQc7ixYC">
+    <div class="content-container sub-menu">
+    </div>
+  </div>
+  <div class="opilsol-N34" data-bid="mWLqC7iXyY">
+    <div class="content-container container-md">
+      <div class="textset content-tit">
+        <p class="textset-eu">Support</p>
+        <c:choose>
+          <c:when test="${param.category eq '0'}">
+            <input type="text" id="supCategory" name="supCategory" value="0" style="display: none;">
+            <h2 class="textset-tit">공지사항</h2><br>
+            <c:choose>
+              <c:when test="${sessionScope.user != null and sessionScope.user.role eq 1}">
+                <a href="addSupport?category=0">작성하기</a>
+              </c:when>
+            </c:choose>
+          </c:when>
+          <c:when test="${param.category eq '1'}">
+            <input type="text" id="supCategory" name="supCategory" value="1" style="display: none;">
+            <h2 class="textset-tit">Q&A</h2><br>
+
+            <a href="addSupport?category=1">
+            <c:choose>
+              <c:when test="${sessionScope.user != null and sessionScope.user.role eq 0}">
+                질문하기
+              </c:when>
+            </c:choose>
+            </a>
+          </c:when>
+          <c:when test="${param.category eq '2'}">
+            <input type="text" id="supCategory" name="supCategory" value="2" style="display: none;">
+            <h2 class="textset-tit">신고센터</h2><br>
+          </c:when>
+        </c:choose>
+
+
+
+      </div>
+    </div>
+  </div>
+
+  <div class="opilsol-N24" data-bid="EWLQc7iXZf" id="">
     <div class="content-container">
       <div class="container-md">
         <div class="tableset">
           <div class="tableset-inner">
-            <div class="textset content-tit">
-              <p class="textset-eu">고객센터</p>
-              <c:choose>
-                <c:when test="${param.category eq '0'}">
-                  <input type="text" id="supCategory" name="supCategory" value="0" style="display: none;">
-                  <h4 class="h4">공지사항</h4>
-
-                  <a href="addSupport?category=0">작성하기</a>
-                </c:when>
-                <c:when test="${param.category eq '1'}">
-                  <input type="text" id="supCategory" name="supCategory" value="1" style="display: none;">
-                  <h4 class="h4">Q&A</h4>
-                  <a href="addSupport?category=1">작성하기</a>
-                </c:when>
-                <c:when test="${param.category eq '2'}">
-                  <input type="text" id="supCategory" name="supCategory" value="2" style="display: none;">
-                  <h4 class="h4">신고센터</h4>
-                  <p class="textset-eu">작성하기</p>
-                </c:when>
-              </c:choose>
-
-            </div>
             <table class="tableset-table table">
               <colgroup>
                 <col>
@@ -83,12 +117,11 @@
                   <th scope="col">신고 URL</th>
                   <th scope="col">추가자료</th>
                   <th scope="col">조치</th>
-
                 </c:if>
                 <th class="last-child" scope="col">등록일</th>
+
               </tr>
               </thead>
-
               <tbody>
               <c:set var="i" value="0"/>
               <c:forEach var="support" items="${list}">
@@ -96,12 +129,13 @@
 
                   <c:when test="${param.category eq '0' and support.supCategory eq '0'}">
                     <c:set var="i" value="${i + 1}"/>
-                    <tr class="ct_list_pop">
+                    <tr class="ct_list_pop" style=" margin: 0 auto; max-width: 500px;">
                       <td class="number">${i}</td>
                       <td>
-                        <a href="getSupport?supNo=${support.supNo}">${support.supContent}</a>
+                        <a href="getSupport?supNo=${support.supNo}">${support.supName}</a>
                       </td>
                       <td class="last-child">${support.supDate}</td>
+
                     </tr>
                   </c:when>
 
@@ -110,7 +144,7 @@
                     <tr class="ct_list_pop">
                       <td class="number">${i}</td>
                       <td>
-                        <a href="javascript:void(0)">${support.supContent}</a>
+                        <a href="getSupport?supNo=${support.supNo}">${support.supName}</a>
                       </td>
                       <td>${support.userId}</td>
                       <td>${support.supPluscon}</td>
@@ -125,7 +159,7 @@
                       <td class="number">${i}</td>
                       <td>${support.userId}</td>
                       <td>${support.supId}</td>
-                      <td>${support.supContent}</td>
+                      <td>${support.supName}</td>
                       <td><a href="${support.supPluscon}">URL</a></td>
                       <td>${support.supImage}</td>
                       <td>${support.supBan}일</td>
@@ -135,18 +169,16 @@
                 </c:choose>
               </c:forEach>
               </tbody>
-
-
-
-
             </table>
           </div>
         </div>
+        <nav class="pagiset pagiset-line">
+          <div class="pagiset-list">
+          </div>
+        </nav>
       </div>
-
     </div>
   </div>
-  <!-- [E]opilsol-N24 -->
 
 </main>
   <script src="../ssh/js/setting.js"></script>
