@@ -22,29 +22,8 @@
     <link rel="stylesheet" href="../ssh/css/common.css">
     <link rel="stylesheet" href="../ssh/css/style.css">
 
-
-
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script>
-        function findAddress() {
-            new daum.Postcode({
-                oncomplete: function(data) {
-                    document.getElementById('addr').value = data.address;
-                }
-            }).open();
-        }
-    </script>
-    <style>
-        .check-text {
-            padding: 140px;
-            font-size: 12px;
-        }
-        .check-image {
-
-            font-size: 12px;
-        }
-    </style>
 </head>
 <body>
 
@@ -62,18 +41,26 @@
                 <div class="container-md">
                     <div class="contents-form-top">
                     </div>
-                    <div class="inputset inputset-lg inputset-group" for="social">
-                        <label class="inputset-label">소셜 연동</label>
-                        <input type="checkbox" class="inputset-input check-text" id="social" name="social" value="${user.social}" required><br>
-                    </div>
                     <div class="inputset inputset-lg inputset-group">
                         <label class="inputset-label" for="password">비밀번호</label>
-                        <input type="password" class="inputset-input form-control" id="password" name="password" value="${user.password}" required><br>
+                        <input type="password" class="inputset-input form-control" id="password" name="password"
+                               pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()])[A-Za-z\d!@#$%^&*()]{8,16}$"
+                               title="# 영문, 숫자, 특수문자를 혼합하여 8자 이상 16자 이하로 입력하세요" maxlength="16"
+                               oninput="updateCharCount('password', 'passwordLength')" minlength="8" value="${user.password}" required >
+                        <span id="passwordLength">0/16</span>
                     </div>
+                    <span class="check-text"> 영문 숫자 특수문자를 조합하여 최소 8자 최대 16자 등록 가능합니다.</span>
+                    <span class="check-text" id="passwordMessage"></span>
+
                     <div class="inputset inputset-lg inputset-group" for="nickName">
                         <label class="inputset-label">닉네임</label>
-                        <input type="text" class="inputset-input form-control" id="nickName" name="nickName" value="${user.nickName}" required><br>
+                        <input type="text" class="inputset-input form-control" id="nickName" name="nickName" value="${user.nickName}"
+                               required maxlength="8" oninput="updateCharCount('nickName', 'nickNameLength')" minlength="2"/>
+                        <span id="nickNameLength">0/8</span>
                     </div>
+                    <span class="check-text">영문과 숫자 한글을 조합하여 최소 2자 최대 8자 등록 가능합니다.</span>
+                    <span class="check-text" id="nickNameMessage"></span>
+
                     <div class="inputset inputset-lg inputset-group" for="addr">
                         <label class="inputset-label">주소</label>
                         <input type="text"  class="inputset-input form-control" id="addr" name="addr" value="${user.addr}" required>
@@ -87,15 +74,29 @@
                         <label class="inputset-label">휴대폰번호</label>
                         <input type="tel" class="inputset-input form-control" id="phone" name="phone" value="${user.phone}" required><br>
                     </div>
+                    <span class="check-text" id="phoneMessage"></span>
 
                     <div class="inputset inputset-lg inputset-group" for="userImage">
-                        <label class="inputset-label">회원 사진</label>
-                        <img src="../file/user/${user.userImage}" width="100" alt=""/>
-                        <label class="inputset-label">${user.userImage}</label>
-                        <input class="check-image" type="file" id="userImage" name="filename" accept=".jpg"/>
+                        <label class="inputset-label">회원 이미지</label>
+
+                        <div style="text-align: center;">
+                            <img src="../file/user/${user.userImage}" width="100" alt=""/>
+                            <p class="check-stext">* 기존이미지 입니다.</p>
+
+                        </div>
+
+                        <div id="dropArea" class="drop-area">
+                            <span class="drop-text">
+                                JPG 이미지를 올려 주세요
+                            </span>
+                            <input class="check-image" type="file" id="userfile" name="userfile" accept=".jpg"/>
+                            <ul id="fileList" class="file-list" style="list-style-type: none; padding: 0; margin-top: 10px;"></ul>
+                        </div>
 
                     </div>
-                    <span class="check-text"> 파일 용량 1MB 이하 JPG만 업로드 가능합니다.</span>
+
+
+
 
                     <div class="inputset inputset-lg inputset-group" for="email">
                         <label class="inputset-label">이메일</label>
@@ -119,11 +120,59 @@
     </div>
 
     <%@ include file="../layout/bottom.jsp" %>
+
+    <script>
+
+        $('.drop-area').on('drag dragstart dragend dragover dragenter dragleave drop', function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+        });
+        $(".drop-area").on("dragover", function (event) {
+            $(this).addClass('drag-over');
+        });
+        $(".drop-area").on("dragleave dragend drop", function (event) {
+            $(this).removeClass('drag-over');
+        });
+        $(".drop-area").on("drop", function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            if (event.originalEvent.dataTransfer.files.length === 1) {
+                const files = event.originalEvent.dataTransfer.files;
+
+                // Display the uploaded file
+                displayFile(files[0]);
+                $("input[name='userfile']")[0].files = files;
+            } else {
+                alert('Please drop only one file at a time.');
+            }
+
+            // Remove highlight from drop area
+            $(this).removeClass('drag-over');
+        });
+
+        $("input[type='file']").on("change", function (event) {
+            const file = this.files[0];
+            displayFile(file);
+        });
+        function displayFile(file) {
+            const listItem = $("<li>");
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                listItem.html('<img src="' + e.target.result + '" alt="your image"/>');
+            };
+            reader.readAsDataURL(file);
+            $(".file-list").empty().append(listItem);
+        }
+
+
+    </script>
     <script src="../ssh/js/setting.js"></script>
     <script src="../ssh/js/plugin.js"></script>
     <script src="../ssh/js/template.js"></script>
     <script src="../ssh/js/common.js"></script>
     <script src="../ssh/js/script.js"></script>
+    <script src="../ssh/js/addUser.js"></script>
 </form>
 </body>
 </html>

@@ -26,9 +26,9 @@
 
 	<insert		id="addUser"		parameterType="user" >
 		INSERT
-		INTO user( user_id,role,user_name,nickname,password,birthday,addr,address,phone, email,user_image,popcorn_cnt,r_date)
+		INTO user( user_id,role,user_name,nickname,password,birthday,addr,address,phone, email,user_image,popcorn_cnt,r_date,social)
 		VALUES (#{userId},0,#{userName},#{nickName},#{password},#{birthday},#{addr:VARCHAR},#{address:VARCHAR},
-				#{phone:VARCHAR},#{email:VARCHAR},#{userImage:VARCHAR},0,NOW())
+				#{phone:VARCHAR},#{email:VARCHAR},#{userImage:VARCHAR},0,NOW(),#{social})
 	</insert>
 
 	<!-- SQL : SELECT ONE -->

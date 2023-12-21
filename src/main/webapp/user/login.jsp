@@ -7,34 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
-    <script>
-        // 카카오 초기화
-        Kakao.init('b0bd84c71b068376094579f78dcd6af0');
-
-        // 문서 로드 후 실행
-        $(document).ready(function () {
-            // 카카오 로그인 버튼 생성
-            createKakaoLoginButton();
-        });
-
-        // 카카오 로그인 버튼 생성
-        function createKakaoLoginButton() {
-            // Kakao.Auth.createLoginButton 함수로 카카오 로그인 버튼을 생성합니다.
-            Kakao.Auth.createLoginButton({
-                container: '#kakao-login-btn',
-                success: function (authObj) {
-                    console.log(authObj);
-                    // 로그인 성공 시 서버로 전송
-                    // ... (이 부분은 서버로 전송하는 부분으로, 필요에 따라 구현하세요.)
-                },
-                fail: function (err) {
-                    console.log(err);
-                }
-            });
-        }
-    </script>
-
     <script>
         function submitLoginForm() {
             var userIdInput = document.getElementById('userId');
@@ -136,7 +108,6 @@
                         <a href="/user/addStart.jsp" >회원가입</a>
                         <div class="bottom-btn">
                             <div id="errorMessage" style="color: #ff0000;"></div>
-                            <div id="kakao-login-btn"></div>
                             <button type="submit" class="btnset btnset-lg btnset-rect">로그인</button><br>
                             <a href="https://kauth.kakao.com/oauth/authorize?client_id=b0bd84c71b068376094579f78dcd6af0&redirect_uri=http://localhost:8088/user/slogin&response_type=code">
                                 <img src="../file/user/kakao_login_medium_narrow.png">
