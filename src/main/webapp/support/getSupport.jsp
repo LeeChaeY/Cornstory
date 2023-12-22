@@ -290,4 +290,5 @@
 <script src="../common/js/common.js"></script>
 <script src="../common/js/script.js"></script>
 <script src="../ssh/js/support.js"></script>
+<script src="../ssh/js/deleteSupport.js"></script>
 <%@ include file="../layout/bottom.jsp" %>
