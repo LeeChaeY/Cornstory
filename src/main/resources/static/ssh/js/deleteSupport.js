@@ -16,7 +16,8 @@ $(document).ready(function () {
                     // 삭제 성공 시, 필요에 따라 추가적인 처리를 할 수 있습니다.
                 } else {
                     alert("삭제에 실패했습니다.");
-                }
+                }꿈과 창작을 펼치는플랫폼
+                고객 만족도 향상을 위한 솔루션 제공
             },
             error: function (xhr, status, error) {
                 console.log(xhr.status); // HTTP 응답 코드를 콘솔에 출력
