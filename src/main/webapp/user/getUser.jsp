@@ -112,9 +112,9 @@
 
             </div>
 <!-- 탈퇴가 완료되면 표시할 메시지 -->
-<c:if test="${param.deleted eq 'true'}">
-    <p style="color: green;">회원 탈퇴가 완료되었습니다.</p>
-</c:if>
+            <c:if test="${param.deleted eq 'true'}">
+                <p style="color: green;">회원 탈퇴가 완료되었습니다.</p>
+            </c:if>
         </div>
     </div>
 </div>

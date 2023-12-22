@@ -268,7 +268,9 @@
                                         </c:when>
                                     </c:choose>
 
-
+                                    <c:if test="${param.deleted eq 'true'}">
+                                        <p style="color: green;">회원 탈퇴가 완료되었습니다.</p>
+                                    </c:if>
 
 
                                 </div>
