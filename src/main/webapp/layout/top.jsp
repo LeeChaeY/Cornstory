@@ -25,7 +25,7 @@
   <link rel="stylesheet" href="../ssh/css/style.css">
 
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script src="http://localhost:3000/socket.io/socket.io.js"></script>
   <script>
 
     function redirectToIndex() {
@@ -33,6 +33,16 @@
     }
 
     $(function () {
+      if ("${sessionScope.user}" !== "") {
+        const socket = io.connect('http://localhost:3000');
+        socket.emit("connection", {userId: "${sessionScope.user.userId}"});
+
+        socket.on("message", async (data) => {
+          console.log(data);
+        });
+      }
+
+
       $("span:contains('나의 채팅방')").on("click", function () {
         $("input[name='userStatus']").val(1);
         $("form[name='form']").attr("method", "post").attr("action", "/chat/listChatSpace").submit();
@@ -104,13 +114,13 @@
           </a>
           <ul class="header-sublist">
             <li class="header-subitem">
-              <a class="header-sublink" href="javascript:void(0)">
+              <a class="header-sublink" href="/story/listStory">
                 <span>스토리 목록</span>
               </a>
             </li>
             <c:if test="${!empty sessionScope.user}">
               <li class="header-subitem">
-                <a class="header-sublink" href="javascript:void(0)">
+                <a class="header-sublink" href="/story/getStory">
                   <span>나의 스토리</span>
                 </a>
               </li>
@@ -315,13 +325,13 @@
           </a>
           <ul class="fullmenu-sublist">
             <li class="fullmenu-subitem">
-              <a class="fullmenu-sublink" href="javascript:void(0)">
+              <a class="fullmenu-sublink" href="/story/listStory">
                 <span>스토리 목록</span>
               </a>
             </li>
             <c:if test="${!empty sessionScope.user}">
               <li class="fullmenu-subitem">
-                <a class="fullmenu-sublink" href="javascript:void(0)">
+                <a class="fullmenu-sublink" href="/story/getStory">
                   <span>나의 스토리</span>
                 </a>
               </li>

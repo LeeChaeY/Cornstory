@@ -30,4 +30,6 @@ public interface EpisodeDao {
     public int episodeMax(int workNo) throws Exception;
 
     public Episode getLatestEpisode(Episode episode);
+
+    public List<Episode> getPurchaseEpisode(String userId)throws Exception;
 }

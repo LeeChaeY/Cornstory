@@ -1,23 +1,10 @@
 package com.cornstory;
 
 import com.cornstory.common.Search;
-import com.cornstory.domain.Chat;
-import com.cornstory.domain.ChatSpace;
 import com.cornstory.service.chat.ChatDao;
-import com.cornstory.service.chat.ChatRepository;
 import com.cornstory.service.chat.ChatService;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import java.text.SimpleDateFormat;
-
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static org.junit.jupiter.params.shadow.com.univocity.parsers.conversions.Conversions.toLong;
 
 @SpringBootTest
 class ChatTests {
@@ -145,7 +132,7 @@ class ChatTests {
 
 //	@Test
 	void chatTest() {
-		Chat chat = new Chat(10001, "test1", "안녕하세요!", "2023-12-03", "");
+//		Chat chat = new Chat(10001, "test1", "안녕하세요!", "2023-12-03", "");
 
 		try {
 //			chatService.addChat(chat);
@@ -157,7 +144,7 @@ class ChatTests {
 			search.setPageSize(3);
 			search.setCurrentPage(1);
 
-			System.out.println(chatService.listChat(10001, "2020-12-01", "2023-12-31"));
+//			System.out.println(chatService.listChat(10001, "2020-12-01", "2023-12-31"));
 
 		} catch (Exception e) {
 			throw new RuntimeException(e);

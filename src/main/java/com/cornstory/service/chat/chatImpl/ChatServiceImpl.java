@@ -1,17 +1,12 @@
 package com.cornstory.service.chat.chatImpl;
 
 import com.cornstory.common.Search;
-import com.cornstory.domain.Chat;
 import com.cornstory.domain.ChatSpace;
 import com.cornstory.service.chat.ChatDao;
-import com.cornstory.service.chat.ChatRepository;
 import com.cornstory.service.chat.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.util.*;
 
 @Service
@@ -19,9 +14,6 @@ public class ChatServiceImpl implements ChatService {
 
     @Autowired
     private ChatDao chatDao;
-
-    @Autowired
-    private ChatRepository chatRepository;
 
     @Override
     public int addChatSpace(ChatSpace chatSpace) throws Exception {
@@ -47,8 +39,6 @@ public class ChatServiceImpl implements ChatService {
         map.put("chatSpaceNo", chatSpaceNo);
         map.put("userId", "");
         chatDao.deleteChatEnter(map);
-
-        chatRepository.deleteChatsByChatSpaceNo(chatSpaceNo);
 
         return chatDao.deleteChatSpace(chatSpaceNo);
     }
@@ -131,34 +121,5 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public int countChatEnterCheck(Map map) throws Exception {
         return chatDao.countChatEnterCheck(map);
-    }
-
-    @Override
-    public Chat addChat(Chat chat) throws Exception {
-        return chatRepository.save(chat);
-    }
-
-    @Override
-    public void deleteChat(Long chatNo) throws Exception {
-        chatRepository.deleteByChatNo(chatNo);
-    }
-
-    @Override
-    public Map<String, Object> listChat(int chatSpaceNo, String startDate, String endDate) throws Exception {
-        Map<String,Object> map = new HashMap<String,Object>();
-
-        int totalCount = chatRepository.countByChatSpaceNo(chatSpaceNo);
-        System.out.println("ChatServiceImpl :: countByChatSpaceNo :: "+totalCount);
-
-        List<Chat> list = new ArrayList<Chat>();
-        if (startDate != null && !startDate.equals("") && endDate != null && !endDate.equals("")) {
-            list = chatRepository.findByChatSpaceNoAndChatDateBetween(chatSpaceNo, startDate, endDate);
-        } else {
-            list = chatRepository.findByChatSpaceNo(chatSpaceNo);
-        }
-        map.put("totalCount", totalCount);
-        map.put("list", list);
-
-        return map;
     }
 }

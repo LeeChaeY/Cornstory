@@ -100,4 +100,9 @@ public class EpisodeServiceImpl implements EpisodeService{
     public Episode getLatestEpisode(Episode episode) throws Exception {
         return episodeDao.getLatestEpisode(episode);
     }
+
+    @Override
+    public List<Episode> getPurchaseEpisode(String userId) throws  Exception{
+        return episodeDao.getPurchaseEpisode(userId);
+    }
 }

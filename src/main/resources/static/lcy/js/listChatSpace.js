@@ -99,18 +99,6 @@ function fncGetChatList(currentPage) {
 }
 
 function enterChatSpace(chatSpaceNo) {
-    // $(self.location).attr("href", "/chat/enterChatSpace?chatSpaceNo="+chatSpaceNo);
-    // popWin = window.open("/chat/enterChatSpace?chatSpaceNo=" + chatSpaceNo, "popWin", "scrollbars=yes");
-
-    // fetch("/chat/json/enterChatSpace?chatSpaceNo=" + chatSpaceNo)
-    //     // .then(response => response.json())
-    //     .then(data => {
-    //         // alert(data.text());
-    //         // Open a new window or tab with the specified URL
-    //         window.open("http://127.0.0.1:3000", '_blank');
-    //     })
-    //     .catch(error => console.error('Error:', error));
-
 
     $.ajax({
         url: "/chat/json/enterChatSpace?chatSpaceNo=" + chatSpaceNo + "",
@@ -130,10 +118,10 @@ function enterChatSpace(chatSpaceNo) {
             form.enctype = 'application/json';  // Set content type to JSON
 
             addJsonDataToForm(form, JSONData.chatSpace, 'chatSpace');
-            addJsonDataToForm(form, JSONData.list, 'list');
             addJsonDataToForm(form, JSONData.userList, 'userList');
             addJsonDataToForm(form, JSONData.totalCount, 'totalCount');
             addJsonDataToForm(form, JSONData.user, 'user');
+            addJsonDataToForm(form, JSONData.startDate, 'startDate');
 
             const chatWindow = window.open('',chatSpaceNo, 'width=500,height=400,left:100,top:100');
 
@@ -141,7 +129,6 @@ function enterChatSpace(chatSpaceNo) {
             if (chatWindow) {
                 // Set the HTML content of the new window to the form
                 chatWindow.document.body.appendChild(form);
-
 
                 // Submit the form
                 form.submit();
@@ -170,21 +157,9 @@ function updateChatSpace(chatSpaceNo) {
 }
 
 function deleteChatSpace(chatSpaceNo) {
-    let url2 = "http://101.79.8.55:3000/delete_chats?chatSpaceNo=" + chatSpaceNo + "";
-    // let url2 = "http://localhost:3000/delete_chats?chatSpaceNo=" + chatSpaceNo + "";
-
-    $.ajax({
-        url: url2,
-        method: "GET",
-        success: function(JSONData, status) {
-            // $("input[value='" + chatSpaceNo + "']").parents("tr").children("td").remove();
-        },
-        error: function(status) {
-
-            //Debug...
-            alert("error");
-        }
-    });
+    const socket = io.connect('http://localhost:3000');
+    socket.emit("connection", {userId: "${sessionScope.user.userId}"});
+    socket.emit("delete", {chatSpaceNo: chatSpaceNo});
 
     $.ajax({
         url: "/chat/json/deleteChatSpace/" + chatSpaceNo + "",

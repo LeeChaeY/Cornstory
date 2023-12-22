@@ -254,9 +254,7 @@
                         <div class="container-list">
                             <!-- 작품 이미지와 정보를 표시 -->
                             <figure class="cardset-figure">
-                                <a class="cardset cardset-border" href="../work/getDetailWork?workNo=${work.workNo}">
-                                    <img class="cardset-img" src="${work.thumbnail}" alt="이미지">
-                                </a>
+                                <img class="cardset-img" src="${work.thumbnail}" alt="이미지">
                             </figure>
                             <div class="cardset-body">
                                 <!-- 작품 제목 표시 -->
@@ -275,6 +273,10 @@
                                     <c:if test="${not empty work.genre3}">, ${work.genre3}</c:if></p>
                                 <!-- 작품 가격(무료 또는 유료) 표시 -->
                                 <p class="cardset-desc">${work.fap == 0 ? '무료' : '유료'}</p>
+
+                                <div class="work-options">
+                                    <span class="work-option" onclick="viewWorkDetail(${work.workNo})">자세히 보기</span>
+                                </div>
                             </div>
                         </div>
                     </c:forEach>
@@ -294,6 +296,10 @@
 
 </body>
 <script>
+    function viewWorkDetail(workNo) {
+        window.location.href = "../work/getDetailWork?workNo=" + workNo;
+    }
+
     // 카테고리에 따른 텍스트 반환
     function getCategoryText(category) {
         switch (category) {

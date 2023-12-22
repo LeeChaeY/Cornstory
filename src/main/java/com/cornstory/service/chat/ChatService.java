@@ -1,10 +1,8 @@
 package com.cornstory.service.chat;
 
 import com.cornstory.common.Search;
-import com.cornstory.domain.Chat;
 import com.cornstory.domain.ChatSpace;
 
-import java.util.List;
 import java.util.Map;
 
 public interface ChatService {
@@ -38,12 +36,4 @@ public interface ChatService {
 
     public int countChatEnterCheck(Map map) throws Exception;
 
-
-
-    public Chat addChat(Chat chat) throws Exception;            //save, controller 단에서 chatDate 현재 시간으로 지정
-
-    public void deleteChat(Long chatNo) throws Exception;       //delete
-
-    //selectList, controller 단에서 endDate 현재 시간, 특정 시간으로 지정
-    public Map<String, Object> listChat(int chatSpaceNo, String startDate, String endDate) throws Exception;
 }

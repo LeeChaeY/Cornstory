@@ -121,6 +121,7 @@
         <div class="content-container">
             <h2 class="textset-tit">나의 작품 목록</h2>
             <p>전체 개수: ${myCount}</p>
+            <p><a href="../work/addWork">작품추가</a></p>
             <div class="container-md">
                 <c:forEach var="work" items="${list}">
                     <div class="container-list">
