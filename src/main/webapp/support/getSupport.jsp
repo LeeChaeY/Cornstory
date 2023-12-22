@@ -92,22 +92,22 @@
                                 </tr>
 
                                 <c:choose>
-                                    <c:when test="${support.supCategory eq '0' and sessionScope.user.role eq 1}">
+                                    <c:when test="${support.supCategory eq '0'}">
                                         <div class="sup-content">
                                             <tr>
                                                 <th>
-                                                    <label class="req label" for="supContent">공지내용</label>
+                                                    <label class=" label" for="supContent">공지내용</label>
                                                 </th>
                                                 <td colspan="3">
-
                                                     <div class="inputset">
                                                         <img class="textset-tit" src="../file/support/${support.supImage}" width="500" style=" max-width: 100%;" alt=""/>
-                                                            ${support.supContent}$
+                                                            ${support.supContent}
                                                     </div>
                                                 </td>
                                             </tr>
                                         </div>
                                     </c:when>
+
                                     <c:when test="${support.supCategory eq '1' and sessionScope.user.role eq 0}">
                                         <div class="sup-content">
                                             <tr>
@@ -155,11 +155,19 @@
                                             <input type="text"  name="supPluscon" value="1" style="display: none;">
                                             <tr>
                                                 <th>
-                                                    <label class="req label" for="supPluscon">답변 작성</label>
+                                                    <label class="req label" for="supPluscon">답변</label>
                                                 </th>
                                                 <td colspan="3">
                                                     <div class="inputset">
-                                                        <textarea class="inputset-input form-control textarea" name="supContent" aria-label="문의내용" required></textarea>
+                                                        <c:choose>
+                                                            <c:when test="${not empty support.supPluscon}">
+                                                                ${support.supPluscon}<a href="updateSupport">[수정하기]</a>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <textarea class="inputset-input form-control textarea" name="supContent" aria-label="문의내용" required></textarea>
+                                                            </c:otherwise>
+                                                        </c:choose>
+
                                                     </div>
                                                 </td>
                                             </tr>
@@ -213,15 +221,54 @@
 
                                     <a href="listSupport?category=${support.supCategory}"><button class="btnset btnset-lg btnset-dark btnset-rect">확인</button></a>
 
-                                    <!-- 간격을 위한 빈 span 요소 추가 -->
-                                    <span class="button-gap"></span>
+                                    <c:choose>
+                                        <c:when test="${support.supCategory eq '0' and sessionScope.user.role eq 1}">
+                                            <span class="button-gap"></span>
 
-                                    <a href="updateSupport?supNo=${support.supNo}"><button class="btnset btnset-lg btnset-rect">수정하기</button></a>
+                                            <a href="updateSupport?supNo=${support.supNo}"><button class="btnset btnset-lg btnset-rect">수정하기</button></a>
 
-                                    <!-- 간격을 위한 빈 span 요소 추가 -->
-                                    <span class="button-gap"></span>
 
-                                    <a id="withdrawLink" href="#"><button class="btnset btnset-lg btnset-dark btnset-rect">삭제하기</button></a>
+                                            <span class="button-gap"></span>
+
+                                            <a id="withdrawLink" href="#"><button class="btnset btnset-lg btnset-dark btnset-rect">삭제하기</button></a>
+                                        </c:when>
+                                        <c:when test="${support.supCategory eq '1' and sessionScope.user.role eq 0 and support.userId eq sessionScope.user.userId}">
+                                            <span class="button-gap"></span>
+
+                                            <a href="updateSupport?supNo=${support.supNo}"><button class="btnset btnset-lg btnset-rect">수정하기</button></a>
+
+
+                                            <span class="button-gap"></span>
+
+                                            <a id="withdrawLink" href="#"><button class="btnset btnset-lg btnset-dark btnset-rect">삭제하기</button></a>
+                                        </c:when>
+                                        <c:when test="${support.supCategory eq '1' and sessionScope.user.role eq 1}">
+
+                                            <span class="button-gap"></span>
+
+
+
+                                            <c:choose>
+                                                <c:when test="${not empty support.supPluscon}">
+                                                    <span class="button-gap"></span>
+
+                                                    <a id="withdrawLink" href="#"><button class="btnset btnset-lg btnset-rect">수정하기</button></a>
+
+                                                    <span class="button-gap"></span>
+
+                                                    <a id="withdrawLink" href="#"><button class="btnset btnset-lg btnset-dark btnset-rect">삭제하기</button></a>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <a href="updateSupport?supNo=${support.supNo}"><button class="btnset btnset-lg btnset-rect">등록하기</button></a>
+
+                                                </c:otherwise>
+                                            </c:choose>
+
+
+                                        </c:when>
+                                    </c:choose>
+
+
 
 
                                 </div>
