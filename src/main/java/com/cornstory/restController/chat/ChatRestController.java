@@ -1,19 +1,15 @@
 package com.cornstory.restController.chat;
 
-import com.cornstory.domain.Chat;
 import com.cornstory.domain.ChatSpace;
 import com.cornstory.domain.User;
 import com.cornstory.service.chat.ChatService;
 import com.cornstory.service.user.UserService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -91,7 +87,6 @@ public class ChatRestController {
         if (chatService.countChatEnterCheck(map01) == 0)
             chatService.addChatEnter(user.getUserId(), chatSpaceNo);
 
-        chatSpace = chatService.getChatSpace(chatSpaceNo);
         User createUser = userService.getUser(chatSpace.getUserId());
         chatSpace.setNickname(createUser.getNickName());
         chatSpace.setUserImage(createUser.getUserImage());
@@ -101,15 +96,10 @@ public class ChatRestController {
 
         String startDate = chatService.getChatEnter(user.getUserId(), chatSpaceNo).getChatEnterDate().toString();
 
-        Map <String, Object> map = chatService.listChat(chatSpace.getChatSpaceNo(), startDate, "");
-        System.out.println("/chat/enterChatSpace : GET :: " + map.get("list"));
-        model.addAttribute("list", map.get("list"));
-
         Map<String, Object> map02 = chatService.listChatEnterUser(chatSpaceNo);
 
         model.addAttribute("userList", map02.get("list"));
         model.addAttribute("totalCount", map02.get("totalCount"));
-
         System.out.println(map02.get("list"));
 
 //        String url = "http://localhost:3000/";
@@ -118,10 +108,10 @@ public class ChatRestController {
         Map<String, Object> returnMap = new HashMap<String, Object>();
         returnMap.put("url", url);
         returnMap.put("chatSpace", chatSpace);
-        returnMap.put("list", map.get("list"));
         returnMap.put("userList", map02.get("list"));
         returnMap.put("totalCount", map02.get("totalCount"));
         returnMap.put("user", user);
+        returnMap.put("startDate", startDate);
         return returnMap;
     }
 
@@ -136,21 +126,6 @@ public class ChatRestController {
         chatService.deleteChatEnter(map);
 
         return "삭제가 완료되었습니다.";
-    }
-
-    @PostMapping(value="json/addChat")
-    public Chat addChat(@RequestBody Chat chat, @SessionAttribute("user") User user) throws Exception {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        chat.setChatDate(dateFormat.format(new Timestamp(System.currentTimeMillis())));
-        chat.setUserId(user.getUserId());
-
-        user = userService.getUser(user.getUserId());
-        chat.setNickname(user.getNickName());
-        chat.setUserImage(user.getUserImage());
-
-        System.out.println("/chat/json/addChat : POST :: chat : " + chat);
-        chatService.addChat(chat);
-        return chat;
     }
 
 }

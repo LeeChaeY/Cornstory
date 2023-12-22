@@ -29,9 +29,6 @@ public class ChatController {
     @Autowired
     private ChatService chatService;
 
-    @Autowired
-    private UserService userService;
-
 //    @Value("${pageUnit}")
     int pageUnit = 5;
 //    @Value("${pageSize}")
@@ -189,49 +186,4 @@ public class ChatController {
 
         return "chat/listChatSpace";
     }
-
-
-
-
-//    @RequestMapping(value="enterChatSpace")
-//    public String enterChatSpace(@RequestParam("chatSpaceNo") int chatSpaceNo,
-//                                 @SessionAttribute("user") User user, Model model) throws Exception {
-//        System.out.println("/chat/enterChatSpace : GET/POST :: userId : " + user.getUserId() + ", chatSpaceNo : " + chatSpaceNo);
-//
-//        ChatSpace chatSpace = chatService.getChatSpace(chatSpaceNo);
-//        chatSpace.setUserId(user.getUserId());
-//
-//        Map<String, Object> map01 = new HashMap<String, Object>();
-//        map01.put("userId", user.getUserId());
-//        map01.put("chatSpaceNo", chatSpaceNo);
-//
-//        if (chatService.countChatEnterCheck(map01) == 0)
-//            chatService.addChatEnter(user.getUserId(), chatSpaceNo);
-//
-//        chatSpace = chatService.getChatSpace(chatSpaceNo);
-//        User createUser = userService.getUser(chatSpace.getUserId());
-//        chatSpace.setNickname(createUser.getNickName());
-//        chatSpace.setUserImage(createUser.getUserImage());
-//
-//        System.out.println("/chat/enterChatSpace : GET :: " + chatSpace);
-//        model.addAttribute("chatSpace", chatSpace);
-//
-//        String startDate = chatService.getChatEnter(user.getUserId(), chatSpaceNo).getChatEnterDate().toString();
-//
-//        Map <String, Object> map = chatService.listChat(chatSpace.getChatSpaceNo(), startDate, "");
-//        System.out.println("/chat/enterChatSpace : GET :: " + map.get("list"));
-//        model.addAttribute("list", map.get("list"));
-//
-//        Map<String, Object> map02 = chatService.listChatEnterUser(chatSpaceNo);
-//
-//        model.addAttribute("userList", map02.get("list"));
-//        model.addAttribute("totalCount", map02.get("totalCount"));
-//
-//        System.out.println(map02.get("list"));
-//
-//        String url = "http://127.0.0.1:3000";
-//        return url;
-//    }
-
-
 }

@@ -25,7 +25,7 @@
   <link rel="stylesheet" href="../ssh/css/style.css">
 
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script src="http://localhost:3000/socket.io/socket.io.js"></script>
   <script>
 
     function redirectToIndex() {
@@ -33,6 +33,16 @@
     }
 
     $(function () {
+      if ("${sessionScope.user}" !== "") {
+        const socket = io.connect('http://localhost:3000');
+        socket.emit("connection", {userId: "${sessionScope.user.userId}"});
+
+        socket.on("message", async (data) => {
+          console.log(data);
+        });
+      }
+
+
       $("span:contains('나의 채팅방')").on("click", function () {
         $("input[name='userStatus']").val(1);
         $("form[name='form']").attr("method", "post").attr("action", "/chat/listChatSpace").submit();
