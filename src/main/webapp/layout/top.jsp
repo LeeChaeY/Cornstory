@@ -191,7 +191,7 @@
           <c:choose>
             <c:when test="${empty sessionScope.user}">
               <a href="/user/login" class="btn-profile header-utils-btn" title="Login">
-                <img src="../ssh/images/login.png" alt="로고">
+
               </a>
             </c:when>
             <c:otherwise>
