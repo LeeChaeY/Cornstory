@@ -18,7 +18,7 @@
 		<result property="nickname" column="nickname" jdbcType="VARCHAR"/>
 		<result property="userImage" column="user_image" jdbcType="VARCHAR"/>
 		<result property="chatEnterNo" column="chat_enter_no" jdbcType="INTEGER"/>
-		<result property="chatEnterDate" column="chat_enter_date" jdbcType="DATE"/>
+		<result property="chatEnterDate" column="chat_enter_date" jdbcType="TIMESTAMP"/>
 	</resultMap>
 
 	<insert id="addChatSpace" parameterType="chatSpace" useGeneratedKeys="true"

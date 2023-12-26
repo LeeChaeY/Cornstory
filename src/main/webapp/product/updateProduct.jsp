@@ -86,7 +86,8 @@
                                             <label class="req label">팝콘 수량</label>
                                         </th>
                                         <td>
-                                            <input type="number" min="1" value="${product.prodCnt}" name="prodCnt" required=""> 개
+                                            <input type="text" min="1" value="<fmt:formatNumber value='${product.prodCnt}' pattern='#,##0'/>" name="prodCnt" required=""> 개
+                                            <input type="hidden" name="prodCnt2" value="${product.prodCnt}">
                                             <p class="prodNameCheck" style="color: red; display: none;">
                                                 해당 수량의 팝콘이 등록되어있습니다.
                                             </p>
@@ -101,7 +102,8 @@
                                         </th>
                                         <td>
                                             <div class="inputset">
-                                                <input type="number" min="100" value="${product.prodPrice}" name="prodPrice" required="">
+
+                                                <input type="text" min="100" value="<fmt:formatNumber value='${product.prodPrice}' pattern='#,##0'/>" name="prodPrice" required="">
                                                 원<br><br>
                                             </div>
                                         </td>
@@ -149,7 +151,7 @@
                                         </th>
                                         <td>
                                             <div class="inputset">
-                                                <input type="number" min="0" value="${product.prodPrice}" name="prodPrice" required="">
+                                                <input type="text" min="0" value="<fmt:formatNumber value='${product.prodPrice}' pattern='#,##0'/>" name="prodPrice" required="">
                                                 <span class="free" style="display: none;">0</span> 개<br>
                                                 <p class="freeCheck" style="color: red; display: none;">
                                                     무료인 작품의 저작권 가격은 팝콘 0개입니다.

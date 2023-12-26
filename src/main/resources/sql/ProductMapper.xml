@@ -73,10 +73,13 @@
 	<update id="updateProduct" parameterType="product">
 		UPDATE product
 		<trim prefix="set" suffixOverrides=",">
+			<if test="prodName != null">
+				prod_name = #{prodName},
+			</if>
 			<if test="prodPrice != 0">
 				prod_price = #{prodPrice},
 			</if>
-			<if test="prodCnt != 1">
+			<if test="prodCnt != 1 and prodCnt != 0">
 				prod_cnt = #{prodCnt},
 			</if>
 			<if test="prodImage != null">

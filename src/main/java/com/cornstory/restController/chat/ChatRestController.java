@@ -77,8 +77,9 @@ public class ChatRestController {
                                  @SessionAttribute("user") User user, Model model) throws Exception {
         System.out.println("/chat/json/enterChatSpace : GET/POST :: userId : " + user.getUserId() + ", chatSpaceNo : " + chatSpaceNo);
 
-        ChatSpace chatSpace = chatService.getChatSpace(chatSpaceNo);
+        ChatSpace chatSpace = new ChatSpace();
         chatSpace.setUserId(user.getUserId());
+        chatSpace.setChatSpaceNo(chatSpaceNo);
 
         Map<String, Object> map01 = new HashMap<String, Object>();
         map01.put("userId", user.getUserId());
@@ -87,6 +88,7 @@ public class ChatRestController {
         if (chatService.countChatEnterCheck(map01) == 0)
             chatService.addChatEnter(user.getUserId(), chatSpaceNo);
 
+        chatSpace = chatService.getChatSpace(chatSpaceNo);
         User createUser = userService.getUser(chatSpace.getUserId());
         chatSpace.setNickname(createUser.getNickName());
         chatSpace.setUserImage(createUser.getUserImage());
@@ -94,6 +96,7 @@ public class ChatRestController {
         System.out.println("/chat/enterChatSpace : GET :: " + chatSpace);
         model.addAttribute("chatSpace", chatSpace);
 
+        System.out.println(chatService.getChatEnter(user.getUserId(), chatSpaceNo).getChatEnterDate());
         String startDate = chatService.getChatEnter(user.getUserId(), chatSpaceNo).getChatEnterDate().toString();
 
         Map<String, Object> map02 = chatService.listChatEnterUser(chatSpaceNo);
@@ -102,8 +105,8 @@ public class ChatRestController {
         model.addAttribute("totalCount", map02.get("totalCount"));
         System.out.println(map02.get("list"));
 
-//        String url = "http://localhost:3000/";
-        String url = "http://101.79.8.55:3000/";
+        String url = "http://localhost:3000/";
+//        String url = "http://101.79.8.55:3000/";
 
         Map<String, Object> returnMap = new HashMap<String, Object>();
         returnMap.put("url", url);

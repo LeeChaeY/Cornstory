@@ -114,13 +114,13 @@
                                             </c:if>
                                     </td>
                                     <td>
-                                            ${purchaseCnt.purchasePopcornCnt}
+                                            <fmt:formatNumber value="${purchaseCnt.purchasePopcornCnt}" pattern="#,##0"/> 팝콘
                                     </td>
                                     <td>
-                                            ${purchaseCnt.purchasePrice}
+                                            <fmt:formatNumber value="${purchaseCnt.purchasePrice}" pattern="#,##0"/> 원
                                     </td>
                                     <td>
-                                            ${purchaseCnt.usePopcornCnt}
+                                            <fmt:formatNumber value="${purchaseCnt.usePopcornCnt}" pattern="#,##0"/> 팝콘
                                     </td>
                                 </tr>
                             </c:forEach>

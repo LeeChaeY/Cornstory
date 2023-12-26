@@ -38,18 +38,21 @@
     <script src="/ssh/js/script.js"></script>
 
     <script src="/lcy/js/listStore.js"></script>
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 </head>
 
 <body>
 
 <%@ include file="../layout/top.jsp" %>
 
+<%@ include file="../product/listStoreTop.jsp" %>
+
 <!-- [E]opilsol-N26 -->
 <main class="th-layout-main">
     <!-- [S]opilsol-N24 -->
     <div class="opilsol-N24" data-bid="XZlQ1o5z61">
         <div class="content-container">
-
+            <input type="hidden" name="userId" value="${sessionScope.user.userId}">
             <c:if test="${userStatus == 0}">
                 <div class="container-md">
                     <div class="tableset">
@@ -63,15 +66,15 @@
                                     <col>
                                     <col>
                                     <col>
-                                    <col>
+                                    <col width="150">
                                 </colgroup>
                                 <thead class="thead-border-top">
                                 <tr>
                                     <th class="number" scope="col">NO</th>
                                     <th scope="col">팝콘 이미지</th>
                                     <th scope="col">팝콘 이름</th>
-                                    <th scope="col">팝콘 가격</th>
                                     <th scope="col">팝콘 개수</th>
+                                    <th scope="col">팝콘 가격</th>
                                     <th scope="col">팝콘 등록일</th>
                                     <th class="last-child" scope="col"></th>
                                 </tr>
@@ -92,18 +95,23 @@
                                                 ${popcorn.prodName}
                                         </td>
                                         <td>
-                                                ${popcorn.prodPrice} 원
+                                            <fmt:formatNumber value="${popcorn.prodCnt}" pattern="#,##0"/> 개
                                         </td>
                                         <td>
-                                                ${popcorn.prodCnt} 개
+                                                <fmt:formatNumber value="${popcorn.prodPrice}" pattern="#,##0"/> 원
                                         </td>
                                         <td>
                                                 ${popcorn.prodDate}
                                         </td>
                                         <td class="last-child">
                                             <c:if test="${sessionScope.user.role == 0}">
-                                                <input type="number" min="1" value="1" name="tranCnt"
-                                                       style="width: 50px;"> 개
+                                                <c:if test="${popcorn.prodCnt == 1}">
+                                                    <input type="text" min="1" value="1" name="tranCnt"
+                                                           style="width: 70px; margin-bottom: 1rem;"> 개<br>
+                                                </c:if>
+                                                <c:if test="${popcorn.prodCnt != 1}">
+                                                    <input type="hidden" value="1" name="tranCnt">
+                                                </c:if>
                                                 <input type="button" value="충전하기">
                                             </c:if>
                                             <c:if test="${sessionScope.user.role == 1}">
@@ -186,10 +194,10 @@
                                                 ${copyright.workName}
                                         </td>
                                         <td>
-                                                ${copyright.prodPrice} 팝콘
+                                                <fmt:formatNumber value="${copyright.prodPrice}" pattern="#,##0"/> 팝콘
                                         </td>
                                         <td>
-                                                ${copyright.episodeOrder} 회차 완결
+                                                <fmt:formatNumber value="${copyright.episodeOrder}" pattern="#,##0"/> 회차 완결
                                         </td>
                                         <td>
                                                 ${copyright.prodDate}
@@ -199,13 +207,15 @@
                                                 ${copyright.nickname}
                                         </td>
                                         <td class="last-child">
-                                            <c:if test="${copyright.userId != sessionScope.user.userId}">
-                                                <input type="button" value="구매하기">
-                                                <input type="hidden" name="popcornCnt" value="${sessionScope.user.popcornCnt}">
-                                            </c:if>
-                                            <c:if test="${copyright.userId == sessionScope.user.userId}">
-                                                <input type="button" value="수정하기"><br>
-                                                <input type="button" value="삭제하기"><br>
+                                            <c:if test="${!empty sessionScope.user}">
+                                                <c:if test="${copyright.userId != sessionScope.user.userId}">
+                                                    <input type="button" value="구매하기">
+                                                    <input type="hidden" name="popcornCnt" value="${sessionScope.user.popcornCnt}">
+                                                </c:if>
+                                                <c:if test="${copyright.userId == sessionScope.user.userId}">
+                                                    <input type="button" value="수정하기"><br>
+                                                    <input type="button" value="삭제하기"><br>
+                                                </c:if>
                                             </c:if>
                                         </td>
                                     </tr>

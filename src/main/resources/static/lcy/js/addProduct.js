@@ -26,16 +26,29 @@ $(function() {
     $("select[name='workSelect']").on("change", function() {
         workSelect();
     });
+
+    $("input[name='prodCnt']").on("keyup", function(e) {
+        inputNumberFormat(e.target);
+    });
+
+    $("input[name='prodPrice']").on("keyup", function(e) {
+        inputNumberFormat(e.target);
+    });
+
+    $(".contents-figure").on("click", function() {
+        $(self.location).attr("href", "/work/getWork");
+    });
+
 });
 
 function addProduct() {
-    let prodCategory = $("input[name='prodCategory']").val();
+    let prodCategory = parseInt($("input[name='prodCategory']").val());
 
-    if (prodCategory === "2" && ($("select[name='workSelect']").val() === "작품 선택")) {
+    if (prodCategory === 2 && ($("select[name='workSelect']").val() === "작품 선택")) {
         alert("작품을 선택해주세요.");
         return false;
     }
-    if (prodCategory === "0") {
+    if (prodCategory === 0) {
         if ($("input[name='prodCnt']").val() === "") {
             alert("1개 이상의 팝콘 수량을 입력해주세요.");
             return false;
@@ -45,19 +58,20 @@ function addProduct() {
         alert("가격을 입력해주세요.");
         return false;
     }
-    if (prodCategory === "2") {
+
+    if (prodCategory === 0) {
+        $("input[name='prodCnt']").val(uncomma($("input[name='prodCnt']").val()));
+    } else if (prodCategory === 2) {
         $("input[name='workNo']").val($("select[name='workSelect']").val());
-        // $("input[name='workNo']").val(10024);
-        // $("input[name='episodeNo']").val(10034);
-        // $("input[name='prodCategory']").val(1);
     }
+    $("input[name='prodPrice']").val(uncomma($("input[name='prodPrice']").val()));
     $("form[name='addProduct']").attr("method", "post").attr("action", "/product/addProduct").submit();
 }
 
 function updateProduct() {
-    let prodCategory = $("input[name='prodCategory']").val();
+    let prodCategory = parseInt($("input[name='prodCategory']").val());
 
-    if (prodCategory === "0") {
+    if (prodCategory === 0) {
         if ($("input[name='prodCnt']").val() === "") {
             alert("1개 이상의 팝콘 수량을 입력해주세요.");
             return false;
@@ -67,10 +81,18 @@ function updateProduct() {
         alert("가격을 입력해주세요.");
         return false;
     }
+
+    if (prodCategory === 0) {
+        $("input[name='prodCnt']").val(uncomma($("input[name='prodCnt']").val()));
+    }
+    $("input[name='prodPrice']").val(uncomma($("input[name='prodPrice']").val()));
     $("form[name='updateProduct']").attr("method", "post").attr("action", "/product/updateProduct").submit();
+
 }
 
 function fncProdNameCheck() {
+    let prodCnt = uncomma($("input[name='prodCnt']").val());
+
     if ($(".prodNameCheck").css("display") === "block") {
         $(".prodNameCheck").css("display", "none");
     }
@@ -78,14 +100,14 @@ function fncProdNameCheck() {
         $(".check").css("display", "none");
     }
 
-    if ($("input[name='prodCnt']").val() === "0") {
+    if (prodCnt === "0") {
         $("input[name='prodCnt']").val("");
         $(".check").css("display", "block");
     }
 
-    if ($("input[name='prodCnt']").val() !== "") {
+    if ($("input[name='prodCnt2']").val() !== prodCnt && prodCnt !== "") {
         $.ajax({
-            url: "/product/json/prodNameCheck?prodCnt=" + $("input[name='prodCnt']").val(),
+            url: "/product/json/prodNameCheck?prodCnt=" + prodCnt,
             method: "GET",
             dataType: "text",
             success: function(data, status) {
@@ -115,4 +137,18 @@ function workSelect() {
             $(".freeCheck").css("display", "block");
         }
     }
+}
+
+function comma(str) {
+    str = String(str);
+    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+}
+
+function uncomma(str) {
+    str = String(str);
+    return str.replace(/[^\d]+/g, '');
+}
+
+function inputNumberFormat(obj) {
+    obj.value = comma(uncomma(obj.value));
 }

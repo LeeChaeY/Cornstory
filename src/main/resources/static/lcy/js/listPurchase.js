@@ -15,6 +15,15 @@ $(function() {
         viewUser(userId)
     });
 
+    $(".contents-figure").on("click", function() {
+        if ($(this).children("h4").text().trim() === "감상하러가기"){
+            $("form[name='form']").attr("method", "post").attr("action", "/work/listWork").submit();
+        } else {
+            $("form[name='form']").attr("method", "post").attr("action", "/product/listProduct").submit();
+        }
+
+    });
+
     $("input[value='삭제하기']").on("click", function() {
         // let prodNo = $(this).parents("tr").children("td").eq(0).children("input").val();
         // deleteProduct(prodNo);

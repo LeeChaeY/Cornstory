@@ -25,15 +25,49 @@
   <link rel="stylesheet" href="../common/css/style.css">
 
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="http://localhost:3000/socket.io/socket.io.js"></script>
   <script>
     function redirectToIndex() {
       window.location.href = "../index.jsp";
     }
+
+    $(function () {
+      if ("${sessionScope.user}" !== "") {
+        const socket = io.connect('http://localhost:3000');
+        socket.emit("connection", {userId: "${sessionScope.user.userId}"});
+
+        socket.on("message", async (data) => {
+          console.log(data);
+        });
+      }
+
+
+      $("span:contains('마이 채팅방')").on("click", function () {
+        $("input[name='userStatus']").val(1);
+        $("form[name='form']").attr("method", "post").attr("action", "/chat/listChatSpace").submit();
+      });
+      $("span:contains('구매내역')").on("click", function () {
+        $("input[name='userStatus']").val(1);
+        $("form[name='form']").attr("method", "post").attr("action", "/purchase/listPurchase").submit();
+      });
+      $("span:contains('판매내역')").on("click", function () {
+        $("input[name='userStatus']").val(1);
+        $("form[name='form']").attr("method", "post").attr("action", "/purchase/listSale").submit();
+      });
+      $(".popcornCnt").on("click", function () {
+        $("input[name='userStatus']").val(1);
+        $("form[name='form']").attr("method", "post").attr("action", "/purchase/listPurchase").submit();
+      });
+    });
   </script>
 
 </head>
 
 <body>
+<form name="form">
+  <input type="hidden" name="userStatus" value="">
+</form>
+
 <!-- [S]hooms-N56 -->
 <div class="hooms-N56" data-bid="vdlqGbmgl8" id="">
   <div class="header-inner">

@@ -76,17 +76,17 @@
 			<scope>test</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-mongodb</artifactId>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-data-mongodb</artifactId>-->
+<!--		</dependency>-->
 
-		<dependency>
-			<groupId>org.mongodb</groupId>
+<!--		<dependency>-->
+<!--			<groupId>org.mongodb</groupId>-->
 
-			<artifactId>mongodb-driver-sync</artifactId>
-			<version>4.11.1</version> <!-- Use the latest version available -->
-		</dependency>
+<!--			<artifactId>mongodb-driver-sync</artifactId>-->
+<!--			<version>4.11.1</version> &lt;!&ndash; Use the latest version available &ndash;&gt;-->
+<!--		</dependency>-->
 
 		<dependency>
 			<groupId>jakarta.servlet.jsp</groupId>
@@ -128,7 +128,11 @@
         </dependency>
 
 
-
+		<dependency>
+			<groupId>com.github.iamport</groupId>
+			<artifactId>iamport-rest-client-java</artifactId>
+			<version>0.2.23</version>
+		</dependency>
 
     </dependencies>
 
@@ -141,5 +145,12 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<repositories>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+	</repositories>
 
 </project>

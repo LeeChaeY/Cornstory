@@ -9,7 +9,7 @@ public class Purchase {
 	private String sellerId;			// 판매한 회원 아이디, product에서 가져오기
 	private String buyerId;			// 구매한 회원 아이디
 	private int tranCategory;		// 0 : 팝콘, 1: 작품 회차, 2: 저작권, product꺼 그대로 가져오기
-	private int tranMethod;			// 0 - 팝콘, 1 - 카카오페이, 2 - 토스페이, 3 - 카드
+	private String tranMethod;
 	private int tranCnt;			// 팝콘은 팝콘 수량, 작품 회차, 저작권은 디폴트 1
 	private int prodCnt;
 	private int bfPopcornCnt;		// 구매 전 회원이 보유한 팝콘수, 회원에서 정보 가져오기
@@ -25,7 +25,7 @@ public class Purchase {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Purchase(int prodNo, String sellerId, String buyerId, int tranCategory, int tranMethod,
+	public Purchase(int prodNo, String sellerId, String buyerId, int tranCategory, String tranMethod,
 					int tranCnt, int bfPopcornCnt, int afPopcornCnt, int prodPrice) {
 		this.prodNo = prodNo;
 		this.sellerId = sellerId;
@@ -38,7 +38,7 @@ public class Purchase {
 		this.prodPrice = prodPrice;
 	}
 
-	public Purchase(int prodNo, String sellerId, String buyerId, int tranCategory, int tranMethod,
+	public Purchase(int prodNo, String sellerId, String buyerId, int tranCategory, String tranMethod,
 					int bfPopcornCnt, int afPopcornCnt, Integer episodeOrder, int prodPrice) {
 		this.prodNo = prodNo;
 		this.sellerId = sellerId;
@@ -51,7 +51,7 @@ public class Purchase {
 		this.prodPrice = prodPrice;
 	}
 
-	public Purchase(int prodNo, String sellerId, String buyerId, int tranCategory, int tranMethod,
+	public Purchase(int prodNo, String sellerId, String buyerId, int tranCategory, String tranMethod,
 					int tranCnt, int bfPopcornCnt, int afPopcornCnt, Integer episodeOrder,
 					int prodPrice) {
 		this.prodNo = prodNo;
@@ -66,7 +66,7 @@ public class Purchase {
 		this.prodPrice = prodPrice;
 	}
 
-	public Purchase(int tranNo, int prodNo, String sellerId, String buyerId, int tranCategory, int tranMethod,
+	public Purchase(int tranNo, int prodNo, String sellerId, String buyerId, int tranCategory, String tranMethod,
 					int tranCnt, int bfPopcornCnt, int afPopcornCnt, Integer episodeOrder,
 					int prodPrice, Date tranDate, int category, String workName, String nickname) {
 		this.tranNo = tranNo;
@@ -126,11 +126,11 @@ public class Purchase {
 		this.tranCategory = tranCategory;
 	}
 
-	public int getTranMethod() {
+	public String getTranMethod() {
 		return tranMethod;
 	}
 
-	public void setTranMethod(int tranMethod) {
+	public void setTranMethod(String tranMethod) {
 		this.tranMethod = tranMethod;
 	}
 
