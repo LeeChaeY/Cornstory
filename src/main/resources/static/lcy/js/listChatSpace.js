@@ -178,8 +178,7 @@ function updateChatSpace(chatSpaceNo) {
 }
 
 function deleteChatSpace(chatSpaceNo) {
-    const socket = io.connect('http://localhost:3000');
-    socket.emit("connection", {userId: "${sessionScope.user.userId}"});
+    const socket = io.connect();
     socket.emit("delete", {chatSpaceNo: chatSpaceNo});
 
     $.ajax({

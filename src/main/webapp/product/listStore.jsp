@@ -53,6 +53,9 @@
     <div class="opilsol-N24" data-bid="XZlQ1o5z61">
         <div class="content-container">
             <input type="hidden" name="userId" value="${sessionScope.user.userId}">
+            <input type="hidden" name="userName" value="${sessionScope.user.userName}">
+            <input type="hidden" name="phone" value="${sessionScope.user.phone}">
+            <input type="hidden" name="email" value="${sessionScope.user.email}">
             <c:if test="${userStatus == 0}">
                 <div class="container-md">
                     <div class="tableset">
