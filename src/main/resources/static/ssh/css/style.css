@@ -1,6 +1,45 @@
 header-left@charset "utf-8";
 
+.check-text {
+ padding: 140px;
+ font-size: 12px;
+}
+.check-stext {
+ padding: 10px;
+ font-size: 12px;
+ argin-top: 5px;
+}
+.check-image {
+ font-size: 12px;
+}
+.drop-area {
+ border: 2px dashed #ccc;
+ padding: 20px;
+ text-align: center;
+ cursor: pointer;
+}
 
+.drop-text {
+ display: block;
+ margin-bottom: 10px;
+}
+
+.file-list {
+ list-style-type: none;
+ padding: 0;
+}
+
+.file-list img {
+ width: 200px;
+ height: 200px;
+ margin: 5px;
+}
+.th-layout-main {
+ display: flex;
+ justify-content: space-around;
+ align-items: stretch;
+ min-height: 100vh;
+}
 
 /* opilsol-N4 [muLPW5z3N1] */
 .opilsol-N4 { margin-bottom: 7rem; }
@@ -303,15 +342,8 @@ header-left@charset "utf-8";
 @media (max-width: 1366px) {
  .opilsol-N24 .container-md { padding: 0 1.6rem; }
 }
-.th-layout-main {
 
 
- .th-layout-main {
-     display: flex;
-     justify-content: space-around;
-     align-items: stretch;
-     min-height: 100vh;
- }
 
 @media (max-width: 1024px) {
  .opilsol-N24 .content-container { margin-bottom: 6rem; padding: 4rem 0; }
@@ -327,37 +359,4 @@ header-left@charset "utf-8";
 }
 
 
- .check-text {
-  padding: 140px;
-  font-size: 12px;
- }
-.check-stext {
- padding: 10px;
- font-size: 12px;
- argin-top: 5px;
-}
-.check-image {
- font-size: 12px;
-}
-.drop-area {
- border: 2px dashed #ccc;
- padding: 20px;
- text-align: center;
- cursor: pointer;
-}
 
-.drop-text {
- display: block;
- margin-bottom: 10px;
-}
-
-.file-list {
- list-style-type: none;
- padding: 0;
-}
-
-.file-list img {
- width: 200px;
- height: 200px;
- margin: 5px;
-}

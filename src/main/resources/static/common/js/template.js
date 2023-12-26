@@ -108,23 +108,84 @@
     buttonElement.addEventListener("click", clickEventHandler);
   });
 
-   // Videoset
-   const videosetButtons = document.querySelectorAll(".videoset-play");
-   videosetButtons.forEach((buttonElement) => {
-     const clickEventHandler = (countevent) => {
-       const buttonElement = event.target.closest(".videoset").querySelector(".videoset-video");
-       const buttonGrandParent = event.target.closest(".videoset");
-       buttonElement.play();
-       buttonGrandParent.classList.add("active");
-       buttonElement.addEventListener("click", () => {
-         buttonElement.pause();
-         buttonGrandParent.classList.remove("active");
-       });
-     };
-     buttonElement.removeEventListener("click", clickEventHandler);
-     buttonElement.addEventListener("click", clickEventHandler);
-   });
-   
+  // Videoset
+  const videosetButtons = document.querySelectorAll(".videoset-play");
+  videosetButtons.forEach((buttonElement) => {
+    const clickEventHandler = (countevent) => {
+      const buttonElement = event.target
+        .closest(".videoset")
+        .querySelector(".videoset-video");
+      const buttonGrandParent = event.target.closest(".videoset");
+      buttonElement.play();
+      buttonGrandParent.classList.add("active");
+      buttonElement.addEventListener("click", () => {
+        buttonElement.pause();
+        buttonGrandParent.classList.remove("active");
+      });
+    };
+    buttonElement.removeEventListener("click", clickEventHandler);
+    buttonElement.addEventListener("click", clickEventHandler);
+  });
+
+  // Checkset
+  const checksetElements = document.querySelectorAll(".checkset");
+  checksetElements.forEach((checksetElement) => {
+    const checksetText = checksetElement.querySelector(".checkset-text");
+    const checkboxInput = checksetElement.querySelector(".checkset-input");
+    checksetText.addEventListener("click", () => {
+      if (!checkboxInput.disabled) {
+        checkboxInput.checked = !checkboxInput.checked;
+      }
+    });
+  });
+
+  // Radioset
+  const radiosetElements = document.querySelectorAll(".radioset");
+  radiosetElements.forEach((radiosetElement) => {
+    const radiosetText = radiosetElement.querySelector(".radioset-text");
+    const radioboxInput = radiosetElement.querySelector(".radioset-input");
+    radiosetText.addEventListener("click", () => {
+      if (!radioboxInput.disabled) {
+        radioboxInput.checked = !radioboxInput.checked;
+      }
+    });
+  });
+
+  // Inputset
+  const inputsetElements = document.querySelectorAll(".inputset-textarea");
+  inputsetElements.forEach((inputsetElement) => {
+    inputsetElement.addEventListener("keyup", () => {
+      const inputsetText = inputsetElement.value;
+      const inputsetCount = inputsetElement
+        .closest(".inputset")
+        .querySelector(".inputset-count");
+      if (inputsetText.length === 0 || inputsetText === "") {
+        inputsetCount.textContent = "0";
+      } else {
+        inputsetCount.textContent = inputsetText.length;
+      }
+      if (inputsetText.length > 4000) {
+        inputsetElement.value = inputsetText.substring(0, 4000);
+      }
+    });
+  });
+
+  // Fileset
+  const filesetElements = document.querySelectorAll(".fileset");
+  filesetElements.forEach((filesetElement) => {
+    const filesetInput = filesetElement.querySelector(".fileset-input");
+    const filesetCancel = filesetElement.querySelector(".fileset-cancel");
+    filesetInput.addEventListener("change", () => {
+      filesetInput.classList.add("active");
+      filesetCancel.style.display = "block";
+    });
+    filesetCancel.addEventListener("click", () => {
+      filesetInput.value = "";
+      filesetInput.classList.remove("active");
+      filesetCancel.style.display = "none";
+    });
+  });
+
   // Function
   function getSiblings(parent, element) {
     return [...parent.children].filter((item) => item !== element);
