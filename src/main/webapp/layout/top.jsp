@@ -25,7 +25,8 @@
   <link rel="stylesheet" href="../common/css/style.css">
 
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-  <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+<%--  <script src="http://localhost:3000/socket.io/socket.io.js"></script>--%>
+  <script src="http://101.79.8.55:3000/socket.io/socket.io.js"></script>
   <script>
     function redirectToIndex() {
       window.location.href = "../index.jsp";
@@ -33,7 +34,8 @@
 
     $(function () {
       if ("${sessionScope.user}" !== "") {
-        const socket = io.connect('http://localhost:3000');
+        // const socket = io.connect('http://localhost:3000');
+        const socket = io.connect('http://101.79.8.55:3000/');
         socket.emit("connection", {userId: "${sessionScope.user.userId}"});
 
         socket.on("message", async (data) => {

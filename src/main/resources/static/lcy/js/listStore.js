@@ -65,9 +65,9 @@ function addPurchaseKG(prodNo,tranCnt,prodName,prodPrice,userId) {
         merchant_uid: merchantUid,   // 주문번호
         name: prodName+"",
         amount: amount,                        // 숫자 타입
-        buyer_name: "이채연",
-        buyer_email: "",
-        buyer_tel : "010-5578-2721"   //필수 파라미터 입니다.
+        buyer_name: $("input[name='userName']").val(),
+        buyer_email: $("input[name='email']").val(),
+        buyer_tel : $("input[name='phone']").val()   //필수 파라미터 입니다.
     }, rsp => {
         if (rsp.success) {
             alert("결제가 완료되었습니다.");
