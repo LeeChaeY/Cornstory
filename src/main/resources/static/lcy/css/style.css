@@ -50,6 +50,148 @@ form[name="form"] .inputset {
     margin: 5px;
 }
 
+.contents-ico {
+    text-align: center;
+}
+
+.contents-figure {
+    display: inline-block;
+    cursor: pointer;
+}
+
+
+
+
+.contents-inner {
+    padding: 10rem 2.4rem;
+}
+
+.contents-result {
+    font-size: 1.8rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+}
+
+.contents-result span {
+    color: var(--secondary);
+}
+
+.contents-cardlist {
+    display: none;
+    border-top: 1px solid var(--primary);
+}
+
+.contents-cardlist.contents-cardlist-active {
+    display: block;
+}
+
+.cardset {
+    padding: 1.6rem 0;
+    border-bottom: 1px solid var(--line-color1);
+}
+
+.cardset.cardset-hor .cardset-figure {
+    width: 40rem;
+    height: 20rem;
+}
+
+.genre {
+    font-weight:bold;
+}
+
+.contents-info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.contents-name {
+    font-size: var(--fs-p1);
+    font-weight: 400;
+    color: var(--text-color3);
+    text-align: right;
+}
+
+.contents-date {
+    margin-left: 0.8rem;
+    text-align: right;
+}
+
+.cardset-tit-group {
+    margin-top: 1.6rem;
+}
+
+.cardset-tit {
+    font-size: var(--fs-h6);
+    line-height: 2.8rem;
+    font-weight: 500;
+}
+
+.cardset-desc {
+    width: 100%;
+    margin-top: 0.8rem;
+}
+
+@media (max-width: 992px) {
+    .contents-inner {
+        padding: 6rem 2.4rem;
+    }
+
+    .cardset {
+        flex-direction: column;
+        padding: 1.2rem 0;
+    }
+
+    .cardset.cardset-hor .cardset-body {
+        width: 100%;
+        padding: 0;
+        padding-top: 1.4rem;
+    }
+
+    .contents-search {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 2.4rem;
+    }
+
+    .contents-result {
+        margin-bottom: 0.8rem;
+        font-size: 1.4rem;
+    }
+
+    .selectset {
+        width: 100%;
+    }
+
+    .cardset.cardset-hor .cardset-figure {
+        width: 100%;
+    }
+
+    .contents-ico-item {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .contents-ico-item+.contents-ico-item {
+        margin-left: 0;
+    }
+
+    .cardset-tit-group {
+        margin-top: 1.4rem;
+    }
+
+    .cardset-tit {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+}
+
+@media (max-width: 768px) {
+    .cardset.cardset-hor .cardset-figure {
+        height: 10rem;
+    }
+}
+
 /* opilsol-N26 [sblQ1o2joM] */
 .opilsol-N26 .content-container { padding-top: 8rem; }
 .opilsol-N26 .contents-form-top { align-items: flex-end; margin-bottom: 1.5rem; }

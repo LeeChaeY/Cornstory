@@ -22,6 +22,10 @@ $(function() {
         viewUser(userId)
     });
 
+    $(".contents-figure").on("click", function() {
+        $(self.location).attr("href", "/work/addWork");
+    });
+
 });
 
 

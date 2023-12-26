@@ -1,6 +1,7 @@
 package com.cornstory.domain;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class ChatSpace {
 
@@ -16,7 +17,7 @@ public class ChatSpace {
 	private String nickname;
 	private String userImage;
 	private int chatEnterNo;
-	private Date chatEnterDate;		// 입장 시간, yyyy-MM-dd hh:mm:ss
+	private Timestamp chatEnterDate;		// 입장 시간, yyyy-MM-dd hh:mm:ss
 
 	private int chatEnterCheck;		// 채팅방 입장 여부, 0: 입장 안함, 1: 입장함
 
@@ -53,7 +54,7 @@ public class ChatSpace {
 
 	public ChatSpace(int chatSpaceNo, String userId, String cSpaceName, String cSpaceImage,
 					 int cSpaceUserCnt, Date cSpaceDate, String genre, String nickname,
-					 String userImage, int chatEnterNo, Date chatEnterDate) {
+					 String userImage, int chatEnterNo, Timestamp chatEnterDate) {
 		this.chatSpaceNo = chatSpaceNo;
 		this.userId = userId;
 		this.cSpaceName = cSpaceName;
@@ -147,11 +148,11 @@ public class ChatSpace {
 		this.chatEnterNo = chatEnterNo;
 	}
 
-	public Date getChatEnterDate() {
+	public Timestamp getChatEnterDate() {
 		return chatEnterDate;
 	}
 
-	public void setChatEnterDate(Date chatEnterDate) {
+	public void setChatEnterDate(Timestamp chatEnterDate) {
 		this.chatEnterDate = chatEnterDate;
 	}
 

@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="../ssh/css/template.css">
     <link rel="stylesheet" href="../ssh/css/common.css">
     <link rel="stylesheet" href="../ssh/css/style.css">
+    <link rel="stylesheet" href="common/css/drag.css">
 
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -163,6 +164,7 @@
     <script src="../ssh/js/common.js"></script>
     <script src="../ssh/js/script.js"></script>
     <script src="../ssh/js/addUser.js"></script>
+    <script src="/common/js/drag.js"></script>
 </form>
 </body>
 </html>
