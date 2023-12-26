@@ -87,7 +87,7 @@ function checkUserId(userId) {
     var pattern = /^[a-zA-Z0-9]{4,8}$/;
 
     if (!pattern.test(userId)) {
-        userIdMessage.text("아이디는 4자 이상 8자 이하의 영문과 숫자만 입력 가능합니다.").css("color", "red");
+        userIdMessage.text("조건에 맞게 입력해주세요.").css("color", "red");
         return Promise.resolve(false);
     }
 
