@@ -78,8 +78,8 @@
 
       <div class="header-left">
         <h1 class="header-title">
-          <a class="header-logo" href="../index.jsp" title="main Page">
-            <img src="../common/images/logo.png" style="margin-bottom: 50px" alt="로고">
+          <a class="header-gnblink" href="../index.jsp" title="main Page">
+            <h2 class="contents-title" style="font-family: var(--ff-ko2); font-size: 30px">CornStory</h2>
           </a>
         </h1>
 
@@ -195,12 +195,6 @@
                 </a>
               </li>
               <li class="header-subitem">
-
-                <a class="header-sublink" href="/support/listSupport?category=1">
-                  <span>Q&amp;A</span>
-                </a>
-              </li>
-              <li class="header-subitem">
                 <c:if test="${sessionScope.user.role eq 0}">
                   <a class="header-sublink" href="/support/report.jsp">
                     <span>신고</span>
@@ -211,6 +205,12 @@
                     <span>신고 관리</span>
                   </a>
                 </c:if>
+              </li>
+              <li class="header-subitem">
+
+                <a class="header-sublink" href="/support/listSupport?category=1">
+                  <span>Q&amp;A</span>
+                </a>
               </li>
               <li class="header-subitem">
                 <c:if test="${sessionScope.user.role eq 1}">
@@ -398,11 +398,6 @@
               </a>
             </li>
             <li class="fullmenu-subitem">
-              <a class="fullmenu-sublink" href="/support/listSupport?category=1">
-                <span>Q&amp;A</span>
-              </a>
-            </li>
-            <li class="fullmenu-subitem">
               <c:if test="${sessionScope.user.role eq 0}">
                 <a class="fullmenu-sublink" href="/support/report.jsp">
                   <span>신고</span>
@@ -413,6 +408,11 @@
                   <span>신고 관리</span>
                 </a>
               </c:if>
+            </li>
+            <li class="fullmenu-subitem">
+              <a class="fullmenu-sublink" href="/support/listSupport?category=1">
+                <span>Q&amp;A</span>
+              </a>
             </li>
             <li class="fullmenu-subitem">
               <c:if test="${sessionScope.user.role eq 1}">

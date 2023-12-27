@@ -22,202 +22,152 @@
     <link rel="stylesheet" href="../common/css/template.css">
     <link rel="stylesheet" href="../common/css/common.css">
     <link rel="stylesheet" href="../common/css/style.css">
+    <link rel="stylesheet" href="../support/css/setting.css">
+    <link rel="stylesheet" href="../support/css/plugin.css">
+    <link rel="stylesheet" href="../support/css/template.css">
+    <link rel="stylesheet" href="../support/css/common.css">
+    <link rel="stylesheet" href="../support/css/style.css">
+    <link rel="stylesheet" href="/common/css/drag.css">
+    <style>
+        .drop-area {
+            border: 2px dashed #ccc;
+            padding: 20px;
+            text-align: center;
+            width: 5000px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <%@ include file="../layout/top.jsp" %>
 <main class="th-layout-main ">
-    <div class="opilsol-N9" data-bid="pzlq69LM4F" >
-    </div>
-    <div class="opilsol-N33" data-bid="MNLq69lM53" >
-        <div class="content-container sub-menu">
-        </div>
-    </div>
-    <div class="opilsol-N34" data-bid="ghLQ69LM5n" id="">
-        <div class="content-container container-md">
-            <div class="textset content-tit">
-                <p class="textset-eu">고객센터</p>
-                <c:choose>
-                    <c:when test="${param.category eq '0'}">
-                        <input type="text" id="supCategory" name="supCategory" value="0" style="display: none;">
-                        <h2 class="textset-tit">공지사항</h2>
-                    </c:when>
-                    <c:when test="${param.category eq '1'}">
-                        <input type="text" id="supCategory" name="supCategory" value="1" style="display: none;">
-                        <h2 class="textset-tit">Q&A</h2>
-                    </c:when>
-                    <c:when test="${param.category eq '2'}">
-                        <input type="text" id="supCategory" name="supCategory" value="2" style="display: none;">
-                        <h2 class="textset-tit">신고</h2>
-                    </c:when>
-                </c:choose>
+    <!-- [S]thpart-HmlqLtFlNZ -->
+    <div class="thpart-HmlqLtFlNZ" data-bid="HmlqLtFlNZ" id="">
+        <div class="contents-container">
+            <img class="contents-backimg" src="https://images.unsplash.com/photo-1624007435086-7e236df42151?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=M3w0OTE2MDd8MHwxfHNlYXJjaHwxOTh8fCVFRCU5RCU5MSVFQiVCMCVCMXxrb3wwfHx8YmxhY2tfYW5kX3doaXRlfDE3MDM1ODMzNjB8MA&amp;ixlib=rb-4.0.3&amp;q=80&amp;w=1080" alt="">
+            <div class="contents-body container-md">
+                <h2 class="contents-title"> Support </h2>
+                <h7 class="contents-sub">고객센터</h7>
             </div>
         </div>
     </div>
-    <div class="opilsol-N27" data-bid="yRLq69LM6s">
-        <div class="content-container">
-            <div class="contents-form container-md">
-                <div class="contents-form-top d-flex justify-content-between">
+    <!-- [E]thpart-HmlqLtFlNZ -->
+    <div class="hooms-N39" data-bid="CtlqM6s29L">
+        <div class="contents-inner">
+            <div class="contents-container container-md">
+                <form action="${pageContext.request.contextPath}/support/addSupport" method="post" enctype="multipart/form-data">
+                <div class="textset textset-h2">
                     <c:choose>
                         <c:when test="${param.category eq '0'}">
                             <input type="text" id="supCategory" name="supCategory" value="0" style="display: none;">
-                            <h3 class="inputset-tit">공지사항 등록</h3>
+                            <h2 class="textset-tit">공지사항 등록</h2>
                         </c:when>
                         <c:when test="${param.category eq '1'}">
                             <input type="text" id="supCategory" name="supCategory" value="1" style="display: none;">
-                            <h3 class="inputset-tit">Q&A 등록</h3>
+                            <h2 class="textset-tit">Q&A 등록</h2>
                         </c:when>
                         <c:when test="${param.category eq '2'}">
                             <input type="text" id="supCategory" name="supCategory" value="2" style="display: none;">
-                            <h3 class="inputset-tit">신고 등록</h3>
+                            <h2 class="textset-tit">신고 접수</h2>
                         </c:when>
                     </c:choose>
-
-                    <span class="req">필수 선택입니다.</span>
                 </div>
-                <form action="${pageContext.request.contextPath}/support/addSupport" method="post" enctype="multipart/form-data">
-                    <input type="hidden" name="userId" value="${sessionScope.user.userId}">
-                    <div class="contents-form tableset">
-                        <div class="tableset-inner">
-                            <table class="tableset-table table">
-                                <colgroup>
-                                    <col>
-                                    <col>
-                                    <col>
-                                    <col>
-                                </colgroup>
-                                <tbody>
-                                <tr>
-                                    <th>
-                                        <label class="req label">닉네임</label>
-                                    </th>
-                                    <td>
-                                        <div class="inputset">
-                                            ${sessionScope.user.nickName}
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        <label class="req label" for="supName">제목</label>
-                                    </th>
-                                    <td colspan="3">
-                                        <div class="inputset">
-                                            <input type="text" class="inputset-input form-control" name="supName" aria-label="제목">
-                                        </div>
-                                    </td>
-                                </tr>
-
+                <div class="contents-form">
+                    <div class="contents-form-top">
+                        <label class="labelset">
+                            <strong class="labelset-vital">
+                                <span>*</span>필수입력 </strong>
+                        </label>
+                    </div>
+                    <div class="contents-form-middle">
+                        <div class="inputset inputset-lg inputset-label">
+                            <label>
+                                <h6 class="inputset-tit"> 등록자 </h6>  ${sessionScope.user.nickName}
+                            </label>
+                        </div>
+                        <div class="contents-form-middle">
+                            <div class="inputset inputset-lg inputset-label">
+                                <label for="supName">
                                 <c:choose>
-                                    <c:when test="${param.category eq '0' and sessionScope.user.role eq 1}">
-                                        <div class="sup-content">
-                                            <tr>
-                                                <th>
-                                                    <label class="req label" for="supContent">문의내용</label>
-                                                </th>
-                                                <td colspan="3">
-                                                    <div class="inputset">
-                                                        <textarea class="inputset-input form-control textarea" name="supContent" aria-label="문의내용" required></textarea>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </div>
+                                    <c:when test="${param.category eq '1'}">
                                     </c:when>
-                                    <c:when test="${param.category eq '1' and sessionScope.user.role eq 0}">
-                                        <div class="sup-content">
-                                            <input type="text"  name="supCategory" value="1" style="display: none;">
-                                            <tr>
-                                                <th>
-                                                    <label class="req label" for="supContent">질문내용</label>
-                                                </th>
-                                                <td colspan="3">
-                                                    <div class="inputset">
-                                                        <textarea class="inputset-input form-control textarea" name="supContent" aria-label="문의내용" required></textarea>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </div>
-                                    </c:when>
-                                    <c:when test="${param.category eq '2' and sessionScope.user.role eq 0}">
-                                        <div class="sup-content">
-                                            <tr>
-                                                <th>
-                                                    <label class="req label" for="supId">신고 할 회원 닉네임</label>
-                                                </th>
-                                                <td colspan="3">
-                                                    <div class="inputset">
-                                                        <input class="inputset-input form-control" name="supId"  required/>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>
-                                                    <label class="req label" for="supContent">신고내용</label>
-                                                </th>
-                                                <td colspan="3">
-                                                    <div class="inputset">
-                                                        <textarea class="inputset-input form-control textarea" name="supContent" aria-label="신고내용" required></textarea>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>
-                                                    <label class="label" for="supPluscon">신고할 URL</label>
-                                                </th>
-                                                <td colspan="3">
-                                                <div class="inputset">
-                                                    <input class="inputset-input form-control" name="supPluscon"  required/>
-                                                </div>
+                                    <c:otherwise>
+                                        <h6 class="inputset-tit"> 제목 </h6>
+                                        <input type="text" class="inputset-input form-control" placeholder="제목을 입력해주세요." name="supName" aria-label="내용" required="">
+                                    </c:otherwise>
+                                </c:choose>
 
-                                                </td>
-                                            </tr>
-                                        </div>
+                                </label>
+                            </div>
+                            <div class="inputset inputset-lg inputset-label">
+                                <label for="supContent">
+                                <c:choose>
+                                    <c:when test="${param.category eq '0'}">
+                                        <h6 class="inputset-tit"> 공지내용<span>*</span> </h6>
+                                    </c:when>
+                                    <c:when test="${param.category eq '1'}">
+                                            <h6 class="inputset-tit"> 질문내용<span>*</span> </h6>
+                                    </c:when>
+                                    <c:when test="${param.category eq '2'}">
+                                                <h6 class="inputset-tit"> 신고내용<span>*</span> </h6>
                                     </c:when>
                                 </c:choose>
-                                <tr>
-                                    <th>
-                                        <span class="label">파일첨부</span>
-                                    </th>
-                                    <td colspan="3">
 
-                                        <div id="dropArea" class="drop-area">
-                                            <span class="drop-text">
-                                                JPG 이미지를 올려 주세요
-                                            </span>
-                                            <input class="check-image" type="file"  name="supfile" accept=".jpg"/>
-                                            <ul id="fileList" class="file-list" style="list-style-type: none; padding: 0; margin-top: 10px;"></ul>
-
-                                        </div>
-
-
-                                        <p class="p1 co-text3">이미지 형식의 jpg(jpeg) 만 첨부 가능합니다.</p>
-                                        <p class="p1 co-text3">첨부파일은 20MB를 초과할 수 없으며, 최대 1개까지 가능합니다.</p>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="opilsol-N28" data-bid="NNlq69lM7V">
-                        <div class="content-container">
-                            <div class="contents-agree container-md">
-                                <div class="inputset inputset-lg inputset-label">
-                                    <h6 class="inputset-tit">개인정보수집 및 이용동의</h6>
-                                    <div class="inputset-board">
-                                        <p class="subj-txt"> 1. 개인정보의 수집 및 이용목적</p>
-                                        <p>콘스토리는 개인정보보호법을 준수하며, 관련 법령에 의거한 개인정보처리방침을 정하여 이용자 권익 보호에 최선을 다하고 있습니다. <br> 회사의 개인정보처리방침은 다음과 같은 내용을 담고 있습니다. </p>
-                                        <p>2. 개인정보의 처리 목적 '회사'는 개인정보를 다음의 목적을 위해 처리합니다. 처리한 개인정보는 다음의 목적이외의 용도로는 사용되지 않으며 이용 목적이 변경될 시에는 사전동의를 구할 예정입니다.</p>
+                                    <textarea class="inputset-textarea"  name="supContent" placeholder="공지 내용을 입력해주세요." required=""></textarea>
+                                    <div class="inputset-langth">
+                                        <span class="inputset-count">0</span>
+                                        <span class="inputset-total">/4000</span>
                                     </div>
-                                </div>
-                                <div class="checkset checkset-sm">
-                                    <input id="checkset-c-6-1" class="checkset-input input-round" type="checkbox" value="" checked="">
-                                    <label class="checkset-label" for="checkset-c-6-1"></label>
-                                    <span class="checkset-text">[필수] 개인정보처리방침 및 이용동의에 동의합니다</span>
-                                </div>
-                                <div class="bottom-btn">
-                                    <button class="btnset btnset-lg btnset-dark btnset-rect">등록 하기</button>
-                                </div>
+
+                                </label>
+                            </div>
+                            <div class="fileset fileset-lg fileset-label">
+                                <label>
+                                    <c:choose>
+                                        <c:when test="${param.category eq '1'}">
+
+                                        </c:when>
+                                    <c:otherwise>
+                                    <h6 class="fileset-tit"> 첨부파일<span>(선택사항)</span>
+                                    </h6>
+
+                                    <div class="inputset inputset-lg inputset-label"  for="supImage">
+                                        <label>
+                                            <div style="text-align: Left;">
+                                                <img src="../file/support/support.jpg" width="80" style=" max-width: 100%;" alt=""/>
+                                                <p class="check-stext">* 기본이미지 입니다.</p>
+                                            </div>
+                                        </label>
+                                        <div id="dropArea" class="drop-area">
+                                            <span class="drop-text">JPG 이미지를 올려 주세요</span>
+                                            <input class="check-image" type="file" id="supfile" name="supfile" accept=".jpg"/>
+                                                <ul id="fileList" class="file-list"></ul>
+                                        </div>
+                                    </div>
+                                    </c:otherwise>
+                                    </c:choose>
+                                </label>
                             </div>
                         </div>
+                        <div class="contents-form-bottom">
+                            <div class="inputset inputset-lg inputset-label">
+                                <label>
+                                    <h6 class="inputset-tit">개인정보수집 및 이용동의</h6>
+                                    <div class="inputset-board"> - 수집하는 개인정보 항목 : 이메일 주소 <br>
+                                        <br> 작성해주시는 개인 정보는 문의 접수 및 고객 불만 해결을 위해 5년간 보관됩니다. 이용자는 본 동의를 거부할 수 있으나, 미동의시 문의 접수가 불가능합니다.
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="checkset">
+                                <input id="checkset-a-1-1" class="checkset-input input-fill" type="checkbox" value="">
+                                <label class="checkset-label" for="checkset-a-1-1"></label>
+                                <span class="checkset-text">위 내용을 읽었으며, 내용에 동의합니다. (필수)</span>
+                            </div>
+                        </div>
+                        <div class="contents-sign">
+                            <button class="btnset modalset-btn">등록하기</button>
+                        </div>
                     </div>
+                </div>
                 </form>
             </div>
         </div>
@@ -230,5 +180,6 @@
 <script src="../common/js/template.js"></script>
 <script src="../common/js/common.js"></script>
 <script src="../common/js/script.js"></script>
-<script src="../ssh/js/support.js"></script>
+<script src="../support/js/support.js"></script>
+<script src="/common/js/drag.js"></script>
 <%@ include file="../layout/bottom.jsp" %>

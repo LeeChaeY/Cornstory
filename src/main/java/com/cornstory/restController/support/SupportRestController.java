@@ -1,11 +1,13 @@
 package com.cornstory.restController.support;
 
+import com.cornstory.domain.Support;
 import com.cornstory.service.support.SupportService;
 
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,4 +38,20 @@ public class SupportRestController {
         }
 
     }
+
+    @RequestMapping( value="json/getSupport/{supNo}", method=RequestMethod.GET )
+    public Support getSupport(@RequestParam("supNo") int supNo , Model model ) throws Exception {
+
+        System.out.println("support/json/getSupport : GET");
+        //Business Logic
+        Support support = supportService.getSupport(supNo);
+
+        // Model 과 View 연결
+        model.addAttribute("support", support);
+
+        System.out.println("getSupport"+support);
+
+        return supportService.getSupport(supNo);
+    }
+
 }

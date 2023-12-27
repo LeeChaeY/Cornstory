@@ -70,6 +70,9 @@ public class SupportController {
                 e.printStackTrace();
             }
 
+        }else{
+            support.setSupImage("support.jpg");
+
         }
 
         // 공통 처리
@@ -114,6 +117,64 @@ public class SupportController {
         return "support/listSupport";
     }
 
+    @RequestMapping( value="updateSupport", method=RequestMethod.GET )
+    public String updateSupport(@RequestParam("supNo") int supNo , Model model ) throws Exception {
+
+        System.out.println("support/updateSupport : GET");
+        //Business Logic
+        Support support = supportService.getSupport(supNo);
+
+        // Model 과 View 연결
+        model.addAttribute("support", support);
+
+        System.out.println("getSupport"+support);
+
+        return "forward:/support/updateSupport.jsp";
+    }
+
+    @RequestMapping(value = "/updateSupport", method = RequestMethod.POST)
+    public String updateSupport(@ModelAttribute("support") @Validated Support support, HttpServletRequest request,
+                             @RequestParam("supfile") MultipartFile file, Model model, HttpSession session) throws Exception {
+        System.out.println("support/add : POST");
+        String userId = ((User) session.getAttribute("user")).getUserId();
+        support.setUserId(userId);
+        System.out.println("support/add" +support);
+
+        int category = support.getSupCategory();
+        String supContent = request.getParameter("supContent");
+
+        System.out.println(support + "들어온 정보 확인 하기 ");
+
+        String fileName = support.getSupContent() + "_support" ;
+        fileName = fileName.replaceAll("[^a-zA-Z0-9가-힣_]", "_");
+        fileName += ".jpg";
+
+        if (!file.isEmpty()) {
+            try {
+                String uploadDir = request.getServletContext().getRealPath("")+"\\..\\resources\\static\\file\\support\\";
+                String filePath = uploadDir + File.separator + fileName;
+
+
+                Files.write(Path.of(filePath), file.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+
+                // 파일 경로를 Work 객체에 저장
+
+                support.setSupImage(fileName);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }else{
+            support.setSupImage("support.jpg");
+
+        }
+
+        // 공통 처리
+        supportService.updateSupport(support);
+        System.out.println("들어온 값을 확인해보자" + support);
+
+        return "support/getSupport";
+    }
 }
 
 
