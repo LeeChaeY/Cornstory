@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../user/css/template.css">
     <link rel="stylesheet" href="../user/css/common.css">
     <link rel="stylesheet" href="../user/css/style.css">
-    <link rel="stylesheet" href="common/css/drag.css">
+    <link rel="stylesheet" href="/common/css/drag.css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -97,6 +97,15 @@
                             </label>
                         </div>
 
+                        <!--생일-->
+                        <div class="inputset inputset-lg inputset-label">
+                            <label  for="birthday">
+                                <h6 class="inputset-tit"> 생년월일<span>*</span>
+                                </h6>
+                                <input type="date" class="inputset-input form-control" id="birthday" name="birthday" max="2024-12-31" required>
+                            </label>
+                        </div>
+
                         <!--주소-->
                         <div class="inputset inputset-lg inputset-label">
                             <label for="addr">
@@ -131,7 +140,7 @@
                             <label  for="email">
                                 <h6 class="inputset-tit"> 이메일<span>*</span>
                                 </h6>
-                                <input type="email" class="inputset-input form-control" id="email" name="email" value="${kakaoUserInfo.email}"required>
+                                <input type="email" class="inputset-input form-control" id="email" placeholder="이메일 형식에 맞게 입력해주세요 ex) cornstory@cornstory.com" name="email" value="${kakaoUserInfo.email}"required>
                             </label>
                         </div>
 
@@ -139,21 +148,16 @@
                             <div class="inputset inputset-lg inputset-label"  for="userImage">
                                 <label>
                                     <h6 class="inputset-tit"> 회원 이미지 </h6>
-
-                                    <div style="text-align: Left;">
-                                        <img src="../file/user/user.jpg" width="80" style="border-radius: 50%; max-width: 100%;" alt=""/>
-                                        <p class="check-stext">* 기본이미지 입니다.</p>
-                                    </div>
-
-                                    <div id="dropArea" class="drop-area" >
-                                        <span class="drop-text">
-                                            JPG 이미지를 올려 주세요
-                                        </span>
-                                        <input class="check-image" type="file" id="userfile" name="userfile" accept=".jpg"/>
-                                        <ul id="fileList" class="file-list" style="list-style-type: none; padding: 0; margin-top: 10px;"></ul>
-                                    </div>
-
+                                        <div style="text-align: Left;">
+                                            <img src="../file/user/user.jpg" width="80" style="border-radius: 50%; max-width: 100%;" alt=""/>
+                                            <p class="check-stext">* 기본이미지 입니다.</p>
+                                        </div>
                                 </label>
+                                <div id="dropArea" class="drop-area" >
+                                    <span class="drop-text">JPG 이미지를 올려 주세요</span>
+                                    <input class="check-image" type="file" id="userfile" name="userfile" accept=".jpg"/>
+                                    <ul id="fileList" class="file-list"></ul>
+                                </div>
                             </div>
 
 

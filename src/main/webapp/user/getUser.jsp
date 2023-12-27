@@ -3,134 +3,121 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="imagetoolbar" content="no">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="title" content="웹사이트">
-    <meta name="description" content="웹사이트입니다.">
-    <meta name="keywords" content="키워드,키워드,키워드">
-    <meta property="og:title" content="웹사이트">
-    <meta property="og:description" content="웹사이트입니다">
-    <meta property="og:image" content="https://웹사이트/images/opengraph.png">
-    <meta property="og:url" content="https://웹사이트">
     <title>회원 정보 조회</title>
-    <link rel="stylesheet" href="../ssh/css/setting.css">
-    <link rel="stylesheet" href="../ssh/css/plugin.css">
-    <link rel="stylesheet" href="../ssh/css/template.css">
-    <link rel="stylesheet" href="../ssh/css/common.css">
-    <link rel="stylesheet" href="../ssh/css/style.css">
-
-
-
+    <link rel="stylesheet" href="../user/css/setting.css">
+    <link rel="stylesheet" href="../user/css/plugin.css">
+    <link rel="stylesheet" href="../user/css/template.css">
+    <link rel="stylesheet" href="../user/css/common.css">
+    <link rel="stylesheet" href="../user/css/style.css">
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <!-- jQuery 추가 -->
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <style>
-        .user-size{
-            padding: 140px;
-            font-size: 12px;
-        }
-    </style>
+   
 </head>
 <body>
 <%@ include file="../layout/top.jsp" %>
 <main class="th-layout-main ">
-    <!-- [S]opilsol-N29 -->
-    <div class="opilsol-N29" data-bid="aO2clo2iX6D" id="">
-        <div class="modal">
+
+    <div class="thpart-HmlqLtFlNZ" data-bid="HmlqLtFlNZ" id="">
+        <div class="contents-container">
+            <img class="contents-backimg" src="https://images.unsplash.com/photo-1532276269954-64188308dcb3?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=M3w0OTE2MDd8MHwxfHNlYXJjaHw0fHwlRUIlQTElOUMlRUElQjclQjglRUMlOUQlQjh8a298MHx8fGJsYWNrfDE3MDM1NjQ1NDB8MA&amp;ixlib=rb-4.0.3&amp;q=80&amp;w=1080" alt="">
+            <div class="contents-body container-md">
+                <h2 class="contents-title" contenteditable="true">UserPage</h2>
+                <h7 class="contents-sub">회원</h7>
+            </div>
         </div>
     </div>
-    <!-- [E]opilsol-N29 -->
+
+    <div class="hooms-N46" data-bid="gvLQlsUZ0g" id="">
+        <div class="contents-inner">
+            <div class="contents-container container-md">
+                <div class="textset textset-h2">
+                    <h2 class="textset-tit">My Page</h2>
+                </div>
+                <div class="contents-top">
+                    <div class="contents-tit">
+                        <c:choose>
+                            <c:when test="${user.role eq 0}">
+                                <span class="contents-membership">회원</span>
+
+                            </c:when>
+                            <c:when test="${user.role eq 1}">
+                                <span class="contents-membership">관리자</span>
+                            </c:when>
+                            <c:otherwise>
+                                <!-- 기본값 처리 또는 특정 뱃지가 없을 경우의 처리 -->
+                            </c:otherwise>
+                        </c:choose>
+                        <h3> <img class="textset-tit" src="../file/user/${sessionScope.user.userImage}" width="50" style="border-radius: 100%; max-width: 100%;" alt=""/>
+                            <strong>${user.nickName}</strong>님 안녕하세요! </h3>
+                    </div>
+                    <c:choose>
+                        <c:when test="${user.social eq 0}">
+                            <span class="badgeset">일반회원</span>
+                        </c:when>
+                        <c:when test="${user.role eq 1}">
+                            <span class="badgeset badgeset-active">소셜회원</span>
+                        </c:when>
+                        <c:otherwise>
+                            <!-- 기본값 처리 또는 특정 뱃지가 없을 경우의 처리 -->
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+                <div class="contents-bottom">
+                    <ul class="contents-list">
+                        <li class="contents-item">
+                            <strong>아이디<br></strong>
+                            <span>${user.userId}</span>
+                        </li>
+                        <li class="contents-item">
+                            <strong>주소​<br></strong>
+                            <span>${user.addr}</span>
+                        </li>
+                        <li class="contents-item">
+                            <strong>상세주소</strong>
+                            <span>${user.address}</span>
+                        </li>
+                        <li class="contents-item">
+                            <strong>이메일</strong>
+                            <span>${user.email}</span>
+                        </li>
+                        <li class="contents-item">
+                            <strong>회원명</strong>
+                            <span>${user.userName}</span>
+                        </li>
+                        <li class="contents-item">
+                            <strong>휴대전화</strong>
+                            <span>${user.phone}</span>
+                        </li>
+                        <li class="contents-item">
+                            <strong>생년월일</strong>
+                            <span>${user.birthday}</span>
+                        </li>
+                        <li class="contents-item">
+                            <strong>가입일</strong>
+                            <span>${user.rDate}</span>
+                        </li>
+                    </ul>
+                    <div class="contents-btn">
+                        <a class="btnset" href="updateUser?userId=${sessionScope.user.userId}">정보수정</a>
+
+                        <a id="withdrawLink" href="#"><button class="btnset btnset-ghost" >회원탈퇴</button></a>
+                    </div>
+                </div>
+                <c:if test="${param.deleted eq 'true'}">
+                    <p style="color: green;">회원 탈퇴가 완료되었습니다.</p>
+                </c:if>
+            </div>
+        </div>
+    </div>
 </main>
-<!-- [S]opilsol-N31 -->
-<div class="opilsol-N31" data-bid="bg4j773N4HN">
-    <div class="content-container">
-        <div class="textset content-top">
-            <div class="container-md">
-                <h2 class="textset-tit">회원정보조회</h2>
-            </div>
-        </div>
-        <div class="contents-form">
-            <div style="text-align: center;">
-                <img class="textset-tit" src="../file/user/${sessionScope.user.userImage}" width="100" style="border-radius: 100%; max-width: 100%;" alt=""/>
-            </div>
-            <div class="container-md">
-                <div class="contents-form-top"></div>
-
-                <div class="inputset inputset-lg inputset-group" for="userName">
-                    <label class="inputset-label">성명</label>
-                    <label class="inputset-label">${user.userName}</label>
-                </div>
-
-                <div class="inputset inputset-lg inputset-group" for="userId">
-                    <label class="inputset-label">아이디</label>
-                    <label class="inputset-label">${user.userId}</label>
-                </div>
-                <div class="inputset inputset-lg inputset-group" for="nickName">
-                    <label class="inputset-label">닉네임</label>
-                    <label class="inputset-label">${user.nickName}</label>
-                </div>
-                <div class="inputset inputset-lg inputset-group" for="addr">
-                    <label class="inputset-label">주소</label>
-                    <label class="inputset-label"><c:out value="${user.addr}"/><br></label>
-                </div>
-                <div class="inputset inputset-lg inputset-group" for="address">
-                    <label class="inputset-label">상세주소</label>
-                    <label class="inputset-label">${user.address}</label>
-                </div>
-                <div class="inputset inputset-lg inputset-group" for="phone">
-                    <label class="inputset-label">휴대폰번호</label>
-                    <label class="inputset-label">${user.phone}</label>
-                </div>
-                <div class="inputset inputset-lg inputset-group" for="email">
-                    <label class="inputset-label">이메일</label>
-                    <label class="inputset-label">${user.email}</label>
-                </div>
-                <div class="inputset inputset-lg inputset-group" for="birthday">
-                    <label class="inputset-label">생년월일</label>
-                    <label class="inputset-label">${user.birthday}</label>
-                </div>
-                <div class="contents-form-top"></div>
-            </div>
-            <div class="bottom-btn">
-
-                <a href="../index.jsp"><button class="btnset btnset-lg btnset-dark btnset-rect">확인</button></a>
-
-                <!-- 간격을 위한 빈 span 요소 추가 -->
-                <span class="button-gap"></span>
-
-                <a href="updateUser?userId=${sessionScope.user.userId}"><button class="btnset btnset-lg btnset-rect">수정하기</button></a>
-
-                <!-- 간격을 위한 빈 span 요소 추가 -->
-                <span class="button-gap"></span>
-
-                <a id="withdrawLink" href="#"><button class="btnset btnset-lg btnset-dark btnset-rect">탈퇴하기</button></a>
 
 
-            </div>
-<!-- 탈퇴가 완료되면 표시할 메시지 -->
-            <c:if test="${param.deleted eq 'true'}">
-                <p style="color: green;">회원 탈퇴가 완료되었습니다.</p>
-            </c:if>
-        </div>
-    </div>
-</div>
-<style>
-    /* 간격을 위한 스타일 추가 */
-    .button-gap {
-        display: inline-block;
-        width: 10px; /* 원하는 간격 값으로 조정 */
-    }
-</style>
-<script src="../ssh/js/setting.js"></script>
-<script src="../ssh/js/plugin.js"></script>
-<script src="../ssh/js/template.js"></script>
-<script src="../ssh/js/common.js"></script>
-<script src="../ssh/js/script.js"></script>
-
+<script src="../user/js/setting.js"></script>
+<script src="../user/js/plugin.js"></script>
+<script src="../user/js/template.js"></script>
+<script src="../user/js/common.js"></script>
+<script src="../user/js/script.js"></script>
+<script src="../user/js/getUser.js"></script>
 <%@ include file="../layout/bottom.jsp" %>
 </body>
 </html>

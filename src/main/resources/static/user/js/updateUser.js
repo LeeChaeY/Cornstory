@@ -246,7 +246,7 @@ function validateAgreement() {
     var agreementCheckbox = document.getElementById("checkset-a-2-1");
 
     if (!agreementCheckbox.checked) {
-        alert("개인정보수집 및 이용에 동의해야 가입이 가능합니다.");
+        alert("개인정보수집 및 이용에 동의해야 수정이 가능합니다.");
         return false;
     }
 
@@ -261,3 +261,5 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 });
+
+

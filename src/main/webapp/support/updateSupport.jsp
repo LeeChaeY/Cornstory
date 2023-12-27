@@ -81,7 +81,7 @@
                     <div class="contents-form-middle">
                         <div class="inputset inputset-lg inputset-label">
                             <label>
-                                <h6 class="inputset-tit"> 등록자 </h6>  ${sessionScope.user.nickName}
+                                <h6 class="inputset-tit"> 등록자 </h6>  ${support.userId}
                             </label>
                         </div>
                         <div class="contents-form-middle">
@@ -92,7 +92,7 @@
                                     </c:when>
                                     <c:otherwise>
                                         <h6 class="inputset-tit"> 제목 </h6>
-                                        <input type="text" class="inputset-input form-control" placeholder="제목을 입력해주세요." name="supName" aria-label="내용" required="">
+                                        <input type="text" class="inputset-input form-control" placeholder="제목을 입력해주세요." value="${support.supName}" name="supName" aria-label="내용" required="">
                                     </c:otherwise>
                                 </c:choose>
 
@@ -112,7 +112,8 @@
                                     </c:when>
                                 </c:choose>
 
-                                    <textarea class="inputset-textarea"  name="supContent" placeholder="공지 내용을 입력해주세요." required=""></textarea>
+                                    <textarea class="inputset-textarea"  name="supContent" placeholder="공지 내용을 입력해주세요." value="${support.supContent}" required=""></textarea>
+                                    ${ support.supContent}
                                     <div class="inputset-langth">
                                         <span class="inputset-count">0</span>
                                         <span class="inputset-total">/4000</span>
@@ -133,8 +134,8 @@
                                     <div class="inputset inputset-lg inputset-label"  for="supImage">
                                         <label>
                                             <div style="text-align: Left;">
-                                                <img src="../file/support/support.jpg" width="80" style=" max-width: 100%;" alt=""/>
-                                                <p class="check-stext">* 기본이미지 입니다.</p>
+                                                <img src="../file/support/${support.supImage}" width="80" style=" max-width: 100%;" alt=""/>
+                                                <p class="check-stext">* 기존이미지 입니다.</p>
                                             </div>
                                         </label>
                                         <div id="dropArea" class="drop-area">
@@ -164,7 +165,7 @@
                             </div>
                         </div>
                         <div class="contents-sign">
-                            <button class="btnset modalset-btn">등록하기</button>
+                            <button class="btnset modalset-btn">수정하기</button>
                         </div>
                     </div>
                 </div>
