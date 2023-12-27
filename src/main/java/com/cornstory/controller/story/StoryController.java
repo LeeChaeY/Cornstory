@@ -24,9 +24,10 @@ public class StoryController {
     private StoryService storyService;
 
     @GetMapping("/listStory")
-    public String listStories(Model model) throws Exception {
+    public String listStories(Model model,@SessionAttribute(name="user", required = false) User user) throws Exception {
         List<Story> story = storyService.listStory();
         model.addAttribute("story", story);
+        model.addAttribute("user",user);
         return "story/listStory";  // 뷰의 이름 (list.jsp)
     }
 

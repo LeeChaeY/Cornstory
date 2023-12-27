@@ -7,154 +7,158 @@
 <html>
 <head>
     <title>cornstory</title>
-    <link rel="stylesheet" href="/ssh/css/setting.css">
-    <link rel="stylesheet" href="/ssh/css/plugin.css">
-    <link rel="stylesheet" href="/ssh/css/template.css">
-    <link rel="stylesheet" href="/ssh/css/common.css">
-    <link rel="stylesheet" href="/ssh/css/style.css">
+    <link rel="stylesheet" href="/khs/css/setting.css">
+    <link rel="stylesheet" href="/khs/css/plugin.css">
+    <link rel="stylesheet" href="/khs/css/template.css">
+    <link rel="stylesheet" href="/khs/css/common.css">
+    <link rel="stylesheet" href="/khs/css/style.css">
     <meta charset="utf-8">
     <style>
-        /* 추가된 스타일 */
-        :root {
-            --primary-color: #0056b3;
-            --secondary-color: #e9ecef;
-            --text-color: #333333;
-            --background-color: #ffffff;
+        .genre-list span {
+            display: inline-block; /* 각 장르를 inline-block으로 설정하여 가로로 배열 */
+            margin-right: 5px; /* 각 장르 사이에 간격 추가 */
+        }
+        .contents-radioset {
+            display: flex; /* Flex 컨테이너 설정 */
+            flex-wrap: wrap; /* 내용이 넘칠 경우 줄바꿈 */
         }
 
-        body {
-            font-family: 'Arial', sans-serif;
-            color: var(--text-color);
-            background-color: var(--background-color);
+        .radioset {
+            margin-right: 10px; /* 각 장르 사이의 간격 설정 */
         }
 
-        .content-container {
-            text-align: center;
+        #workList{
+            display: flex; /* 가로로 정렬하기 위해 flex 컨테이너로 설정 */
+            flex-wrap: wrap; /* 필요하다면 자식 요소들을 여러 행에 걸쳐 표시 */
+            justify-content: flex-start; /* 왼쪽 정렬로 변경 */
         }
 
-        .textset-tit {
-            font-size: 24px;
-            color: var(--primary-color);
-            margin-bottom: 10px;
+        .contents-cardlist.contents-cardlist-active {
+            width: calc(20% - 10px); /* 마진을 고려한 실제 너비 계산 */
+            margin-right: 10px; /* 오른쪽 마진 */
+            margin-bottom: 10px; /* 아래쪽 마진 */
         }
 
-        .content-container p {
-            font-size: 20px;
+        .hooms-N31 .cardset {
+            width: 100%; /* 전체 너비의 20%에서 간격을 빼기 */
+            margin-right: 10px; /* 오른쪽 간격 */
+            margin-bottom: 10px; /* 아래쪽 간격 */
         }
 
-        .container-md {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
+        /* 한 줄의 마지막 항목에는 오른쪽 여백 제거 */
+        .hooms-N31 .cardset:nth-child(5n) {
+            margin-right: 0;
         }
 
-        .container-list {
-            background: var(--secondary-color);
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-            transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
-        }
 
-        .container-list:hover {
-            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-            transform: translateY(-5px);
-        }
-
-        .cardset-img {
-            width: 100%;
-            height: auto;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
-            object-fit: cover;
-        }
-
-        .cardset-body {
-            padding: 15px;
-            text-align: center;
-        }
-
-        .cardset-tit {
-            font-size: 18px;
-            font-weight: bold;
-            color: var(--text-color);
-            margin-bottom: 10px;
-        }
-
-        .cardset-desc {
-            font-size: 14px;
-            color: var(--text-color);
-        }
-
-        /* 반응형 레이아웃 */
-        @media screen and (max-width: 992px) {
-            .container-md {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media screen and (max-width: 768px) {
-            .container-md {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media screen and (max-width: 480px) {
-            .container-md {
-                grid-template-columns: 1fr;
-            }
-        }
     </style>
 </head>
 <body>
 
 <!--top start-->
-<%@ include file="../layout/top.jsp" %>
+<%--<%@ include file="../layout/header.jsp" %>--%>
+<jsp:include page="../layout/header.jsp" flush="true"/>
 <!--top end-->
 
-<main class="th-layout-main ">
-    <div class="opilsol-N31" data-bid="nu2ClPPZgeB" id="">
-        <div class="content-container">
-            <h2 class="textset-tit">나의 작품 목록</h2>
-            <p>전체 개수: ${myCount}</p>
-            <p><a href="../work/addWork">작품추가</a></p>
-            <div class="container-md">
-                <c:forEach var="work" items="${list}">
-                    <div class="container-list">
-                        <figure class="cardset-figure">
-                            <a class="cardset cardset-border" href="../work/getDetailWork?workNo=${work.workNo}">
-                                <img class="cardset-img" src="${work.thumbnail}" alt="이미지">
-                            </a>
-                        </figure>
-                        <div class="cardset-body">
-                            <h5 class="cardset-tit">${work.workName}</h5>
-                            <p class="cardset-desc">카테고리: <c:choose>
-                                <c:when test="${work.category eq '0'}">웹소설</c:when>
-                                <c:when test="${work.category eq '1'}">웹툰</c:when>
-                                <c:when test="${work.category eq '2'}">웹드라마</c:when>
-                            </c:choose></p>
-                            <p class="cardset-desc">장르:  ${work.genre1}
-                                <c:if test="${not empty work.genre2}">, ${work.genre2}</c:if>
-                                <c:if test="${not empty work.genre3}">, ${work.genre3}</c:if></p>
-                            <p class="cardset-desc">${work.fap == 0 ? '무료' : '유료'}</p>
-                                <a href="../work/updateWork?workNo=${work.workNo}">수정</a>
-                                <form method="post" action="../work/deleteWork">
-                                    <input type="hidden" name="workNo" value="${work.workNo}" />
-                                    <button type="submit">삭제</button>
-                                </form>
-                        </div>
-                    </div>
-                </c:forEach>
-            </div>
-        </div>
-    </div>
-</main>
+<%--<main class="th-layout-main ">--%>
+<%--    <div class="opilsol-N31" data-bid="nu2ClPPZgeB" id="">--%>
+<%--        <div class="content-container">--%>
+<%--            <h2 class="textset-tit">나의 작품 목록</h2>--%>
+<%--            <p>전체 개수: ${myCount}</p>--%>
+<%--            <p><a href="../work/addWork">작품추가</a></p>--%>
+<%--            <div class="container-md">--%>
+<%--                <c:forEach var="work" items="${list}">--%>
+<%--                    <div class="container-list">--%>
+<%--                        <figure class="cardset-figure">--%>
+<%--                            <a class="cardset cardset-border" href="../work/getDetailWork?workNo=${work.workNo}">--%>
+<%--                                <img class="cardset-img" src="${work.thumbnail}" alt="이미지">--%>
+<%--                            </a>--%>
+<%--                        </figure>--%>
+<%--                        <div class="cardset-body">--%>
+<%--                            <h5 class="cardset-tit">${work.workName}</h5>--%>
+<%--                            <p class="cardset-desc">카테고리: <c:choose>--%>
+<%--                                <c:when test="${work.category eq '0'}">웹소설</c:when>--%>
+<%--                                <c:when test="${work.category eq '1'}">웹툰</c:when>--%>
+<%--                                <c:when test="${work.category eq '2'}">웹드라마</c:when>--%>
+<%--                            </c:choose></p>--%>
+<%--                            <p class="cardset-desc">장르:  ${work.genre1}--%>
+<%--                                <c:if test="${not empty work.genre2}">, ${work.genre2}</c:if>--%>
+<%--                                <c:if test="${not empty work.genre3}">, ${work.genre3}</c:if></p>--%>
+<%--                            <p class="cardset-desc">${work.fap == 0 ? '무료' : '유료'}</p>--%>
+<%--                                <a href="../work/updateWork?workNo=${work.workNo}">수정</a>--%>
+<%--                                <form method="post" action="../work/deleteWork">--%>
+<%--                                    <input type="hidden" name="workNo" value="${work.workNo}" />--%>
+<%--                                    <button type="submit">삭제</button>--%>
+<%--                                </form>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
+<%--                </c:forEach>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--    </div>--%>
+<%--</main>--%>
 
-<%@ include file="../layout/bottom.jsp" %>
+<!-- 나의 작품 리스트 -->
+<main class="th-layout-main">
+    <div class="hooms-N31" data-bid="geLqKMOmeJ" id="">
+        <div class="contents-inner">
+            <div class="contents-container container-md">
+                <div class="textset textset-h2">
+                    <h2 class="textset-tit">나의 작품 리스트</h2>
+                    <p>전체 개수: ${myCount}</p>
+                </div>
+                <!-- 작품 목록 -->
+                <div class="contents-group">
+                    <div class="work-items-container custom-work-list">
+                        <div class="container-md" id="workList">
+                            <!-- 작품 목록이 여기에 동적으로 생성됩니다. -->
+                            <c:forEach var="work" items="${list}">
+                                <div class="contents-cardlist contents-cardlist-active">
+                                    <a href="javascript:void(0)" class="cardset">
+                                        <figure class="cardset-figure">
+                                            <img class="cardset-img" src="${work.thumbnail}" alt="이미지">
+                                        </figure>
+                                        <div class="cardset-body">
+                                            <div class="cardset-tit-group">
+                                                <h5 class="cardset-tit">${work.workName}</h5>
+                                            </div>
+                                            <p class="cardset-desc">
+                                                유/무료:
+                                                <c:choose>
+                                                    <c:when test="${work.fap == 0}">무료</c:when>
+                                                    <c:otherwise>유료</c:otherwise>
+                                                </c:choose>
+                                                | 장르: ${work.genre1}
+                                                <c:if test="${not empty work.genre2}">, ${work.genre2}</c:if>
+                                                <c:if test="${not empty work.genre3}">, ${work.genre3}</c:if>
+                                                | 카테고리: <c:choose>
+                                                <c:when test="${work.category eq '0'}">웹소설</c:when>
+                                                <c:when test="${work.category eq '1'}">웹툰</c:when>
+                                                <c:when test="${work.category eq '2'}">웹드라마</c:when>
+                                                </c:choose>
+                                            </p>
+                                        </div>
+                                        </a>
+                                        <a href="../work/updateWork?workNo=${work.workNo}">수정</a>
+                                        <form method="post" action="../work/deleteWork">
+                                            <input type="hidden" name="workNo" value="${work.workNo}" />
+                                            <button type="submit">삭제</button>
+                                        </form>
+                                        </div>
+                                        </c:forEach>
+                                        </div>
+                                        </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </main>
+
+
+                                <!-- [S]thwhole-wfLpW5Z3pJ -->
+                                <%--<%@ include file="../layout/footer.jsp" %>--%>
+<jsp:include page="../layout/footer.jsp" flush="true"/>
+<!-- [E]thwhole-wfLpW5Z3pJ -->
 
 </body>
 </html>

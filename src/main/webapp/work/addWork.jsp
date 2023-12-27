@@ -5,105 +5,43 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="imagetoolbar" content="no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
     <title>cornstory</title>
-    <link rel="stylesheet" href="/ssh/css/setting.css">
-    <link rel="stylesheet" href="/ssh/css/plugin.css">
-    <link rel="stylesheet" href="/ssh/css/template.css">
-    <link rel="stylesheet" href="/ssh/css/common.css">
-    <link rel="stylesheet" href="/ssh/css/style.css">
-    <style>
-        label {
-            display: block;
-            margin-bottom: 8px;
-        }
-
-        input,
-        textarea {
-            margin-bottom: 16px;
-        }
-        .checkset-wrap {
-            display: flex;
-            flex-wrap: wrap;
-        }
-
-        .checkset {
-            flex-basis: calc(33.333% - 10px);
-            margin: 5px;
-            box-sizing: border-box;
-        }
-
-        .checkset-label {
-            display: block; /* 또는 inline-block */
-        }
-
-        .checkset-text {
-            display: block; /* 또는 inline-block */
-        }
-
-        @media screen and (max-width: 768px) {
-            .checkset {
-                flex-basis: calc(50% - 10px); /* 화면이 좁아질 때 2개씩 나타내기 */
-            }
-        }
-
-        @media screen and (max-width: 480px) {
-            .checkset {
-                flex-basis: 100%; /* 아주 좁은 화면에서는 한 줄에 하나씩 나타내기 */
-            }
-        }
-        #image_container {
-            max-width: 150px; /* 최대 가로 크기 설정 */
-            max-height: 200px; /* 최대 세로 크기 설정 */
-            overflow: hidden; /* 크기를 넘어가는 부분을 숨김 */
-        }
-        /* 파일드롭 */
-        .drop-area {
-            border: 2px dashed #ccc;
-            padding: 20px;
-            text-align: center;
-            cursor: pointer;
-        }
-
-        .drop-text {
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        .file-list {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .file-list img {
-            width: 200px;
-            height: 200px;
-            margin: 5px;
-        }
-
-    </style>
-<%--    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>--%>
+    <link rel="stylesheet" href="/khs/css/setting.css">
+    <link rel="stylesheet" href="/khs/css/plugin.css">
+    <link rel="stylesheet" href="/khs/css/template.css">
+    <link rel="stylesheet" href="/khs/css/common.css">
+    <link rel="stylesheet" href="/khs/css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
 
 <!--top start-->
-<%@ include file="../layout/top.jsp" %>
+<%--<%@ include file="../layout/header.jsp" %>--%>
+<jsp:include page="../layout/header.jsp" flush="true"/>
 <!--top end-->
 
-
 <main class="th-layout-main ">
-    <div class="opilsol-N31" data-bid="gslq1V9ptK">
-        <div class="content-container">
+    <div class="hooms-N39" data-bid="MzlQkMIezC" >
+        <div class="contents-inner">
             <form action="../work/addWork" method="post" onsubmit="return validateForm()" enctype="multipart/form-data">
-            <div class="textset content-top">
-                <div class="container-md">
-                    <h2 class="textset-tit">작품 추가</h2>
-                </div>
-            </div>
-            <div class="contents-form" >
-                <div class="container-md">
-                    <!-- 창작여부 -->
+                <div class="contents-container container-md">
+                    <div class="textset textset-h2">
+                        <h2 class="textset-tit">작품 추가</h2>
+                    </div>
+
+                    <!-- 창작여부 선택 -->
                     <div class="inputset inputset-lg inputset-group">
-                        <label class="inputset-label" style="font-size: var(--fs-h4);">창작여부</label>
+                        <label class="labelset">
+                            <h6 class="labelset-tit">창작<span>*</span>
+                            </h6>
+                            <strong class="labelset-vital">
+                                <span>*</span>필수입력 </strong>
+                        </label>
                         <div class="radioset-wrap">
                             <div class="radioset">
                                 <input id="status0" name="status" class="visually-hidden" type="radio" value="0" checked>
@@ -113,150 +51,169 @@
                                 <input id="status1" name="status" class="visually-hidden" type="radio" value="1">
                                 <label class="radioset-thumb thumb-round" for="status1">창작</label>
                             </div>
-                            <div id="creationMessage" style="color: red;"></div>
                         </div>
+                        <div id="creationMessage" style="color: red;"></div>
                     </div>
+
+                    <!-- 저작권 구매한 작품 선택 -->
                     <div class="selectset selectset-lg" id="copylight" name="copylight">
-                        <button class="selectset-toggle btn" type="button">
-                            <span>저작권 구매한 작품</span>
+                        <button class="selectset-toggle btn" type="button" id="copylightButton" aria-haspopup="true" aria-expanded="false">
+                            저작권 구매한 작품 선택
                         </button>
-                        <ul class="selectset-list">
-                            <li class="selectset-item">
-                                <c:forEach var="product" items="${list}">
-                                <button class="selectset-link btn" type="button" data-value="<c:out value='${product.prodName}'/>">
-                                    <span><c:out value='${product.prodName}'/></span>
-                                </button>
-                                </c:forEach>
-                            </li>
+                        <ul class="selectset-list" aria-labelledby="copylightButton">
+                            <!-- 서버에서 불러온 저작권 구매한 작품 목록을 반복적으로 표시 -->
+                            <c:forEach var="product" items="${list}">
+                                <li class="selectset-item">
+                                    <button class="selectset-link btn" type="button" data-value="<c:out value='${product.prodName}'/>">
+                                        <span><c:out value='${product.prodName}'/></span>
+                                    </button>
+                                </li>
+                            </c:forEach>
                         </ul>
                     </div>
 
-
-                    <!-- 작품명 -->
                     <div class="inputset inputset-lg inputset-group">
-                        <label class="inputset-label" style="font-size: var(--fs-h4);"for="workName">작품명</label>
-                        <input type="text" class="inputset-input form-control" id="workName" name="workName" maxlength="30" required>
-                        <div id="workNameCount">글자 수: 0/30</div>
-
-                    </div>
-                    <div id="workNameMessage" style="color: red;"></div>
-                    <!-- 카테고리 -->
-                    <div class="inputset inputset-lg inputset-group">
-                        <label class="inputset-label" style="font-size: var(--fs-h4);">카테고리</label>
+                        <label class="labelset">
+                            <h6 class="labelset-tit">카테고리<span>*</span>
+                            </h6>
+                        </label>
                         <div class="radioset-wrap">
+                            <!-- 웹소설 카테고리 -->
                             <div class="radioset">
-                                <input id="category0" name="category" class="visually-hidden" type="radio" value="0" checked="">
-                                <label class="radioset-thumb thumb-round" for="category0">웹소설</label>
+                                <input id="categoryNovel" name="category" class="visually-hidden" type="radio" value="0">
+                                <label class="radioset-thumb thumb-round" for="categoryNovel">웹소설</label>
                             </div>
+                            <!-- 웹툰 카테고리 -->
                             <div class="radioset">
-                                <input id="category1" name="category" class="visually-hidden" type="radio" value="1">
-                                <label class="radioset-thumb thumb-round" for="category1">웹툰</label>
+                                <input id="categoryWebtoon" name="category" class="visually-hidden" type="radio" value="1">
+                                <label class="radioset-thumb thumb-round" for="categoryWebtoon">웹툰</label>
                             </div>
+                            <!-- 웹드라마 카테고리 -->
                             <div class="radioset">
-                                <input id="category2" name="category" class="visually-hidden" type="radio" value="2">
-                                <label class="radioset-thumb thumb-round" for="category2">웹드라마</label>
+                                <input id="categoryDrama" name="category" class="visually-hidden" type="radio" value="2">
+                                <label class="radioset-thumb thumb-round" for="categoryDrama">웹드라마</label>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 장르 선택 -->
-                    <div class="inputset inputset-lg inputset-group" style="line-height: 10;">
-                        <label class="inputset-label" style="font-size: var(--fs-h4);">장르</label>
+                    <!-- 작품명 입력 필드 -->
+                    <div class="inputset inputset-lg inputset-group">
+                        <label class="labelset" for="workName">
+                            <h6 class="labelset-tit">작품명<span>*</span>
+                            </h6>
+                        </label>
+                        <input type="text" class="inputset-input form-control" id="workName" name="workName" maxlength="30" required>
+                        <div id="workNameCount">글자 수: 0/30</div>
+                    </div>
+                    <div id="workNameMessage" style="color: red;"></div>
+
+                    <!-- 장르 선택 체크박스 -->
+                    <div class="inputset inputset-lg inputset-group">
+                        <label class="labelset">
+                            <h6 class="labelset-tit">장르<span>*</span>
+                            </h6>
+                        </label>
                         <div class="checkset-wrap">
-                            <!-- 학원 장르 체크박스 -->
+                            <!-- 학원 장르 -->
                             <div class="checkset">
-                                <input id="genreAcademy" class="checkset-input input-fill"type="checkbox" name="genre" value="학원" onclick="handleGenreCheckboxClick(this)">
+                                <input id="genreAcademy" class="checkset-input input-fill" type="checkbox" name="genre" value="학원" onclick="handleGenreCheckboxClick(this)">
                                 <label class="checkset-label" for="genreAcademy"></label>
                                 <span class="checkset-text">학원</span>
                             </div>
-                            <!-- 액션 장르 체크박스 -->
+                            <!-- 액션 장르 -->
                             <div class="checkset">
                                 <input id="genreAction" class="checkset-input input-fill" type="checkbox" name="genre" value="액션" onclick="handleGenreCheckboxClick(this)">
                                 <label class="checkset-label" for="genreAction"></label>
                                 <span class="checkset-text">액션</span>
                             </div>
-                            <!-- SF 장르 체크박스 -->
+                            <!-- SF 장르 -->
                             <div class="checkset">
                                 <input id="genreSF" class="checkset-input input-fill" type="checkbox" name="genre" value="SF" onclick="handleGenreCheckboxClick(this)">
                                 <label class="checkset-label" for="genreSF"></label>
                                 <span class="checkset-text">SF</span>
                             </div>
-                            <!-- 판타지 장르 체크박스 -->
+                            <!-- 판타지 장르 -->
                             <div class="checkset">
                                 <input id="genreFantasy" class="checkset-input input-fill" type="checkbox" name="genre" value="판타지" onclick="handleGenreCheckboxClick(this)">
                                 <label class="checkset-label" for="genreFantasy"></label>
                                 <span class="checkset-text">판타지</span>
                             </div>
-                            <!-- 개그 장르 체크박스 -->
+                            <!-- 개그 장르 -->
                             <div class="checkset">
                                 <input id="genreComedy" class="checkset-input input-fill" type="checkbox" name="genre" value="개그" onclick="handleGenreCheckboxClick(this)">
                                 <label class="checkset-label" for="genreComedy"></label>
                                 <span class="checkset-text">개그</span>
                             </div>
-                            <!-- 로맨스 장르 체크박스 -->
+                            <!-- 로맨스 장르 -->
                             <div class="checkset">
                                 <input id="genreRomance" class="checkset-input input-fill" type="checkbox" name="genre" value="로맨스" onclick="handleGenreCheckboxClick(this)">
                                 <label class="checkset-label" for="genreRomance"></label>
                                 <span class="checkset-text">로맨스</span>
                             </div>
-                            <!-- 스포츠 장르 체크박스 -->
+                            <!-- 스포츠 장르 -->
                             <div class="checkset">
                                 <input id="genreSports" class="checkset-input input-fill" type="checkbox" name="genre" value="스포츠" onclick="handleGenreCheckboxClick(this)">
                                 <label class="checkset-label" for="genreSports"></label>
                                 <span class="checkset-text">스포츠</span>
                             </div>
-                            <!-- 일상 장르 체크박스 -->
+                            <!-- 일상 장르 -->
                             <div class="checkset">
                                 <input id="genreSliceOfLife" class="checkset-input input-fill" type="checkbox" name="genre" value="일상" onclick="handleGenreCheckboxClick(this)">
                                 <label class="checkset-label" for="genreSliceOfLife"></label>
                                 <span class="checkset-text">일상</span>
                             </div>
-                            <!-- 추리 장르 체크박스 -->
+                            <!-- 추리 장르 -->
                             <div class="checkset">
                                 <input id="genreMystery" class="checkset-input input-fill" type="checkbox" name="genre" value="추리" onclick="handleGenreCheckboxClick(this)">
                                 <label class="checkset-label" for="genreMystery"></label>
                                 <span class="checkset-text">추리</span>
                             </div>
-                            <!-- 스릴러 장르 체크박스 -->
+                            <!-- 스릴러 장르 -->
                             <div class="checkset">
                                 <input id="genreThriller" class="checkset-input input-fill" type="checkbox" name="genre" value="스릴러" onclick="handleGenreCheckboxClick(this)">
                                 <label class="checkset-label" for="genreThriller"></label>
                                 <span class="checkset-text">스릴러</span>
                             </div>
-                            <!-- 무협 장르 체크박스 -->
+                            <!-- 무협 장르 -->
                             <div class="checkset">
                                 <input id="genreMartialArts" class="checkset-input input-fill" type="checkbox" name="genre" value="무협" onclick="handleGenreCheckboxClick(this)">
                                 <label class="checkset-label" for="genreMartialArts"></label>
                                 <span class="checkset-text">무협</span>
                             </div>
-                            <!-- 기타 장르 체크박스 -->
+                            <!-- 기타 장르 -->
                             <div class="checkset">
                                 <input id="genreOthers" class="checkset-input input-fill" type="checkbox" name="genre" value="기타" onclick="handleGenreCheckboxClick(this)">
                                 <label class="checkset-label" for="genreOthers"></label>
                                 <span class="checkset-text">기타</span>
                             </div>
-                            <div id="genreMessage" style="color: red;"></div>
                         </div>
-
+                        <div id="genreMessage" style="color: red;"></div>
                     </div>
 
-                    <!-- 작가 노트 -->
-                    <div class="inputset inputset-lg inputset-group">
-                        <label class="inputset-label" style="font-size: var(--fs-h4);" for="note">작가 노트</label>
-                        <textarea class="inputset-textarea inputset-input form-control textarea" id="note" name="note" maxlength="100"></textarea>
-                        <div id="noteCount">글자 수: 0/100</div>
+                    <div class="inputset inputset-lg inputset-label">
+                        <!-- 작가노트 입력 필드 -->
+                        <label>
+                            <h6 class="inputset-tit">작가노트</h6>
+                            <textarea class="inputset-textarea" id="note" name="note" placeholder="작가의 상태나 작품에 대한 내용을 입력해주세요." maxlength="100" required=""></textarea>
+                            <div id="noteCount">글자 수: 0/100</div>
+                        </label>
+
+                        <!-- 작품소개 입력 필드 -->
+                        <label>
+                            <h6 class="inputset-tit">작품소개<span>*</span></h6>
+                            <textarea class="inputset-textarea" id="workDesc" name="workDesc" placeholder="작품을 소개해주세요." maxlength="400" required=""></textarea>
+                            <div id="charCount">글자 수: 0/400</div>
+                        </label>
                     </div>
 
-                    <!-- 작품 소개 -->
-                    <div class="inputset inputset-lg inputset-group">
-                        <label class="inputset-label" style="font-size: var(--fs-h4);" for="workDesc">작품 소개</label>
-                        <textarea class="inputset-textarea inputset-input form-control textarea" id="workDesc" name="workDesc" maxlength="400"></textarea>
-                        <div id="charCount">글자 수: 0/400</div>
-                    </div>
 
-                    <!-- 썸네일 업로드 -->
+
+                    <!-- 썸네일 업로드 영역 -->
                     <div class="inputset inputset-lg inputset-group" for="thumbnailFile">
-                        <label class="inputset-label" style="font-size: var(--fs-h4);">썸네일</label>
+                        <label class="labelset" for="workName">
+                            <h6 class="labelset-tit">썸네일<span>*</span>
+                            </h6>
+                        </label>
                         <div id="dropArea" class="drop-area">
                             <div id="image_container"><img src="..\khs\images\popcorn.jpg" alt="" width="150" height="200" placeholder="이미지가 여기에 나타납니다."></div>
                             <span class="drop-text"></span>
@@ -268,7 +225,10 @@
 
                     <!-- 유료/무료 선택 -->
                     <div class="inputset inputset-lg inputset-group">
-                        <label class="inputset-label" style="font-size: var(--fs-h4);">유료/무료 선택</label>
+                        <label class="labelset">
+                            <h6 class="labelset-tit">유료/무료 선택<span>*</span>
+                            </h6>
+                        </label>
                         <div class="radioset-wrap">
                             <div class="radioset">
                                 <input id="fap0" class="radioset-input input-line" name="fap" type="radio" value="0" checked="">
@@ -277,42 +237,53 @@
                             <div class="radioset">
                                 <input id="fap1" class="radioset-input input-line" name="fap" type="radio" value="1">
                                 <label class="radioset-thumb thumb-round" for="fap1">유료</label>
-                                <p id="popcornCountText"></p>
-
                             </div>
                         </div>
                     </div>
-                    <div class="inputset inputset-lg">
-                        <label class="inputset-label" style="font-size: var(--fs-h4);">운영사항</label>
-                        <div class="checkset checkset-sm" style="width: 100%; padding: 10px; box-sizing: border-box;">
-                            <input id="matters" class="checkset-input input-round" type="checkbox" value="">
-                            <label class="checkset-label" for="matters"></label>
-                            <span class="checkset-text" style=" font-size: 12px; line-height: 1.5; overflow: auto; "> 저작권 등 다른 사람의 권리를 침해하거나 명예를 훼손하는 게시물은 이용약관 및 관련 법률에 의해 제재를 받으실 수 있습니다.<br> 성인물, 폭력물 등의 게시물은 통보 없이 삭제될 수 있습니다. </span>
+
+                    <!-- 운영사항 동의 체크박스 -->
+                    <div class="inputset inputset-lg inputset-label">
+                        <label>
+                            <h6 class="inputset-tit">운영사항 동의
+                                <strong class="labelset-vital">
+                                    <span>*</span>
+                                </strong></h6>
+                            <div class="inputset-board">
+                                저작권 등 다른 사람의 권리를 침해하거나 명예를 훼손하는 게시물은 이용약관 및 관련 법률에 의해 제재를 받으실 수 있습니다. 성인물, 폭력물 등의 게시물은 통보 없이 삭제될 수 있습니다.
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="inputset inputset-lg inputset-label">
+                        <div class="checkset">
+                            <input id="operationAgreement" class="checkset-input input-fill" type="checkbox" required>
+                            <label class="checkset-label" for="operationAgreement"></label>
                         </div>
-                        <div id="operationMessage" style="color: red;"></div>
+                        <span class="checkset-text">위 내용을 읽었으며, 내용에 동의합니다.</span>
+                    </div>
+                    <div id="operationMessage" style="color: red;"></div>
+
+                    <input type="hidden" name="genre1" value="">
+                    <input type="hidden" name="genre2" value="">
+                    <input type="hidden" name="genre3" value="">
+
+                    <!-- 제출 버튼 -->
+                    <div class="bottom-btn">
+                        <button class="btnset btnset-lg btnset-dark btnset-rect" type="reset">취소</button>
+                        <button class="btnset btnset-lg btnset-dark btnset-rect" type="submit">등록</button>
                     </div>
                 </div>
-                <input type="hidden" name="genre1" value="">
-                <input type="hidden" name="genre2" value="">
-                <input type="hidden" name="genre3" value="">
-                <!-- 제출 버튼 -->
-                <div class="bottom-btn">
-                    <button class="btnset btnset-lg btnset-dark btnset-rect" type="reset">취소</button>
-                    <button class="btnset btnset-lg btnset-dark btnset-rect" type="submit">등록</button>
-                </div>
-            </div>
-
             </form>
         </div>
     </div>
 </main>
 
 
-
-
 <!-- [S]thwhole-wfLpW5Z3pJ -->
-<%@ include file="../layout/bottom.jsp" %>
+<%--<%@ include file="../layout/footer.jsp" %>--%>
+<jsp:include page="../layout/footer.jsp" flush="true"/>
 <!-- [E]thwhole-wfLpW5Z3pJ -->
+
 </body>
 <script>
     window.onload = function() {

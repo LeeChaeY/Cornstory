@@ -167,7 +167,7 @@
             <strong>Story Image:</strong> ${story.storyImage}<br>
             <strong>Story Content:</strong> ${story.storyContent}<br>
             <strong>Story Date:</strong> ${story.storyDate}<br>
-
+            <c:if test="${story.userId} eq ${user.userId}">
             <a href="/story/updateStory?storyNo=${story.storyNo}">수정</a>
             |
             <form action="/story/deleteStory" method="post" id="deleteForm_${story.storyNo}">
@@ -175,8 +175,10 @@
                 <a href="#" onclick="confirmAndSubmit(${story.storyNo})">삭제</a>
             </form>
             |
+            </c:if>
             <!-- 댓글 보기/숨기기 버튼 -->
             <a href="#" onclick="toggleComments(${story.storyNo})">댓글 보기/숨기기</a>
+
 
             <!-- 댓글 폼 -->
             <div class="comment-form" id="commentForm_${story.storyNo}">
