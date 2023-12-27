@@ -24,7 +24,7 @@ public class SupportRestController {
     public SupportRestController(){System.out.println("SupportRestController 진입");}
 
     @RequestMapping(value = "json/deleteSupport", method = RequestMethod.GET)
-    public String deleteUser(@RequestParam("supNo") int supNo, HttpServletResponse response, HttpSession session) {
+    public String deleteSupport(@RequestParam("supNo") int supNo, HttpServletResponse response, HttpSession session) {
 
         try {
             supportService.deleteSupport(supNo);

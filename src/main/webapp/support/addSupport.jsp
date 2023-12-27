@@ -127,22 +127,22 @@
 
                                         </c:when>
                                     <c:otherwise>
-                                    <h6 class="fileset-tit"> 첨부파일<span>(선택사항)</span>
-                                    </h6>
+                                        <h6 class="fileset-tit"> 첨부파일<span>(선택사항)</span>
+                                        </h6>
 
-                                    <div class="inputset inputset-lg inputset-label"  for="supImage">
-                                        <label>
-                                            <div style="text-align: Left;">
-                                                <img src="../file/support/support.jpg" width="80" style=" max-width: 100%;" alt=""/>
-                                                <p class="check-stext">* 기본이미지 입니다.</p>
+                                        <div class="inputset inputset-lg inputset-label"  for="supImage">
+                                            <label>
+                                                <div style="text-align: Left;">
+                                                    <img src="../file/support/support.jpg" width="80" style=" max-width: 100%;" alt=""/>
+                                                    <p class="check-stext">* 기본이미지 입니다.</p>
+                                                </div>
+                                            </label>
+                                            <div id="dropArea" class="drop-area">
+                                                <span class="drop-text">JPG 이미지를 올려 주세요</span>
+                                                <input class="check-image" type="file" id="supfile" name="supfile" accept=".jpg"/>
+                                                    <ul id="fileList" class="file-list"></ul>
                                             </div>
-                                        </label>
-                                        <div id="dropArea" class="drop-area">
-                                            <span class="drop-text">JPG 이미지를 올려 주세요</span>
-                                            <input class="check-image" type="file" id="supfile" name="supfile" accept=".jpg"/>
-                                                <ul id="fileList" class="file-list"></ul>
                                         </div>
-                                    </div>
                                     </c:otherwise>
                                     </c:choose>
                                 </label>
