@@ -19,26 +19,26 @@
     <meta property="og:image" content="https://웹사이트/images/opengraph.png">
     <meta property="og:url" content="https://웹사이트">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <title>addChatSpace</title>
-    <link rel="stylesheet" href="/ssh/css/style.css">
-    <link rel="stylesheet" href="/ssh/css/plugin.css">
-    <link rel="stylesheet" href="/ssh/css/template.css">
-    <link rel="stylesheet" href="/ssh/css/common.css">
-    <link rel="stylesheet" href="/ssh/css/style.css">
+<%--    <link rel="stylesheet" href="/ssh/css/style.css">--%>
+<%--    <link rel="stylesheet" href="/ssh/css/plugin.css">--%>
+<%--    <link rel="stylesheet" href="/ssh/css/template.css">--%>
+<%--    <link rel="stylesheet" href="/ssh/css/common.css">--%>
+<%--    <link rel="stylesheet" href="/ssh/css/style.css">--%>
 
     <link rel="stylesheet" href="/lcy/css/style.css">
+    <link rel="stylesheet" href="/common/css/drag.css">
 
 
     <!-- [E]thwhole-wfLpW5Z3pJ -->
-    <script src="/ssh/js/setting.js"></script>
-    <script src="/ssh/js/plugin.js"></script>
-    <script src="/ssh/js/template.js"></script>
-    <script src="/ssh/js/common.js"></script>
-    <script src="/ssh/js/script.js"></script>
+<%--    <script src="/ssh/js/setting.js"></script>--%>
+<%--    <script src="/ssh/js/plugin.js"></script>--%>
+<%--    <script src="/ssh/js/template.js"></script>--%>
+<%--    <script src="/ssh/js/common.js"></script>--%>
+<%--    <script src="/ssh/js/script.js"></script>--%>
 
     <script src="/lcy/js/addChatSpace.js"></script>
-<%--    <script src="/lcy/js/fileDragAndDrop.js"></script>--%>
+    <script src="/common/js/drag.js"></script>
 </head>
 
 <body>

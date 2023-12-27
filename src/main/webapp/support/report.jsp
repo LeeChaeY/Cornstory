@@ -1,55 +1,60 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
-<html lang="ko">
-
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta http-equiv="imagetoolbar" content="no">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="title" content="웹사이트">
-  <meta name="description" content="웹사이트입니다.">
-  <meta name="keywords" content="키워드,키워드,키워드">
-  <meta property="og:title" content="웹사이트">
-  <meta property="og:description" content="웹사이트입니다">
-  <meta property="og:image" content="https://웹사이트/images/opengraph.png">
-  <meta property="og:url" content="https://웹사이트">
-  <title>회원 가입</title>
-  <link rel="stylesheet" href="../ssh/css/setting.css">
-  <link rel="stylesheet" href="../ssh/css/plugin.css">
-  <link rel="stylesheet" href="../ssh/css/template.css">
-  <link rel="stylesheet" href="../ssh/css/common.css">
-  <link rel="stylesheet" href="../ssh/css/style.css">
+  <title>회원 정보 조회</title>
+  <link rel="stylesheet" href="../user/css/setting.css">
+  <link rel="stylesheet" href="../user/css/plugin.css">
+  <link rel="stylesheet" href="../user/css/template.css">
+  <link rel="stylesheet" href="../user/css/common.css">
+  <link rel="stylesheet" href="../user/css/style.css">
+  <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 </head>
-
 <body>
-<!-- [S]opilsol-N2 -->
 <%@ include file="../layout/top.jsp" %>
-<!-- [E]opilsol-N2 -->
 <main class="th-layout-main ">
-  <!-- [S]opilsol-N30 -->
-  <div class="opilsol-N30" data-bid="vzLpwCWK7e">
-    <div class="content-container">
-      <div class="textset content-top">
-        <div class="container-md">
+
+  <div class="thpart-HmlqLtFlNZ" data-bid="HmlqLtFlNZ" id="">
+    <div class="contents-container">
+      <img class="contents-backimg" src="https://images.unsplash.com/photo-1624007435086-7e236df42151?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=M3w0OTE2MDd8MHwxfHNlYXJjaHwxOTh8fCVFRCU5RCU5MSVFQiVCMCVCMXxrb3wwfHx8YmxhY2tfYW5kX3doaXRlfDE3MDM1ODMzNjB8MA&amp;ixlib=rb-4.0.3&amp;q=80&amp;w=1080" alt="">
+      <div class="contents-body container-md">
+        <h2 class="contents-title"> Support </h2>
+        <h7 class="contents-sub">고객센터</h7>
+      </div>
+    </div>
+  </div>
+
+  <div class="hooms-N46" data-bid="gvLQlsUZ0g" id="">
+    <div class="contents-inner">
+      <div class="contents-container container-md">
+        <div class="textset textset-h2">
           <h2 class="textset-tit">신고센터</h2>
         </div>
-      </div>
-      <div class="contents-form">
-        <div class="container-md">
-          <div class="contents-form-top">
-            <h3 class="inputset-tit">[콘스토리 신고센터] 운영 안내문</h3>
-            <div class="checkset">
-              <input id="checkset-a-1" class="checkset-input input-round" type="checkbox" value="">
-            </div>
-          </div>
-          <div class="accordset">
-            <div class="accordset-item">
-              <div class="accordset-header">
+        <div class="contents-top">
+          <div class="contents-tit">
+            <c:choose>
+              <c:when test="${user.role eq 0}">
+                <span class="contents-membership">회원</span>
 
-                안녕하세요,<br>
+              </c:when>
+              <c:when test="${user.role eq 1}">
+                <span class="contents-membership">관리자</span>
+              </c:when>
+              <c:otherwise>
+                <!-- 기본값 처리 또는 특정 뱃지가 없을 경우의 처리 -->
+              </c:otherwise>
+            </c:choose>
+            <h3> <img class="textset-tit" src="../file/user/${sessionScope.user.userImage}" width="50" style="border-radius: 100%; max-width: 100%;" alt=""/>
+              <strong>${user.nickName}</strong>님 안녕하세요! </h3>
+          </div>
+        </div>
+        <div class="contents-bottom">
+          <ul class="contents-list">
+            <li class="contents-item">
+              <strong>
 
                 저희 [콘스토리 신고센터]에 오신 것을 환영합니다.<br>
 
@@ -83,30 +88,25 @@
                 - 거짓된 신고는 엄격하게 처리됩니다.<br>
                 - 타인의 개인 정보를 제공하지 마십시오.<br><br>
 
-                감사합니다.
-
-              </div>
-            </div>
-          </div>
-          <div class="bottom-btn">
-            <a class="btnset btnset-lg btnset-rect" href="addSupport?category=2" onclick="proceedToNextPage()">신고 등록하러 가기</a>
+                감사합니다.<br></strong>
+            </li>
+          </ul>
+          <div class="contents-btn">
+            <a class="btnset" href="addSupport?category=2">신고접수</a>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <!-- [E]opilsol-N30 -->
 </main>
 
-<!-- [E]thwhole-wfLpW5Z3pJ -->
-<script src="../ssh/js/setting.js"></script>
-<script src="../ssh/js/plugin.js"></script>
-<script src="../ssh/js/template.js"></script>
-<script src="../ssh/js/common.js"></script>
-<script src="../ssh/js/script.js"></script>
 
+<script src="../user/js/setting.js"></script>
+<script src="../user/js/plugin.js"></script>
+<script src="../user/js/template.js"></script>
+<script src="../user/js/common.js"></script>
+<script src="../user/js/script.js"></script>
+<script src="../user/js/getUser.js"></script>
 <%@ include file="../layout/bottom.jsp" %>
 </body>
 </html>
-
-

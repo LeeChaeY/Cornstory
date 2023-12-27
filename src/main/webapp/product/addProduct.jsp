@@ -52,14 +52,14 @@
     <div class="opilsol-N27" data-bid="Si2cLPRPujy">
         <div class="content-container">
             <div class="contents-form container-md">
-                <div class="contents-form-top d-flex justify-content-between">
+                <div class="textset content-tit">
+                    <p class="textset-eu">스토어</p>
                     <c:if test="${prodCategory == 0}">
-                        <h3 class="inputset-tit">팝콘 등록하기</h3>
+                        <h4 class="h4">팝콘 등록하기</h4>
                     </c:if>
                     <c:if test="${prodCategory == 2}">
-                        <h3 class="inputset-tit">저작권 등록하기</h3>
+                        <h4 class="h4">저작권 등록하기</h4>
                     </c:if>
-                    <span class="req">필수 선택입니다.</span>
                 </div>
 
                 <form name="form" method="post">
@@ -68,24 +68,29 @@
                     <input type="hidden" name="condition" value="${condition}">
                 </form>
 
-                <div class="contents-form tableset">
-                    <div class="tableset-inner">
-                        <form name="addProduct" enctype="multipart/form-data">
-                            <input type="hidden" name="prodCategory" value="${prodCategory}">
-                            <table class="tableset-table table">
-                                <colgroup>
-                                    <col>
-                                    <col>
-                                    <col>
-                                </colgroup>
-                                <tbody>
-                                <c:if test="${prodCategory == 0}">
+                <c:if test="${prodCategory == 0}">
+                    <div class="contents-form-top d-flex justify-content-between">
+                        <h3 class="inputset-tit"></h3>
+                        <span class="req">필수 선택입니다.</span>
+                    </div>
+
+                    <div class="contents-form tableset">
+                        <div class="tableset-inner">
+                            <form name="addProduct" enctype="multipart/form-data">
+                                <input type="hidden" name="prodCategory" value="${prodCategory}">
+                                <table class="tableset-table table">
+                                    <colgroup>
+                                        <col>
+                                        <col>
+                                        <col>
+                                    </colgroup>
+                                    <tbody>
                                     <tr>
                                         <th>
                                             <label class="req label">팝콘 수량</label>
                                         </th>
                                         <td>
-                                            <input type="number" min="1" value="1" name="prodCnt" required=""> 개
+                                            <input type="text" min="1" value="1" name="prodCnt" required=""> 개
                                             <p class="prodNameCheck" style="color: red; display: none;">
                                                 해당 수량의 팝콘이 등록되어있습니다.
                                             </p>
@@ -100,7 +105,7 @@
                                         </th>
                                         <td>
                                             <div class="inputset">
-                                                <input type="number" min="100" value="100" name="prodPrice" required="">
+                                                <input type="text" min="100" value="100" name="prodPrice" required="">
                                                 원<br><br>
                                             </div>
                                         </td>
@@ -129,54 +134,95 @@
                                             <img width="100px" height="100px" src="/file/product/popcorn.jpg">
                                         </td>
                                     </tr>
-                                </c:if>
-
-                                <c:if test="${prodCategory == 2}">
-                                    <tr>
-                                        <th>
-                                            <input type="file" name="file" style="display: none;">
-                                            <input type="hidden" name="workNo" value="">
-                                            <label class="req label">작품 이름</label>
-                                        </th>
-                                        <td>
-                                            <select name="workSelect">
-                                                <option>작품 선택</option>
-                                                <c:set var="i" value="0"/>
-                                                <c:forEach var="work" items="${ workList }">
-                                                    <c:set var="i" value="${i+1}"/>
-                                                    <option value="${work.workNo}" name="workNo">
-                                                            ${work.workName}
-                                                        <input type="hidden" name="${work.workNo}" value="${work.fap}">
-                                                    </option>
-                                                </c:forEach>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            <label class="req label">저작권 가격</label>
-                                        </th>
-                                        <td>
-                                            <div class="inputset">
-                                                <input type="number" min="0" value="100" name="prodPrice" required="">
-                                                <span class="free" style="display: none;">0</span> 개<br>
-                                                <p class="freeCheck" style="color: red; display: none;">
-                                                    무료인 작품의 저작권 가격은 팝콘 0개입니다.
-                                                </p>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </c:if>
-                                </tbody>
-                            </table>
-                        </form>
-                        <br>
-                        <div class="bottom-btn">
-                            <input type="button" class="btnset btnset-lg btnset-dark btnset-rect" value="취소"/>
-                            <input type="button" class="btnset btnset-lg btnset-rect" value="등록"/>
+                                    </tbody>
+                                </table>
+                            </form>
+                            <br>
+                            <div class="bottom-btn">
+                                <input type="button" class="btnset btnset-lg btnset-dark btnset-rect" value="취소"/>
+                                <input type="button" class="btnset btnset-lg btnset-rect" value="등록"/>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </c:if>
+
+                <c:if test="${prodCategory == 2}">
+                    <c:if test="${empty workList}">
+                        <div class="contents-ico">
+                            <figure class="contents-figure">
+                                <img class="cardset-img" src="https://temha.io/api/t-a/56/1703523600/resources/icons/ico_plus_circle.svg"
+                                     alt="체크아이콘">
+                                <h4>나의 작품 보러가기</h4>
+                            </figure>
+                            <h3>완결된 원작 작품이 없습니다.</h3>
+                        </div>
+                    </c:if>
+
+                    <c:if test="${!empty workList}">
+                        <div class="contents-form-top d-flex justify-content-between">
+                            <h3 class="inputset-tit"></h3>
+                            <span class="req">필수 선택입니다.</span>
+                        </div>
+                        
+                        <div class="contents-form tableset">
+                            <div class="tableset-inner">
+                                <form name="addProduct" enctype="multipart/form-data">
+                                    <input type="hidden" name="prodCategory" value="${prodCategory}">
+                                    <table class="tableset-table table">
+                                        <colgroup>
+                                            <col>
+                                            <col>
+                                            <col>
+                                        </colgroup>
+                                        <tbody>
+                                        <tr>
+                                            <th>
+                                                <input type="file" name="file" style="display: none;">
+                                                <input type="hidden" name="workNo" value="">
+                                                <label class="req label">작품 이름</label>
+                                            </th>
+                                            <td>
+                                                <select name="workSelect">
+                                                    <option>작품 선택</option>
+                                                    <c:set var="i" value="0"/>
+                                                    <c:forEach var="work" items="${ workList }">
+                                                        <c:set var="i" value="${i+1}"/>
+                                                        <option value="${work.workNo}" name="workNo">
+                                                                ${work.workName}
+                                                            <input type="hidden" name="${work.workNo}"
+                                                                   value="${work.fap}">
+                                                        </option>
+                                                    </c:forEach>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                <label class="req label">저작권 가격</label>
+                                            </th>
+                                            <td>
+                                                <div class="inputset">
+                                                    <input type="text" min="0" value="100" name="prodPrice" required="">
+                                                    <span class="free" style="display: none;">0</span> 개<br>
+                                                    <p class="freeCheck" style="color: red; display: none;">
+                                                        무료인 작품의 저작권 가격은 팝콘 0개입니다.
+                                                    </p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </form>
+                                <br>
+                                <div class="bottom-btn">
+                                    <input type="button" class="btnset btnset-lg btnset-dark btnset-rect" value="취소"/>
+                                    <input type="button" class="btnset btnset-lg btnset-rect" value="등록"/>
+                                </div>
+                            </div>
+                        </div>
+                    </c:if>
+                </c:if>
+
             </div>
         </div>
     </div>

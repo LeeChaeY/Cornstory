@@ -13,7 +13,7 @@
 		<result property="sellerId" column="seller_id" jdbcType="VARCHAR"/>
 		<result property="buyerId" column="buyer_id" jdbcType="VARCHAR"/>
 		<result property="tranCategory" column="tran_category" jdbcType="INTEGER"/>
-		<result property="tranMethod" column="tran_method" jdbcType="INTEGER"/>
+		<result property="tranMethod" column="tran_method" jdbcType="VARCHAR"/>
 		<result property="tranCnt" column="tran_cnt" jdbcType="INTEGER"/>
 		<result property="prodCnt" column="prod_cnt" jdbcType="INTEGER"/>
 		<result property="bfPopcornCnt" column="bf_popcorn_cnt" jdbcType="INTEGER"/>

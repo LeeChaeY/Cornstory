@@ -16,53 +16,37 @@
   <meta property="og:image" content="https://웹사이트/images/opengraph.png">
   <meta property="og:url" content="https://웹사이트">
   <title>cornstory</title>
-  <link rel="stylesheet" href="../ssh/css/setting.css">
-  <link rel="stylesheet" href="../ssh/css/plugin.css">
-  <link rel="stylesheet" href="../ssh/css/template.css">
-  <link rel="stylesheet" href="../ssh/css/common.css">
-  <link rel="stylesheet" href="../ssh/css/style.css">
+  <link rel="stylesheet" href="../common/css/setting.css">
+  <link rel="stylesheet" href="../common/css/plugin.css">
+  <link rel="stylesheet" href="../common/css/template.css">
+  <link rel="stylesheet" href="../common/css/common.css">
+  <link rel="stylesheet" href="../common/css/style.css">
 </head>
 
 <body>
 
-<footer class="thwhole-wfLpW5Z3pJ" data-bid="wfLpW5Z3pJ" id="">
-  <div class="pc-footer">
-    <div class="footer-wrapper">
-      <div class="footer-container">
-        <div class="footer-txt">
-          <p> 서울 강남구 강남대로94길 20 삼오빌딩6층 603호 </p>
-          <p>
-            <span>T. 010-1111-1111</span>
-            <span>E. help@cornstory.com</span>
-          </p>
-        </div>
+<div class="hooms-N57" data-bid="fVlQGchmkp" id="">
+  <div class="footer-container container-lg">
+    <div class="footer-top">
+      <h1 class="footer-logo">
+        <a href="javascript:void(0)">
+          <img src="../common/images/logo.png" alt="">
+        </a>
+      </h1>
+      <div class="footer-txt">
+        <p> 서울 강남구 강남대로94길 20 삼오빌딩6층 603호 </p>
+        <p>
+          <span>T. 010-1111-1111</span>
+          <span>E. help@cornstory.com</span>
+        </p>
       </div>
     </div>
   </div>
-  <div class="mobile-footer">
-    <div class="footer-wrapper">
-      <div class="footer-container container-md">
-        <div class="footer-left">
-          <div class="footer-content">
-            <div class="footer-txtgroup">
-              <div class="footer-txt">
-                <p> 서울 강남구 강남대로94길 20 삼오빌딩6층 603호 </p>
-                <p>
-                  <span>T. 010-1111-1111</span>
-                  <span>E. help@cornstory.com</span>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</footer>
+</div>
 <!-- [E]thwhole-wfLpW5Z3pJ -->
-<script src="../ssh/js/setting.js"></script>
-<script src="../ssh/js/plugin.js"></script>
-<script src="../ssh/js/template.js"></script>
-<script src="../ssh/js/common.js"></script>
-<script src="../ssh/js/script.js"></script>
+<script src="../common/js/setting.js"></script>
+<script src="../common/js/plugin.js"></script>
+<script src="../common/js/template.js"></script>
+<script src="../common/js/common.js"></script>
+<script src="../common/js/script.js"></script>
 </body>

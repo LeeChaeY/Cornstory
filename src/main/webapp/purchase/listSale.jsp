@@ -66,99 +66,117 @@
                                value="${!empty search.searchKeyword ? search.searchKeyword:''}">
                     </div>
                 </form>
-                <br>
                 <br><br>
+                <p style="font-weight: bold;">
+                    * 작가가 등록한 작품에 대한 작품 회차 및 저작권 판매 현황입니다.<br>
+                    * 작품 회차 및 저작권의 가격, 구매 인원, 그에 따른 누적 팝콘수를 확인할 수 있습니다.<br>
+                    * 작품 저작권 미등록 시 저작권 가격은 저작권 등록 X로 표시되며 구매 인원 및 누적 팝콘수은 0으로 표시됩니다.<br>
+                    * 회차가 등록된 작품만 보여집니다.<br>
+                </p><br>
 
-                <div class="tableset">
-                    <div class="tableset-inner">
-                        <h3>판매 내역</h3> 전체 ${totalCount} 개 <br>
-                        <p align="right">* 회차가 등록된 작품만 보여집니다.</p>
-                        <table class="tableset-table table">
-                            <colgroup>
-                                <col>
-                                <c:if test="${sessionScope.user.role == 1}">
-                                    <col>
-                                </c:if>
-                                <col>
-                                <col>
-                                <col>
-                                <col>
-                                <col>
-                                <col>
-                                <col>
-                                <col>
-                            </colgroup>
-                            <thead class="thead-border-top">
-                            <tr>
-                                <th class="number" scope="col">NO</th>
-                                <c:if test="${sessionScope.user.role == 1}">
-                                    <th scope="col">닉네임</th>
-                                </c:if>
-                                <th scope="col">작품 이름</th>
-                                <th scope="col">카테고리</th>
-                                <th scope="col">작품 회차 가격</th>
-                                <th scope="col">작품 구매 인원</th>
-                                <th scope="col">작품 누적 팝콘수</th>
-                                <th scope="col">저작권 가격</th>
-                                <th scope="col">저작권 구매 인원</th>
-                                <th scope="col">저작권 누적 팝콘수</th>
-                                <th scope="col">누적 판매 팝콘수</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <c:set var="i" value="0"/>
-                            <c:forEach var="workSale" items="${ workList }">
-                                <c:set var="i" value="${i+1}"/>
-                                <tr>
-                                    <td class="number">
-                                            <input type="hidden" name="workNo" value="${workSale.work_no}">
-                                            ${i}
-                                    </td>
-                                    <c:if test="${sessionScope.user.role == 1}">
-                                        <td>
-                                                ${workSale.nickname}
-                                        </td>
-                                    </c:if>
-                                    <td>
-                                            ${workSale.workName}
-                                    </td>
-                                    <td>
-                                            <c:if test="${workSale.category == 0}">웹소설</c:if>
-                                            <c:if test="${workSale.category == 1}">웹툰</c:if>
-                                            <c:if test="${workSale.category == 2}">웹드라마</c:if>
-                                    </td>
-                                    <td>
-                                            ${workSale.workPrice} 팝콘
-                                    </td>
-                                    <td>
-                                            ${workSale.workUserCount} 명
-                                    </td>
-                                    <td>
-                                            ${workSale.workTotalPrice} 팝콘
-                                    </td>
-                                    <td>
-                                            <c:if test="${workSale.copyPrice == -1}">
-                                                저작권 등록 X
-                                            </c:if>
-                                            <c:if test="${workSale.copyPrice != -1}">
-                                                ${workSale.copyPrice} 팝콘
-                                            </c:if>
-                                    </td>
-                                    <td>
-                                            ${workSale.copyUserCount} 명
-                                    </td>
-                                    <td>
-                                            ${workSale.copyTotalPrice} 팝콘
-                                    </td>
-                                    <td>
-                                            ${workSale.workTotalPrice + workSale.copyTotalPrice} 팝콘
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                            </tbody>
-                        </table>
+                <c:if test="${empty workList}">
+                    <div class="contents-ico">
+                        <figure class="contents-figure">
+                            <img class="cardset-img" src="https://temha.io/api/t-a/56/1703523600/resources/icons/ico_plus_circle.svg"
+                                 alt="체크아이콘">
+                            <h4>작품 등록하러가기</h4>
+                        </figure>
+                        <h3>회차가 등록된 작품이 없습니다.</h3>
                     </div>
-                </div>
+                </c:if>
+
+                <c:if test="${!empty workList}">
+                    <div class="tableset">
+                        <div class="tableset-inner">
+                            <h3>판매 내역</h3> 전체 ${totalCount} 개 <br><br>
+                            <table class="tableset-table table">
+                                <colgroup>
+                                    <col>
+                                    <c:if test="${sessionScope.user.role == 1}">
+                                        <col>
+                                    </c:if>
+                                    <col>
+                                    <col>
+                                    <col>
+                                    <col>
+                                    <col>
+                                    <col>
+                                    <col>
+                                    <col>
+                                </colgroup>
+                                <thead class="thead-border-top">
+                                <tr>
+                                    <th class="number" scope="col">NO</th>
+                                    <c:if test="${sessionScope.user.role == 1}">
+                                        <th scope="col">닉네임</th>
+                                    </c:if>
+                                    <th scope="col">작품 이름</th>
+                                    <th scope="col">카테고리</th>
+                                    <th scope="col">작품 회차 가격</th>
+                                    <th scope="col">작품 구매 인원</th>
+                                    <th scope="col">작품 누적 팝콘수</th>
+                                    <th scope="col">저작권 가격</th>
+                                    <th scope="col">저작권 구매 인원</th>
+                                    <th scope="col">저작권 누적 팝콘수</th>
+                                    <th scope="col">누적 판매 팝콘수</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <c:set var="i" value="0"/>
+                                <c:forEach var="workSale" items="${ workList }">
+                                    <c:set var="i" value="${i+1}"/>
+                                    <tr>
+                                        <td class="number">
+                                                <input type="hidden" name="workNo" value="${workSale.work_no}">
+                                                ${i}
+                                        </td>
+                                        <c:if test="${sessionScope.user.role == 1}">
+                                            <td>
+                                                    ${workSale.nickname}
+                                            </td>
+                                        </c:if>
+                                        <td>
+                                                ${workSale.workName}
+                                        </td>
+                                        <td>
+                                                <c:if test="${workSale.category == 0}">웹소설</c:if>
+                                                <c:if test="${workSale.category == 1}">웹툰</c:if>
+                                                <c:if test="${workSale.category == 2}">웹드라마</c:if>
+                                        </td>
+                                        <td>
+                                                ${workSale.workPrice} 팝콘
+                                        </td>
+                                        <td>
+                                                <fmt:formatNumber value="${workSale.workUserCount}" pattern="#,##0"/> 명
+                                        </td>
+                                        <td>
+                                                <fmt:formatNumber value="${workSale.workTotalPrice}" pattern="#,##0"/> 팝콘
+                                        </td>
+                                        <td>
+                                                <c:if test="${workSale.copyPrice == -1}">
+                                                    저작권 등록 X
+                                                </c:if>
+                                                <c:if test="${workSale.copyPrice != -1}">
+                                                    <fmt:formatNumber value="${workSale.copyPrice}" pattern="#,##0"/> 팝콘
+                                                </c:if>
+                                        </td>
+                                        <td>
+                                                <fmt:formatNumber value="${workSale.copyUserCount}" pattern="#,##0"/> 명
+                                        </td>
+                                        <td>
+                                                <fmt:formatNumber value="${workSale.copyTotalPrice}" pattern="#,##0"/> 팝콘
+                                        </td>
+                                        <td>
+                                                <fmt:formatNumber value="${workSale.workTotalPrice + workSale.copyTotalPrice}" pattern="#,##0"/> 팝콘
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </c:if>
+                <br><br>
             </div>
         </div>
     </div>

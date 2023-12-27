@@ -1,4 +1,6 @@
 $(function() {
+    let chatWindow;
+
     let genre = $("input[name='genre']").val();
     if (genre === "") {
         $("input[id='radioset-c-1-1']").attr("checked", "");
@@ -36,24 +38,28 @@ $(function() {
         $(self.location).attr("href", "/chat/addChatSpace");
     });
 
+    $(".contents-figure").on("click", function() {
+        $(self.location).attr("href", "/chat/addChatSpace");
+    });
+
     $(".radioset-thumb").on("click", function() {
         fncGetChatList('1');
     });
 
     $("input[type='button'][value='입장하기']").on("click", function() {
-        let chatSpaceNo = $(this).parents("tr").children("td").eq(0).children("input").val();
+        let chatSpaceNo = $(this).parents().parents().children("input").val();
         enterChatSpace(chatSpaceNo);
     });
 
     $("input[type='button'][value='수정하기']").on("click", function() {
-        let chatSpaceNo = $(this).parents("tr").children("td").eq(0).children("input").val();
+        let chatSpaceNo = $(this).parents().parents().children("input").val();
         updateChatSpace(chatSpaceNo);
     });
 
     $("input[type='button'][value='삭제하기']").on("click", function() {
         const p = confirm("정말 삭제하시겠습니까?");
         if (p) {
-            let chatSpaceNo = $(this).parents("tr").children("td").eq(0).children("input").val();
+            let chatSpaceNo = $(this).parents().parents().children("input").val();
             deleteChatSpace(chatSpaceNo);
         }
     });
@@ -61,7 +67,7 @@ $(function() {
     $("input[type='button'][value='나가기']").on("click", function() {
         const p = confirm("정말 나가시겠습니까?");
         if (p) {
-            let chatSpaceNo = $(this).parents("tr").children("td").eq(0).children("input").val();
+            let chatSpaceNo = $(this).parents().parents().children("input").val();
             deleteChatEnter(chatSpaceNo);
         }
     });
@@ -105,11 +111,22 @@ function enterChatSpace(chatSpaceNo) {
         method: "GET",
         dataType: "json",
         success: function(JSONData, status) {
-            let enter = $($("input[value='" + chatSpaceNo + "']").parents("tr").children("td").eq(7)).children("input").eq(1).val();
-            if (enter === undefined) {
-                let cnt = parseInt($("input[value='" + chatSpaceNo + "']").parents("tr").children("td").eq(5).text()) + 1;
-                $("input[value='" + chatSpaceNo + "']").parents("tr").children("td").eq(5).text(cnt);
-                $("input[value='" + chatSpaceNo + "']").parents("tr").children("td").eq(7).append("<input type='button' value='나가기''>");
+            let enter = $("input[value='" + chatSpaceNo + "']").parents().find("input.exit").val();
+            let enter2 = $("input[value='" + chatSpaceNo + "']").parents().find("input.update").val();
+
+            if (enter === undefined && enter2 === undefined) {
+                let cnt = parseInt($("input[value='" + chatSpaceNo + "']").parents().find("div.cSpaceUserCnt").text()) + 1;
+                $("input[value='" + chatSpaceNo + "']").parents().find("div.cSpaceUserCnt").text(cnt);
+                const exit = $("<input>");
+                exit.attr("type", "button");
+                exit.attr("value", "나가기");
+                exit.on("click", function() {
+                    const p = confirm("정말 나가시겠습니까?");
+                    if (p) {
+                        deleteChatEnter(chatSpaceNo);
+                    }
+                });
+                $("input[value='" + chatSpaceNo + "']").parents().find("div.cardset-body").append(exit);
             }
 
             const form = document.createElement('form');
@@ -123,7 +140,11 @@ function enterChatSpace(chatSpaceNo) {
             addJsonDataToForm(form, JSONData.user, 'user');
             addJsonDataToForm(form, JSONData.startDate, 'startDate');
 
-            const chatWindow = window.open('',chatSpaceNo, 'width=500,height=400,left:100,top:100');
+            const width = 1000;
+            const height = 600;
+            const leftPosition = (window.innerWidth - width) / 2;
+            const topPosition = (window.innerHeight - height) / 2;
+            chatWindow = window.open('',chatSpaceNo, 'width='+width+',height='+height+',left='+leftPosition+',top='+topPosition);
 
             // Check if the new window/tab is opened successfully
             if (chatWindow) {
@@ -157,15 +178,16 @@ function updateChatSpace(chatSpaceNo) {
 }
 
 function deleteChatSpace(chatSpaceNo) {
-    const socket = io.connect('http://localhost:3000');
-    socket.emit("connection", {userId: "${sessionScope.user.userId}"});
+    const socket = io.connect();
     socket.emit("delete", {chatSpaceNo: chatSpaceNo});
 
     $.ajax({
         url: "/chat/json/deleteChatSpace/" + chatSpaceNo + "",
         method: "GET",
         success: function(JSONData, status) {
-            $("input[value='" + chatSpaceNo + "']").parents("tr").children("td").remove();
+            $("input[value='" + chatSpaceNo + "']").parents().remove();
+
+            socket.emit("delete", {chatSpaceNo: chatSpaceNo});
         },
         error: function(status) {
 
@@ -183,9 +205,15 @@ function deleteChatEnter(chatSpaceNo) {
         data: {},
         success: function(returnMessage, status) {
             // alert(returnMessage);
-            let cnt = $("input[value='" + chatSpaceNo + "']").parents("tr").children("td").eq(5).text() - 1;
-            $("input[value='" + chatSpaceNo + "']").parents("tr").children("td").eq(5).text(cnt);
-            $($("input[value='" + chatSpaceNo + "']").parents("tr").children("td").eq(7)).children("input").eq(1).remove();
+            let cnt = parseInt($("input[value='" + chatSpaceNo + "']").parents().find("div.cSpaceUserCnt").text()) - 1;
+            $("input[value='" + chatSpaceNo + "']").parents().find("div.cSpaceUserCnt").text(cnt);
+            $("input[value='" + chatSpaceNo + "']").parents().find("div.exit").remove();
+
+            if (chatWindow && !chatWindow.closed) {
+                chatWindow.close();
+            } else {
+                console.log('Window not found or already closed.');
+            }
         },
         error: function(status) {
 

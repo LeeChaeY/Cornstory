@@ -20,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
+import java.text.DecimalFormat;
 
 @Controller
 @RequestMapping("/product")
@@ -122,15 +122,15 @@ public class ProductController {
     public String updateProduct(@ModelAttribute("product") Product product,
                                 @RequestParam("file") MultipartFile file, HttpServletRequest request,
                                 @SessionAttribute("user") User user) throws Exception {
-        System.out.println("/product/updateProduct : POST");
-
+        System.out.println("/product/updateProduct : POST ");
         product.setUserId(user.getUserId());
-
 
         // https://action713.tistory.com/entry/%EC%8A%A4%ED%94%84%EB%A7%81-%ED%8C%8C%EC%9D%BC-%EA%B2%BD%EB%A1%9C
         String uploadDir = request.getServletContext().getRealPath("")+"\\..\\resources\\static\\file\\product\\";
         // request.getServletContext().getRealPath(""): webapp 상대 경로
         if (product.getProdCategory() == 0) {
+            product.setProdName("팝콘 "+formatNumberWithComma(product.getProdCnt())+" 개");
+
             if (!file.isEmpty()) {
                 try {
                     // 기존 파일 삭제
@@ -164,6 +164,7 @@ public class ProductController {
             }
         }
 
+        System.out.println("/product/updateProduct : POST :: " + product);
         //Business Logic
         productService.updateProduct(product);
 
@@ -199,6 +200,11 @@ public class ProductController {
         System.out.println(search);
 
         return "product/listStore";
+    }
+
+    private static String formatNumberWithComma(int number) {
+        DecimalFormat decimalFormat = new DecimalFormat("#,###");
+        return decimalFormat.format(number);
     }
 
 }

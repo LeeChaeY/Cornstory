@@ -47,43 +47,45 @@ public class PurchaseController {
 
 
     // 결제승인요청
-    @GetMapping("/kakaopayCompleted")
-    public String kakaopayCompleted(@SessionAttribute("user") User user, @RequestParam("pg_token") String pgToken,
-                               @SessionAttribute("tid") String tid, @RequestParam("orderId") String orderId,
-                               @RequestParam("prodNo") int prodNo, @RequestParam("tranCnt") int tranCnt) throws Exception{
-
-        System.out.println("/purchase/kakaopayCompleted : GET :: pgToken = " + pgToken + ", tid = " + tid + ", orderId = " + orderId + ", prodNo = " + prodNo + ", tranCnt = " + tranCnt);
-
-        // 카카오 결재 요청하기
-        MultiValueMap<String, String> parameters = new LinkedMultiValueMap<String, String>();
-        parameters.add("cid", "TC0ONETIME");
-        parameters.add("tid", tid);
-        parameters.add("partner_order_id", orderId);
-        parameters.add("partner_user_id", user.getUserId());
-        parameters.add("pg_token", pgToken);
-
-        MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
-        headers.add("Authorization", "KakaoAK 34178778d3ef4a8aad68e39b028d4864");
-        headers.add("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
-
-        HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(parameters, headers);
-
-        // 외부url요청 통로 열기.
-        RestTemplate template = new RestTemplate();
-        String url = "https://kapi.kakao.com/v1/payment/approve";
-        // template으로 값을 보내고 받아온 ReadyResponse값 readyResponse에 저장.
-        ApproveResponse approveResponse = template.postForObject(url, requestEntity, ApproveResponse.class);
-        System.out.println("approveResponse : " + approveResponse.toString());
-
-        return "redirect:/purchase/addPurchase?prodNo=" + prodNo + "&tranCnt=" + tranCnt + "&tranMethod=1";
-    }
+//    @GetMapping("/kakaopayCompleted")
+//    public String kakaopayCompleted(@SessionAttribute("user") User user, @RequestParam("pg_token") String pgToken,
+//                               @SessionAttribute("tid") String tid, @RequestParam("orderId") String orderId,
+//                               @RequestParam("prodNo") int prodNo, @RequestParam("tranCnt") int tranCnt) throws Exception{
+//
+//        System.out.println("/purchase/kakaopayCompleted : GET :: pgToken = " + pgToken + ", tid = " + tid + ", orderId = " + orderId + ", prodNo = " + prodNo + ", tranCnt = " + tranCnt);
+//
+//        // 카카오 결재 요청하기
+//        MultiValueMap<String, String> parameters = new LinkedMultiValueMap<String, String>();
+//        parameters.add("cid", "TC0ONETIME");
+//        parameters.add("tid", tid);
+//        parameters.add("partner_order_id", orderId);
+//        parameters.add("partner_user_id", user.getUserId());
+//        parameters.add("pg_token", pgToken);
+//
+//        MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
+//        headers.add("Authorization", "KakaoAK 34178778d3ef4a8aad68e39b028d4864");
+//        headers.add("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
+//
+//        HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(parameters, headers);
+//
+//        // 외부url요청 통로 열기.
+//        RestTemplate template = new RestTemplate();
+//        String url = "https://kapi.kakao.com/v1/payment/approve";
+//        // template으로 값을 보내고 받아온 ReadyResponse값 readyResponse에 저장.
+//        ApproveResponse approveResponse = template.postForObject(url, requestEntity, ApproveResponse.class);
+//        System.out.println("approveResponse : " + approveResponse.toString());
+//
+//        return "redirect:/purchase/addPurchase?prodNo=" + prodNo + "&tranCnt=" + tranCnt + "&tranMethod=1";
+//    }
 
     @GetMapping("addPurchase")
     public String addPurchase(@RequestParam(value = "episodeNo", required = false, defaultValue = "0") int episodeNo,
                               @RequestParam(value = "prodNo", required = false, defaultValue = "0") int prodNo,
-                              @RequestParam(name="tranCnt", defaultValue="1") int tranCnt,
-                              @RequestParam(name="tranMethod", defaultValue="0") int tranMethod, @SessionAttribute("user") User user) throws Exception {
+                              @RequestParam(name="tranCnt", required = false, defaultValue="1") int tranCnt,
+                              @RequestParam(name="tranMethod", required = false, defaultValue="팝콘") String tranMethod,
+                              @RequestParam(name="cardName", required = false) String cardName, @SessionAttribute("user") User user) throws Exception {
         System.out.println("/purchase/json/addPurchase : GET :: prodNo = " + prodNo + ", tranCnt = " + tranCnt);
+        System.out.println("/purchase/json/addPurchase : GET :: tranMethod = " + tranMethod);
 
         Product product = null;
         if (episodeNo != 0) {
@@ -101,6 +103,16 @@ public class PurchaseController {
         purchase.setBuyerId(user.getUserId());
         purchase.setTranCategory(product.getProdCategory());
         if (product.getProdCategory() == 0) {
+            switch (tranMethod) {
+                case "naverpay" -> tranMethod = "네이버페이";
+                case "kakopay" -> tranMethod = "카카오페이";
+                case "payco" -> tranMethod = "페이코";
+                case "samsungpay" -> tranMethod = "삼성페이";
+                case "ssgpay" -> tranMethod = "SSG페이";
+                case "lpay" -> tranMethod = "L페이";
+                case "applepay" -> tranMethod = "애플페이";
+                case "tosspay", "toss_brandpay" -> tranMethod = "토스페이";
+            }
             purchase.setTranMethod(tranMethod);
             purchase.setAfPopcornCnt(user.getPopcornCnt() + product.getProdCnt() * tranCnt);
         } else {
