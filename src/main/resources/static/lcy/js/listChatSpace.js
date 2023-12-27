@@ -132,6 +132,7 @@ function enterChatSpace(chatSpaceNo) {
             const form = document.createElement('form');
             form.method = 'post';
             form.action = JSONData.url;
+            // form.action = 'http://localhost:3000/';
             form.enctype = 'application/json';  // Set content type to JSON
 
             addJsonDataToForm(form, JSONData.chatSpace, 'chatSpace');

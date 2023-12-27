@@ -3,6 +3,15 @@
 $(function() {
     $("input[id='checkset-e-5-6']").attr("checked", "");
 
+    $("a:contains('나의 저작권')").on("click", function() {
+        $("input[name='userStatus']").val(1);   // 0: 전체, 1: 나의~ㄴ
+        $("form[name='form']").attr("method", "post").attr("action", "/product/listProduct").submit();
+    });
+
+    $("a:contains('팝콘 총 매출')").on("click", function() {
+        $("form[name='form']").attr("method", "post").attr("action", "/purchase/listTotalSale").submit();
+    });
+
     $(".listStoreSearchButton").on("click", function() {
         $("form[name='form']").attr("method", "post").attr("action", "/purchase/listSale").submit();
     });

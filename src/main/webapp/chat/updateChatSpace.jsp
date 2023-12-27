@@ -19,17 +19,9 @@
     <meta property="og:image" content="https://웹사이트/images/opengraph.png">
     <meta property="og:url" content="https://웹사이트">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <title>updateChatSpace</title>
-    <link rel="stylesheet" href="/ssh/css/style.css">
-    <link rel="stylesheet" href="/ssh/css/plugin.css">
-    <link rel="stylesheet" href="/ssh/css/template.css">
-    <link rel="stylesheet" href="/ssh/css/common.css">
-    <link rel="stylesheet" href="/ssh/css/style.css">
-
     <link rel="stylesheet" href="/lcy/css/style.css">
-
-
+    <link rel="stylesheet" href="/common/css/drag.css">
     <!-- [E]thwhole-wfLpW5Z3pJ -->
     <script src="/ssh/js/setting.js"></script>
     <script src="/ssh/js/plugin.js"></script>
@@ -38,7 +30,7 @@
     <script src="/ssh/js/script.js"></script>
 
     <script src="/lcy/js/addChatSpace.js"></script>
-
+    <script src="/common/js/drag.js"></script>
 </head>
 
 <body>
@@ -47,22 +39,40 @@
 
 <!-- [E]opilsol-N26 -->
 <main class="th-layout-main ">
+    <div class="thpart-HmlqLtFlNZ" data-bid="HmlqLtFlNZ" id="">
+        <div class="contents-container">
+            <img class="contents-backimg"
+                 src="https://images.unsplash.com/photo-1616004675303-ae5657c14af7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0OTE2MDd8MHwxfHNlYXJjaHw1OXx8JUVBJUIyJTgwJUVDJTlEJTgwfGtvfDB8fHx8MTcwMzYwOTc4MXww&ixlib=rb-4.0.3&q=80&w=1080"
+                 alt="">
+            <div class="contents-body container-md">
+                <h2 class="contents-title">
+                    Chatting
+                </h2>
+                <h7 class="contents-sub">채팅</h7>
+            </div>
+        </div>
+    </div>
+
+
     <!-- [S]opilsol-N27 -->
-    <div class="opilsol-N27" data-bid="PNlQ32jk6H">
-        <div class="content-container">
+    <div class="hooms-N53" data-bid="lYlQluvFkB">
+        <div class="contents-inner">
             <div class="contents-form container-md">
-                <div class="textset content-tit">
-                    <p class="textset-eu">채팅</p>
-                    <h4 class="h4">채팅방 수정하기</h4>
-                    <a href="javascript:void(0)">채팅방 추가하기</a>
+                <div class="textset textset-h2">
+                    <h2 class="textset-tit">채팅방 수정하기</h2>
                 </div>
-                <div class="contents-form-top d-flex justify-content-between">
-                    <span class="req">필수 선택입니다.</span>
-                </div>
+
+                <form name="updateForm" method="post" enctype="multipart/form-data">
+                    <div class="contents-form">
+                        <div class="contents-form-top"></div>
+                        <label class="labelset">
+                            <strong class="labelset-vital">
+                                <span>*</span>필수입력
+                            </strong>
+                        </label>
                 <div class="contents-form tableset">
+                    <input type="hidden" name="chatSpaceNo" value="${chatSpace.chatSpaceNo}">
                     <div class="tableset-inner">
-                        <form name="updateForm" method="post" enctype="multipart/form-data">
-                            <input type="hidden" name="chatSpaceNo" value="${chatSpace.chatSpaceNo}">
                             <table class="tableset-table table">
                                 <colgroup>
                                     <col>
@@ -76,27 +86,29 @@
                                         <label class="label">개설자 닉네임</label>
                                     </th>
                                     <td>
-                                        <div class="inputset">
+<%--                                        <div class="inputset">--%>
                                             ${sessionScope.user.nickName}
-                                        </div>
+<%--                                        </div>--%>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>
-                                        <label class="req label" for="Name">채팅방 제목</label>
+                                        <label class="req label" for="Name">채팅방 제목 <span>*</span></label>
                                     </th>
                                     <td>
                                         <div class="inputset">
                                             <input type="text" class="inputset-input form-control" name="cSpaceName" id="Name"
-                                                   value="${chatSpace.cSpaceName}" aria-label="이름" required maxlength="30">
+                                                   placeholder="채팅방 제목을 입력해주세요" aria-label="이름" required maxlength="30"
+                                                   value="${chatSpace.cSpaceName}">
                                             <span class="cSpaceNameLength"> ${cSpaceNameCnt}/30</span>
-                                            <p class="cSpaceNameCheck" style="color: red; display: none;">
                                         </div>
+                                        <p class="cSpaceNameCheck" style="color: red; display: none;">
+                                        </p>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>
-                                        <span class="label">장르</span>
+                                        <label class="req label">장르 선택 <span>*</span></label>
                                     </th>
                                     <td colspan="3">
                                         <input type="hidden" name="genre2" value="${chatSpace.genre}">
@@ -107,7 +119,7 @@
                                     <th>
                                         <span class="label">썸네일 첨부</span>
                                     </th>
-                                    <td colspan="1">
+                                    <td colspan="2">
                                         <div id="dropArea" class="drop-area">
                                             <span class="drop-text">Drag and drop files here or click to upload</span>
                                             <input class="check-image" type="file" name="file" accept=".jpg"/>
@@ -117,6 +129,7 @@
                                         <p class="p1 co-text3">이미지 형식의 jpg만 첨부 가능합니다.</p>
                                         <p class="p1 co-text3">첨부파일은 10MB를 초과할 수 없으며, 최대 1개까지 가능합니다.</p>
                                         <p class="fileCheck" style="color: red; display:none;">
+                                        </p>
                                     </td>
                                     <td colspan="1">
                                         * 기존 썸네일<br><br>
@@ -125,7 +138,6 @@
                                 </tr>
                                 </tbody>
                             </table>
-                        </form>
                         <br>
                         <div class="bottom-btn">
                             <input type="button" class="btnset btnset-lg btnset-dark btnset-rect" value="취소"/>
@@ -133,6 +145,8 @@
                         </div>
                     </div>
                 </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

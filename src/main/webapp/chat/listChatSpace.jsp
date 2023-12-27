@@ -52,7 +52,7 @@
     <div class="thpart-HmlqLtFlNZ" data-bid="HmlqLtFlNZ" id="">
         <div class="contents-container">
             <img class="contents-backimg"
-                 src="https://images.unsplash.com/photo-1497091071254-cc9b2ba7c48a?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=M3w0OTE2MDd8MHwxfHNlYXJjaHw4OXx8dXNlcnxrb3wwfHx8YmxhY2t8MTcwMzU2MTkyN3ww&amp;ixlib=rb-4.0.3&amp;q=80&amp;w=1080"
+                 src="https://images.unsplash.com/photo-1616004675303-ae5657c14af7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0OTE2MDd8MHwxfHNlYXJjaHw1OXx8JUVBJUIyJTgwJUVDJTlEJTgwfGtvfDB8fHx8MTcwMzYwOTc4MXww&ixlib=rb-4.0.3&q=80&w=1080"
                  alt="">
             <div class="contents-body container-md">
                 <h2 class="contents-title">
@@ -171,41 +171,42 @@
                                              src="/file/chat/${chatSpace.cSpaceImage}" alt="이미지">
                                     </figure>
                                     <div class="cardset-body">
-
                                         <div class="cardset-tit-group">
                                             <h5 class="cardset-tit">
                                                     ${chatSpace.cSpaceName}
                                             </h5>
+                                            <br>
                                         </div>
-
-                                        <div class="genre">
-                                                장르&nbsp; : &nbsp;${chatSpace.genre}
+                                        <div class=".contents-info">
+                                            <div class="genre">
+                                                    장르&nbsp; : &nbsp;${chatSpace.genre}
+                                            </div>
+                                            <div class="contents-name">
+                                                채팅방 개설자&nbsp; : &nbsp;
+                                                <img src="/file/user/${chatSpace.userImage}" width="20"
+                                                     style="border-radius: 50%; max-width: 100%;" alt="">
+                                                    ${chatSpace.nickname}
+                                            </div>
+                                            <div class="cSpaceUserCnt">
+                                                인원수&nbsp; : &nbsp;${chatSpace.cSpaceUserCnt}
+                                            </div>
+                                            <div class="contents-date">
+                                                채팅방 개설일&nbsp; : &nbsp;${chatSpace.cSpaceDate}
+                                            </div>
                                         </div>
-                                        <div class="cSpaceUserCnt">
-                                            인원수&nbsp; : &nbsp;${chatSpace.cSpaceUserCnt}
-                                        </div>
-                                        <div class="contents-date">
-                                            채팅방 개설일&nbsp; : &nbsp;${chatSpace.cSpaceDate}
-                                        </div>
-
-                                        <div class="contents-name">
-                                            채팅방 개설자&nbsp; : &nbsp;
-                                            <img src="/file/user/${chatSpace.userImage}" width="20"
-                                                 style="border-radius: 50%; max-width: 100%;" alt="">
-                                                ${chatSpace.nickname}
-                                        </div>
-                                        <div class="cardset-desc">
-                                            <c:if test="${chatSpace.chatEnterCheck != 1}">
-                                                채팅방에 입장한 회원만 미리보기가 가능합니다.
-                                            </c:if>
-                                        </div>
-                                        <br>
-                                        <input type="button" class="enter" value="입장하기">
+                                    </div>
+                                    <div class="cardset-desc">
+                                        <c:if test="${chatSpace.chatEnterCheck != 1}">
+                                            채팅방에 입장한 회원만 미리보기가 가능합니다.
+                                        </c:if>
+                                    </div>
+                                    <div class="contents-button">
+                                        <input type="button" class="enter" value="입장하기"><br>
                                         <c:if test="${chatSpace.userId != sessionScope.user.userId && chatSpace.chatEnterCheck == 1}">
-                                            <input type="button" class="exit" value="나가기">
+                                            <input type="button" class="exit" value="나가기"><br>
                                         </c:if>
                                         <c:if test="${chatSpace.userId == sessionScope.user.userId}">
-                                            <input type="button" class="update" value="수정하기">
+                                            <input type="button" class="update" value="수정하기"><br>
                                             <input type="button" class="delete" value="삭제하기">
                                         </c:if>
                                     </div>

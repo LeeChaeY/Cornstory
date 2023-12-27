@@ -44,15 +44,15 @@
       }
 
 
-      $("span:contains('마이 채팅방')").on("click", function () {
+      $("a:contains('마이 채팅방')").on("click", function () {
         $("input[name='userStatus']").val(1);
         $("form[name='form']").attr("method", "post").attr("action", "/chat/listChatSpace").submit();
       });
-      $("span:contains('구매내역')").on("click", function () {
+      $("a:contains('구매내역')").on("click", function () {
         $("input[name='userStatus']").val(1);
         $("form[name='form']").attr("method", "post").attr("action", "/purchase/listPurchase").submit();
       });
-      $("span:contains('판매내역')").on("click", function () {
+      $("a:contains('판매내역')").on("click", function () {
         $("input[name='userStatus']").val(1);
         $("form[name='form']").attr("method", "post").attr("action", "/purchase/listSale").submit();
       });
@@ -158,13 +158,15 @@
               </li>
               <c:if test="${!empty sessionScope.user}">
                 <li class="header-subitem">
-                  <a class="header-sublink" href="/product/listProduct?prodCategory=2">
-                    <span>저작권 등록</span>
-                  </a>
+                  <c:if test="${sessionScope.user.role eq 0}">
+                    <a class="header-sublink" href="/product/addProduct?prodCategory=2">
+                      <span>저작권 등록</span>
+                    </a>
+                  </c:if>
                 </li>
                 <li class="header-subitem">
                   <c:if test="${sessionScope.user.role eq 1}">
-                    <a class="header-sublink" href="/product/listProduct?prodCategory=0">
+                    <a class="header-sublink" href="/product/addProduct?prodCategory=0">
                       <span>팝콘 등록</span>
                     </a>
                   </c:if>
@@ -359,13 +361,15 @@
             </li>
             <c:if test="${!empty sessionScope.user}">
               <li class="fullmenu-subitem">
-                <a class="fullmenu-sublink" href="/product/listProduct?prodCategory=2">
-                  <span>저작권 등록</span>
-                </a>
+                <c:if test="${sessionScope.user.role eq 0}">
+                  <a class="fullmenu-sublink" href="/product/addProduct?prodCategory=2">
+                    <span>저작권 등록</span>
+                  </a>
+                </c:if>
               </li>
               <li class="fullmenu-subitem">
                 <c:if test="${sessionScope.user.role eq 1}">
-                  <a class="fullmenu-sublink" href="/product/listProduct?prodCategory=0">
+                  <a class="fullmenu-sublink" href="/product/addProduct?prodCategory=0">
                     <span>팝콘 등록</span>
                   </a>
                 </c:if>

@@ -39,7 +39,7 @@ $(function() {
     });
 
     $("input[value='수정하기']").on("click", function() {
-        let prodNo = parseInt($(this).parents("tr").children("td").eq(0).children("input").val());
+        let prodNo = $(this).parents().parents().children("input").val();
         updateProduct(prodNo);
     });
 

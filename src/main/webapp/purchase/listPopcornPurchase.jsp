@@ -21,14 +21,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <title>listPopcornPurchase</title>
-    <link rel="stylesheet" href="/ssh/css/style.css">
-    <link rel="stylesheet" href="/ssh/css/plugin.css">
-    <link rel="stylesheet" href="/ssh/css/template.css">
-    <link rel="stylesheet" href="/ssh/css/common.css">
-    <link rel="stylesheet" href="/ssh/css/style.css">
 
     <link rel="stylesheet" href="/lcy/css/style.css">
-
 
     <!-- [E]thwhole-wfLpW5Z3pJ -->
     <script src="/ssh/js/setting.js"></script>
@@ -38,26 +32,49 @@
     <script src="/ssh/js/script.js"></script>
 
     <script src="/lcy/js/listPurchase.js"></script>
+    <script src="/lcy/js/listStoreTop.js"></script>
 </head>
 
 <body>
 
 <%@ include file="../layout/top.jsp" %>
 
-<%@ include file="../product/listStoreTop.jsp" %>
-
 <!-- [E]opilsol-N26 -->
 <main class="th-layout-main ">
+    <div class="thpart-HmlqLtFlNZ" data-bid="HmlqLtFlNZ" id="">
+        <div class="contents-container">
+            <img class="contents-backimg"
+                 src="https://images.unsplash.com/photo-1582567257180-eff71017288d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0OTE2MDd8MHwxfHNlYXJjaHwzMjJ8fCVFQSVCMiU4MCVFQyU5RCU4MHxrb3wwfHx8fDE3MDM2MDk4NDZ8MA&ixlib=rb-4.0.3&q=80&w=200"
+                 alt="">
+            <div class="contents-body container-md">
+                <h2 class="contents-title">
+                    Store
+                </h2>
+                <h7 class="contents-sub">스토어</h7>
+            </div>
+        </div>
+    </div>
+
+
+
     <!-- [S]opilsol-N24 -->
-    <div class="opilsol-N24" data-bid="bZ2ClR05J8P" style="margin-left: 0px;" id="">
-        <div class="content-container">
-            <div class="container-md">
+    <div class="hooms-N36" data-bid="fdLqmbY43s">
+        <div class="contents-inner">
+            <div class="content-container container-md">
+                <div class="textset textset-h2">
+                    <h2 class="textset-tit">구매 내역</h2>
+                </div>
                 <form name="form" method="post">
                     <input type="hidden" name="tranCategory" value="${tranCategory}">
                     <input type="hidden" name="userStatus" value="${userStatus}">
                 </form>
+                <div class="contents-form">
+                    <p class="contents-result">
+                        전체<span> ${totalCount}</span> 개
+                    </p>
+                </div>
 
-                <div class="radioset-wrap">
+                <div class="radioset-wrap" style="margin-bottom: 0.5rem;">
                     <div class="radioset">
                         <input id="radioset-c-1-1" name="radioset-c-1" class="visually-hidden" type="radio" value="" checked="">
                         <label class="radioset-thumb thumb-round" for="radioset-c-1-1">
@@ -76,9 +93,10 @@
                             <span>저작권 구매 내역</span>
                         </label>
                     </div>
-                </div><br><br>
+                </div>
 
                 <c:if test="${empty list}">
+                    <br><br><br>
                     <div class="contents-ico">
                         <figure class="contents-figure">
                             <img class="cardset-img" src="https://temha.io/api/t-a/56/1703523600/resources/icons/ico_plus_circle.svg"
@@ -91,8 +109,6 @@
 
                 <c:if test="${!empty list}">
                     <div class="tableset">
-                        <div class="tableset-inner">
-                            <h3>팝콘 충전 내역</h3> 전체 ${totalCount} 개 <br>
                             <table class="tableset-table table">
                                 <colgroup>
                                     <col>
@@ -109,9 +125,9 @@
                                     <col>
                                     <col>
                                 </colgroup>
-                                <thead class="thead-border-top">
+                                <thead class="thead-light thead-border-top">
                                 <tr>
-                                    <th class="number" scope="col">NO</th>
+                                    <th scope="col">NO.</th>
                                     <c:if test="${sessionScope.user.role == 1}">
                                         <th scope="col">닉네임</th>
                                     </c:if>
@@ -138,37 +154,37 @@
                                 <c:forEach var="purchase" items="${ list }">
                                     <c:set var="i" value="${i+1}"/>
                                     <tr>
-                                        <td class="number">
+                                        <td class="tableset-mobile">
                                             <input type="hidden" name="prodNo" value="${purchase.prodNo}">
                                             <input type="hidden" name="tranNo" value="${purchase.tranNo}">
                                                 ${i}
                                         </td>
                                         <c:if test="${sessionScope.user.role == 1}">
-                                            <td>
+                                            <td class="tableset-category tableset-order03">
                                                     ${purchase.nickname}
                                             </td>
                                         </c:if>
-                                        <td>
+                                        <td class="tableset-tit tableset-order02">
                                                 <fmt:formatNumber value="${purchase.prodCnt}" pattern="#,##0"/> 개
                                         </td>
-                                        <td>
+                                        <td class="tableset-tit tableset-order02">
                                                 <fmt:formatNumber value="${purchase.prodPrice}" pattern="#,##0"/> 원
                                         </td>
-                                        <td>
+                                        <td class="tableset-category tableset-order03">
                                                 ${purchase.tranMethod}
-                                        <td>
+                                        <td class="tableset-tit tableset-order02">
                                                 <fmt:formatNumber value="${purchase.tranCnt}" pattern="#,##0"/> 개
                                         </td>
-                                        <td>
+                                        <td class="tableset-tit tableset-order02">
                                                 <fmt:formatNumber value="${purchase.tranCnt * purchase.prodPrice}" pattern="#,##0"/> 원
                                         </td>
-                                        <td>
+                                        <td class="tableset-tit tableset-order02">
                                                 <fmt:formatNumber value="${purchase.bfPopcornCnt}" pattern="#,##0"/> 팝콘
                                         </td>
-                                        <td>
+                                        <td class="tableset-tit tableset-order02">
                                                 <fmt:formatNumber value="${purchase.afPopcornCnt}" pattern="#,##0"/> 팝콘
                                         </td>
-                                        <td>
+                                        <td class="tableset-order04">
                                                 ${purchase.tranDate}
                                         </td>
                                         <c:if test="${sessionScope.user.role == 1}">

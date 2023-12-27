@@ -26,23 +26,6 @@ form[name="form"] .inputset {
 }
 
 
-.contents-ico {
-    text-align: center;
-}
-
-.contents-figure {
-    display: inline-block;
-    cursor: pointer;
-}
-.no {
-    width: 10rem;
-    height: 20rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-
 /* thpart-HmlqLtFlNZ [HmlqLtFlNZ] */
 .thpart-HmlqLtFlNZ .contents-container { position: relative; height: 36rem; text-align: center; }
 .thpart-HmlqLtFlNZ .contents-backimg { width: 100%; height: 100%; object-fit: cover; }
@@ -122,12 +105,16 @@ form[name="form"] .inputset {
 .contents-cardlist.contents-cardlist-active { display: block; }
 .cardset { padding: 1.6rem 0; border-bottom: 1px solid var(--line-color1); }
 .cardset.cardset-hor .cardset-figure { width: 40rem; height: 20rem; }
-.contents-info { display: flex; align-items: center; justify-content: space-between; }
-.contents-name { font-size: var(--fs-p1); font-weight: 400; color: var(--text-color3); }
-.contents-date { margin-left: 0.8rem; }
+.contents-ico { text-align: center; }
+.contents-figure { display: inline-block; cursor: pointer; }
+.no { width: 10rem; height: 20rem; display: flex; align-items: center; justify-content: center; }
+.contents-info { display: flex; align-items: center; justify-content: center; }
+.contents-name { font-weight: 400;}
 .cardset-tit-group { margin-top: 1.6rem; }
 .cardset-tit { font-size: var(--fs-h6); line-height: 2.8rem; font-weight: 500; }
 .cardset-desc { margin-top: 0.8rem; }
+.contents-button { margin-left: auto;}
+.contents-button > input { margin-bottom: 1rem;}
 @media (max-width: 992px) {
     .contents-inner { padding: 6rem 2.4rem; }
     .cardset { flex-direction: column; padding: 1.2rem 0; }
@@ -144,4 +131,97 @@ form[name="form"] .inputset {
 @media (max-width: 768px) {
     .cardset.cardset-hor .cardset-figure { height: 10rem; }
 }
+
+/* hooms-N53 [lYlQluvFkB] */
+.hooms-N53 .contents-inner { padding: 10rem 2.4rem; }
+.hooms-N53 .contents-container { width: 100%; max-width: 62rem; margin: 0 auto; }
+.hooms-N53 .textset { margin-bottom: 4rem; }
+.hooms-N53 .textset-tit { text-align: center; }
+.hooms-N53 .contents-form-top { padding: 1rem 0; border-top: 1.5px solid var(--line-color4); }
+/*.hooms-N53 .contents-form-top .contents-radioset { display: flex; align-items: center; }*/
+/*.hooms-N53 .contents-form-top .contents-radioset .radioset+.radioset { margin-top: 0; margin-left: 4rem; }*/
+/*.hooms-N53 .contents-form-top .radioset .radioset-input+.radioset-label { width: 2.4rem; height: 2.4rem; }*/
+/*.hooms-N53 .contents-form-top .radioset .radioset-input.input-line:checked+.radioset-label::before { font-size: 2.4rem; }*/
+/*.hooms-N53 .radioset .radioset-text { font-size: var(--fs-p1); color: var(--text-color2); }*/
+.hooms-N53 .contents-form-bottom { padding: 4rem 0;  }
+.hooms-N53 .inputset-label { margin-bottom: 3rem; }
+.hooms-N53 .inputset > label {  display: flex; align-items: center; }
+/*.hooms-N53 .inputset > label::after { content: ""; display: block; height: 100%; !* 세로선의 높이를 부모 요소 높이와 같게 설정 *! width: 1px; !* 세로선의 너비 *! background-color: var(--line-color1); !* 연한 세로선의 색상 *! margin-left: 10px; !* 간격 조절 *!}*/
+/*.hooms-N53 .inputset { align-items: flex-end; }*/
+.hooms-N53 .inputset h6 { display: inline-block; width: 30%; }
+.hooms-N53 .contents-form-bottom .btnset { width: 100%; max-width: 17.6rem; padding: 1.6rem; margin-left: 0.8rem; }
+.hooms-N53 .contents-form-bottom .selectset { position: relative; margin-left: 3rem; }
+.hooms-N53 .contents-form-bottom .selectset::before { content: '@'; position: absolute; top: 50%; right: 100%; transform: translateY(-50%); margin-right: 0.8rem; font-weight: 500; color: var(--text-color4); }
+.hooms-N53 .inputset-input { width: 50%; }
+.hooms-N53 .checkset .checkset-input+.checkset-label { width: 2.4rem; height: 2.4rem; border-color: var(--primary); }
+.hooms-N53 .checkset .checkset-input.input-fill+.checkset-label::before { font-size: 2.4rem; }
+.hooms-N53 .checkset-text { font-size: 1.8rem; }
+.hooms-N53 .contents-btn { display: flex; justify-content: center; margin-top: 4rem; text-align: right; }
+@media (max-width: 992px) {
+    .hooms-N53 .contents-inner { padding: 6rem 2.4rem; }
+    .hooms-N53 .textset { margin-bottom: 2.4rem; }
+    .hooms-N53 .contents-form-top { padding: 2.4rem 0; }
+    .hooms-N53 .inputset.inputset-label { flex-direction: row; }
+    /*.hooms-N53 .contents-form-top .contents-radioset { flex-direction: column; align-items: flex-start; }*/
+    /*.hooms-N53 .contents-form-top .contents-radioset .radioset+.radioset { margin-left: 0; margin-top: 0.8rem; }*/
+    /*.hooms-N53 .contents-form-top .radioset .radioset-input+.radioset-label { width: 2rem; height: 2rem; }*/
+    /*.hooms-N53 .contents-form-top .radioset .radioset-input.input-line:checked+.radioset-label::before { font-size: 2rem; }*/
+    .hooms-N53 .contents-form-bottom { padding: 2.4rem 0; }
+    .hooms-N53 .contents-alarm { padding: 2.4rem 0; }
+    .hooms-N53 .checkset .checkset-input+.checkset-label { width: 2rem; height: 2rem; }
+    .hooms-N53 .checkset .checkset-input.input-fill+.checkset-label::before { font-size: 2rem; }
+    .hooms-N53 .checkset-text { font-size: 1.4rem; }
+    .hooms-N53 .contents-submit { margin-top: 4rem; }
+}
+
+
+
+/* hooms-N31 [viLqMAGCT2] */
+.hooms-N31 .contents-inner { padding: 10rem 2.4rem; }
+.hooms-N31 .contents-container { width: 100%; max-width: 62rem; margin: 0 auto; }
+.hooms-N31 .textset { margin-bottom: 4rem; }
+.hooms-N31 .textset-tit { text-align: center; }
+.hooms-N31 .tabset.tabset-brick { margin-bottom: 4rem; }
+.hooms-N31 .contents-search { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+.hooms-N31 .inputset { width: 40.3rem; }
+.hooms-N31 .contents-result { font-size: 1.8rem; font-weight: 500; }
+.hooms-N31 .contents-result span { color: var(--secondary); }
+.hooms-N31 .contents-cardlist { display: none; }
+.hooms-N31 .contents-cardlist.contents-cardlist-active { display: flex; flex-wrap: wrap; }
+.hooms-N31 .cardset { width: calc(100% / 4); height: 100%; padding: 2rem; }
+.hooms-N31 .cardset:nth-child(4n) { padding-right: 0; }
+.hooms-N31 .cardset:nth-child(4n + 1) { padding-left: 0; }
+.hooms-N31 .cardset .cardset-figure { width: 100%; height: 25rem; }
+.hooms-N31 .cardset .cardset-body { margin-top: 1.4rem; }
+.hooms-N31 .cardset-tit-group { display: flex; align-items: center; }
+.hooms-N31 .cardset-tit { width: 100%; flex-shrink: 0; font-size: var(--fs-p1); line-height: var(--lh-p1); text-overflow: ellipsis; white-space: nowrap; overflow: hidden; font-weight: 500; }
+.hooms-N31 .cardset-desc { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; line-height: var(--lh-p2); text-overflow: ellipsis; overflow: hidden; font-size: var(--fs-p2); }
+.hooms-N31 .cardset-badge { display: inline-block; flex-shrink: 0; width: 7.8rem; height: 3.2rem; line-height: 3.2rem; margin-right: 0.8rem; color: var(--text-color5); font-size: var(--fs-p2); text-align: center; }
+.hooms-N31 .cardset-badge.badge-color1 { background-color: var(--secondary); }
+.hooms-N31 .cardset-badge.badge-color2 { background-color: #666666; }
+.hooms-N31 .cardset-desc { margin-top: 0.8rem; }
+.hooms-N31 .pagiset { margin-top: 6rem; }
+@media (max-width: 992px) {
+    .hooms-N31 .contents-inner { padding: 6rem 2.4rem; }
+    .hooms-N31 .textset { margin-bottom: 2.4rem; }
+    .hooms-N31 .tabset.tabset-brick { margin-bottom: 2.4rem; }
+    .hooms-N31 .cardset { width: 100%; padding: 0; }
+    .hooms-N31 .cardset+.cardset { padding-top: 2.4rem; }
+    .hooms-N31 .contents-cardlist.contents-cardlist-active { flex-direction: column; }
+    .hooms-N31 .cardset .cardset-body { width: 100%; padding: 0; }
+    .hooms-N31 .contents-search { flex-direction: column; align-items: flex-start; margin-bottom: 2.4rem; }
+    .hooms-N31 .contents-result { margin-bottom: 0.8rem; font-size: 1.4rem; }
+    .hooms-N31 .inputset { width: 100%; }
+    .hooms-N31 .cardset-tit { text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }
+    .hooms-N31 .cardset-badge { width: 5.6em; height: 2.5rem; line-height: 2.5rem; }
+    .hooms-N31 .cardset .cardset-figure { width: 100%; }
+    .hooms-N31 .cardset-desc { display: block; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }
+    .hooms-N31 .pagiset-link { width: 3.2rem; height: 3.2rem; }
+}
+@media (max-width: 768px) {
+    .hooms-N31 .cardset .cardset-figure { height: 12rem; }
+}
+
+
+
 
