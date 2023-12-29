@@ -172,7 +172,7 @@
                                 <span class="accordset-q">Q</span> ${support.supContent} </button>
                               <c:choose>
                                 <c:when test="${empty support.supPluscon}">
-                                  <div class="badgeset">답변ㄷㄷ</div>
+                                  <div class="badgeset">답변</div>
                                   <div class="accordset-body">
                                     <div class="accordset-content">
                                         <c:if test="${support.supCategory eq '1' and sessionScope.user.role eq 0}">
