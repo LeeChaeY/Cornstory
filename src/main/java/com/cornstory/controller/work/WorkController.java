@@ -6,6 +6,7 @@ import com.cornstory.domain.User;
 import com.cornstory.domain.Work;
 import com.cornstory.service.episode.EpisodeService;
 import com.cornstory.service.product.ProductService;
+import com.cornstory.service.storage.StorageService;
 import com.cornstory.service.work.WorkService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -29,6 +30,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.Map;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/work/*")
@@ -45,6 +47,10 @@ public class WorkController {
     @Autowired
     @Qualifier("productServiceImpl")
     private ProductService productService;
+
+    @Autowired
+    @Qualifier("storageServiceImpl")
+    private StorageService storageService;
 
     public WorkController(){
         System.out.println("WorkController 진입");
@@ -83,24 +89,17 @@ public class WorkController {
 
         String extension = getFileExtension(file);
 
-
         if (extension != null && extension.equalsIgnoreCase("jpg")) {
-                try {
                     String fileName = work.getUserId() + "_" + work.getWorkName();
-                    fileName = fileName.replaceAll("[^a-zA-Z0-9가-힣_]", "_");
-                    fileName += ".jpg";
-                    String uploadDir = "C:\\CornStory\\src\\main\\resources\\static\\file\\work";
-                    String filePath = uploadDir + File.separator + fileName;
+                    fileName = fileName.replaceAll("[^a-zA-Z0-9가-힣_]", "_") + ".jpg";
+                    String bucketName = "cornstory"; // 버킷 이름 지정
+                    String fileKey = "work/" + fileName;
 
-                    Files.write(Path.of(filePath), file.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+                    String fileUrl = storageService.uploadFileToS3(bucketName, fileKey, file);
 
                     // 파일 경로를 Work 객체에 저장
-                    System.out.println(filePath);
-                    work.setThumbnail("..\\file\\work"+ File.separator + fileName);
-                    System.out.println(work.toString());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                    System.out.println(fileUrl);
+                    work.setThumbnail(fileUrl);
         }else{
             work.setThumbnail("..\\khs\\images\\popcorn.jpg");
         }
@@ -130,23 +129,26 @@ public class WorkController {
 
         String extension = getFileExtension(file);
 
+        Work copyWork = workService.getWork(work.getWorkNo());
+
         if (extension != null && extension.equalsIgnoreCase("jpg")) {
-            try {
-                String fileName = work.getUserId() + "_" + work.getWorkName();
-                fileName = fileName.replaceAll("[^a-zA-Z0-9가-힣_]", "_");
-                fileName += ".jpg";
-                String uploadDir = "C:\\CornStory\\src\\main\\resources\\static\\file\\work";
-                String filePath = uploadDir + File.separator + fileName;
+            String fileName = work.getUserId() + "_" + work.getWorkName();
+            fileName = fileName.replaceAll("[^a-zA-Z0-9가-힣_]", "_") + ".jpg";
+            String bucketName = "cornstory"; // 버킷 이름 지정
+            String fileKey = "work/" + fileName;
 
-                Files.write(Path.of(filePath), file.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 
-                // 파일 경로를 Work 객체에 저장
-                System.out.println(filePath);
-                work.setThumbnail("..\\file\\work"+ File.separator + fileName);
-                System.out.println(work.toString());
-            } catch (IOException e) {
-                e.printStackTrace();
+                // 새 파일을 클라우드 스토리지에 업로드
+                String fileUrl = storageService.uploadFileToS3(bucketName, fileKey, file);
+
+            if(!Objects.equals(fileUrl, copyWork.getThumbnail())){
+                String key = copyWork.getThumbnail().replace("https://cornstory.kr.object.ncloudstorage.com/", "");
+                storageService.deleteFileFromS3(bucketName,key);
             }
+
+
+            // 파일 URL을 Work 객체에 저장
+            work.setThumbnail(fileUrl);
         }else{
 
             work.setThumbnail(workService.getWork(work.getWorkNo()).getThumbnail());
@@ -205,6 +207,7 @@ public class WorkController {
         Map<String, Object> map=episodeService.listEpisode(workNo);
         model.addAttribute("bookmark",workService.getBookmarksByUserId(user.getUserId()));
         model.addAttribute("purchase",episodeService.getPurchaseEpisode(user.getUserId()));
+        model.addAttribute("user",user);
         model.addAttribute("work",work);
         model.addAttribute("list",map.get("list"));
         model.addAttribute("totalCount",map.get("totalCount"));

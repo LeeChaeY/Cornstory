@@ -7,283 +7,216 @@
 <html>
 <head>
     <title>cornstory</title>
-    <link rel="stylesheet" href="/ssh/css/setting.css">
-    <link rel="stylesheet" href="/ssh/css/plugin.css">
-    <link rel="stylesheet" href="/ssh/css/template.css">
-    <link rel="stylesheet" href="/ssh/css/common.css">
-    <link rel="stylesheet" href="/ssh/css/style.css">
-    <meta charset="utf-8">
+    <link rel="stylesheet" href="../common/css/setting.css">
+    <link rel="stylesheet" href="../common/css/plugin.css">
+    <link rel="stylesheet" href="../common/css/template.css">
+    <link rel="stylesheet" href="../common/css/common.css">
+    <link rel="stylesheet" href="../common/css/style.css">
+    <link rel="stylesheet" href="../common/css/drag.css">
+    <link rel="stylesheet" href="../support/css/setting.css">
+    <link rel="stylesheet" href="../support/css/plugin.css">
+    <link rel="stylesheet" href="../support/css/template.css">
+    <link rel="stylesheet" href="../support/css/common.css">
+    <link rel="stylesheet" href="../support/css/style.css">
+
     <style>
-        /* 기존 스타일 유지 */
-        :root {
-            --primary-color: #0056b3;
-            --secondary-color: #e9ecef;
-            --text-color: #333333;
-            --background-color: #ffffff;
+        .textset-tit{text-align: center;}
+
+        .genre-list span {
+            display: inline-block; /* 각 장르를 inline-block으로 설정하여 가로로 배열 */
+            margin-right: 5px; /* 각 장르 사이에 간격 추가 */
+        }
+        .contents-radioset {
+            display: flex; /* Flex 컨테이너 설정 */
+            flex-wrap: wrap; /* 내용이 넘칠 경우 줄바꿈 */
         }
 
-        body {
-            font-family: 'Arial', sans-serif;
-            color: var(--text-color);
-            background-color: var(--background-color);
+        .radioset {
+            margin-right: 10px; /* 각 장르 사이의 간격 설정 */
         }
 
-        .content-container {
-            text-align: center;
+        #workList{
+            display: flex; /* 가로로 정렬하기 위해 flex 컨테이너로 설정 */
+            flex-wrap: wrap; /* 필요하다면 자식 요소들을 여러 행에 걸쳐 표시 */
+            justify-content: flex-start; /* 왼쪽 정렬로 변경 */
         }
 
-        .textset-tit {
-            font-size: 24px;
-            color: var(--primary-color);
-            margin-bottom: 10px;
+        .contents-cardlist.contents-cardlist-active {
+            width: calc(20% - 10px); /* 마진을 고려한 실제 너비 계산 */
+            margin-right: 10px; /* 오른쪽 마진 */
+            margin-bottom: 10px; /* 아래쪽 마진 */
         }
 
-        .content-container p {
-            font-size: 20px;
+        .hooms-N31 .cardset {
+            width: 100%; /* 전체 너비의 20%에서 간격을 빼기 */
+            margin-right: 10px; /* 오른쪽 간격 */
+            margin-bottom: 10px; /* 아래쪽 간격 */
         }
 
-        .container-md {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
+        /* 한 줄의 마지막 항목에는 오른쪽 여백 제거 */
+        .hooms-N31 .cardset:nth-child(5n) {
+            margin-right: 0;
         }
 
-        .container-list {
-            background: var(--secondary-color);
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-            transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
-        }
 
-        .container-list:hover {
-            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-            transform: translateY(-5px);
-        }
-
-        .cardset-img {
-            width: 100%;
-            height: auto;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
-            object-fit: cover;
-        }
-
-        .cardset-body {
-            padding: 15px;
-            text-align: center;
-        }
-
-        .cardset-tit {
-            font-size: 18px;
-            font-weight: bold;
-            color: var(--text-color);
-            margin-bottom: 10px;
-        }
-
-        .cardset-desc {
-            font-size: 14px;
-            color: var(--text-color);
-        }
-
-        /* 반응형 레이아웃 */
-        @media screen and (max-width: 992px) {
-            .container-md {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media screen and (max-width: 768px) {
-            .container-md {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media screen and (max-width: 480px) {
-            .container-md {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* 검색 폼 스타일 수정 */
-        .contents-form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 10px 0;
-        }
-
-        .inputset {
-            margin-bottom: 15px;
-        }
-
-        .radioset-wrap, .checkset-wrap {
-            display: block;
-            margin: 10px 5px;
-            text-align: left;
-        }
-
-        .radioset, .checkset {
-            margin-right: 10px;
-            white-space: nowrap;
-        }
-
-        .radioset-thumb, .checkset-text {
-            font-size: 14px;
-            display: inline-block;
-            margin-left: 5px;
-        }
-
-        /* 반응형 레이아웃 조정 */
-        @media screen and (max-width: 768px) {
-            .radioset-wrap, .checkset-wrap {
-                flex-direction: row;
-                justify-content: space-around;
-                width: 100%;
-            }
-        }
     </style>
 
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
+<%@ include file="../layout/top.jsp" %>
 <body>
 
-<!--top start-->
-<%@ include file="../layout/top.jsp" %>
-<!--top end-->
-
     <!-- 작품 목록을 표시하는 부분 -->
-    <main class="th-layout-main ">
-        <div class="opilsol-N31" data-bid="nu2ClPPZgeB" >
-            <div class="content-container">
-
-                <h2 class="textset-tit">작품 목록</h2>
-                <!-- 전체 작품 개수를 표시 -->
-                <p>전체 개수: <span id="totalCount">${totalCount}</span></p>
-
-                <div class="contents-form">
-                    <div class="inputset inputset-line inputset-lg">
-                        <button class="inputset-icon icon-right icon-search btn" type="button" aria-label="아이콘"></button>
-                        <input type="text" class="inputset-input form-control" placeholder="내용을 입력해 주세요." aria-label="내용" id="searchKeyword" name="searchKeyword" value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
-                    </div>
-                        <div class="radioset-wrap">
-                            <div class="radioset radioset-brick">
-                                <!-- 카테고리 선택 -->
-                                <input id="radioset-b-1-1" name="searchCondition" class="visually-hidden" type="radio" value="0" ${ ! empty search.searchCondition && search.searchCondition==0 ? "checked" : ""}>
-                                <label class="radioset-thumb" for="radioset-b-1-1">웹소설</label>
-                                <input id="radioset-b-1-2" name="searchCondition" class="visually-hidden" type="radio" value="1" ${ ! empty search.searchCondition && search.searchCondition==1 ? "checked" : ""}>
-                                <label class="radioset-thumb" for="radioset-b-1-2">웹툰</label>
-                                <input id="radioset-b-1-3" name="searchCondition" class="visually-hidden" type="radio" value="2" ${ ! empty search.searchCondition && search.searchCondition==2 ? "checked" : ""}>
-                                <label class="radioset-thumb" for="radioset-b-1-3">웹드라마</label>
-                            </div>
-                        </div>
-
-                        <!-- 장르 선택 -->
-                        <div class="radioset-wrap">
-                            <div class="radioset">
-                                <input id="radioset-c-1-1" name="orderKeyword" class="visually-hidden" type="radio" value="학원" ${search.orderKeyword == '학원' ? 'checked' : ''}>
-                                <label class="radioset-thumb thumb-round" for="radioset-c-1-1">학원</label>
-                            </div>
-                            <div class="radioset">
-                                <input id="radioset-c-1-2" name="orderKeyword" class="visually-hidden" type="radio" value="액션" ${search.orderKeyword == '액션' ? 'checked' : ''}>
-                                <label class="radioset-thumb thumb-round" for="radioset-c-1-2">액션</label>
-                            </div>
-                            <div class="radioset">
-                                <input id="radioset-c-1-3" name="orderKeyword" class="visually-hidden" type="radio" value="SF" ${search.orderKeyword == 'SF' ? 'checked' : ''}>
-                                <label class="radioset-thumb thumb-round" for="radioset-c-1-3">SF</label>
-                            </div>
-                            <div class="radioset">
-                                <input id="radioset-c-1-4" name="orderKeyword" class="visually-hidden" type="radio" value="판타지" ${search.orderKeyword == '판타지' ? 'checked' : ''}>
-                                <label class="radioset-thumb thumb-round" for="radioset-c-1-4">판타지</label>
-                            </div>
-                            <div class="radioset">
-                                <input id="radioset-c-1-5" name="orderKeyword" class="visually-hidden" type="radio" value="개그" ${search.orderKeyword == '개그' ? 'checked' : ''}>
-                                <label class="radioset-thumb thumb-round" for="radioset-c-1-5">개그</label>
-                            </div>
-                            <div class="radioset">
-                                <input id="radioset-c-1-6" name="orderKeyword" class="visually-hidden" type="radio" value="로맨스" ${search.orderKeyword == '로맨스' ? 'checked' : ''}>
-                                <label class="radioset-thumb thumb-round" for="radioset-c-1-6">로맨스</label>
-                            </div>
-                            <div class="radioset">
-                                <input id="radioset-c-1-7" name="orderKeyword" class="visually-hidden" type="radio" value="스포츠" ${search.orderKeyword == '스포츠' ? 'checked' : ''}>
-                                <label class="radioset-thumb thumb-round" for="radioset-c-1-7">스포츠</label>
-                            </div>
-                            <div class="radioset">
-                                <input id="radioset-c-1-8" name="orderKeyword" class="visually-hidden" type="radio" value="일상" ${search.orderKeyword == '일상' ? 'checked' : ''}>
-                                <label class="radioset-thumb thumb-round" for="radioset-c-1-8">일상</label>
-                            </div>
-                            <div class="radioset">
-                                <input id="radioset-c-1-9" name="orderKeyword" class="visually-hidden" type="radio" value="추리" ${search.orderKeyword == '추리' ? 'checked' : ''}>
-                                <label class="radioset-thumb thumb-round" for="radioset-c-1-9">추리</label>
-                            </div>
-                            <div class="radioset">
-                                <input id="radioset-c-1-10" name="orderKeyword" class="visually-hidden" type="radio" value="스릴러" ${search.orderKeyword == '스릴러' ? 'checked' : ''}>
-                                <label class="radioset-thumb thumb-round" for="radioset-c-1-10">스릴러</label>
-                            </div>
-                            <div class="radioset">
-                                <input id="radioset-c-1-11" name="orderKeyword" class="visually-hidden" type="radio" value="무협" ${search.orderKeyword == '무협' ? 'checked' : ''}>
-                                <label class="radioset-thumb thumb-round" for="radioset-c-1-11">무협</label>
-                            </div>
-                            <div class="radioset">
-                                <input id="radioset-c-1-12" name="orderKeyword" class="visually-hidden" type="radio" value="기타" ${search.orderKeyword == '기타' ? 'checked' : ''}>
-                                <label class="radioset-thumb thumb-round" for="radioset-c-1-12">기타</label>
-                            </div>
-                        </div>
-
-
-                        <!-- 조회순 선택 -->
-                        <div class="checkset-wrap">
-                            <div class="checkset">
-                                <input id="checkset-a-1-1" class="checkset-input input-fill" type="checkbox" name="orderCondition" value="1" ${!empty search.orderCondition && search.orderCondition == 1 ? "checked" : ""}>
-                                <label class="checkset-label" for="checkset-a-1-1"></label>
-                                <span class="checkset-text">조회순</span>
-                            </div>
-                        </div>
-
-                </div>
-
-
-                <!-- 작품 목록을 그리드 형식으로 표시 -->
-                <div class="container-md" id="workList">
-                    <!-- 작품 목록을 순회하며 표시 -->
-                    <c:forEach var="work" items="${list}">
-                        <div class="container-list">
-                            <!-- 작품 이미지와 정보를 표시 -->
-                            <figure class="cardset-figure">
-                                <img class="cardset-img" src="${work.thumbnail}" alt="이미지">
-                            </figure>
-                            <div class="cardset-body">
-                                <!-- 작품 제목 표시 -->
-                                <h5 class="cardset-tit">${work.workName}</h5>
-                                <p class="cardset-user">${work.userId}</p>
-                                <!-- 작품 카테고리 표시 -->
-                                <p class="cardset-desc">카테고리: <c:choose>
-                                    <c:when test="${work.category eq '0'}">웹소설</c:when>
-                                    <c:when test="${work.category eq '1'}">웹툰</c:when>
-                                    <c:when test="${work.category eq '2'}">웹드라마</c:when>
-                                    <c:otherwise>기타</c:otherwise>
-                                </c:choose></p>
-                                <!-- 작품 장르 표시 -->
-                                <p class="cardset-desc">장르:  ${work.genre1}
-                                    <c:if test="${not empty work.genre2}">, ${work.genre2}</c:if>
-                                    <c:if test="${not empty work.genre3}">, ${work.genre3}</c:if></p>
-                                <!-- 작품 가격(무료 또는 유료) 표시 -->
-                                <p class="cardset-desc">${work.fap == 0 ? '무료' : '유료'}</p>
-
-                                <div class="work-options">
-                                    <span class="work-option" onclick="viewWorkDetail(${work.workNo})">자세히 보기</span>
-                                </div>
-                            </div>
-                        </div>
-                    </c:forEach>
-                </div>
+<main class="th-layout-main">
+    <div class="thpart-HmlqLtFlNZ" data-bid="HmlqLtFlNZ" id="">
+        <div class="contents-container">
+            <img class="contents-backimg" src="../khs/images/work.jpg" alt="">
+            <div class="contents-body container-md">
+                <h2 class="contents-title"> Work </h2>
+                <h7 class="contents-sub">작품</h7>
             </div>
         </div>
-    </main>
+    </div>
+    <div class="hooms-N31" data-bid="geLqKMOmeJ">
+        <div class="contents-inner">
+            <div class="contents-container container-md">
+                <div class="textset textset-h2">
+                    <h2 class="textset-tit">작품 리스트</h2>
+                </div>
+
+                <!-- 카테고리 탭 -->
+                <div class="radioset-wrap">
+                    <div class="radioset radioset-brick">
+                        <!-- 카테고리 선택 -->
+                        <input id="radioset-b-1-1" name="searchCondition" class="visually-hidden" type="radio" value="0" ${ ! empty search.searchCondition && search.searchCondition==0 ? "checked" : ""}>
+                        <label class="radioset-thumb" for="radioset-b-1-1">웹소설</label>
+                        <input id="radioset-b-1-2" name="searchCondition" class="visually-hidden" type="radio" value="1" ${ ! empty search.searchCondition && search.searchCondition==1 ? "checked" : ""}>
+                        <label class="radioset-thumb" for="radioset-b-1-2">웹툰</label>
+                        <input id="radioset-b-1-3" name="searchCondition" class="visually-hidden" type="radio" value="2" ${ ! empty search.searchCondition && search.searchCondition==2 ? "checked" : ""}>
+                        <label class="radioset-thumb" for="radioset-b-1-3">웹드라마</label>
+                    </div>
+                </div>
+
+                <!-- 장르 필터링 -->
+                <div class="contents-radioset">
+                    <!-- 장르 1: 학원 -->
+                    <div class="radioset">
+                        <input id="genre-academy" class="radioset-input input-line" type="radio" name="orderKeyword" type="radio" value="학원" ${search.orderKeyword == '학원' ? 'checked' : ''}>
+                        <label class="radioset-label" for="genre-academy"></label>
+                        <span class="radioset-text">학원</span>
+                    </div>
+
+                    <!-- 장르 2: 액션 -->
+                    <div class="radioset">
+                        <input id="genre-action" class="radioset-input input-line" type="radio" name="orderKeyword" type="radio" value="액션" ${search.orderKeyword == '액션' ? 'checked' : ''}>
+                        <label class="radioset-label" for="genre-action"></label>
+                        <span class="radioset-text">액션</span>
+                    </div>
+
+                    <!-- 장르 3: SF -->
+                    <div class="radioset">
+                        <input id="genre-sf" class="radioset-input input-line" type="radio" name="orderKeyword" type="radio" value="SF" ${search.orderKeyword == 'SF' ? 'checked' : ''}>
+                        <label class="radioset-label" for="genre-sf"></label>
+                        <span class="radioset-text">SF</span>
+                    </div>
+
+                    <!-- 장르 4: 판타지 -->
+                    <div class="radioset">
+                        <input id="genre-fantasy" class="radioset-input input-line" type="radio" name="orderKeyword" type="radio" value="판타지" ${search.orderKeyword == '판타지' ? 'checked' : ''}>
+                        <label class="radioset-label" for="genre-fantasy"></label>
+                        <span class="radioset-text">판타지</span>
+                    </div>
+
+                    <!-- 장르 5: 개그 -->
+                    <div class="radioset">
+                        <input id="genre-comedy" class="radioset-input input-line" type="radio" name="orderKeyword" type="radio" value="개그" ${search.orderKeyword == '개그' ? 'checked' : ''}>
+                        <label class="radioset-label" for="genre-comedy"></label>
+                        <span class="radioset-text">개그</span>
+                    </div>
+
+                    <!-- 장르 6: 로맨스 -->
+                    <div class="radioset">
+                        <input id="genre-romance" class="radioset-input input-line" type="radio" name="orderKeyword" type="radio" value="로맨스" ${search.orderKeyword == '로맨스' ? 'checked' : ''}>
+                        <label class="radioset-label" for="genre-romance"></label>
+                        <span class="radioset-text">로맨스</span>
+                    </div>
+
+                    <!-- 장르 7: 스포츠 -->
+                    <div class="radioset">
+                        <input id="genre-sports" class="radioset-input input-line" type="radio" name="orderKeyword" type="radio" value="스포츠" ${search.orderKeyword == '스포츠' ? 'checked' : ''}>
+                        <label class="radioset-label" for="genre-sports"></label>
+                        <span class="radioset-text">스포츠</span>
+                    </div>
+
+                    <!-- 장르 8: 일상 -->
+                    <div class="radioset">
+                        <input id="genre-sliceoflife" class="radioset-input input-line" type="radio" name="orderKeyword" type="radio" value="일상" ${search.orderKeyword == '일상' ? 'checked' : ''}>
+                        <label class="radioset-label" for="genre-sliceoflife"></label>
+                        <span class="radioset-text">일상</span>
+                    </div>
+
+                    <!-- 장르 9: 추리 -->
+                    <div class="radioset">
+                        <input id="genre-mystery" class="radioset-input input-line" type="radio" name="orderKeyword" type="radio" value="추리" ${search.orderKeyword == '추리' ? 'checked' : ''}>
+                        <label class="radioset-label" for="genre-mystery"></label>
+                        <span class="radioset-text">추리</span>
+                    </div>
+
+                    <!-- 장르 10: 스릴러 -->
+                    <div class="radioset">
+                        <input id="genre-thriller" class="radioset-input input-line" type="radio" name="orderKeyword" type="radio" value="스릴러" ${search.orderKeyword == '스릴러' ? 'checked' : ''}>
+                        <label class="radioset-label" for="genre-thriller"></label>
+                        <span class="radioset-text">스릴러</span>
+                    </div>
+
+                    <!-- 장르 11: 무협 -->
+                    <div class="radioset">
+                        <input id="genre-martialarts" class="radioset-input input-line" type="radio" name="orderKeyword" type="radio" value="무협" ${search.orderKeyword == '무협' ? 'checked' : ''}>
+                        <label class="radioset-label" for="genre-martialarts"></label>
+                        <span class="radioset-text">무협</span>
+                    </div>
+
+                    <!-- 장르 12: 기타 -->
+                    <div class="radioset">
+                        <input id="genre-others" class="radioset-input input-line" type="radio" name="orderKeyword" type="radio" value="기타" ${search.orderKeyword == '기타' ? 'checked' : ''}>
+                        <label class="radioset-label" for="genre-others"></label>
+                        <span class="radioset-text">기타</span>
+                    </div>
+                </div>
+
+
+                <div class="checkset-wrap">
+                    <div class="checkset">
+                        <input id="checkset-a-1-1" class="checkset-input input-fill" type="checkbox" name="orderCondition" value="1" ${!empty search.orderCondition && search.orderCondition == 1 ? "checked" : ""}>
+                        <label class="checkset-label" for="checkset-a-1-1"></label>
+                        <span class="checkset-text">조회순${!empty search.orderCondition && search.orderCondition == 1 ? "(높은순)" : "(낮은순)"}</span>
+                    </div>
+                </div>
+
+                <!-- 작품 검색 -->
+                <div class="contents-search">
+                    <p class="contents-result">전체<span id="totalCount"> ${totalCount}</span>개</p>
+                    <div class="inputset">
+                        <button class="inputset-icon icon-right icon-search btn" type="button" aria-label="검색"></button>
+                        <input type="text" class="inputset-input form-control" placeholder="검색어를 입력해주세요." aria-label="검색어" id="searchKeyword" name="searchKeyword" value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
+                    </div>
+                </div>
+
+                <!-- 작품 목록 -->
+                <div class="contents-group">
+                    <div class="work-items-container custom-work-list">
+                        <div class="container-md" id="workList">
+
+                        </div>
+                    </div>
+
+
+                    </div>
+                </div>
+        </div>
+    </div>
+    </div>
+</main>
 
 <!-- 추가된 작업 목록을 저장할 div 요소 -->
 <div id="additionalWorkList"></div>
@@ -291,8 +224,6 @@
 <!-- 페이지 정보를 저장할 hidden input -->
 <input type="hidden" id="currentPage" value="${search.currentPage}" />
 <input type="hidden" id="loading" value="false" />
-
-<%@ include file="../layout/bottom.jsp" %>
 
 </body>
 <script>
@@ -407,40 +338,43 @@
         }
 
         function updateWorkItems(workItems) {
-            var workList = $("#workList");
+            var workList = $("#workList"); // 컨테이너의 ID에 맞게 조정
             $.each(workItems, function(index, work) {
-                if (workList.find(".work-item[data-workno='" + work.workNo + "']").length === 0) {
-                    var workItem = $("<div class='container-list work-item' data-workno='" + work.workNo + "'></div>");
+                var contentItem = $("<div></div>").addClass("contents-cardlist contents-cardlist-active");
+                var link = $("<a></a>").attr("href", "../work/getDetailWork?workNo=" + work.workNo).addClass("cardset");
 
-                    var figure = $("<figure class='cardset-figure'></figure>");
-                    var link = $("<a class='cardset cardset-border'></a>").attr("href", "../work/getDetailWork?workNo=" + work.workNo);
-                    var img = $("<img class='cardset-img'>").attr("src", work.thumbnail).attr("alt", "이미지");
-                    link.append(img);
-                    figure.append(link);
-                    workItem.append(figure);
+                var figure = $("<figure></figure>").addClass("cardset-figure");
+                var img = $("<img>").addClass("cardset-img").attr("src", work.thumbnail).attr("alt", "이미지");
+                figure.append(img);
 
-                    var cardBody = $("<div class='cardset-body'></div>");
-                    cardBody.append("<h5 class='cardset-tit'>" + work.workName + "</h5>");
+                var cardBody = $("<div></div>").addClass("cardset-body");
+                var titleGroup = $("<div></div>").addClass("cardset-tit-group");
+                titleGroup.append("<h5 class='cardset-tit'>" + work.workName + "</h5>");
+                cardBody.append(titleGroup);
 
-                    var categoryText = getCategoryText(work.category);
-                    cardBody.append("<p class='cardset-desc'>카테고리: " + categoryText + "</p>");
+                // FAP, 장르, 카테고리 정보 추가
+                var fapText = work.fap == 0 ? "무료" : "유료";
+                var genreText = getGenreText(work.genre1, work.genre2, work.genre3); // 'work.genre'는 예시입니다. 실제 속성 이름에 맞게 조정
+                var categoryText = getCategoryText(work.category); // 'getCategoryText' 함수를 사용
 
-                    var genreText = getGenreText(work.genre1, work.genre2, work.genre3);
-                    cardBody.append("<p class='cardset-desc'>장르: " + genreText + "</p>");
+                var desc = $("<p></p>").addClass("cardset-desc")
+                    .text("유/무료: " + fapText + " | 장르: " + genreText + " | 카테고리: " + categoryText);
+                cardBody.append(desc);
 
-                    var fapText = work.fap == 0 ? "무료" : "유료";
-                    cardBody.append("<p class='cardset-desc'>" + fapText + "</p>");
-
-                    workItem.append(cardBody);
-                    workList.append(workItem);
-                }
+                link.append(figure).append(cardBody);
+                contentItem.append(link);
+                workList.append(contentItem);
             });
         }
     });
 </script>
 
-
-
-
-
 </html>
+<script src="../common/js/setting.js"></script>
+<script src="../common/js/plugin.js"></script>
+<script src="../common/js/template.js"></script>
+<script src="../common/js/common.js"></script>
+<script src="../common/js/script.js"></script>
+<script src="../support/js/support.js"></script>
+<script src="/common/js/drag.js"></script>
+<%@ include file="../layout/bottom.jsp" %>

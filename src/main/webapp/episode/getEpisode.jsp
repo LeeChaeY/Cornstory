@@ -7,11 +7,19 @@
 <html>
 <head>
     <title>cornstory</title>
-    <link rel="stylesheet" href="/ssh/css/setting.css">
-    <link rel="stylesheet" href="/ssh/css/plugin.css">
-    <link rel="stylesheet" href="/ssh/css/template.css">
-    <link rel="stylesheet" href="/ssh/css/common.css">
-    <link rel="stylesheet" href="/ssh/css/style.css">
+    <link rel="stylesheet" href="../common/css/setting.css">
+    <link rel="stylesheet" href="../common/css/plugin.css">
+    <link rel="stylesheet" href="../common/css/template.css">
+    <link rel="stylesheet" href="../common/css/common.css">
+    <link rel="stylesheet" href="../common/css/style.css">
+    <link rel="stylesheet" href="../common/css/drag.css">
+    <link rel="stylesheet" href="../support/css/setting.css">
+    <link rel="stylesheet" href="../support/css/plugin.css">
+    <link rel="stylesheet" href="../support/css/template.css">
+    <link rel="stylesheet" href="../support/css/common.css">
+    <link rel="stylesheet" href="../support/css/style.css">
+    <link rel="stylesheet" href="../khs/css/style.css">
+    <link rel="stylesheet" href="../khs/css/common.css">
     <meta charset="utf-8">
     <style>
         /* 기본 스타일 설정 */
@@ -56,32 +64,32 @@
         }
 
         /* 댓글 섹션 스타일링 */
-        #commentForm, #commentList {
-            margin-top: 20px;
-            padding: 15px;
-            background: var(--secondary-color);
-            border-radius: 5px;
-        }
+        /*#commentForm, #commentList {*/
+        /*    margin-top: 20px;*/
+        /*    padding: 15px;*/
+        /*    background: var(--secondary-color);*/
+        /*    border-radius: 5px;*/
+        /*}*/
 
-        #commentForm textarea {
-            width: 100%;
-            margin-bottom: 10px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
+        /*#commentForm textarea {*/
+        /*    width: 100%;*/
+        /*    margin-bottom: 10px;*/
+        /*    padding: 10px;*/
+        /*    border: 1px solid #ddd;*/
+        /*    border-radius: 4px;*/
+        /*}*/
 
-        #commentList div {
-            margin-bottom: 15px;
-            padding: 10px;
-            background: #f8f9fa;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
+        /*#commentList div {*/
+        /*    margin-bottom: 15px;*/
+        /*    padding: 10px;*/
+        /*    background: #f8f9fa;*/
+        /*    border: 1px solid #ddd;*/
+        /*    border-radius: 4px;*/
+        /*}*/
 
-        #commentList strong {
-            font-weight: bold;
-        }
+        /*#commentList strong {*/
+        /*    font-weight: bold;*/
+        /*}*/
 
         /* 반응형 디자인 */
         @media screen and (max-width: 768px) {
@@ -91,76 +99,164 @@
         }
 
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <!--top start-->
 <%@ include file="../layout/top.jsp" %>
 <!--top end-->
-
+<body>
 <main class="th-layout-main ">
 
-    <div class="opilsol-N34" data-bid="Dklq5i7YYR" >
-        <div class="content-container container-md">
-            <div class="textset content-tit">
-                <h4 class="h4">${work.workName} | ${episode.episodeOrder}</h4>
-                <h2 class="textset-tit">${episode.episodeName}</h2>
-                <p class="textset-eu"><fmt:formatDate value="${episode.episodeDate}" pattern="yyyy-MM-dd HH:mm:ss"/></p>
+    <div class="thpart-HmlqLtFlNZ" data-bid="HmlqLtFlNZ">
+        <div class="contents-container">
+            <img class="contents-backimg" src="../khs/images/work.jpg" alt="">
+            <div class="contents-body container-md">
+                <h2 class="contents-title"> Work </h2>
+                <h7 class="contents-sub">작품</h7>
             </div>
         </div>
     </div>
 
-    <div class="opilsol-N17" data-bid="GkLq5I7z1g">
-        <div class="content-container">
-            <c:choose>
+<%--    <div class="opilsol-N34" data-bid="Dklq5i7YYR" >--%>
+<%--        <div class="content-container container-md">--%>
+<%--            <div class="textset content-tit">--%>
+<%--                <h4 class="h4">${work.workName} | ${episode.episodeOrder}</h4>--%>
+<%--                <h2 class="textset-tit">${episode.episodeName}</h2>--%>
+<%--                <p class="textset-eu"><fmt:formatDate value="${episode.episodeDate}" pattern="yyyy-MM-dd"/></p>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--    </div>--%>
 
-                <c:when test="${work.category eq '0'}">
-                    <div class="text-content">
-                        <p>${textContent}</p>
-                    </div>
-                </c:when>
+<%--    <div class="opilsol-N17" data-bid="GkLq5I7z1g">--%>
+<%--        <div class="content-container">--%>
+<%--            <c:choose>--%>
+
+<%--                <c:when test="${work.category eq '0'}">--%>
+<%--                    <div class="text-content">--%>
+<%--                        <p>${textContent}</p>--%>
+<%--                    </div>--%>
+<%--                </c:when>--%>
 
 
-                <c:when test="${work.category eq '1'}">
-                    <div class="image-content">
-                        <img src="${files}" alt="Episode Image" style="max-width: 300px; max-height: 300px; display: block;">
-                    </div>
-                </c:when>
+<%--                <c:when test="${work.category eq '1'}">--%>
+<%--                    <div class="image-content">--%>
+<%--                        <img src="${files}" alt="Episode Image" style="max-width: 300px; max-height: 300px; display: block;">--%>
+<%--                    </div>--%>
+<%--                </c:when>--%>
 
 
-                <c:when test="${work.category eq '2'}">
-                    <div class="video-content">
-                        <video controls style="width: 100%; height: auto;">
-                            <source src="${files}" type="video/mp4">
-                            브라우저가 비디오를 지원하지 않습니다.
-                        </video>
-                    </div>
-                </c:when>
-            </c:choose>
+<%--                <c:when test="${work.category eq '2'}">--%>
+<%--                    <div class="video-content">--%>
+<%--                        <video controls style="width: 100%; height: auto;">--%>
+<%--                            <source src="${files}" type="video/mp4">--%>
+<%--                            브라우저가 비디오를 지원하지 않습니다.--%>
+<%--                        </video>--%>
+<%--                    </div>--%>
+<%--                </c:when>--%>
+<%--            </c:choose>--%>
+<%--        </div>--%>
+<%--    </div>--%>
+
+    <!-- [S]hooms-N32 -->
+    <div class="hooms-N32" data-bid="XklqkoBO8I">
+        <div class="contents-inner">
+            <div class="contents-container container-md">
+                <div class="textset textset-h2">
+                    <h2 class="textset-tit">${work.workName}</h2>
+                </div>
+                <div class="contents-group">
+                    <h5 class="contents-tit"> ${episode.episodeName} : ${episode.episodeOrder}</h5>
+                    <p class="textset-eu"><fmt:formatDate value="${episode.episodeDate}" pattern="yyyy-MM-dd"/></p>
+                </div>
+                <c:choose>
+
+                    <c:when test="${work.category eq '0'}">
+                        <div class="contents-cardlist contents-cardlist-active">
+                            <div class="cardset-body">
+                                <p class="h5 cardset-desc"> ${textContent}</p>
+                            </div>
+                        </div>
+                    </c:when>
+                    <c:when test="${work.category eq '1'}">
+                        <div class="contents-cardlist contents-cardlist-active">
+                            <figure class="cardset-figure">
+                                <img class="cardset-img" src=".${files}" alt="이미지" style="max-width: 690px; max-height: 1280px; display: block;">
+                            </figure>
+                        </div>
+                    </c:when>
+                    <c:when test="${work.category eq '2'}">
+                        <div class="contents-container">
+                            <div class="videoset">
+                                <video class="videoset-video">
+                                    <source src="../resources/videos/video.mp4">
+                                </video>
+                                <div class="videoset-body container-md">
+                                    <h2 class="videoset-tit"> </h2>
+                                    <button class="videoset-play">
+                                        <img src="../resources/icons/ico_play_white.svg" alt="">
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </c:when>
+                </c:choose>
+
+                <div class="contents-btn">
+                    <a class="btnset" href="../work/listWork">목록으로</a>
+                    <a class="btnset" href="javascript:window.history.back();">뒤로가기</a>
+                </div>
+
+            </div>
         </div>
     </div>
+    <!-- [E]hooms-N32 -->
+
 
     <!-- 다른 섹션들 -->
 
-    <div class="opilsol-N22" data-bid="QklQ5i7Z5J">
-        <div class="content-container">
-            <div class="container-md">
-                <h4 class="h4">댓글란</h4>
-                <div id="commentForm">
+    <div class="hooms-N41" data-bid="fhlQKohvsi">
+        <div class="contents-inner">
+            <div class="inputset inputset-lg inputset-label">
+                <label >
+                    <c:if test="${not empty user}">
+                    <h3 class="h3">댓글란</h3>
                     <input type="hidden" id="episodeNo" value="${episode.episodeNo}">
-                    <textarea id="commentContent" placeholder="댓글을 입력하세요"></textarea>
-                    <button type="button" onclick="addComment()">댓글 추가</button>
-                </div>
-                <h3>댓글 목록</h3>
-                <div id="commentList">
-                    <!-- 댓글 목록이 여기에 동적으로 로드됩니다. -->
+                    <textarea id="commentContent" class="inputset-textarea" placeholder="댓글을 입력해주세요." required=""></textarea>
+                    <div class="inputset-langth">
+                        <span class="inputset-count">0</span>
+                        <span class="inputset-total">/300</span>
+                    </div>
+                        <a href="javascript:addComment()" class="btnset btnset-lg">댓글추가</a>
+                    </c:if>
+                    <c:if test="${empty user}">
+                        <h3 class="h3">로그인후 댓글을 이용해 주세요</h3>
+                    </c:if>
+                </label>
+            </div>
+            <div class="contents-container container-md">
+                <div class="contents-group">
+                    <div class="contents-cardlist contents-cardlist-active">
+                            <div class="cardset-body" id="commentList">
+
+                            </div>
+                    </div>
                 </div>
             </div>
+
+
+
         </div>
     </div>
 </main>
-
-<%@ include file="../layout/bottom.jsp" %>
-
+<%--<div id="editCommentModal" class="modal">--%>
+<%--    <div class="modal-content">--%>
+<%--        <h2>댓글 수정</h2>--%>
+<%--        <textarea id="editCommentText" rows="4"></textarea>--%>
+<%--        <button onclick="updateComment(currentEditingComment)">수정하기</button>--%>
+<%--        <button onclick="closeModal('editCommentModal')">취소하기</button>--%>
+<%--    </div>--%>
+<%--</div>--%>
 </body>
 <script>
     // 댓글 추가
@@ -219,33 +315,84 @@
         commentListElement.innerHTML = ""; // 댓글 목록 초기화
 
         comments.forEach(function (comment) {
-            var listItem = document.createElement("div");
-            if(loggedInUserId === comment.userId){
-                listItem.innerHTML =
-                    '<div>' +
-                    '<strong>' + comment.userId + '</strong> ' +
-                    '<span>' + comment.commentDate + '</span>' +
-                    '</div>' +
-                    '<p>' + comment.content + '</p>'+
-                    '<button onclick="openModal(\'' + comment.commentNo + '\', \'' + escapeHtml(comment.content) + '\')">수정</button>' +
-                    '<button onclick="deleteComment(\'' + comment.commentNo + '\')">삭제</button>';
+            var commentBody = document.createElement("div");
+            commentBody.className = "cardset-body";
 
-            }else{
-                listItem.innerHTML =
-                    '<div>' +
-                    '<strong>' + comment.userId + '</strong> ' +
-                    '<span>' + comment.commentDate + '</span>' +
-                    '</div>' +
-                    '<p>' + comment.content + '</p>';
+            var contentsInfo = document.createElement("div");
+            contentsInfo.className = "contents-info";
+
+            var contentsName = document.createElement("div");
+            contentsName.className = "contents-name";
+            contentsName.innerHTML = comment.userId + ' <span class="contents-date">' + comment.commentDate + '</span>';
+
+            var cardsetTitGroup = document.createElement("div");
+            cardsetTitGroup.className = "cardset-tit-group";
+
+            var cardsetTit = document.createElement("h5");
+            cardsetTit.className = "cardset-tit";
+            cardsetTit.innerHTML = '<span style="color: rgb(102, 102, 102); font-size: 16px;">' + comment.content + '</span>';
+
+            contentsInfo.appendChild(contentsName);
+            cardsetTitGroup.appendChild(cardsetTit);
+            commentBody.appendChild(contentsInfo);
+            commentBody.appendChild(cardsetTitGroup);
+
+            if (loggedInUserId === comment.userId) {
+
+                var editButton = document.createElement("button");
+                editButton.innerText = "수정";
+                editButton.onclick = function() {
+                    addEditField(commentBody, comment);
+                };
+
+                commentBody.appendChild(editButton);
+
+                var deleteButton = document.createElement("button");
+                deleteButton.onclick = function() { deleteComment(comment.commentNo); };
+                deleteButton.innerText = "삭제";
+
+                commentBody.appendChild(deleteButton);
             }
 
-            commentListElement.appendChild(listItem);
+            commentListElement.appendChild(commentBody);
         });
 
         if (comments.length === 0) {
             commentListElement.innerHTML = "<p>아직 댓글 내역이 없습니다.</p>";
         }
     }
+
+    // 댓글 수정 필드 추가
+    function addEditField(commentBody, comment) {
+        var existingEditField = document.getElementById("editedContent_" + comment.commentNo);
+        if (existingEditField) {
+            return; // 이미 수정 필드가 존재하면 함수 실행을 중단
+        }
+        var editField = document.createElement("textarea");
+        editField.value = comment.content;
+        editField.rows = 3;
+        editField.id = "editedContent_" + comment.commentNo;
+
+        var saveButton = document.createElement("button");
+        saveButton.innerText = "수정";
+        saveButton.onclick = function() {
+            updateComment(comment.commentNo, editField.value);
+        };
+
+        var cancelButton = document.createElement("button");
+        cancelButton.innerText = "취소";
+        cancelButton.onclick = function() {
+            commentBody.removeChild(editField);
+            commentBody.removeChild(saveButton);
+            commentBody.removeChild(cancelButton);
+            //loadComments(); // 댓글 목록을 다시 로드하여 원래 상태로 복원
+        };
+
+        commentBody.appendChild(editField);
+        commentBody.appendChild(saveButton);
+        commentBody.appendChild(cancelButton);
+    }
+
 
     // HTML 태그를 escape 하는 함수
     function escapeHtml(unsafe) {
@@ -256,27 +403,17 @@
             .replace(/"/g, "&quot;")
             .replace(/'/g, "&#039;");
     }
-    // 댓글 수정 모달 열기
-    function openModal(commentNo, content) {
-        document.getElementById("editedContent_" + commentNo).value = content;
-        document.getElementById("commentModal_" + commentNo).style.display = "block";
-    }
 
-    // 댓글 수정 모달 닫기
-    function closeModal(modalId) {
-        document.getElementById(modalId).style.display = "none";
-    }
 
     // 댓글 수정
-    function updateComment(commentNo) {
-        var editedContent = document.getElementById("editedContent_" + commentNo).value;
+    function updateComment(commentNo, updatedContent) {
         $.ajax({
             type: "POST",
             url: "/episode/json/updateComment",
             contentType: "application/json",
             data: JSON.stringify({
                 commentNo: commentNo,
-                content: editedContent
+                content: updatedContent
             }),
             success: function () {
                 loadComments(); // 댓글 목록 다시 로드
@@ -307,13 +444,15 @@
             });
         }
     }
-    var loggedIn = ${not empty user};
-    if (loggedIn) {
-        document.getElementById("commentForm").style.display = "block";
-    } else {
-        document.getElementById("commentForm").style.display = "none";
-        document.getElementById("commentForm").text("로그인 후 댓글을 이용해 주세요");
-    }
+
 </script>
 
 </html>
+<script src="../common/js/setting.js"></script>
+<script src="../common/js/plugin.js"></script>
+<script src="../common/js/template.js"></script>
+<script src="../common/js/common.js"></script>
+<script src="../common/js/script.js"></script>
+<script src="../support/js/support.js"></script>
+<script src="/common/js/drag.js"></script>
+<%@ include file="../layout/bottom.jsp" %>

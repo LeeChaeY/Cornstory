@@ -1,7 +1,7 @@
-// hooms-N56 [vdlqGbmgl8]
+// hooms-N54 [GFlqkmBXy9]
 (function() {
   $(function() {
-    $(".hooms-N56").each(function() {
+    $(".hooms-N54").each(function() {
       const $block = $(this);
       const $dim = $block.find(".header-dim");
       // Header Scroll
@@ -23,13 +23,22 @@
           $this.find(".header-gnblink").removeClass("on");
         });
       });
+      // Header SearchForm
+      $block.find(".btn-search").on("click", function() {
+        $block.addClass("header-search-active");
+        $dim.fadeIn();
+      });
+      $block.find(".btn-close, .header-dim").on("click", function() {
+        $block.removeClass("header-search-active");
+        $dim.fadeOut();
+      });
       // Full Gnb
       $block.find(".btn-menu").on("click", function() {
-        $block.find(".header-fullmenu-photo").addClass("fullmenu-active");
-        $block.find(".header-fullmenu-photo .fullmenu-gnbitem .fullmenu-img").show();
+        $block.find(".header-fullmenu-dark").addClass("fullmenu-active");
+        $block.find(".header-fullmenu-dark .fullmenu-gnbitem .fullmenu-img").show();
       });
       $block.find(".fullmenu-close").on("click", function() {
-        $block.find(".header-fullmenu-photo").removeClass("fullmenu-active");
+        $block.find(".header-fullmenu-dark").removeClass("fullmenu-active");
       });
       // Full Gnb Hover
       $block.find(".fullmenu-gnbitem").each(function() {
@@ -39,7 +48,7 @@
           $block.find(".fullmenu-gnbitem").removeClass("fullmenu-item-active");
           $this.addClass("fullmenu-item-active");
           // Full Gnb Background Img
-          const $headerFullmenu = $block.find(".header-fullmenu-photo");
+          const $headerFullmenu = $block.find(".header-fullmenu-dark");
           const classesToRemove = $headerFullmenu.attr("class").split(" ").filter(function(fuillmenu) {
             return fuillmenu.startsWith("header-fullmenu-bg");
           });
@@ -49,58 +58,17 @@
       });
       // Header Mobile 1Depth Click
       if (window.innerWidth <= 992) {
-        $block.find(".header-gnbitem").each(function() {
-          const $sublist = $(this).find(".header-sublist");
+        $(".fullmenu-gnbitem").each(function() {
+          const $sublist = $(this).find(".fullmenu-sublist");
           if ($sublist.length) {
-            $(this).find(".header-gnblink").attr("href", "javascript:void(0);");
+            $(this).find(".fullmenu-gnblink").attr("href", "javascript:void(0);");
           }
         });
       }
     });
   });
 })();
-// hooms-N1 [SAlQg8Ft2x]
-(function() {
-  $(function() {
-    $(".hooms-N1").each(function() {
-      const $block = $(this);
-      // Swiper
-      const swiper = new Swiper(".hooms-N1 .contents-swiper", {
-        slidesPerView: 1,
-        spaceBetween: 0,
-        allowTouchMove: false,
-        loop: true,
-        autoplay: {
-          delay: 5000,
-        },
-        pagination: {
-          el: ".hooms-N1 .swiper-pagination",
-          clickable: true,
-        },
-        navigation: {
-          nextEl: ".hooms-N1 .swiper-button-next",
-          prevEl: ".hooms-N1 .swiper-button-prev",
-        },
-      });
-      // Swiper Play, Pause Button
-      const pauseButton = $block.find('.swiper-button-pause');
-      const playButton = $block.find('.swiper-button-play');
-      playButton.hide();
-      pauseButton.show();
-      pauseButton.on('click', function() {
-        swiper.autoplay.stop();
-        playButton.show();
-        pauseButton.hide();
-      });
-      playButton.on('click', function() {
-        swiper.autoplay.start();
-        playButton.hide();
-        pauseButton.show();
-      });
-    });
-  });
-})();
-// hooms-N39 [xQlqGhhsUs]
+// hooms-N39 [MzlQkMIezC]
 (function() {
   $(function() {
     $(".hooms-N39").each(function() {
@@ -130,35 +98,6 @@
           $block.find(dim).fadeOut();
         });
       };
-    });
-  });
-})();;
-(function() {
-  $(function() {
-    $(".hooms-N27").each(function() {
-      const $block = $(this);
-      // Swiper
-      const swiper = new Swiper(".hooms-N27 .contents-swiper", {
-        slidesPerView: 'auto',
-        centeredSlides: true,
-        allowTouchMove: false,
-        loop: true,
-        pagination: {
-          type: "progressbar",
-          el: ".hooms-N27 .swiper-pagination",
-          clickable: true,
-        },
-        autoplay: {
-          delay: 2500,
-        },
-        on: {
-          slideChange: function() {
-            $block.find('.contents-slide').removeClass('contents-price-active');
-            const activeIndex = this.activeIndex % this.slides.length;
-            $block.find('.contents-slide').eq(activeIndex).addClass('contents-price-active');
-          }
-        }
-      });
     });
   });
 })();;

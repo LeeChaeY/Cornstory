@@ -16,6 +16,8 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
 
+import static java.lang.Integer.parseInt;
+
 @Controller
 @RequestMapping("/story/*")
 public class StoryController {
@@ -24,9 +26,10 @@ public class StoryController {
     private StoryService storyService;
 
     @GetMapping("/listStory")
-    public String listStories(Model model) throws Exception {
+    public String listStories(Model model,@SessionAttribute(name="user", required = false) User user) throws Exception {
         List<Story> story = storyService.listStory();
         model.addAttribute("story", story);
+        model.addAttribute("user",user);
         return "story/listStory";  // 뷰의 이름 (list.jsp)
     }
 
@@ -65,7 +68,7 @@ public class StoryController {
         }
         System.out.println(story.toString());
         storyService.addStory(story);
-        return "index";
+        return "story/getStory";
         //redirect:/stories/list
     }
 
@@ -84,7 +87,7 @@ public class StoryController {
 
 
     @PostMapping("/updateStory")
-    public String updateStory(@ModelAttribute("story") Story story, @RequestParam("thumbnailFile") MultipartFile file) throws Exception {
+    public String updateStory(@ModelAttribute("story") Story story, @RequestParam(value = "storyNo", required = false) int storyNo,@RequestParam("thumbnailFile") MultipartFile file) throws Exception {
 
         String fileName = story.getUserId() + "_" + story.getStoryName();
         fileName = fileName.replaceAll("[^a-zA-Z0-9가-힣_]", "_");
@@ -104,10 +107,10 @@ public class StoryController {
                 e.printStackTrace();
             }
 
-        }
+        }story.setStoryNo(storyNo);
         System.out.println(story.toString());
         storyService.updateStory(story);
-        return "index";
+        return "story/getStory";
         //redirect:/stories/list
     }
 
@@ -116,7 +119,7 @@ public class StoryController {
         System.out.println("[ StoryController.deleteStory() start........]");
 
         storyService.deleteStory(storyNo);
-        return "index";
+        return "story/getStory";
     }
     @GetMapping("/getStory")
     public String getStory(@SessionAttribute(name="user", required = false) User user,Model model) throws Exception {

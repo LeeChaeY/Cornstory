@@ -17,24 +17,24 @@ public class StoryRestController {
 
     // 댓글 추가
     @PostMapping("json/addComment")
-    public List<StoryComment> addComment(@RequestBody StoryComment comment) throws Exception {
+    public List<StoryComment> addStoryComment(@RequestBody StoryComment comment) throws Exception {
         storytService.addComment(comment);
         return storytService.listStoryComments(comment.getStoryNo());
     }
 
     // 댓글 목록 조회
     @GetMapping("json/listComments")
-    public List<StoryComment> listComments(@RequestParam int storyNo) throws Exception {
+    public List<StoryComment> listStoryComment(@RequestParam int storyNo) throws Exception {
         return storytService.listStoryComments(storyNo);
     }
 
     @PostMapping("json/updateComment")
-    public void updateComment(@RequestBody StoryComment comment) throws Exception {
+    public void updateStoryComment(@RequestBody StoryComment comment) throws Exception {
         storytService.updateComment(comment);
     }
 
     @PostMapping("json/deleteComment")
-    public void deleteComment(@RequestBody StoryComment comment) throws Exception {
+    public void deleteStoryComment(@RequestBody StoryComment comment) throws Exception {
         storytService.deleteComment(comment.getsCommentNo());
     }
 
