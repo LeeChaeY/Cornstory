@@ -172,15 +172,15 @@
                                 <span class="accordset-q">Q</span> ${support.supContent} </button>
                               <c:choose>
                                 <c:when test="${empty support.supPluscon}">
-                                  <div class="badgeset">대기</div>
+                                  <div class="badgeset">답변</div>
                                   <div class="accordset-body">
                                     <div class="accordset-content">
-                                        <c:when test="${support.supCategory eq '1' and sessionScope.user.role eq 0}">
+                                        <c:if test="${support.supCategory eq '1' and sessionScope.user.role eq 0}">
                                               <span class="accordset-a">A</span>등록된 답변이 없습니다.
-                                        </c:when>
-                                        <c:when test="${support.supCategory eq '1' and sessionScope.user.role eq 1}">
+                                        </c:if>
+                                        <c:if test="${support.supCategory eq '1' and sessionScope.user.role eq 1}">
                                               <textarea class="inputset-textarea"  name="supContent" placeholder="공지 내용을 입력해주세요." required=""></textarea>
-                                        </c:when>
+                                        </c:if>
                                     </div>
                                   </div>
                                 </c:when>
