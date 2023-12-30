@@ -38,7 +38,7 @@ public class WorkRestController {
     }
 
     @GetMapping("json/listWork")
-    public Map<String, Object> listWorksPaged(@RequestParam(required = false) String searchCondition,
+    public Map<String, Object> listWork(@RequestParam(required = false) String searchCondition,
                                               @RequestParam(required = false) String orderKeyword,
                                               @RequestParam(required = false) String orderCondition,
                                               @RequestParam(required = false) String searchKeyword,

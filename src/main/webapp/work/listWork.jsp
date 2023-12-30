@@ -7,14 +7,21 @@
 <html>
 <head>
     <title>cornstory</title>
-    <link rel="stylesheet" href="/khs/css/setting.css">
-    <link rel="stylesheet" href="/khs/css/plugin.css">
-    <link rel="stylesheet" href="/khs/css/template.css">
-    <link rel="stylesheet" href="/khs/css/common.css">
-    <link rel="stylesheet" href="/khs/css/style.css">
-    <meta charset="utf-8">
+    <link rel="stylesheet" href="../common/css/setting.css">
+    <link rel="stylesheet" href="../common/css/plugin.css">
+    <link rel="stylesheet" href="../common/css/template.css">
+    <link rel="stylesheet" href="../common/css/common.css">
+    <link rel="stylesheet" href="../common/css/style.css">
+    <link rel="stylesheet" href="../common/css/drag.css">
+    <link rel="stylesheet" href="../support/css/setting.css">
+    <link rel="stylesheet" href="../support/css/plugin.css">
+    <link rel="stylesheet" href="../support/css/template.css">
+    <link rel="stylesheet" href="../support/css/common.css">
+    <link rel="stylesheet" href="../support/css/style.css">
 
     <style>
+        .textset-tit{text-align: center;}
+
         .genre-list span {
             display: inline-block; /* 각 장르를 inline-block으로 설정하여 가로로 배열 */
             margin-right: 5px; /* 각 장르 사이에 간격 추가 */
@@ -56,143 +63,21 @@
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
+<%@ include file="../layout/top.jsp" %>
 <body>
 
-<!--top start-->
-<%--<%@ include file="../layout/header.jsp" %>--%>
-<jsp:include page="../layout/header.jsp" flush="true"/>
-<!--top end-->
-
     <!-- 작품 목록을 표시하는 부분 -->
-<%--    <main class="th-layout-main ">--%>
-<%--        <div class="opilsol-N31" data-bid="nu2ClPPZgeB" >--%>
-<%--            <div class="content-container">--%>
-
-<%--                <h2 class="textset-tit">작품 목록</h2>--%>
-<%--                <!-- 전체 작품 개수를 표시 -->--%>
-<%--                <p>전체 개수: <span id="totalCount">${totalCount}</span></p>--%>
-
-<%--                <div class="contents-form">--%>
-<%--                    <div class="inputset inputset-line inputset-lg">--%>
-<%--                        <button class="inputset-icon icon-right icon-search btn" type="button" aria-label="아이콘"></button>--%>
-<%--                        <input type="text" class="inputset-input form-control" placeholder="내용을 입력해 주세요." aria-label="내용" id="searchKeyword" name="searchKeyword" value="${! empty search.searchKeyword ? search.searchKeyword : '' }">--%>
-<%--                    </div>--%>
-<%--                        <div class="radioset-wrap">--%>
-<%--                            <div class="radioset radioset-brick">--%>
-<%--                                <!-- 카테고리 선택 -->--%>
-<%--                                <input id="radioset-b-1-1" name="searchCondition" class="visually-hidden" type="radio" value="0" ${ ! empty search.searchCondition && search.searchCondition==0 ? "checked" : ""}>--%>
-<%--                                <label class="radioset-thumb" for="radioset-b-1-1">웹소설</label>--%>
-<%--                                <input id="radioset-b-1-2" name="searchCondition" class="visually-hidden" type="radio" value="1" ${ ! empty search.searchCondition && search.searchCondition==1 ? "checked" : ""}>--%>
-<%--                                <label class="radioset-thumb" for="radioset-b-1-2">웹툰</label>--%>
-<%--                                <input id="radioset-b-1-3" name="searchCondition" class="visually-hidden" type="radio" value="2" ${ ! empty search.searchCondition && search.searchCondition==2 ? "checked" : ""}>--%>
-<%--                                <label class="radioset-thumb" for="radioset-b-1-3">웹드라마</label>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-
-<%--                        <!-- 장르 선택 -->--%>
-<%--                        <div class="radioset-wrap">--%>
-<%--                            <div class="radioset">--%>
-<%--                                <input id="radioset-c-1-1" name="orderKeyword" class="visually-hidden" type="radio" value="학원" ${search.orderKeyword == '학원' ? 'checked' : ''}>--%>
-<%--                                <label class="radioset-thumb thumb-round" for="radioset-c-1-1">학원</label>--%>
-<%--                            </div>--%>
-<%--                            <div class="radioset">--%>
-<%--                                <input id="radioset-c-1-2" name="orderKeyword" class="visually-hidden" type="radio" value="액션" ${search.orderKeyword == '액션' ? 'checked' : ''}>--%>
-<%--                                <label class="radioset-thumb thumb-round" for="radioset-c-1-2">액션</label>--%>
-<%--                            </div>--%>
-<%--                            <div class="radioset">--%>
-<%--                                <input id="radioset-c-1-3" name="orderKeyword" class="visually-hidden" type="radio" value="SF" ${search.orderKeyword == 'SF' ? 'checked' : ''}>--%>
-<%--                                <label class="radioset-thumb thumb-round" for="radioset-c-1-3">SF</label>--%>
-<%--                            </div>--%>
-<%--                            <div class="radioset">--%>
-<%--                                <input id="radioset-c-1-4" name="orderKeyword" class="visually-hidden" type="radio" value="판타지" ${search.orderKeyword == '판타지' ? 'checked' : ''}>--%>
-<%--                                <label class="radioset-thumb thumb-round" for="radioset-c-1-4">판타지</label>--%>
-<%--                            </div>--%>
-<%--                            <div class="radioset">--%>
-<%--                                <input id="radioset-c-1-5" name="orderKeyword" class="visually-hidden" type="radio" value="개그" ${search.orderKeyword == '개그' ? 'checked' : ''}>--%>
-<%--                                <label class="radioset-thumb thumb-round" for="radioset-c-1-5">개그</label>--%>
-<%--                            </div>--%>
-<%--                            <div class="radioset">--%>
-<%--                                <input id="radioset-c-1-6" name="orderKeyword" class="visually-hidden" type="radio" value="로맨스" ${search.orderKeyword == '로맨스' ? 'checked' : ''}>--%>
-<%--                                <label class="radioset-thumb thumb-round" for="radioset-c-1-6">로맨스</label>--%>
-<%--                            </div>--%>
-<%--                            <div class="radioset">--%>
-<%--                                <input id="radioset-c-1-7" name="orderKeyword" class="visually-hidden" type="radio" value="스포츠" ${search.orderKeyword == '스포츠' ? 'checked' : ''}>--%>
-<%--                                <label class="radioset-thumb thumb-round" for="radioset-c-1-7">스포츠</label>--%>
-<%--                            </div>--%>
-<%--                            <div class="radioset">--%>
-<%--                                <input id="radioset-c-1-8" name="orderKeyword" class="visually-hidden" type="radio" value="일상" ${search.orderKeyword == '일상' ? 'checked' : ''}>--%>
-<%--                                <label class="radioset-thumb thumb-round" for="radioset-c-1-8">일상</label>--%>
-<%--                            </div>--%>
-<%--                            <div class="radioset">--%>
-<%--                                <input id="radioset-c-1-9" name="orderKeyword" class="visually-hidden" type="radio" value="추리" ${search.orderKeyword == '추리' ? 'checked' : ''}>--%>
-<%--                                <label class="radioset-thumb thumb-round" for="radioset-c-1-9">추리</label>--%>
-<%--                            </div>--%>
-<%--                            <div class="radioset">--%>
-<%--                                <input id="radioset-c-1-10" name="orderKeyword" class="visually-hidden" type="radio" value="스릴러" ${search.orderKeyword == '스릴러' ? 'checked' : ''}>--%>
-<%--                                <label class="radioset-thumb thumb-round" for="radioset-c-1-10">스릴러</label>--%>
-<%--                            </div>--%>
-<%--                            <div class="radioset">--%>
-<%--                                <input id="radioset-c-1-11" name="orderKeyword" class="visually-hidden" type="radio" value="무협" ${search.orderKeyword == '무협' ? 'checked' : ''}>--%>
-<%--                                <label class="radioset-thumb thumb-round" for="radioset-c-1-11">무협</label>--%>
-<%--                            </div>--%>
-<%--                            <div class="radioset">--%>
-<%--                                <input id="radioset-c-1-12" name="orderKeyword" class="visually-hidden" type="radio" value="기타" ${search.orderKeyword == '기타' ? 'checked' : ''}>--%>
-<%--                                <label class="radioset-thumb thumb-round" for="radioset-c-1-12">기타</label>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-
-
-<%--                        <!-- 조회순 선택 -->--%>
-<%--                        <div class="checkset-wrap">--%>
-<%--                            <div class="checkset">--%>
-<%--                                <input id="checkset-a-1-1" class="checkset-input input-fill" type="checkbox" name="orderCondition" value="1" ${!empty search.orderCondition && search.orderCondition == 1 ? "checked" : ""}>--%>
-<%--                                <label class="checkset-label" for="checkset-a-1-1"></label>--%>
-<%--                                <span class="checkset-text">조회순</span>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-
-<%--                </div>--%>
-
-
-<%--                <!-- 작품 목록을 그리드 형식으로 표시 -->--%>
-<%--                <div class="container-md" id="workList">--%>
-<%--                    <!-- 작품 목록을 순회하며 표시 -->--%>
-<%--                    <c:forEach var="work" items="${list}">--%>
-<%--                        <div class="container-list">--%>
-<%--                            <!-- 작품 이미지와 정보를 표시 -->--%>
-<%--                            <figure class="cardset-figure">--%>
-<%--                                <img class="cardset-img" src="${work.thumbnail}" alt="이미지">--%>
-<%--                            </figure>--%>
-<%--                            <div class="cardset-body">--%>
-<%--                                <!-- 작품 제목 표시 -->--%>
-<%--                                <h5 class="cardset-tit">${work.workName}</h5>--%>
-<%--                                <p class="cardset-user">${work.userId}</p>--%>
-<%--                                <!-- 작품 카테고리 표시 -->--%>
-<%--                                <p class="cardset-desc">카테고리: <c:choose>--%>
-<%--                                    <c:when test="${work.category eq '0'}">웹소설</c:when>--%>
-<%--                                    <c:when test="${work.category eq '1'}">웹툰</c:when>--%>
-<%--                                    <c:when test="${work.category eq '2'}">웹드라마</c:when>--%>
-<%--                                    <c:otherwise>기타</c:otherwise>--%>
-<%--                                </c:choose></p>--%>
-<%--                                <!-- 작품 장르 표시 -->--%>
-<%--                                <p class="cardset-desc">장르:  ${work.genre1}--%>
-<%--                                    <c:if test="${not empty work.genre2}">, ${work.genre2}</c:if>--%>
-<%--                                    <c:if test="${not empty work.genre3}">, ${work.genre3}</c:if></p>--%>
-<%--                                <!-- 작품 가격(무료 또는 유료) 표시 -->--%>
-<%--                                <p class="cardset-desc">${work.fap == 0 ? '무료' : '유료'}</p>--%>
-
-<%--                                <div class="work-options">--%>
-<%--                                    <span class="work-option" onclick="viewWorkDetail(${work.workNo})">자세히 보기</span>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </c:forEach>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--    </main>--%>
 <main class="th-layout-main">
-    <div class="hooms-N31" data-bid="geLqKMOmeJ" id="">
+    <div class="thpart-HmlqLtFlNZ" data-bid="HmlqLtFlNZ" id="">
+        <div class="contents-container">
+            <img class="contents-backimg" src="../khs/images/work.jpg" alt="">
+            <div class="contents-body container-md">
+                <h2 class="contents-title"> Work </h2>
+                <h7 class="contents-sub">작품</h7>
+            </div>
+        </div>
+    </div>
+    <div class="hooms-N31" data-bid="geLqKMOmeJ">
         <div class="contents-inner">
             <div class="contents-container container-md">
                 <div class="textset textset-h2">
@@ -304,7 +189,7 @@
                     <div class="checkset">
                         <input id="checkset-a-1-1" class="checkset-input input-fill" type="checkbox" name="orderCondition" value="1" ${!empty search.orderCondition && search.orderCondition == 1 ? "checked" : ""}>
                         <label class="checkset-label" for="checkset-a-1-1"></label>
-                        <span class="checkset-text">조회순</span>
+                        <span class="checkset-text">조회순${!empty search.orderCondition && search.orderCondition == 1 ? "(높은순)" : "(낮은순)"}</span>
                     </div>
                 </div>
 
@@ -339,11 +224,6 @@
 <!-- 페이지 정보를 저장할 hidden input -->
 <input type="hidden" id="currentPage" value="${search.currentPage}" />
 <input type="hidden" id="loading" value="false" />
-
-<!-- [S]thwhole-wfLpW5Z3pJ -->
-<%--<%@ include file="../layout/footer.jsp" %>--%>
-<jsp:include page="../layout/footer.jsp" flush="true"/>
-<!-- [E]thwhole-wfLpW5Z3pJ -->
 
 </body>
 <script>
@@ -461,7 +341,7 @@
             var workList = $("#workList"); // 컨테이너의 ID에 맞게 조정
             $.each(workItems, function(index, work) {
                 var contentItem = $("<div></div>").addClass("contents-cardlist contents-cardlist-active");
-                var link = $("<a></a>").attr("href", "javascript:void(0)").addClass("cardset");
+                var link = $("<a></a>").attr("href", "../work/getDetailWork?workNo=" + work.workNo).addClass("cardset");
 
                 var figure = $("<figure></figure>").addClass("cardset-figure");
                 var img = $("<img>").addClass("cardset-img").attr("src", work.thumbnail).attr("alt", "이미지");
@@ -489,8 +369,12 @@
     });
 </script>
 
-
-
-
-
 </html>
+<script src="../common/js/setting.js"></script>
+<script src="../common/js/plugin.js"></script>
+<script src="../common/js/template.js"></script>
+<script src="../common/js/common.js"></script>
+<script src="../common/js/script.js"></script>
+<script src="../support/js/support.js"></script>
+<script src="/common/js/drag.js"></script>
+<%@ include file="../layout/bottom.jsp" %>

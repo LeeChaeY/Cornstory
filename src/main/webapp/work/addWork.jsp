@@ -11,21 +11,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="format-detection" content="telephone=no">
     <title>cornstory</title>
-    <link rel="stylesheet" href="/khs/css/setting.css">
-    <link rel="stylesheet" href="/khs/css/plugin.css">
-    <link rel="stylesheet" href="/khs/css/template.css">
-    <link rel="stylesheet" href="/khs/css/common.css">
-    <link rel="stylesheet" href="/khs/css/style.css">
+    <link rel="stylesheet" href="../common/css/setting.css">
+    <link rel="stylesheet" href="../common/css/plugin.css">
+    <link rel="stylesheet" href="../common/css/template.css">
+    <link rel="stylesheet" href="../common/css/common.css">
+    <link rel="stylesheet" href="../common/css/style.css">
+    <link rel="stylesheet" href="../common/css/drag.css">
+    <link rel="stylesheet" href="../support/css/setting.css">
+    <link rel="stylesheet" href="../support/css/plugin.css">
+    <link rel="stylesheet" href="../support/css/template.css">
+    <link rel="stylesheet" href="../support/css/common.css">
+    <link rel="stylesheet" href="../support/css/style.css">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <style>
+        .textset-tit{text-align: center;}
+    </style>
 </head>
+<%@ include file="../layout/top.jsp" %>
 <body>
 
-<!--top start-->
-<%--<%@ include file="../layout/header.jsp" %>--%>
-<jsp:include page="../layout/header.jsp" flush="true"/>
-<!--top end-->
-
 <main class="th-layout-main ">
+
+    <div class="thpart-HmlqLtFlNZ" data-bid="HmlqLtFlNZ" id="">
+        <div class="contents-container">
+            <img class="contents-backimg" src="../khs/images/work.jpg" alt="">
+            <div class="contents-body container-md">
+                <h2 class="contents-title"> Work </h2>
+                <h7 class="contents-sub">작품</h7>
+            </div>
+        </div>
+    </div>
+
     <div class="hooms-N39" data-bid="MzlQkMIezC" >
         <div class="contents-inner">
             <form action="../work/addWork" method="post" onsubmit="return validateForm()" enctype="multipart/form-data">
@@ -277,12 +293,6 @@
         </div>
     </div>
 </main>
-
-
-<!-- [S]thwhole-wfLpW5Z3pJ -->
-<%--<%@ include file="../layout/footer.jsp" %>--%>
-<jsp:include page="../layout/footer.jsp" flush="true"/>
-<!-- [E]thwhole-wfLpW5Z3pJ -->
 
 </body>
 <script>
@@ -575,5 +585,12 @@
         setThumbnail({ target: { files: [file] } }); // 이미지 처리
     });
 </script>
-
 </html>
+<script src="../common/js/setting.js"></script>
+<script src="../common/js/plugin.js"></script>
+<script src="../common/js/template.js"></script>
+<script src="../common/js/common.js"></script>
+<script src="../common/js/script.js"></script>
+<script src="../support/js/support.js"></script>
+<script src="/common/js/drag.js"></script>
+<%@ include file="../layout/bottom.jsp" %>

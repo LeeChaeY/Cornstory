@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -7,17 +7,24 @@
 <html>
 <head>
     <title>cornstory</title>
-    <link rel="stylesheet" href="/khs/css/setting.css">
-    <link rel="stylesheet" href="/khs/css/plugin.css">
-    <link rel="stylesheet" href="/khs/css/template.css">
-    <link rel="stylesheet" href="/khs/css/common.css">
-    <link rel="stylesheet" href="/khs/css/style.css">
+    <link rel="stylesheet" href="../common/css/setting.css">
+    <link rel="stylesheet" href="../common/css/plugin.css">
+    <link rel="stylesheet" href="../common/css/template.css">
+    <link rel="stylesheet" href="../common/css/common.css">
+    <link rel="stylesheet" href="../common/css/style.css">
+    <link rel="stylesheet" href="../common/css/drag.css">
+    <link rel="stylesheet" href="../support/css/setting.css">
+    <link rel="stylesheet" href="../support/css/plugin.css">
+    <link rel="stylesheet" href="../support/css/template.css">
+    <link rel="stylesheet" href="../support/css/common.css">
+    <link rel="stylesheet" href="../support/css/style.css">
     <meta charset="utf-8">
     <style>
         .genre-list span {
             display: inline-block; /* 각 장르를 inline-block으로 설정하여 가로로 배열 */
             margin-right: 5px; /* 각 장르 사이에 간격 추가 */
         }
+
         .contents-radioset {
             display: flex; /* Flex 컨테이너 설정 */
             flex-wrap: wrap; /* 내용이 넘칠 경우 줄바꿈 */
@@ -27,7 +34,7 @@
             margin-right: 10px; /* 각 장르 사이의 간격 설정 */
         }
 
-        #workList{
+        #workList {
             display: flex; /* 가로로 정렬하기 위해 flex 컨테이너로 설정 */
             flex-wrap: wrap; /* 필요하다면 자식 요소들을 여러 행에 걸쳐 표시 */
             justify-content: flex-start; /* 왼쪽 정렬로 변경 */
@@ -53,68 +60,35 @@
 
     </style>
 </head>
+<%@ include file="../layout/top.jsp" %>
 <body>
 
-<!--top start-->
-<%--<%@ include file="../layout/header.jsp" %>--%>
-<jsp:include page="../layout/header.jsp" flush="true"/>
-<!--top end-->
-
-<%--<main class="th-layout-main ">--%>
-<%--    <div class="opilsol-N31" data-bid="nu2ClPPZgeB" id="">--%>
-<%--        <div class="content-container">--%>
-<%--            <h2 class="textset-tit">나의 작품 목록</h2>--%>
-<%--            <p>전체 개수: ${myCount}</p>--%>
-<%--            <p><a href="../work/addWork">작품추가</a></p>--%>
-<%--            <div class="container-md">--%>
-<%--                <c:forEach var="work" items="${list}">--%>
-<%--                    <div class="container-list">--%>
-<%--                        <figure class="cardset-figure">--%>
-<%--                            <a class="cardset cardset-border" href="../work/getDetailWork?workNo=${work.workNo}">--%>
-<%--                                <img class="cardset-img" src="${work.thumbnail}" alt="이미지">--%>
-<%--                            </a>--%>
-<%--                        </figure>--%>
-<%--                        <div class="cardset-body">--%>
-<%--                            <h5 class="cardset-tit">${work.workName}</h5>--%>
-<%--                            <p class="cardset-desc">카테고리: <c:choose>--%>
-<%--                                <c:when test="${work.category eq '0'}">웹소설</c:when>--%>
-<%--                                <c:when test="${work.category eq '1'}">웹툰</c:when>--%>
-<%--                                <c:when test="${work.category eq '2'}">웹드라마</c:when>--%>
-<%--                            </c:choose></p>--%>
-<%--                            <p class="cardset-desc">장르:  ${work.genre1}--%>
-<%--                                <c:if test="${not empty work.genre2}">, ${work.genre2}</c:if>--%>
-<%--                                <c:if test="${not empty work.genre3}">, ${work.genre3}</c:if></p>--%>
-<%--                            <p class="cardset-desc">${work.fap == 0 ? '무료' : '유료'}</p>--%>
-<%--                                <a href="../work/updateWork?workNo=${work.workNo}">수정</a>--%>
-<%--                                <form method="post" action="../work/deleteWork">--%>
-<%--                                    <input type="hidden" name="workNo" value="${work.workNo}" />--%>
-<%--                                    <button type="submit">삭제</button>--%>
-<%--                                </form>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                </c:forEach>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-<%--</main>--%>
 
 <!-- 나의 작품 리스트 -->
 <main class="th-layout-main">
-    <div class="hooms-N31" data-bid="geLqKMOmeJ" id="">
+    <div class="thpart-HmlqLtFlNZ" data-bid="HmlqLtFlNZ">
+        <div class="contents-container">
+            <img class="contents-backimg" src="../khs/images/work.jpg" alt="">
+            <div class="contents-body container-md">
+                <h2 class="contents-title"> Work </h2>
+                <h7 class="contents-sub">작품</h7>
+            </div>
+        </div>
+    </div>
+    <div class="hooms-N31" data-bid="geLqKMOmeJ">
         <div class="contents-inner">
             <div class="contents-container container-md">
                 <div class="textset textset-h2">
-                    <h2 class="textset-tit">나의 작품 리스트</h2>
-                    <p>전체 개수: ${myCount}</p>
+                    <h2 class="textset-tit">작품 관리</h2>
+                    <p class="contents-result">전체<span id="totalCount"> ${myCount}</span>개</p>
                 </div>
                 <!-- 작품 목록 -->
                 <div class="contents-group">
                     <div class="work-items-container custom-work-list">
                         <div class="container-md" id="workList">
-                            <!-- 작품 목록이 여기에 동적으로 생성됩니다. -->
                             <c:forEach var="work" items="${list}">
                                 <div class="contents-cardlist contents-cardlist-active">
-                                    <a href="javascript:void(0)" class="cardset">
+                                    <a href="../work/getDetailWork?workNo=${work.workNo}" class="cardset">
                                         <figure class="cardset-figure">
                                             <img class="cardset-img" src="${work.thumbnail}" alt="이미지">
                                         </figure>
@@ -135,30 +109,33 @@
                                                 <c:when test="${work.category eq '0'}">웹소설</c:when>
                                                 <c:when test="${work.category eq '1'}">웹툰</c:when>
                                                 <c:when test="${work.category eq '2'}">웹드라마</c:when>
-                                                </c:choose>
+                                            </c:choose>
                                             </p>
                                         </div>
-                                        </a>
-                                        <a href="../work/updateWork?workNo=${work.workNo}">수정</a>
-                                        <form method="post" action="../work/deleteWork">
-                                            <input type="hidden" name="workNo" value="${work.workNo}" />
-                                            <button type="submit">삭제</button>
-                                        </form>
-                                        </div>
-                                        </c:forEach>
-                                        </div>
-                                        </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </main>
+                                    </a>
+                                    <a href="../work/updateWork?workNo=${work.workNo}">수정</a>
+                                    <form method="post" action="../work/deleteWork">
+                                        <input type="hidden" name="workNo" value="${work.workNo}"/>
+                                        <button type="submit">삭제</button>
+                                    </form>
+                                </div>
+                            </c:forEach>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
 
-
-                                <!-- [S]thwhole-wfLpW5Z3pJ -->
-                                <%--<%@ include file="../layout/footer.jsp" %>--%>
-<jsp:include page="../layout/footer.jsp" flush="true"/>
-<!-- [E]thwhole-wfLpW5Z3pJ -->
 
 </body>
 </html>
+<script src="../common/js/setting.js"></script>
+<script src="../common/js/plugin.js"></script>
+<script src="../common/js/template.js"></script>
+<script src="../common/js/common.js"></script>
+<script src="../common/js/script.js"></script>
+<script src="../support/js/support.js"></script>
+<script src="/common/js/drag.js"></script>
+<%@ include file="../layout/bottom.jsp" %>

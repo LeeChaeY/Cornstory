@@ -29,7 +29,7 @@
     <update id="updateStory" parameterType="story">
         UPDATE story
         SET user_id = #{userId}, story_name = #{storyName}, story_content = #{storyContent},
-            story_date = #{storyDate}, story_image = #{storyImage}
+            story_date = now(), story_image = #{storyImage}
         WHERE story_no = #{storyNo}
     </update>
 
@@ -40,12 +40,12 @@
 
     <!-- 전체 스토리 목록-->
     <select id="listStory" resultMap="storyResultMap">
-        SELECT * FROM story
+        SELECT * FROM story order by story_date desc
     </select>
 
     <!-- 마이 스토리 확인-->
     <select id="getMyStory" parameterType="String" resultMap="storyResultMap">
-        SELECT * FROM story WHERE user_id = #{userId}
+        SELECT * FROM story WHERE user_id = #{userId} order by story_date desc
     </select>
 
 

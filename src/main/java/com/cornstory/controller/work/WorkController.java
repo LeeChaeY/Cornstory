@@ -207,6 +207,7 @@ public class WorkController {
         Map<String, Object> map=episodeService.listEpisode(workNo);
         model.addAttribute("bookmark",workService.getBookmarksByUserId(user.getUserId()));
         model.addAttribute("purchase",episodeService.getPurchaseEpisode(user.getUserId()));
+        model.addAttribute("user",user);
         model.addAttribute("work",work);
         model.addAttribute("list",map.get("list"));
         model.addAttribute("totalCount",map.get("totalCount"));

@@ -6,71 +6,20 @@
 <html>
 <head>
     <title>cornstory</title>
-    <link rel="stylesheet" href="/ssh/css/setting.css">
-    <link rel="stylesheet" href="/ssh/css/plugin.css">
-    <link rel="stylesheet" href="/ssh/css/template.css">
-    <link rel="stylesheet" href="/ssh/css/common.css">
-    <link rel="stylesheet" href="/ssh/css/style.css">
+    <link rel="stylesheet" href="../common/css/setting.css">
+    <link rel="stylesheet" href="../common/css/plugin.css">
+    <link rel="stylesheet" href="../common/css/template.css">
+    <link rel="stylesheet" href="../common/css/common.css">
+    <link rel="stylesheet" href="../common/css/style.css">
+    <link rel="stylesheet" href="../common/css/drag.css">
+    <link rel="stylesheet" href="../support/css/setting.css">
+    <link rel="stylesheet" href="../support/css/plugin.css">
+    <link rel="stylesheet" href="../support/css/template.css">
+    <link rel="stylesheet" href="../support/css/common.css">
+    <link rel="stylesheet" href="../support/css/style.css">
+    <link rel="stylesheet" href="../khs/css/style.css">
+    <link rel="stylesheet" href="../khs/css/common.css">
     <style>
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background-color: #f5f5f5;
-            margin: 0;
-            padding: 0;
-        }
-
-        h2 {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 24px;
-        }
-
-        a {
-            text-decoration: none;
-            color: #007bff;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        .container-md {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .story-container {
-            background: #ffffff;
-            border: 1px solid #e1e1e1;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .story-container img {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin-top: 20px;
-        }
-
-        .story-container h3 {
-            font-size: 24px;
-            margin-top: 15px;
-        }
-
-        .story-container p {
-            font-size: 16px;
-            margin-top: 10px;
-        }
-
-        .story-container strong {
-            font-weight: bold;
-            color: #007bff;
-        }
-
         .comments-section {
             background: #f0f0f0;
             padding: 10px;
@@ -146,60 +95,73 @@
     </style>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
-<body>
-
 <!--top start-->
 <%@ include file="../layout/top.jsp" %>
 <!--top end-->
-
-
-
-<h2>스토리 목록</h2>
-<main class="th-layout-main">
-    <div class="opilsol-N30" data-bid="raLq4sT3lu">
-        <div class="content-container">
-            <div class="contents-form container-md">
-<c:if test="${not empty story}">
-    <c:forEach var="story" items="${story}">
-        <div class="story-container">
-            <strong>User ID:</strong> ${story.userId}<br>
-            <strong>Story Name:</strong> ${story.storyName}<br>
-            <strong>Story Image:</strong> ${story.storyImage}<br>
-            <strong>Story Content:</strong> ${story.storyContent}<br>
-            <strong>Story Date:</strong> ${story.storyDate}<br>
-            <c:if test="${story.userId} eq ${user.userId}">
-            <a href="/story/updateStory?storyNo=${story.storyNo}">수정</a>
-            |
-            <form action="/story/deleteStory" method="post" id="deleteForm_${story.storyNo}">
-                <input type="hidden" name="storyNo" value="${story.storyNo}">
-                <a href="#" onclick="confirmAndSubmit(${story.storyNo})">삭제</a>
-            </form>
-            |
-            </c:if>
-            <!-- 댓글 보기/숨기기 버튼 -->
-            <a href="#" onclick="toggleComments(${story.storyNo})">댓글 보기/숨기기</a>
-
-
-            <!-- 댓글 폼 -->
-            <div class="comment-form" id="commentForm_${story.storyNo}">
-                <input type="hidden" id="storyNo_${story.storyNo}" value="${story.storyNo}">
-                <textarea id="commentContent_${story.storyNo}" placeholder="댓글을 입력하세요"></textarea>
-                <button type="button" onclick="addComment(${story.storyNo})">댓글 추가</button>
+<body>
+<main class="th-layout-main ">
+    <div class="thpart-HmlqLtFlNZ" data-bid="HmlqLtFlNZ">
+        <div class="contents-container">
+            <img class="contents-backimg" src="../khs/images/story.jpg" alt="">
+            <div class="contents-body container-md">
+                <h2 class="contents-title"> Story </h2>
+                <h7 class="contents-sub">스토리</h7>
             </div>
-
-            <!-- 댓글 목록 -->
-            <div class="comment-list" id="commentList_${story.storyNo}"></div>
         </div>
-    </c:forEach>
-</c:if>
-</div>
-</div>
-</div>
-</main>
-<br/>
-<!-- 하단 푸터 -->
-<%@ include file="../layout/bottom.jsp" %>
+    </div>
 
+    <!-- [S]hooms-N8 -->
+    <div class="hooms-N8" data-bid="VtLQKozMcd" >
+        <div class="contents-inner">
+            <div class="contents-container container-md">
+                <div class="textset textset-h2">
+                    <h2 class="textset-tit">스토리 리스트</h2>
+                </div>
+                <c:if test="${not empty story}">
+                    <c:forEach var="story" items="${story}">
+                <div class="contents-cardgroup">
+
+                    <div class="cardset" style="border: 1px black solid;">
+                        <figure class="cardset-figure">
+                            <img class="cardset-img" src="${story.storyImage}" alt="이미지">
+                        </figure>
+                        <div class="cardset-body">
+                            <h5 class="cardset-tit">${story.storyName}</h5>
+                            <p class="cardset-desc"> <fmt:formatDate value="${story.storyDate}" pattern="yyyy-MM-dd" /> </p>
+                            <p class="cardset-desc"> ${story.userId} </p>
+                            <p class="cardset-desc"> ${story.storyContent} </p>
+                            <c:if test="${story.userId eq user.userId}">
+                                <a href="/story/updateStory?storyNo=${story.storyNo}">수정</a>
+                                |
+                                <form action="/story/deleteStory" method="post" id="deleteForm_${story.storyNo}">
+                                    <input type="hidden" name="storyNo" value="${story.storyNo}">
+                                    <a href="#" onclick="confirmAndSubmit(${story.storyNo})">삭제</a>
+                                </form>
+                            </c:if>
+                        </div>
+                        <a href="#" onclick="event.preventDefault(); toggleComments(${story.storyNo});">댓글 보기/숨기기</a>
+                        <c:if test="${not empty user}">
+                        <div class="comment-form" id="commentForm_${story.storyNo}" style="display: none;">
+                            <input type="hidden" id="storyNo_${story.storyNo}" value="${story.storyNo}">
+                            <textarea id="commentContent_${story.storyNo}" placeholder="댓글을 입력하세요"></textarea>
+                            <button type="button" onclick="addComment(${story.storyNo})">댓글 추가</button>
+                       </div>
+                        </c:if>
+                        <c:if test="${empty user}">
+                            <div class="comment-form" id="commentForm_${story.storyNo}" style="display: none;">
+                                <h4>로그인 후 입력이 가능합니다.</h4>
+                            </div>
+                        </c:if>
+                        <div class="comment-list" id="commentList_${story.storyNo}" style="display: none;"></div>
+                    </div>
+                </div>
+                    </c:forEach>
+                </c:if>
+            </div>
+        </div>
+    </div>
+<!-- [E]hooms-N8 -->
+</main>
 </body>
 
 <script>
@@ -215,13 +177,13 @@
         var commentForm = document.getElementById("commentForm_" + storyNo);
         var commentList = document.getElementById("commentList_" + storyNo);
 
-        if (commentForm.style.display === "none") {
-            // 댓글 폼 및 목록을 보이게 하고 댓글 목록을 가져와서 표시
+        var isHidden = commentForm.style.display === "none";
+
+        if (isHidden) {
             commentForm.style.display = "block";
             commentList.style.display = "block";
             loadComments(storyNo);
         } else {
-            // 댓글 폼 및 목록을 숨김
             commentForm.style.display = "none";
             commentList.style.display = "none";
         }
@@ -264,7 +226,14 @@
             }
         });
     }
+    function formatDate(dateString) {
+        var date = new Date(dateString);
+        var year = date.getFullYear();
+        var month = ('0' + (date.getMonth() + 1)).slice(-2); // 월은 0부터 시작하므로 1을 더합니다.
+        var day = ('0' + date.getDate()).slice(-2);
 
+        return year + '-' + month + '-' + day; // yyyy-MM-dd 형식
+    }
     // 댓글 목록을 화면에 표시하는 함수
     function displayCommentList(comments, storyNo) {
         var commentListElement = document.getElementById("commentList_" + storyNo);
@@ -275,36 +244,62 @@
         }
 
         // comments 배열을 순회하면서 각 댓글을 화면에 추가
-        for (var i = 0; i < comments.length; i++) {
-            var comment = comments[i];
-            var listItem = document.createElement("div");
+        comments.forEach(function(comment) {
+            var listItem = document.createElement("tr"); // 테이블 행 생성
 
-            var htmlContent =
-                '<div class="comment-item">' +
-                '<strong>' + comment.userId + '</strong>' +
-                '<span>' + comment.sCommentDate + '</span>' +
-                '</div>' +
-                '<p>' + comment.sContent + '</p>' +
-                '<button onclick="openModal(\'commentModal_' + comment.sCommentNo + '\', \'' + comment.sContent + '\')">수정</button>' +
-                '<button onclick="deleteComment(' + comment.sCommentNo + ',' + storyNo + ')">삭제</button>' +
+            // 사용자 ID
+            var userIdCell = document.createElement("td");
+            userIdCell.className = "tableset-tit tableset-order02";
+            userIdCell.innerHTML = '<span>' + comment.userId + '</span>';
 
-                <!-- 수정 및 삭제 모달 -->
-                '<div class="modal" id="commentModal_' + comment.sCommentNo + '" style="display: none;">' +
-                '<div class="modal-content">' +
-                '<span class="close" onclick="closeModal(\'commentModal_' + comment.sCommentNo + '\')">&times;</span>' +
-                '<textarea id="editedContent_' + comment.sCommentNo + '" placeholder="댓글을 수정하세요">' + comment.sContent + '</textarea>' +
-                '<button onclick="updateComment(' + comment.sCommentNo + ',' + storyNo + ')">수정</button>' +
-                '</div>' +
-                '</div>';
+            // 댓글 내용
+            var contentCell = document.createElement("td");
+            contentCell.className = "tableset-order03";
+            contentCell.textContent = comment.sContent;
 
-            listItem.innerHTML = htmlContent;
+            // 댓글 날짜
+            var formattedDate = formatDate(comment.sCommentDate);
+
+            var dateCell = document.createElement("td");
+            dateCell.className = "tableset-order03";
+            dateCell.textContent = formattedDate;
+
+            // 수정 및 삭제 버튼
+            var actionCell = document.createElement("td");
+            actionCell.className = "tableset-order03";
+            var editButton = document.createElement("button");
+            editButton.textContent = "수정";
+            editButton.onclick = function() {
+                // 수정 기능 구현
+                openModal('commentModal_' + comment.sCommentNo, comment.sContent);
+            };
+            var deleteButton = document.createElement("button");
+            deleteButton.textContent = "삭제";
+            deleteButton.onclick = function() {
+                // 삭제 기능 구현
+                deleteComment(comment.sCommentNo, storyNo);
+            };
+
+            actionCell.appendChild(editButton);
+            actionCell.appendChild(deleteButton);
+
+            // 행에 셀 추가
+            listItem.appendChild(userIdCell);
+            listItem.appendChild(contentCell);
+            listItem.appendChild(dateCell);
+            listItem.appendChild(actionCell);
+
+            // 댓글 목록에 행 추가
             commentListElement.appendChild(listItem);
-        }
+        });
 
         if (comments.length === 0) {
-            var emptyMessage = document.createElement("p");
-            emptyMessage.textContent = "아직 댓글 내역이 없습니다.";
-            commentListElement.appendChild(emptyMessage);
+            var emptyRow = document.createElement("tr");
+            var emptyCell = document.createElement("td");
+            emptyCell.colSpan = "4"; // 4개의 열을 합침
+            emptyCell.textContent = "아직 댓글 내역이 없습니다.";
+            emptyRow.appendChild(emptyCell);
+            commentListElement.appendChild(emptyRow);
         }
     }
 
@@ -361,3 +356,11 @@
     }
 </script>
 </html>
+<script src="../common/js/setting.js"></script>
+<script src="../common/js/plugin.js"></script>
+<script src="../common/js/template.js"></script>
+<script src="../common/js/common.js"></script>
+<script src="../common/js/script.js"></script>
+<%--<script src="../support/js/support.js"></script>--%>
+<%--<script src="/common/js/drag.js"></script>--%>
+<%@ include file="../layout/bottom.jsp" %>

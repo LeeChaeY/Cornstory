@@ -6,74 +6,85 @@
 <html>
 <head>
     <title>cornstory</title>
-    <link rel="stylesheet" href="/ssh/css/setting.css">
-    <link rel="stylesheet" href="/ssh/css/plugin.css">
-    <link rel="stylesheet" href="/ssh/css/template.css">
-    <link rel="stylesheet" href="/ssh/css/common.css">
-    <link rel="stylesheet" href="/ssh/css/style.css">
-    <style>
-        .th-layout-main {
-            display: flex;
-            justify-content: center; /* 가로 방향으로 가운데 정렬 */
-            align-items: center; /* 세로 방향으로 가운데 정렬 */
-            min-height: 100vh; /* 화면의 전체 높이를 채움 */
-        }
+    <link rel="stylesheet" href="../common/css/setting.css">
+    <link rel="stylesheet" href="../common/css/plugin.css">
+    <link rel="stylesheet" href="../common/css/template.css">
+    <link rel="stylesheet" href="../common/css/common.css">
+    <link rel="stylesheet" href="../common/css/style.css">
+    <link rel="stylesheet" href="../common/css/drag.css">
+    <link rel="stylesheet" href="../support/css/setting.css">
+    <link rel="stylesheet" href="../support/css/plugin.css">
+    <link rel="stylesheet" href="../support/css/template.css">
+    <link rel="stylesheet" href="../support/css/common.css">
+    <link rel="stylesheet" href="../support/css/style.css">
+    <link rel="stylesheet" href="../khs/css/style.css">
+    <link rel="stylesheet" href="../khs/css/common.css">
 
-        .content-container {
-            width: 100%; /* 혹은 원하는 최대 너비 설정 */
-            max-width: 600px; /* 컨테이너의 최대 너비 제한 */
-            padding: 20px; /* 내부 여백 */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
-            background: white; /* 배경색 */
-            border-radius: 8px; /* 모서리 둥글게 */
-        }
-    </style>
-    <%--    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>--%>
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
-<body>
-
 <!--top start-->
 <%@ include file="../layout/top.jsp" %>
 <!--top end-->
-
-<main class="th-layout-main">
-    <div class="opilsol-N24" data-bid="raLq4sT3lu">
-        <div class="content-container">
-            <div class="contents-form container-md">
-                <h2 class="textset-tit">스토리 수정</h2>
-                <form action="/story/updateStory" method="post" enctype="multipart/form-data">
+<body>
+<main class="th-layout-main ">
+    <!-- [S]hooms-N39 -->
+    <div class="hooms-N39" data-bid="csLqpM814f" id="">
+        <div class="contents-inner">
+            <div class="contents-container container-md">
+                <div class="textset textset-h2">
+                    <h2 class="textset-tit">스토리 수정</h2>
+                </div>
+                <form action="../story/updateStory" method="post" enctype="multipart/form-data">
                     <input type="hidden" name="userId" value="${user.userId}"/>
-
-                    <div class="form-group">
-                        <label for="storyName">스토리 이름:</label>
-                        <input type="text" class="form-control" id="storyName" name="storyName" value="${story.storyName}" required/>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="storyContent">스토리 내용:</label>
-                        <textarea class="form-control" id="storyContent" name="storyContent" rows="4" required>${story.storyContent}</textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="thumbnailFile">이미지 파일:</label>
-                        <input type="file" class="form-control-file" name="thumbnailFile" id="thumbnailFile" onchange="setThumbnail(event);" accept=".jpg">
-                        <div id="image_container">
-                            <c:if test="${not empty story.storyImage}">
-                                <img src="${story.storyImage}" style="max-width: 300px; max-height: 300px; display: block;"/>
-                            </c:if>
+                    <input type="hidden" name="storyNo" id="storyNo" value="${story.storyNo}"/>
+                    <div class="contents-form">
+                        <div class="contents-form-middle">
+                            <div class="inputset inputset-lg inputset-label">
+                                <label>
+                                    <h6 class="inputset-tit">스토리 이름</h6>
+                                    <input type="text" class="inputset-input form-control" placeholder="스토리 이름을 입력해주세요." id="storyName" name="storyName" value="${story.storyName}" required>
+                                </label>
+                            </div>
+                            <div class="inputset inputset-lg inputset-label">
+                                <label>
+                                    <h6 class="inputset-tit">스토리 내용</h6>
+                                    <textarea class="inputset-textarea" placeholder="스토리 내용을 입력해주세요." id="storyContent" name="storyContent" required>${story.storyContent}</textarea>
+                                    <div class="inputset-langth">
+                                        <span class="inputset-count">0</span>
+                                        <span class="inputset-total">/300</span>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="fileset fileset-lg fileset-label">
+                                <label>
+                                    <h6 class="fileset-tit"> 첨부파일
+                                    </h6>
+                                    <div class="fileset-body">
+                                        <div class="fileset-group">
+                                            <input type="file" class="fileset-input" name="thumbnailFile" id="thumbnailFile" onchange="setThumbnail(event);" accept=".jpg">
+                                            <button class="fileset-cancel"></button>
+                                        </div>
+                                        <div id="image_container">
+                                            <c:if test="${not empty story.storyImage}">
+                                                <img src="${story.storyImage}" style="max-width: 300px; max-height: 300px; display: block;"/>
+                                            </c:if>
+                                        </div>
+                                        <span class="btnset btnset-line btnset-lg fileset-upload">파일 첨부하기</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="contents-sign">
+                            <button class="btnset modalset-btn" >수정</button>
+                            <button class="btnset modalset-btn" onclick="window.location='/story/listStory'">취소</button>
                         </div>
                     </div>
-
-                    <button type="submit" class="btn btn-primary">수정하기</button>
-                    <button type="button" class="btn btn-secondary" onclick="window.location='/story/listStory'">취소</button>
                 </form>
             </div>
         </div>
     </div>
+    <!-- [E]hooms-N39 -->
 </main>
-
-<!-- 하단 푸터 -->
-<%@ include file="../layout/bottom.jsp" %>
 
 </body>
 <script>
@@ -116,3 +127,11 @@
     }
 </script>
 </html>
+<script src="../common/js/setting.js"></script>
+<script src="../common/js/plugin.js"></script>
+<script src="../common/js/template.js"></script>
+<script src="../common/js/common.js"></script>
+<script src="../common/js/script.js"></script>
+<%--<script src="../support/js/support.js"></script>--%>
+<%--<script src="/common/js/drag.js"></script>--%>
+<%@ include file="../layout/bottom.jsp" %>

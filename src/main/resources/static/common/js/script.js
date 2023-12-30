@@ -133,3 +133,32 @@
     });
   });
 })();;
+(function() {
+  $(function() {
+    $(".hooms-N27").each(function() {
+      const $block = $(this);
+      // Swiper
+      const swiper = new Swiper(".hooms-N27 .contents-swiper", {
+        slidesPerView: 'auto',
+        centeredSlides: true,
+        allowTouchMove: false,
+        loop: true,
+        pagination: {
+          type: "progressbar",
+          el: ".hooms-N27 .swiper-pagination",
+          clickable: true,
+        },
+        autoplay: {
+          delay: 2500,
+        },
+        on: {
+          slideChange: function() {
+            $block.find('.contents-slide').removeClass('contents-price-active');
+            const activeIndex = this.activeIndex % this.slides.length;
+            $block.find('.contents-slide').eq(activeIndex).addClass('contents-price-active');
+          }
+        }
+      });
+    });
+  });
+})();;
