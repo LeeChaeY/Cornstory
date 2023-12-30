@@ -23,15 +23,15 @@
     <link rel="stylesheet" href="/lcy/css/style.css">
 
     <!-- [E]thwhole-wfLpW5Z3pJ -->
-    <script src="/ssh/js/setting.js"></script>
-    <script src="/ssh/js/plugin.js"></script>
-    <script src="/ssh/js/template.js"></script>
-    <script src="/ssh/js/common.js"></script>
-    <script src="/ssh/js/script.js"></script>
+<%--    <script src="/ssh/js/setting.js"></script>--%>
+<%--    <script src="/ssh/js/plugin.js"></script>--%>
+<%--    <script src="/ssh/js/template.js"></script>--%>
+<%--    <script src="/ssh/js/common.js"></script>--%>
+<%--    <script src="/ssh/js/script.js"></script>--%>
 
     <script src="/lcy/js/listChatSpace.js"></script>
     <%--    <script src="http://localhost:3000/socket.io/socket.io.js"></script>--%>
-    <script src="http://101.79.8.55:3000/socket.io/socket.io.js"></script>
+    <script src="http://223.130.133.132:3000/socket.io/socket.io.js"></script>
     <script>
         $(function () {
             // const socket = io();

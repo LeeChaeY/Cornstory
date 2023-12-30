@@ -26,7 +26,7 @@
 
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <%--  <script src="http://localhost:3000/socket.io/socket.io.js"></script>--%>
-  <script src="http://101.79.8.55:3000/socket.io/socket.io.js"></script>
+  <script src="http://223.130.133.132:3000/socket.io/socket.io.js"></script>
   <script>
     function redirectToIndex() {
       window.location.href = "../index.jsp";
@@ -35,7 +35,15 @@
     $(function () {
       if ("${sessionScope.user}" !== "") {
         // const socket = io.connect('http://localhost:3000');
-        const socket = io.connect('http://101.79.8.55:3000/');
+        const socket = io.connect('http://223.130.133.132:3000/', {
+          transports: ['websocket'], // You can adjust this based on your needs
+          withCredentials: true,
+          extraHeaders: {
+            'Access-Control-Allow-Origin': 'http://localhost:8088', // Add your frontend URL
+            'Access-Control-Allow-Credentials': 'true',
+          },
+        });
+
         socket.emit("connection", {userId: "${sessionScope.user.userId}"});
 
         socket.on("message", async (data) => {
