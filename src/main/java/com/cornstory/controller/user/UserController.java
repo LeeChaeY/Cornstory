@@ -4,6 +4,7 @@ package com.cornstory.controller.user;
 import com.cornstory.common.Search;
 import com.cornstory.domain.KakaoAPI;
 import com.cornstory.domain.User;
+import com.cornstory.service.storage.StorageService;
 import com.cornstory.service.user.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -36,6 +37,11 @@ public class UserController {
     @Autowired
     @Qualifier("userServiceImpl")
     private UserService userService;
+
+    @Autowired
+    @Qualifier("storageServiceImpl")
+    private StorageService storageService;
+
     public UserController(){
         System.out.println("UserController 진입 ");
     }
@@ -154,24 +160,18 @@ public class UserController {
         // 유효성 검사 실패 시
         System.out.println(user + "들어온 정보 확인 하기 ");
 
-        String fileName = user.getUserId() + "_user" ;
-        fileName = fileName.replaceAll("[^a-zA-Z0-9가-힣_]", "_");
-        fileName += ".jpg";
+        String extension = getFileExtension(file);
 
-        if (!file.isEmpty()) {
-            try {
-                String uploadDir = request.getServletContext().getRealPath("")+"\\..\\resources\\static\\file\\user\\";
-                String filePath = uploadDir + File.separator + fileName;
+        if (extension != null && extension.equalsIgnoreCase("jpg")) {
+            String fileName = user.getUserId() + "_user" ;
+            fileName = fileName.replaceAll("[^a-zA-Z0-9가-힣_]", "_")+ ".jpg";
+            String bucketName = "cornstory"; // 버킷 이름 지정
+            String fileKey = "user/" + fileName;
 
+            String fileUrl = storageService.uploadFileToS3(bucketName, fileKey, file);
 
-                Files.write(Path.of(filePath), file.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
-
-                // 파일 경로를 Work 객체에 저장
-
-                user.setUserImage(fileName);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            // 파일 경로를 Work 객체에 저장
+            user.setUserImage(fileUrl);
 
         }else{
             user.setUserImage("user.jpg");
@@ -229,28 +229,21 @@ public class UserController {
         //Business Logic
 
 
-        String fileName = user.getUserId() + "_user" ;
-        fileName = fileName.replaceAll("[^a-zA-Z0-9가-힣_]", "_");
-        fileName += ".jpg";
-        System.out.println("user/updateUser : jpg 변환후 들어오나 ");
-        if (!file.isEmpty()) {
-            System.out.println("user/updateUser : jpg 변환후 들어오긴하네 ");
-            try {
-                System.out.println("user/updateUser : jpg 변환중 ");
-                String uploadDir = request.getServletContext().getRealPath("")+"\\..\\resources\\static\\file\\user\\";
-                String filePath = uploadDir + File.separator + fileName;
+        String extension = getFileExtension(file);
 
+        if (extension != null && extension.equalsIgnoreCase("jpg")) {
+            String fileName = user.getUserId() + "_user" ;
+            fileName = fileName.replaceAll("[^a-zA-Z0-9가-힣_]", "_")+ ".jpg";
+            String bucketName = "cornstory"; // 버킷 이름 지정
+            String fileKey = "user/" + fileName;
 
-                Files.write(Path.of(filePath), file.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
-                System.out.println("user/updateUser : jpg 변환후 경로 저장 완료 ");
-                // 파일 경로를 Work 객체에 저장
+            String fileUrl = storageService.uploadFileToS3(bucketName, fileKey, file);
 
-                user.setUserImage(fileName);
-            } catch (IOException e) {
-                System.out.println("user/updateUser : jpg 변환실패 ");
-                e.printStackTrace();
-            }
+            // 파일 경로를 Work 객체에 저장
+            user.setUserImage(fileUrl);
 
+        }else{
+            user.setUserImage("user.jpg");
         }
 
         userService.updateUser(user);
@@ -277,6 +270,22 @@ public class UserController {
         System.out.println("리스트 map를 출력해보자 :::::"+map);
         System.out.println("=================================");
         return "user/listUser";
+    }
+
+    public String getFileExtension(MultipartFile file) {
+        String fileName = file.getOriginalFilename();
+        if (fileName == null || fileName.isEmpty()) {
+            return null;
+        }
+
+        int dotIndex = fileName.lastIndexOf('.');
+        if (dotIndex >= 0) {
+            // 마지막 점 이후의 문자열을 확장자로 추출
+            return fileName.substring(dotIndex + 1);
+        } else {
+            // 확장자가 없는 경우
+            return null;
+        }
     }
 
 }
