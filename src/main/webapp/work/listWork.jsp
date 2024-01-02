@@ -68,15 +68,61 @@
 
     <!-- 작품 목록을 표시하는 부분 -->
 <main class="th-layout-main">
-    <div class="thpart-HmlqLtFlNZ" data-bid="HmlqLtFlNZ" id="">
+    <div class="hooms-N1" data-bid="SAlQg8Ft2x" id="">
         <div class="contents-container">
-            <img class="contents-backimg" src="../khs/images/work.jpg" alt="">
-            <div class="contents-body container-md">
-                <h2 class="contents-title"> Work </h2>
-                <h7 class="contents-sub">작품</h7>
+            <div class="contents-swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img class="contents-backimg img-pc" src="../common/images/main.jpg" alt="">
+                        <img class="contents-backimg img-mobile" src="../common/images/main.jpg" alt="">
+                        <div class="contents-slide-group">
+                            <h2 class="contents-title">Create OR New STORY</h2>
+                            <p class="contents-text">​<br>이곳은 당신만의 이야기가 시작 되는 특별한 공간입니다.<br>지금 여기에서, 당신만의 창작을 펼쳐보세요.</p>
+                            <c:if test="${!empty sessionScope.user}">
+                                <a class="contents-link" href="/work/addWork">Create</a>
+                            </c:if>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <img class="contents-backimg img-pc" src="../common/images/one.jpg" alt="">
+                        <img class="contents-backimg img-mobile" src="../common/images/one.jpg" alt="">
+                        <div class="contents-slide-group">
+                            <h2 class="contents-title">Create OR New STORY</h2>
+                            <p class="contents-text">​<br>이곳은 당신만의 이야기가 시작 되는 특별한 공간입니다.<br>지금 여기에서, 당신만의 창작을 펼쳐보세요.</p>
+                            <c:if test="${!empty sessionScope.user}">
+                                <a class="contents-link" href="/work/addWork">Create</a>
+                            </c:if>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <img class="contents-backimg img-pc" src="https://images.unsplash.com/photo-1598237601465-af66b7475e92?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=M3w0OTE2MDd8MHwxfHNlYXJjaHwyM3x8YmxhY2t8a298MHx8fHwxNzAzMjI1ODk3fDA&amp;ixlib=rb-4.0.3&amp;q=80&amp;w=1080" alt="">
+                        <img class="contents-backimg img-mobile" src="https://images.unsplash.com/photo-1598237601465-af66b7475e92?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=M3w0OTE2MDd8MHwxfHNlYXJjaHwyM3x8YmxhY2t8a298MHx8fHwxNzAzMjI1ODk3fDA&amp;ixlib=rb-4.0.3&amp;q=80&amp;w=1080" alt="">
+                        <div class="contents-slide-group">
+                            <h2 class="contents-title">Create OR New STORY</h2>
+                            <p class="contents-text">​<br>이곳은 당신만의 이야기가 시작 되는 특별한 공간입니다.<br>지금 여기에서, 당신만의 창작을 펼쳐보세요.</p>
+                            <c:if test="${!empty sessionScope.user}">
+                                <a class="contents-link" href="/work/addWork">Create</a>
+                            </c:if>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="contents-control">
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-button-pause">
+                        <img src="../common/icons/ico_pause.svg" alt="스와이퍼 멈춤버튼">
+                    </div>
+                    <div class="swiper-button-play">
+                        <img src="../common/icons/ico_play.svg" alt="스와이퍼 재생버튼">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
+
+
     <div class="hooms-N31" data-bid="geLqKMOmeJ">
         <div class="contents-inner">
             <div class="contents-container container-md">

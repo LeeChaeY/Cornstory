@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="../support/css/style.css">
     <link rel="stylesheet" href="../khs/css/style.css">
     <link rel="stylesheet" href="../khs/css/common.css">
-
+    <meta charset="UTF-8">
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <!--top start-->
@@ -36,9 +36,9 @@
                 </div>
                 <form action="../story/updateStory" method="post" enctype="multipart/form-data">
                     <input type="hidden" name="userId" value="${user.userId}"/>
-                    <input type="hidden" name="storyNo" id="storyNo" value="${story.storyNo}"/>
                     <div class="contents-form">
                         <div class="contents-form-middle">
+                            <input type="hidden" name="storyNo" id="storyNo" value="${story.storyNo}"/>
                             <div class="inputset inputset-lg inputset-label">
                                 <label>
                                     <h6 class="inputset-tit">스토리 이름</h6>
@@ -57,8 +57,7 @@
                             </div>
                             <div class="fileset fileset-lg fileset-label">
                                 <label>
-                                    <h6 class="fileset-tit"> 첨부파일
-                                    </h6>
+                                    <h6 class="fileset-tit"> 첨부파일</h6>
                                     <div class="fileset-body">
                                         <div class="fileset-group">
                                             <input type="file" class="fileset-input" name="thumbnailFile" id="thumbnailFile" onchange="setThumbnail(event);" accept=".jpg">

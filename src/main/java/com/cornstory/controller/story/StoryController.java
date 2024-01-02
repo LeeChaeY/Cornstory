@@ -26,11 +26,11 @@ public class StoryController {
     private StoryService storyService;
 
     @GetMapping("/listStory")
-    public String listStories(Model model,@SessionAttribute(name="user", required = false) User user) throws Exception {
+    public String listStory(Model model,@SessionAttribute(name="user", required = false) User user) throws Exception {
         List<Story> story = storyService.listStory();
         model.addAttribute("story", story);
         model.addAttribute("user",user);
-        return "story/listStory";  // 뷰의 이름 (list.jsp)
+        return "story/listStory";
     }
 
     @GetMapping("/addStory")
@@ -69,7 +69,7 @@ public class StoryController {
         System.out.println(story.toString());
         storyService.addStory(story);
         return "story/getStory";
-        //redirect:/stories/list
+
     }
 
     @GetMapping("/updateStory")
@@ -87,8 +87,9 @@ public class StoryController {
 
 
     @PostMapping("/updateStory")
-    public String updateStory(@ModelAttribute("story") Story story, @RequestParam(value = "storyNo", required = false) int storyNo,@RequestParam("thumbnailFile") MultipartFile file) throws Exception {
+    public String updateStory(@ModelAttribute("story") Story story, @RequestParam(value = "storyNo", required = false) Integer storyNo,@RequestParam("thumbnailFile") MultipartFile file) throws Exception {
 
+        System.out.println(story.getStoryNo());
         String fileName = story.getUserId() + "_" + story.getStoryName();
         fileName = fileName.replaceAll("[^a-zA-Z0-9가-힣_]", "_");
         fileName += ".jpg";
@@ -107,11 +108,11 @@ public class StoryController {
                 e.printStackTrace();
             }
 
-        }story.setStoryNo(storyNo);
+        }
         System.out.println(story.toString());
         storyService.updateStory(story);
-        return "story/getStory";
-        //redirect:/stories/list
+        return "redirect:/story/getStory";
+
     }
 
     @PostMapping("/deleteStory")
@@ -125,6 +126,7 @@ public class StoryController {
     public String getStory(@SessionAttribute(name="user", required = false) User user,Model model) throws Exception {
         List<Story> story = storyService.getMyStory(user.getUserId());
         model.addAttribute("story", story);
+        model.addAttribute("user",user);
         return "story/getStory";
     }
 

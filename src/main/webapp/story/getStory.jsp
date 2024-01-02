@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="../support/css/style.css">
     <link rel="stylesheet" href="../khs/css/style.css">
     <link rel="stylesheet" href="../khs/css/common.css">
+    <meta charset="UTF-8">
     <style>
 
         .comments-section {
@@ -120,41 +121,43 @@
                 </div>
                 <a href="/story/addStory">스토리 추가</a>
                 <c:if test="${not empty story}">
-                    <c:forEach var="story" items="${story}">
+                    <c:forEach var="storyItems" items="${story}">
                         <div class="contents-cardgroup">
 
                             <div class="cardset" style="border: 1px black solid;">
                                 <figure class="cardset-figure">
-                                    <img class="cardset-img" src="${story.storyImage}" alt="이미지">
+                                    <c:if test="${not empty storyItems.storyImage}">
+                                    <img class="cardset-img" src="${storyItems.storyImage}" alt="이미지">
+                                    </c:if>
                                 </figure>
                                 <div class="cardset-body">
-                                    <h5 class="cardset-tit">${story.storyName}</h5>
-                                    <p class="cardset-desc"> <fmt:formatDate value="${story.storyDate}" pattern="yyyy-MM-dd" /> </p>
-                                    <p class="cardset-desc"> ${story.userId} </p>
-                                    <p class="cardset-desc"> ${story.storyContent} </p>
-                                    <c:if test="${story.userId eq user.userId}">
-                                        <a href="/story/updateStory?storyNo=${story.storyNo}">수정</a>
+                                    <h5 class="cardset-tit">${storyItems.storyName}</h5>
+                                    <p class="cardset-desc"> <fmt:formatDate value="${storyItems.storyDate}" pattern="yyyy-MM-dd" /> </p>
+                                    <p class="cardset-desc"> ${storyItems.userId} </p>
+                                    <p class="cardset-desc"> ${storyItems.storyContent} </p>
+                                    <c:if test="${storyItems.userId eq user.userId}">
+                                        <a href="/story/updateStory?storyNo=${storyItems.storyNo}">수정</a>
                                         |
-                                        <form action="/story/deleteStory" method="post" id="deleteForm_${story.storyNo}">
-                                            <input type="hidden" name="storyNo" value="${story.storyNo}">
-                                            <a href="#" onclick="confirmAndSubmit(${story.storyNo})">삭제</a>
+                                        <form action="/story/deleteStory" method="post" id="deleteForm_${storyItems.storyNo}">
+                                            <input type="hidden" name="storyNo" value="${storyItems.storyNo}">
+                                            <a href="#" onclick="confirmAndSubmit(${storyItems.storyNo})">삭제</a>
                                         </form>
                                     </c:if>
                                 </div>
-                                <a href="#" onclick="event.preventDefault(); toggleComments(${story.storyNo});">댓글 보기/숨기기</a>
+                                <a href="#" onclick="event.preventDefault(); toggleComments(${storyItems.storyNo});">댓글 보기/숨기기</a>
                                 <c:if test="${not empty user}">
-                                    <div class="comment-form" id="commentForm_${story.storyNo}" style="display: none;">
-                                        <input type="hidden" id="storyNo_${story.storyNo}" value="${story.storyNo}">
-                                        <textarea id="commentContent_${story.storyNo}" placeholder="댓글을 입력하세요"></textarea>
-                                        <button type="button" onclick="addComment(${story.storyNo})">댓글 추가</button>
+                                    <div class="comment-form" id="commentForm_${storyItems.storyNo}" style="display: none;">
+                                        <input type="hidden" id="storyNo_${storyItems.storyNo}" value="${storyItems.storyNo}">
+                                        <textarea id="commentContent_${storyItems.storyNo}" placeholder="댓글을 입력하세요"></textarea>
+                                        <button type="button" onclick="addComment(${storyItems.storyNo})">댓글 추가</button>
                                     </div>
                                 </c:if>
                                 <c:if test="${empty user}">
-                                    <div class="comment-form" id="commentForm_${story.storyNo}" style="display: none;">
+                                    <div class="comment-form" id="commentForm_${storyItems.storyNo}" style="display: none;">
                                         <h4>로그인 후 입력이 가능합니다.</h4>
                                     </div>
                                 </c:if>
-                                <div class="comment-list" id="commentList_${story.storyNo}" style="display: none;"></div>
+                                <div class="comment-list" id="commentList_${storyItems.storyNo}" style="display: none;"></div>
                             </div>
                         </div>
                     </c:forEach>

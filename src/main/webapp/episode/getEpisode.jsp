@@ -189,7 +189,7 @@
                         <div class="contents-container">
                             <div class="videoset">
                                 <video class="videoset-video">
-                                    <source src="../resources/videos/video.mp4">
+                                    <source src="${episode.directory}">
                                 </video>
                                 <div class="videoset-body container-md">
                                     <h2 class="videoset-tit"> </h2>

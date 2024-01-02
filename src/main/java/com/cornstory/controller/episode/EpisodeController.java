@@ -3,6 +3,7 @@ package com.cornstory.controller.episode;
 import com.cornstory.domain.*;
 import com.cornstory.service.episode.EpisodeService;
 import com.cornstory.service.product.ProductService;
+import com.cornstory.service.storage.StorageService;
 import com.cornstory.service.work.WorkService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -37,6 +38,9 @@ public class EpisodeController {
     @Qualifier("productServiceImpl")
     private ProductService productService;
 
+    @Autowired
+    @Qualifier("storageServiceImpl")
+    private StorageService storageService;
 
 
     @GetMapping("addEpisode")
@@ -54,23 +58,22 @@ public class EpisodeController {
     public String addEpisode(@ModelAttribute("episode")Episode episode, @ModelAttribute("workNo")int workNo, @RequestParam("thumbnailFile") MultipartFile thumbnailFile,  @RequestParam("episodeFile") MultipartFile episodeFile, HttpServletRequest request, HttpServletResponse response) throws Exception {
         System.out.println("[ EpisodeController.addEpisode() start........]");
         Work work = workService.getWork(workNo);
-        String fileName="";
-        String uploadDir="";
-        String filePath="";
+        String fileName;
+        String bucketName = "cornstory"; // S3 Bucket Name
+        String fileKey;
+        String fileUrl;
+
+
         if (!thumbnailFile.isEmpty()) {
             try {
-                fileName = work.getUserId() + "_" + episode.getWorkNo() +"_" +episode.getEpisodeOrder();
-                fileName = fileName.replaceAll("[^a-zA-Z0-9가-힣_]", "_");
-                fileName += ".jpg";
-                uploadDir = "C:\\CornStory\\src\\main\\resources\\static\\file\\episode";
-                filePath = uploadDir + File.separator + fileName;
+                fileName = work.getUserId() + "_" + episode.getWorkNo() + "_" + episode.getEpisodeOrder();
+                fileName = fileName.replaceAll("[^a-zA-Z0-9가-힣_]", "_") + ".jpg";
+                fileKey = "episode/" + fileName;
 
+                fileUrl = storageService.uploadFileToS3(bucketName, fileKey, thumbnailFile);
 
-                Files.write(Path.of(filePath), thumbnailFile.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
-
-                // 파일 경로를 Work 객체에 저장
-                filePath ="..\\file\\episode"+ File.separator + fileName;
-                episode.setThumbnail(filePath);
+                // Save the URL to the episode object
+                episode.setThumbnail(fileUrl);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -79,23 +82,21 @@ public class EpisodeController {
             try {
                 fileName = work.getUserId() + "_" + episode.getWorkNo() +"_" +episode.getEpisodeOrder();
                 fileName = fileName.replaceAll("[^a-zA-Z0-9가-힣_]", "_");
+                String fileExtension = "";
+                fileKey="";
                 if(work.getCategory()==0){
-                    uploadDir = "C:\\CornStory\\src\\main\\resources\\static\\file\\episode\\webnovel";
-                    fileName += ".txt";
+                    fileKey = "episode/webnovel/"+fileName+".txt";
                 }else if(work.getCategory()==1){
-                    uploadDir = "C:\\CornStory\\src\\main\\resources\\static\\file\\episode\\webtoon";
-                    fileName += ".jpg";
+                    fileKey = "episode/webtoon/"+fileName+".jpg";
                 }else if(work.getCategory()==2){
-                    uploadDir = "C:\\CornStory\\src\\main\\resources\\static\\file\\episode\\webdrama";
-                    fileName += ".mp4";
+                    fileKey = "episode/webdrama/"+fileName+".mp4";
                 }
 
-                filePath = uploadDir + File.separator + fileName;
+                fileUrl = storageService.uploadFileToS3(bucketName, fileKey, episodeFile);
 
-                Files.write(Path.of(filePath), episodeFile.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 
                 // 파일 경로를 Work 객체에 저장
-                episode.setDirectory(uploadDir);
+                episode.setDirectory(fileUrl);
                 episode.setFileName(fileName);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -155,19 +156,18 @@ public class EpisodeController {
         System.out.println("[ EpisodeController.updateEpisode() start........]");
         //Work work = workService.getWork(episode.getWorkNo());
 
+
         Episode episodesub = episodeService.getEpisode(episode.getEpisodeNo());
-        episode.setThumbnail(episodesub.getThumbnail());
-        episode.setFileName(episodesub.getFileName());
-        episode.setDirectory(episodesub.getDirectory());
-        String fileName="";
-        String uploadDir="";
-        String filePath="";
+        String fileName;
+        String bucketName = "cornstory"; // S3 Bucket Name
+        String fileKey;
+        String fileUrl;
         if (!thumbnailFile.isEmpty()) {
             try {
-                filePath = episode.getThumbnail();
+                fileKey = episode.getThumbnail();
 
 
-                Files.write(Path.of(filePath), thumbnailFile.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+                fileUrl = storageService.uploadFileToS3(bucketName, fileKey, thumbnailFile);
 
 
             } catch (IOException e) {
@@ -177,9 +177,9 @@ public class EpisodeController {
         if (!episodeFile.isEmpty()) {
             try {
 
-                filePath = episode.getDirectory()+ File.separator +episode.getFileName();
+                fileKey = episode.getDirectory();
 
-                Files.write(Path.of(filePath), episodeFile.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+                fileUrl = storageService.uploadFileToS3(bucketName, fileKey, thumbnailFile);
             } catch (IOException e) {
                 e.printStackTrace();
             }

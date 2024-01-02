@@ -123,7 +123,9 @@
 
                     <div class="cardset" style="border: 1px black solid;">
                         <figure class="cardset-figure">
+                            <c:if test="${not empty story.storyImage}">
                             <img class="cardset-img" src="${story.storyImage}" alt="이미지">
+                            </c:if>
                         </figure>
                         <div class="cardset-body">
                             <h5 class="cardset-tit">${story.storyName}</h5>
