@@ -25,7 +25,7 @@ public class SupportRestController {
 
     @RequestMapping(value = "json/deleteSupport", method = RequestMethod.GET)
     public String deleteSupport(@RequestParam("supNo") int supNo, HttpServletResponse response, HttpSession session) {
-
+            System.out.println("supNo는 왜 안들어 올까?"+supNo);
         try {
             supportService.deleteSupport(supNo);
             response.setStatus(HttpServletResponse.SC_OK); // 200 OK
@@ -41,6 +41,21 @@ public class SupportRestController {
 
     @RequestMapping( value="json/getSupport/{supNo}", method=RequestMethod.GET )
     public Support getSupport(@RequestParam("supNo") int supNo , Model model ) throws Exception {
+
+        System.out.println("support/json/getSupport : GET");
+        //Business Logic
+        Support support = supportService.getSupport(supNo);
+
+        // Model 과 View 연결
+        model.addAttribute("support", support);
+
+        System.out.println("getSupport"+support);
+
+        return supportService.getSupport(supNo);
+    }
+
+    @RequestMapping( value="json/updateSupport/{supNo}", method=RequestMethod.GET )
+    public Support updateSupport(@RequestParam("supNo") int supNo , Model model ) throws Exception {
 
         System.out.println("support/json/getSupport : GET");
         //Business Logic

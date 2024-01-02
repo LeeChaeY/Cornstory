@@ -4,17 +4,6 @@
 <!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta http-equiv="imagetoolbar" content="no">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="title" content="웹사이트">
-  <meta name="description" content="웹사이트입니다.">
-  <meta name="keywords" content="키워드,키워드,키워드">
-  <meta property="og:title" content="웹사이트">
-  <meta property="og:description" content="웹사이트입니다">
-  <meta property="og:image" content="https://웹사이트/images/opengraph.png">
-  <meta property="og:url" content="https://웹사이트">
   <title>Contact_ContactUs_자주묻는질문 | main_복제본_복제본</title>
   <link rel="stylesheet" href="../support/css/setting.css">
   <link rel="stylesheet" href="../support/css/plugin.css">
@@ -175,11 +164,17 @@
                                   <div class="badgeset">대기</div>
                                   <div class="accordset-body">
                                     <div class="accordset-content">
+                                      <span class="accordset-a">A</span>
                                         <c:if test="${support.supCategory eq '1' and sessionScope.user.role eq 0}">
-                                              <span class="accordset-a">A</span>등록된 답변이 없습니다.
+                                             등록된 답변이 없습니다.
                                         </c:if>
                                         <c:if test="${support.supCategory eq '1' and sessionScope.user.role eq 1}">
-                                              <textarea class="inputset-textarea"  name="supContent" placeholder="답변 내용을 입력해주세요." required=""></textarea>
+                                      <form action="/support/qandaSupport?${support.supNo}" method="post">
+                                          <div style="display: flex; flex-direction: column; align-items: center;">
+                                            <textarea class="inputset-textarea" name="supContent" placeholder="답변 내용을 입력해주세요." style="width: 1200px; height: 200px;" required=""></textarea>
+                                            <button class="accordset-q" style="margin-top: 10px;">답변등록</button>
+                                          </div>
+                                      </form>
                                         </c:if>
                                     </div>
                                   </div>

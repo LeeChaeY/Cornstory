@@ -1,9 +1,8 @@
-
 $(document).ready(function () {
     // "삭제하기" 버튼 클릭 시 실행
     $("#withdrawLink").click(function () {
-        var supNo = "${support.supNo}"; // 각 글의 고유한 번호를 가져오기
-
+        var supNo = parseInt("${support.supNo}", 10); // 문자열을 정수로 변환
+        console.log("supNo="+supNo);
         // Ajax를 통한 서버 요청
         $.ajax({
             type: "GET",
@@ -20,7 +19,7 @@ $(document).ready(function () {
             },
             error: function (xhr, status, error) {
                 console.log(xhr.status); // HTTP 응답 코드를 콘솔에 출력
-                alert(" 삭제 중 오류가 발생했습니다.");
+                alert("삭제 중 오류가 발생했습니다.");
             }
         });
     });
