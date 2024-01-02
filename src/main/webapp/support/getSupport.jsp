@@ -75,7 +75,7 @@
 
                                 <span class="button-gap"></span>
 
-                                <a class="btnset" id="withdrawLink" href="#">삭제하기</a>
+                                <a class="btnset" id="withdrawLink">삭제하기</a>
                             </c:when>
                         </c:choose>
                     </div>
