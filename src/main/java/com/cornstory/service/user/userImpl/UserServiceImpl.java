@@ -111,4 +111,9 @@ public class UserServiceImpl implements UserService {
 
 		return user;
 	}
+
+	@Override
+	public void banUser(User user) throws Exception {
+		userDao.banUser(user);
+	}
 }

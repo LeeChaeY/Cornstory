@@ -1,7 +1,7 @@
 $(document).ready(function () {
     // "삭제하기" 버튼 클릭 시 실행
     $("#withdrawLink").click(function () {
-        var supNo = parseInt("${support.supNo}", 10); // 문자열을 정수로 변환
+        var supNo = $("#supNo").val(); // 문자열을 정수로 변환
         console.log("supNo="+supNo);
         // Ajax를 통한 서버 요청
         $.ajax({
@@ -12,7 +12,8 @@ $(document).ready(function () {
                 console.log(response); // 응답을 콘솔에 출력
                 if (response === "valid") {
                     alert("삭제가 완료되었습니다.");
-                    // 삭제 성공 시, 필요에 따라 추가적인 처리를 할 수 있습니다.
+
+                    location.href="../support/listSupport?category=0";
                 } else {
                     alert("삭제에 실패했습니다.");
                 }

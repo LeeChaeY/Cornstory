@@ -35,4 +35,5 @@ public interface UserService {
 
     User processKakaoLogin(Map<String, String> kakaoInfo) throws Exception;
 
+    public void banUser(User user) throws Exception;
 }

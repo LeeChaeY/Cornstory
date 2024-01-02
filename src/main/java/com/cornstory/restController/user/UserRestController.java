@@ -9,6 +9,8 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -40,18 +42,18 @@ public class UserRestController {
 
 
         @RequestMapping(value = "json/login", method = RequestMethod.POST)
-        public String login(@RequestParam("userId") String userId,
-                                   @RequestParam("password") String password) throws Exception {
+        public ResponseEntity<Object> login(@RequestParam("userId") String userId,
+                                            @RequestParam("password") String password) throws Exception {
             System.out.println("user/json/login : POST");
 
             User dbUser = userService.getUser(userId);
 
             if (dbUser != null && password.equals(dbUser.getPassword())) {
                 System.out.println("Login 성공");
-                return "success";
+                return new ResponseEntity<>(dbUser, HttpStatus.OK);
             } else {
                 System.out.println("Login 실패");
-                return "fail";
+                return new ResponseEntity<>("Login 실패", HttpStatus.UNAUTHORIZED); // 실패 메시지와 함께 비인증 상태 코드 반환
             }
         }
 

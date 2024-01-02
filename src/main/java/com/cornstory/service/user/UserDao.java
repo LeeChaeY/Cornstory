@@ -35,4 +35,6 @@ public interface UserDao {
 
 // 구매시에 회원 팝콘수 바뀌는 메소드
 	public int updateUserPopcornCnt(Map map) throws Exception;
+
+	public void banUser(User user) throws Exception;
 }

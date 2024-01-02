@@ -74,7 +74,7 @@
 
 
                                 <span class="button-gap"></span>
-
+                                <input type="hidden" id="supNo" value="${support.supNo}">
                                 <a class="btnset" id="withdrawLink">삭제하기</a>
                             </c:when>
                         </c:choose>

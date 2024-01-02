@@ -1,8 +1,10 @@
 package com.cornstory.restController.support;
 
 import com.cornstory.domain.Support;
+import com.cornstory.domain.User;
 import com.cornstory.service.support.SupportService;
 
+import com.cornstory.service.user.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.sql.Date;
+
+
 @RestController
 @RequestMapping("/support/*")
 public class SupportRestController {
@@ -20,6 +28,10 @@ public class SupportRestController {
     @Autowired
     @Qualifier("supportServiceImpl")
     private SupportService supportService;
+
+    @Autowired
+    @Qualifier("userServiceImpl")
+    private UserService userService;
 
     public SupportRestController(){System.out.println("SupportRestController 진입");}
 
@@ -67,6 +79,32 @@ public class SupportRestController {
         System.out.println("getSupport"+support);
 
         return supportService.getSupport(supNo);
+    }
+
+    @RequestMapping( value="json/banSupport", method=RequestMethod.GET )
+    public String banSupport(@RequestParam("supId") String supId,@RequestParam("supBan") String supBan ,HttpServletResponse response, HttpSession session, Model model ) throws Exception {
+
+        System.out.println("support/json/getSupport : GET");
+        System.out.println(supBan);
+
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            java.util.Date utilDate = sdf.parse(supBan);
+
+            // java.util.Date를 java.sql.Date로 변환합니다.
+            Date sqlDate = new Date(utilDate.getTime());
+
+            User user = new User();
+            user.setUserId(supId);
+            user.setBanDate(sqlDate);
+            System.out.println(user);
+            userService.banUser(user);
+            return "valid"; // 삭제 성공을 클라이언트에게 알림
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return "invalid"; // 삭제 실패를 클라이언트에게 알림
+        }
     }
 
 }

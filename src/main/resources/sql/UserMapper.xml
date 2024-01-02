@@ -117,4 +117,13 @@
 		WHERE user_id = #{userId}
 	</update>
 
+	<update id="banUser" parameterType="user">
+		UPDATE user
+		<set>
+			ban_date = #{banDate}
+		</set>
+		WHERE user_id = #{userId}
+	</update>
+
+
 </mapper>

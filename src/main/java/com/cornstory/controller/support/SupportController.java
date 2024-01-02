@@ -3,6 +3,7 @@ package com.cornstory.controller.support;
 import com.cornstory.common.Search;
 import com.cornstory.domain.Support;
 import com.cornstory.domain.User;
+import com.cornstory.service.storage.StorageService;
 import com.cornstory.service.support.SupportService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -32,13 +33,17 @@ public class SupportController {
     @Qualifier("supportServiceImpl")
     private SupportService supportService;
 
-    @RequestMapping(value = "/addSupport", method = RequestMethod.GET)
+    @Autowired
+    @Qualifier("storageServiceImpl")
+    private StorageService storageService;
+
+    @RequestMapping(value = "addSupport", method = RequestMethod.GET)
     public String addSupport() throws Exception {
         System.out.println("support/addSupport : GET");
         return "support/addSupport";
     }
 
-    @RequestMapping(value = "/addSupport", method = RequestMethod.POST)
+    @RequestMapping(value = "addSupport", method = RequestMethod.POST)
     public String addSupport(@ModelAttribute("support") @Validated Support support, HttpServletRequest request,
                              @RequestParam("supfile") MultipartFile file, Model model, HttpSession session) throws Exception {
         System.out.println("support/add : POST");
@@ -51,24 +56,22 @@ public class SupportController {
 
         System.out.println(support + "들어온 정보 확인 하기 ");
 
-        String fileName = support.getSupContent() + "_support" ;
-        fileName = fileName.replaceAll("[^a-zA-Z0-9가-힣_]", "_");
-        fileName += ".jpg";
-
-        if (!file.isEmpty()) {
-            try {
-                String uploadDir = request.getServletContext().getRealPath("")+"\\..\\resources\\static\\file\\support\\";
-                String filePath = uploadDir + File.separator + fileName;
+        String extension = getFileExtension(file);
 
 
-                Files.write(Path.of(filePath), file.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 
-                // 파일 경로를 Work 객체에 저장
+        if (extension != null && extension.equalsIgnoreCase("jpg")) {
+            String fileName = support.getSupContent() + "_support" ;
+            fileName = fileName.replaceAll("[^a-zA-Z0-9가-힣_]", "_")+".jpg";
+            String bucketName = "cornstory";
+            String fileKey = "support/" + fileName;
 
-                support.setSupImage(fileName);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
+            String fileUrl = storageService.uploadFileToS3(bucketName, fileKey, file);
+
+            System.out.println(fileUrl);
+
+            support.setSupImage(fileUrl);
 
         }else{
             support.setSupImage("support.jpg");
@@ -132,7 +135,7 @@ public class SupportController {
         return "forward:/support/updateSupport.jsp";
     }
 
-    @RequestMapping(value = "/updateSupport", method = RequestMethod.POST)
+    @RequestMapping(value = "updateSupport", method = RequestMethod.POST)
     public String updateSupport(@ModelAttribute("support") @Validated Support support, HttpServletRequest request,
                              @RequestParam("supfile") MultipartFile file, Model model, HttpSession session) throws Exception {
         System.out.println("support/add : POST");
@@ -145,24 +148,22 @@ public class SupportController {
 
         System.out.println(support + "들어온 정보 확인 하기 ");
 
-        String fileName = support.getSupContent() + "_support" ;
-        fileName = fileName.replaceAll("[^a-zA-Z0-9가-힣_]", "_");
-        fileName += ".jpg";
-
-        if (!file.isEmpty()) {
-            try {
-                String uploadDir = request.getServletContext().getRealPath("")+"\\..\\resources\\static\\file\\support\\";
-                String filePath = uploadDir + File.separator + fileName;
+        String extension = getFileExtension(file);
 
 
-                Files.write(Path.of(filePath), file.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 
-                // 파일 경로를 Work 객체에 저장
+        if (extension != null && extension.equalsIgnoreCase("jpg")) {
+            String fileName = support.getSupContent() + "_support" ;
+            fileName = fileName.replaceAll("[^a-zA-Z0-9가-힣_]", "_")+".jpg";
+            String bucketName = "cornstory";
+            String fileKey = "support/" + fileName;
 
-                support.setSupImage(fileName);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
+            String fileUrl = storageService.uploadFileToS3(bucketName, fileKey, file);
+
+            System.out.println(fileUrl);
+
+            support.setSupImage(fileUrl);
 
         }else{
             support.setSupImage("support.jpg");
@@ -174,6 +175,21 @@ public class SupportController {
         System.out.println("들어온 값을 확인해보자" + support);
 
         return "support/getSupport";
+    }
+    public String getFileExtension(MultipartFile file) {
+        String fileName = file.getOriginalFilename();
+        if (fileName == null || fileName.isEmpty()) {
+            return null;
+        }
+
+        int dotIndex = fileName.lastIndexOf('.');
+        if (dotIndex >= 0) {
+            // 마지막 점 이후의 문자열을 확장자로 추출
+            return fileName.substring(dotIndex + 1);
+        } else {
+            // 확장자가 없는 경우
+            return null;
+        }
     }
 }
 

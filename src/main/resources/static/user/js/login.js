@@ -23,18 +23,29 @@ function submitLoginForm() {
         url: "/user/json/login",
         data: data,
         success: function (response) {
-            console.log(response); // 콘솔에 응답 확인
+            // 로그인 실패 처리
+            if (response === "Login 실패") {
+                displayErrorMessageWithCountdown("로그인 실패. 아이디 또는 비밀번호를 확인하세요.", 5);
+                return;
+            }
 
-            if (response === "success") {
-                document.getElementById('errorMessage').style.display = 'none'; // 실패 메시지 숨기기
+            // 로그인 성공 처리
+            var banDate = response.banDate ? new Date(response.banDate) : null;
+            var today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            if (!banDate || banDate <= today) {
+                console.log("로그인 성공");
+                document.getElementById('errorMessage').style.display = 'none';
                 form.submit(); // AJAX 요청이 완료된 후에 form 제출
             } else {
-                displayErrorMessageWithCountdown("로그인 실패. 아이디 또는 비밀번호를 확인하세요.", 5); // 3초 후에 숨김
+                console.log("로그인 실패: 사용자가 밴 상태입니다.");
+                displayErrorMessageWithCountdown("로그인 실패. 사용자가 밴 상태입니다.", 5);
             }
         },
         error: function (xhr, status, error) {
             console.error("AJAX 오류:", status, error);
-            displayErrorMessageWithCountdown("서버 오류", 5); // 3초 후에 숨김
+            displayErrorMessageWithCountdown("서버 오류", 5);
         }
     });
 

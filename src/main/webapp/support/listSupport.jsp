@@ -34,7 +34,7 @@
 <body>
 <%@ include file="../layout/top.jsp" %>
 <main class="th-layout-main ">
-  <div class="thpart-HmlqLtFlNZ" data-bid="HmlqLtFlNZ" id="">
+  <div class="thpart-HmlqLtFlNZ" data-bid="HmlqLtFlNZ">
     <div class="contents-container">
       <img class="contents-backimg" src="https://images.unsplash.com/photo-1624007435086-7e236df42151?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=M3w0OTE2MDd8MHwxfHNlYXJjaHwxOTh8fCVFRCU5RCU5MSVFQiVCMCVCMXxrb3wwfHx8YmxhY2tfYW5kX3doaXRlfDE3MDM1ODMzNjB8MA&amp;ixlib=rb-4.0.3&amp;q=80&amp;w=1080" alt="">
       <div class="contents-body container-md">
@@ -44,7 +44,7 @@
     </div>
   </div>
   <!-- [S]hooms-N36 -->
-  <div class="hooms-N36" data-bid="iSLqLSg68L" id="">
+  <div class="hooms-N36" data-bid="iSLqLSg68L">
     <div class="contents-inner">
       <div class="contents-container container-md">
         <div class="textset textset-h2">
@@ -200,7 +200,7 @@
                   <tr class="ct_list_pop">
                     <td class="number">${i}</td>
                     <td>${support.userId}</td>
-                    <td>${support.supId}</td>
+                    <td>${support.supId}<input type="hidden" id="supId"  value="${support.supId}"/></td>
                     <td><a href="getSupport?supNo=${support.supNo}"> ${support.supContent}</a></td>
                       <c:choose>
                         <c:when test="${empty support.supPluscon}">
@@ -211,7 +211,10 @@
                         </c:otherwise>
                       </c:choose>
                     <td>${support.supImage}</td>
-                    <td>${support.supBan}일</td>
+                    <td>
+                      <input type="number" id="supBan" min="0" max="30" value="${support.supBan}" style="width: 40px;"/>
+                      <a class="btnset" id="updateBan">조치</a>
+                    </td>
                     <td class="last-child">${support.supDate}</td>
                   </tr>
                 </c:when>
@@ -236,7 +239,7 @@
 <script src="../support/js/template.js"></script>
 <script src="../support/js/common.js"></script>
 <script src="../support/js/script.js"></script>
-
+<script src="../user/js/banUser.js"></script>
 <%@ include file="../layout/bottom.jsp" %>
 
 

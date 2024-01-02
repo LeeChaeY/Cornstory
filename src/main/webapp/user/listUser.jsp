@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <head>
     <title>회원 목록</title>
@@ -88,9 +88,14 @@
                         </tr>
                         </thead>
                         <tbody>
+                        <fmt:parseDate value="201701292359" pattern="yyyyMMddHHmm" var="endDate" />
+                        <jsp:useBean id="now" class="java.util.Date"/>
+                        <fmt:formatDate var="today" value="${now}" pattern="yyyy-MM-dd"/>
+
                         <c:set var="i" value="0"/>
                         <c:forEach var="user" items="${list}">
                             <c:set var="i" value="${i + 1}"/>
+                            <fmt:formatDate var="banDate" value="${user.banDate}" pattern="yyyy-MM-dd"/>
                             <tr class="ct_list_pop">
                             <td class="tableset-mobile">${i}</td>
                             <td class="tableset-category tableset-order03" style=" text-align: left;">
@@ -102,7 +107,15 @@
                             <td class="tableset-order05" >${user.phone}</td>
                             <td class="tableset-order04">${user.email}</td>
                             <td class="tableset-order01">
-                                <div class="badgeset">미정지</div>
+                                <c:choose>
+                                    <c:when test="${today lt banDate}">
+                                    <div class="badgeset badgeset-active">정지</div>
+                                    </c:when>
+                                    <c:otherwise>
+                                    <div class="badgeset">미정지</div>
+                                    </c:otherwise>
+                                </c:choose>
+
                                 <!--div class="badgeset badgeset-active">${user.banDate}</div-->
                             </td>
                             <td class="tableset-mobile">${user.rDate}</td>
