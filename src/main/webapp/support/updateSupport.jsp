@@ -55,15 +55,12 @@
         <div class="contents-inner">
             <div class="contents-container container-md">
                 <form action="${pageContext.request.contextPath}/support/addSupport" method="post" enctype="multipart/form-data">
-                <div class="textset textset-h2">
+
+                    <div class="textset textset-h2">
                     <c:choose>
                         <c:when test="${param.category eq '0'}">
                             <input type="text" id="supCategory" name="supCategory" value="0" style="display: none;">
                             <h2 class="textset-tit">공지사항 등록</h2>
-                        </c:when>
-                        <c:when test="${param.category eq '1'}">
-                            <input type="text" id="supCategory" name="supCategory" value="1" style="display: none;">
-                            <h2 class="textset-tit">Q&A 등록</h2>
                         </c:when>
                         <c:when test="${param.category eq '2'}">
                             <input type="text" id="supCategory" name="supCategory" value="2" style="display: none;">
