@@ -81,6 +81,7 @@
                 <div class="textset textset-h2">
                     <h2 class="textset-tit">작품 관리</h2>
                     <p class="contents-result">전체<span id="totalCount"> ${myCount}</span>개</p>
+                    <a href="../work/addWork">작품추가</a>
                 </div>
                 <!-- 작품 목록 -->
                 <div class="contents-group">
