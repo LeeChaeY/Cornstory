@@ -132,7 +132,7 @@
                         </c:choose>
                     </div>
                     <p class="textset-desc">조회수 : ${work.viewCnt}</p>
-                    <c:if test="${user.userId eq work.userId}">
+                    <c:if test="${sessionScope.user.userId eq work.userId}">
                     <div class="contents-btn">
                             <a href="../episode/addEpisode?workNo=${work.workNo}">작품 회차 추가</a>
                     </div>
@@ -206,7 +206,7 @@
                                         <h5 class="cardset-tit"> ${episode.episodeName} </h5>
                                     </div>
                                 </div>
-                                <c:if test="${user.userId eq work.userId}"><a href="../episode/updateEpisode?episodeNo=${episode.episodeNo}" class="btnset btnset-lg">수정</a>
+                                <c:if test="${sessionScope.user.userId eq work.userId}"><a href="../episode/updateEpisode?episodeNo=${episode.episodeNo}" class="btnset btnset-lg">수정</a>
                                     <form method="post" action="../episode/deleteEpisode">
                                         <input type="hidden" name="episodeNo" value="${episode.episodeNo}" />
                                         <button type="submit" class="btnset btnset-lg">삭제</button>

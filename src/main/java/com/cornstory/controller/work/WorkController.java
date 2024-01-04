@@ -10,6 +10,7 @@ import com.cornstory.service.storage.StorageService;
 import com.cornstory.service.work.WorkService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.websocket.Session;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -198,16 +199,18 @@ public class WorkController {
     }
 
     @RequestMapping ("getDetailWork")
-    public String getDetailWork( @RequestParam("workNo") int workNo, Model model, @SessionAttribute(name="user", required = false)User user) throws Exception {
+    public String getDetailWork( @RequestParam("workNo") int workNo, Model model, HttpSession session) throws Exception {
         System.out.println("[ WorkController.getWork() start........]");
         Work work = workService.getWork(workNo);
         work.setViewCnt(work.getViewCnt()+1);
         workService.updateViews(work);
-
+        User user = (User) session.getAttribute("user");
+        if(user != null){
+            model.addAttribute("bookmark",workService.getBookmarksByUserId(user.getUserId()));
+            model.addAttribute("purchase",episodeService.getPurchaseEpisode(user.getUserId()));
+            model.addAttribute("user",user);
+        }
         Map<String, Object> map=episodeService.listEpisode(workNo);
-        model.addAttribute("bookmark",workService.getBookmarksByUserId(user.getUserId()));
-        model.addAttribute("purchase",episodeService.getPurchaseEpisode(user.getUserId()));
-        model.addAttribute("user",user);
         model.addAttribute("work",work);
         model.addAttribute("list",map.get("list"));
         model.addAttribute("totalCount",map.get("totalCount"));

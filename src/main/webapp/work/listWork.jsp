@@ -31,10 +31,6 @@
             flex-wrap: wrap; /* 내용이 넘칠 경우 줄바꿈 */
         }
 
-        .radioset {
-            margin-right: 10px; /* 각 장르 사이의 간격 설정 */
-        }
-
         #workList{
             display: flex; /* 가로로 정렬하기 위해 flex 컨테이너로 설정 */
             flex-wrap: wrap; /* 필요하다면 자식 요소들을 여러 행에 걸쳐 표시 */
@@ -58,6 +54,27 @@
             margin-right: 0;
         }
 
+
+        /* 라디오 버튼 요소 사이의 간격 조정 */
+        .radioset {
+            margin-top: 10px;
+            margin-right: 20px; /* 오른쪽 마진을 더욱 증가시켜 간격을 늘립니다 */
+        }
+
+        /* 장르 필터링 요소 사이의 여백 조정 */
+        .contents-radioset .radioset {
+            margin-bottom: 15px; /* 아래쪽 마진을 더 증가시켜 여백을 늘립니다 */
+        }
+
+        /* 체크박스 요소 사이의 간격 조정 */
+        .checkset {
+            margin-right: 20px; /* 오른쪽 마진을 더욱 증가시켜 간격을 늘립니다 */
+        }
+
+        /* 검색창 주변의 여백 조정 */
+        .contents-search {
+            margin-top: 30px; /* 상단 마진을 더 증가시켜 여백을 늘립니다 */
+        }
 
     </style>
 
@@ -126,9 +143,9 @@
     <div class="hooms-N31" data-bid="geLqKMOmeJ">
         <div class="contents-inner">
             <div class="contents-container container-md">
-                <div class="textset textset-h2">
-                    <h2 class="textset-tit">작품 리스트</h2>
-                </div>
+<%--                <div class="textset textset-h2">--%>
+<%--                    <h2 class="textset-tit">작품 리스트</h2>--%>
+<%--                </div>--%>
 
                 <!-- 카테고리 탭 -->
                 <div class="radioset-wrap">
