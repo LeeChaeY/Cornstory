@@ -192,7 +192,7 @@
                                     <c:if test="${purchase.tranCategory == 1}">작품 회차</c:if>
                                     <c:if test="${purchase.tranCategory == 2}">저작권</c:if>
                                 </td>
-                                <td class="tableset-category tableset-order03">
+                                <td class="tableset-category tableset-order03 viewWork">
                                         ${purchase.workName}
                                 </td>
                                 <td class="tableset-category tableset-order03">

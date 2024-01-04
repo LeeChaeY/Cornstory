@@ -34,16 +34,12 @@ $(function() {
         $("form[name='form']").attr("method", "post").attr("action", "/chat/listChatSpace").submit();
     });
 
-    $("a:contains('채팅방 추가하기')").on("click", function() {
-        $(self.location).attr("href", "/chat/addChatSpace");
-    });
-
-    $(".contents-figure").on("click", function() {
-        $(self.location).attr("href", "/chat/addChatSpace");
-    });
-
     $(".radioset-thumb").on("click", function() {
         fncGetChatList('1');
+    });
+
+    $("a:contains('채팅방 추가하기')").on("click", function() {
+        $(self.location).attr("href", "/chat/addChatSpace");
     });
 
     $("input[type='button'][value='입장하기']").on("click", function() {
@@ -111,12 +107,12 @@ function enterChatSpace(chatSpaceNo) {
         method: "GET",
         dataType: "json",
         success: function(JSONData, status) {
-            let enter = $("input[value='" + chatSpaceNo + "']").parents().find("input.exit").val();
-            let enter2 = $("input[value='" + chatSpaceNo + "']").parents().find("input.update").val();
+            let buttonLength = $($("input[value='" + chatSpaceNo + "']").parents("div").children("div").eq(3)).children("input").length;
 
-            if (enter === undefined && enter2 === undefined) {
-                let cnt = parseInt($("input[value='" + chatSpaceNo + "']").parents().find("div.cSpaceUserCnt").text()) + 1;
-                $("input[value='" + chatSpaceNo + "']").parents().find("div.cSpaceUserCnt").text(cnt);
+            if (buttonLength === 1) {
+                let userCnt = $("#cSpaceUserCnt_" + chatSpaceNo);
+                let cnt = parseInt(userCnt.text()) + 1;
+                userCnt.text(cnt);
                 const exit = $("<input>");
                 exit.attr("type", "button");
                 exit.attr("value", "나가기");
@@ -126,7 +122,7 @@ function enterChatSpace(chatSpaceNo) {
                         deleteChatEnter(chatSpaceNo);
                     }
                 });
-                $("input[value='" + chatSpaceNo + "']").parents().find("div.cardset-body").append(exit);
+                $($("input[value='" + chatSpaceNo + "']").parents("div").children("div").eq(3)).append(exit);
             }
 
             const form = document.createElement('form');
@@ -178,8 +174,8 @@ function updateChatSpace(chatSpaceNo) {
 }
 
 function deleteChatSpace(chatSpaceNo) {
-    const socket = io.connect();
-    socket.emit("delete", {chatSpaceNo: chatSpaceNo});
+    // const socket = io.connect();
+    // socket.emit("delete", {chatSpaceNo: chatSpaceNo});
 
     $.ajax({
         url: "/chat/json/deleteChatSpace/" + chatSpaceNo + "",
@@ -187,7 +183,7 @@ function deleteChatSpace(chatSpaceNo) {
         success: function(JSONData, status) {
             $("input[value='" + chatSpaceNo + "']").parents().remove();
 
-            socket.emit("delete", {chatSpaceNo: chatSpaceNo});
+            // socket.emit("delete", {chatSpaceNo: chatSpaceNo});
         },
         error: function(status) {
 
@@ -204,10 +200,9 @@ function deleteChatEnter(chatSpaceNo) {
         dataType: "text",
         data: {},
         success: function(returnMessage, status) {
-            // alert(returnMessage);
-            let cnt = parseInt($("input[value='" + chatSpaceNo + "']").parents().find("div.cSpaceUserCnt").text()) - 1;
-            $("input[value='" + chatSpaceNo + "']").parents().find("div.cSpaceUserCnt").text(cnt);
-            $("input[value='" + chatSpaceNo + "']").parents().find("div.exit").remove();
+            $("#cSpaceUserCnt_" + chatSpaceNo).text(parseInt($("#cSpaceUserCnt_" + chatSpaceNo).text())-1);
+
+            $($("input[value='" + chatSpaceNo + "']").parents("div").children("div").eq(3)).children("input").eq(1).remove();
 
             if (chatWindow && !chatWindow.closed) {
                 chatWindow.close();
@@ -221,4 +216,21 @@ function deleteChatEnter(chatSpaceNo) {
             alert("error");
         }
     });
+}
+
+
+// 모달 창을 열기 위한 함수
+function openModal(workName, episodeOrder, episodeName) {
+    console.log("Function called with:", workName, episodeOrder, episodeName);
+    var modal = document.getElementById("myModal");
+    modal.style.display = "block";
+
+    var modalContent = document.getElementById("modalContent");
+    modalContent.innerHTML = workName+' : '+episodeOrder+'회 '+episodeName+'를 시청하시겠습니까?'
+}
+
+// 모달 창을 닫기 위한 함수
+function closeModal() {
+    var modal = document.getElementById("myModal");
+    modal.style.display = "none";
 }

@@ -4,20 +4,26 @@ import com.cornstory.common.Page;
 import com.cornstory.common.Search;
 import com.cornstory.domain.*;
 import com.cornstory.service.chat.ChatService;
+import com.cornstory.service.storage.StorageService;
 import com.cornstory.service.user.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -29,6 +35,10 @@ public class ChatController {
     @Autowired
     private ChatService chatService;
 
+    @Autowired
+    @Qualifier("storageServiceImpl")
+    private StorageService storageService;
+
 //    @Value("${pageUnit}")
     int pageUnit = 5;
 //    @Value("${pageSize}")
@@ -39,8 +49,9 @@ public class ChatController {
     }
 
     @GetMapping(value="addChatSpace")
-    public String addChatSpace() throws Exception {
+    public String addChatSpace(HttpServletRequest request) throws Exception {
         System.out.println("/chat/addChatSpace : GET");
+
         return "chat/addChatSpace";
     }
 
@@ -53,10 +64,8 @@ public class ChatController {
         chatSpace.setUserId(user.getUserId());
         System.out.println("/chat/addChatSpace : " + chatSpace);
 
-        // https://action713.tistory.com/entry/%EC%8A%A4%ED%94%84%EB%A7%81-%ED%8C%8C%EC%9D%BC-%EA%B2%BD%EB%A1%9C
-        String uploadDir = request.getServletContext().getRealPath("")+"\\..\\resources\\static\\file\\chat\\";
-        // request.getServletContext().getRealPath(""): webapp 상대 경로
-
+        String bucketName = "cornstory"; // 버킷 이름 지정
+        String fileKey = "chat/";
         if (!file.isEmpty()) {
             try {
                 System.out.println("file : " + file.getOriginalFilename());
@@ -64,10 +73,8 @@ public class ChatController {
                 String savedName = user.getUserId()+"_"+chatSpace.getcSpaceName();
                 savedName = savedName.replaceAll("[^a-zA-Z0-9가-힣_]", "_");
                 savedName += ".jpg";
-                File uploadFile = new File(uploadDir, savedName);
-                file.transferTo(uploadFile);
-                chatSpace.setcSpaceImage(savedName);
 
+                fileKey += savedName;
             } catch (Exception e) {
                 e.printStackTrace();
                 // 파일 업로드 실패 처리
@@ -75,8 +82,13 @@ public class ChatController {
             }
         } else {
             // 업로드된 파일이 없는 경우 처리
-            chatSpace.setcSpaceImage("chat.jpg");
+            fileKey += "chat.jpg";
         }
+
+        // 새 파일을 클라우드 스토리지에 업로드
+        String fileUrl = storageService.uploadFileToS3(bucketName, fileKey, file);
+        chatSpace.setcSpaceImage(fileUrl);
+        System.out.println("fileUrl :: "+fileUrl);
 
         //Business Logic
         int chatSpaceNo = chatService.addChatSpace(chatSpace);
@@ -103,38 +115,28 @@ public class ChatController {
         System.out.println("/chat/updateChatSpace : POST");
         System.out.println("/chat/updateChatSpace : " + chatSpace);
 
-        // https://action713.tistory.com/entry/%EC%8A%A4%ED%94%84%EB%A7%81-%ED%8C%8C%EC%9D%BC-%EA%B2%BD%EB%A1%9C
-        String uploadDir = request.getServletContext().getRealPath("")+"\\..\\resources\\static\\file\\chat\\";
-        // request.getServletContext().getRealPath(""): webapp 상대 경로
-
-        if (!file.isEmpty()) {
+       if (!file.isEmpty()) {
             try {
                 System.out.println("file : " + file.getOriginalFilename());
 
-                // 기존 파일 삭제
-                String deleteImg = chatService.getChatSpace(chatSpace.getChatSpaceNo()).getcSpaceImage();
-                if (!deleteImg.equals("chat.jpg")) {
-                    String deleteDir = uploadDir + File.separator + deleteImg;
-                    File fileToDelete = new File(deleteDir);
-
-                    // 파일을 삭제합니다.
-                    if (fileToDelete.exists()) {
-                        if (fileToDelete.delete()) {
-                            System.out.println("파일이 성공적으로 삭제되었습니다.");
-                        } else {
-                            System.out.println("파일을 삭제하는 데 문제가 발생했습니다.");
-                        }
-                    }
-                }
-
-                //savedName 변수에 uuid + 원래 이름 추가
                 String savedName = user.getUserId()+"_"+chatSpace.getcSpaceName();
                 savedName = savedName.replaceAll("[^a-zA-Z0-9가-힣_]", "_");
                 savedName += ".jpg";
-                File uploadFile = new File(uploadDir, savedName);
-                file.transferTo(uploadFile);
-                chatSpace.setcSpaceImage(savedName);
 
+                String bucketName = "cornstory"; // 버킷 이름 지정
+                String fileKey = "chat/" + savedName;
+
+                // 새 파일을 클라우드 스토리지에 업로드
+                String fileUrl = storageService.uploadFileToS3(bucketName, fileKey, file);
+
+                String deleteImg = chatService.getChatSpace(chatSpace.getChatSpaceNo()).getcSpaceImage();
+                if(!Objects.equals(fileUrl, deleteImg)) {
+                    String key = deleteImg.replace("https://cornstory.kr.object.ncloudstorage.com/", "");
+                    if (!key.replace("chat/", "").equals("chat.jpg"))
+                        storageService.deleteFileFromS3(bucketName,key);
+                }
+                chatSpace.setcSpaceImage(fileUrl);
+                System.out.println("fileUrl :: "+fileUrl);
             } catch (Exception e) {
                 e.printStackTrace();
                 // 파일 업로드 실패 처리

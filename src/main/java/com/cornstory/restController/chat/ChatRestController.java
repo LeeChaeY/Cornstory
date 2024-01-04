@@ -131,4 +131,17 @@ public class ChatRestController {
         return "삭제가 완료되었습니다.";
     }
 
+    @GetMapping(value="json/kickOutUser")
+    public String kickOutUser(@RequestParam("chatSpaceNo") int chatSpaceNo,
+                              @RequestParam("userId") String userId) throws Exception {
+        System.out.println("/chat/json/kickOutUser :: chatSpaceNo: "+chatSpaceNo+", userId: "+userId);
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        map.put("userId", userId);
+        map.put("chatSpaceNo", chatSpaceNo);
+
+        chatService.deleteChatEnter(map);
+        return "삭제가 완료되었습니다.";
+    }
+
 }

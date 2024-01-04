@@ -1,8 +1,6 @@
 
 // opilsol-N24 [XZlQ1o5z61]
 $(function() {
-    $("input[id='checkset-e-5-6']").attr("checked", "");
-
     $("a:contains('나의 저작권')").on("click", function() {
         $("input[name='userStatus']").val(1);   // 0: 전체, 1: 나의~ㄴ
         $("form[name='form']").attr("method", "post").attr("action", "/product/listProduct").submit();

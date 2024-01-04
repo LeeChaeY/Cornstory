@@ -1,39 +1,35 @@
 
 // opilsol-N24 [XZlQ1o5z61]
 $(function() {
-    if($("input[name='userStatus']").val() === "0") {
-        $("input[id='checkset-e-5-1']").attr("checked", "");
-    } else {
-        $("input[id='checkset-e-5-2']").attr("checked", "");
-    }
 
     $(".listStoreSearchButton").on("click", function() {
         $("form[name='form']").attr("method", "post").attr("action", "/product/listProduct").submit();
     });
-    $(".viewWork").on("click", function() {
-        let workNo = parseInt($(this).parents("tr").children("td").eq(3).children("input").val());
-        viewWork(workNo);
-    });
-    $(".viewUser").on("click", function() {
-        let userId = $(this).parents("tr").children("td").eq(7).children("input").val();
-        viewUser(userId)
-    });
+    // $(".viewWork").on("click", function() {
+    //     let workNo = parseInt($(this).parents("tr").children("td").eq(3).children("input").val());
+    //     viewWork(workNo);
+    // });
+    // $(".viewUser").on("click", function() {
+    //     let userId = $(this).parents("tr").children("td").eq(7).children("input").val();
+    //     viewUser(userId)
+    // });
 
     $("input[name='tranCnt']").on("keyup", function(e) {
         inputNumberFormat(e.target);
     });
 
     $("input[value='충전하기']").on("click", function() {
-        let prodNo = parseInt($(this).parents("tr").children("td").eq(0).children("input").val());
+        let prodNo = $(this).parents().parents().children("input").val();
         let tranCnt = parseInt(uncomma($(this).parents("tr").children("td").eq(6).children("input").eq(0).val()));
         let prodName = $(this).parents("tr").children("td").eq(2).text().trim();
         let prodPrice = parseInt(uncomma($(this).parents("tr").children("td").eq(3).text().trim()));
         let userId = $("input[name='userId']").val();
-        addPurchaseKG(prodNo,tranCnt,prodName,prodPrice,userId);
+        alert(prodNo);
+        // addPurchaseKG(prodNo,tranCnt,prodName,prodPrice,userId);
     });
 
     $("input[value='구매하기']").on("click", function() {
-        let prodNo = parseInt($(this).parents("tr").children("td").eq(0).children("input").val());
+        let prodNo = $(this).parents().parents().children("input").val();
         let prodPrice = parseInt($(this).parents("tr").children("td").eq(4).text().replace(/\s/g, ''));
         addPurchase(prodNo, prodPrice);
     });
@@ -44,7 +40,7 @@ $(function() {
     });
 
     $("input[value='삭제하기']").on("click", function() {
-        let prodNo = parseInt($(this).parents("tr").children("td").eq(0).children("input").val());
+        let prodNo = $(this).parents().parents().children("input").val();
         deleteProduct(prodNo);
     });
 });

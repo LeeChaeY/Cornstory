@@ -155,7 +155,7 @@
                             <div class="no">${i}</div>
                             <figure class="cardset-figure">
                                 <img class="cardset-img"
-                                     src="/file/work/${copyright.prodImage}" alt="이미지">
+                                     src="${copyright.prodImage}" alt="이미지">
                             </figure>
                             <div class="cardset-body">
                                 <div class="cardset-tit-group">
@@ -187,7 +187,12 @@
                                 <div class="contents-button">
                                     <c:if test="${!empty sessionScope.user}">
                                         <c:if test="${copyright.userId != sessionScope.user.userId}">
-                                            <input type="button" class="purchase" value="구매하기">
+                                            <c:if test="${copyright.purchaseCheck == 1}">
+                                                구매 완료!
+                                            </c:if>
+                                            <c:if test="${copyright.purchaseCheck == 0}">
+                                                <input type="button" class="purchase" value="구매하기">
+                                            </c:if>
                                             <input type="hidden" name="popcornCnt" value="${sessionScope.user.popcornCnt}">
                                         </c:if>
                                         <c:if test="${copyright.userId == sessionScope.user.userId}">

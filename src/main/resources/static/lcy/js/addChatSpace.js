@@ -79,12 +79,16 @@ function addChatSpace() {
             form.enctype = 'application/json';  // Set content type to JSON
 
             addJsonDataToForm(form, JSONData.chatSpace, 'chatSpace');
-            addJsonDataToForm(form, JSONData.list, 'list');
             addJsonDataToForm(form, JSONData.userList, 'userList');
             addJsonDataToForm(form, JSONData.totalCount, 'totalCount');
             addJsonDataToForm(form, JSONData.user, 'user');
+            addJsonDataToForm(form, JSONData.startDate, 'startDate');
 
-            const chatWindow = window.open('', 'chatWindow', 'width=500,height=400,left:100,top:100');
+            const width = 1000;
+            const height = 600;
+            const leftPosition = (window.innerWidth - width) / 2;
+            const topPosition = (window.innerHeight - height) / 2;
+            chatWindow = window.open('',JSONData.chatSpace.chatSpaceNo, 'width='+width+',height='+height+',left='+leftPosition+',top='+topPosition);
 
             // Check if the new window/tab is opened successfully
             if (chatWindow) {
@@ -131,12 +135,17 @@ function updateChatSpace() {
             form.enctype = 'application/json';  // Set content type to JSON
 
             addJsonDataToForm(form, JSONData.chatSpace, 'chatSpace');
-            addJsonDataToForm(form, JSONData.list, 'list');
             addJsonDataToForm(form, JSONData.userList, 'userList');
             addJsonDataToForm(form, JSONData.totalCount, 'totalCount');
             addJsonDataToForm(form, JSONData.user, 'user');
+            addJsonDataToForm(form, JSONData.startDate, 'startDate');
 
-            const chatWindow = window.open('', 'chatWindow', 'width=500,height=400,left:100,top:100');
+            const width = 1000;
+            const height = 600;
+            const leftPosition = (window.innerWidth - width) / 2;
+            const topPosition = (window.innerHeight - height) / 2;
+            let chatSpaceNo = $("input[name='chatSpaceNo']").val();
+            chatWindow = window.open('',chatSpaceNo, 'width='+width+',height='+height+',left='+leftPosition+',top='+topPosition);
 
             // Check if the new window/tab is opened successfully
             if (chatWindow) {

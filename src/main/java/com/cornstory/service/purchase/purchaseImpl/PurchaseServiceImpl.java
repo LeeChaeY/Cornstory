@@ -141,4 +141,9 @@ public class PurchaseServiceImpl implements PurchaseService {
         map.put("totalCount", list.size());
         return map;
     }
+
+    @Override
+    public int countPurchaseCheck(Map map) throws Exception {
+        return purchaseDao.countPurchaseCheck(map);
+    }
 }

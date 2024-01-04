@@ -1,19 +1,22 @@
 
 // opilsol-N24 [XZlQ1o5z61]
 $(function() {
-    $("input[id='checkset-e-5-5']").attr("checked", "");
+    if (parseInt($("input[name='tranCategory']").val()) === 1)
+        $("input[id='radioset-c-1-2']").attr("checked", "");
+    else if (parseInt($("input[name='tranCategory']").val()) === 2)
+        $("input[id='radioset-c-1-3']").attr("checked", "");
 
     $(".listStoreSearchButton").on("click", function() {
         $("form[name='form']").attr("method", "post").attr("action", "/purchase/listPurchase").submit();
     });
-    $(".viewWork").on("click", function() {
-        let workNo = $(this).parents("tr").children("td").eq(3).children("input").val();
-        viewWork(workNo);
-    });
-    $(".viewUser").on("click", function() {
-        let userId = $(this).parents("tr").children("td").eq(7).children("input").val();
-        viewUser(userId)
-    });
+    // $(".viewWork").on("click", function() {
+    //     let workNo = $(this).parents("tr").children("td").eq(0).children("input").eq(0).val();
+    //     viewWork(workNo);
+    // });
+    // $(".viewUser").on("click", function() {
+    //     let userId = $(this).parents("tr").children("td").eq(7).children("input").val();
+    //     viewUser(userId)
+    // });
 
     $(".contents-figure").on("click", function() {
         if ($(this).children("h4").text().trim() === "감상하러가기"){

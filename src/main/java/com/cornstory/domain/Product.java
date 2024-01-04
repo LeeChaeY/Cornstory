@@ -18,6 +18,7 @@ public class Product {
 	private Date prodDate;		// yyyy-MM-dd
 
 	private String nickname;
+	private int purchaseCheck;
 
 	public Product() {
 		// TODO Auto-generated constructor stub
@@ -195,6 +196,14 @@ public class Product {
 		this.nickname = nickname;
 	}
 
+	public void setPurchaseCheck(int purchaseCheck) {
+		this.purchaseCheck = purchaseCheck;
+	}
+
+	public int getPurchaseCheck() {
+		return purchaseCheck;
+	}
+
 	@Override
 	public String toString() {
 		return "Product{" +
@@ -211,6 +220,7 @@ public class Product {
 				", prodCnt=" + prodCnt +
 				", prodDate=" + prodDate +
 				", nickname='" + nickname + '\'' +
+				", purchaseCheck='" + purchaseCheck + '\'' +
 				'}';
 	}
 }

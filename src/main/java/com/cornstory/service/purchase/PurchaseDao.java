@@ -28,4 +28,6 @@ public interface PurchaseDao {
     public List<Purchase> listPurchasePopcorn(Map map) throws Exception;
 
     public List<Map> countTotalPurchase(Map map) throws Exception;
+
+    public int countPurchaseCheck(Map map) throws Exception;
 }
