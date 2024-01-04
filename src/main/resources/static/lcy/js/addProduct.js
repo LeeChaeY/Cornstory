@@ -1,7 +1,7 @@
 
 $(function() {
-    $("input[id='checkset-e-5-3']").attr("checked", "");
-    $("input[id='checkset-e-5-4']").attr("checked", "");
+    if (parseInt($("input[name='prodCategory']").val()) === 0)
+        fncProdNameCheck();
 
     $("input[name='prodCnt']").on("input", function() {
         fncProdNameCheck();
@@ -17,10 +17,6 @@ $(function() {
 
     $("input[type='button'][value='수정']").on("click", function() {
         updateProduct();
-    });
-
-    $(".dropset").on("click", function() {
-        $(self.location).attr("href", "/");
     });
 
     $("select[name='workSelect']").on("change", function() {
@@ -53,6 +49,10 @@ function addProduct() {
             alert("1개 이상의 팝콘 수량을 입력해주세요.");
             return false;
         }
+        if ($(".prodNameCheck").css("display") === "block") {
+                alert("해당 수량의 팝콘이 등록되어있습니다. 팝콘 수량을 변경해주세요.");
+                return false;
+        }
     }
     if ($("input[name='prodPrice']").val() === "") {
         alert("가격을 입력해주세요.");
@@ -74,6 +74,10 @@ function updateProduct() {
     if (prodCategory === 0) {
         if ($("input[name='prodCnt']").val() === "") {
             alert("1개 이상의 팝콘 수량을 입력해주세요.");
+            return false;
+        }
+        if ($(".prodNameCheck").css("display") === "block") {
+            alert("해당 수량의 팝콘이 등록되어있습니다. 팝콘 수량을 변경해주세요.");
             return false;
         }
     }
@@ -105,6 +109,7 @@ function fncProdNameCheck() {
         $(".check").css("display", "block");
     }
 
+    let result;
     if ($("input[name='prodCnt2']").val() !== prodCnt && prodCnt !== "") {
         $.ajax({
             url: "/product/json/prodNameCheck?prodCnt=" + prodCnt,

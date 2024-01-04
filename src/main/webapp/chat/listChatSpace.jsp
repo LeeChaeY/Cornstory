@@ -68,11 +68,19 @@
         <div class="contents-inner">
             <div class="content-container container-md">
                 <div class="textset textset-h2">
-                    <c:if test="${userStatus == 2}"><h2 class="textset-tit">나의 채팅방</h2></c:if>
-                    <c:if test="${userStatus != 2}"><h2 class="textset-tit">채팅방 목록</h2></c:if>
-                    <br><a href="javascript:void(0)" style="text-align: center; display: block;">채팅방 추가하기</a>
+                    <c:if test="${userStatus == 1}"><h2 class="textset-tit">마이 채팅방</h2></c:if>
+                    <c:if test="${userStatus != 1}"><h2 class="textset-tit">채팅방 리스트</h2></c:if>
                 </div>
+
                 <form name="form">
+                    <div class="contents-search">
+                        <p class="contents-result">
+                            <a href="javascript:void(0)">
+                                <img class="icon-sm" src="../common/icons/ico_plus_circle.svg" alt="아이콘">
+                                채팅방 추가하기
+                            </a>
+                        </p>
+                    </div>
                     <div class="contents-form">
                         <p class="contents-result">
                             전체<span> ${totalCount}</span> 개
@@ -168,7 +176,7 @@
                                     <div class="no">${i}</div>
                                     <figure class="cardset-figure">
                                         <img class="cardset-img"
-                                             src="/file/chat/${chatSpace.cSpaceImage}" alt="이미지">
+                                             src="${chatSpace.cSpaceImage}" alt="이미지">
                                     </figure>
                                     <div class="cardset-body">
                                         <div class="cardset-tit-group">
@@ -188,7 +196,7 @@
                                                     ${chatSpace.nickname}
                                             </div>
                                             <div class="cSpaceUserCnt">
-                                                인원수&nbsp; : &nbsp;${chatSpace.cSpaceUserCnt}
+                                                인원수&nbsp; : &nbsp;<span id="cSpaceUserCnt_${chatSpace.chatSpaceNo}">${chatSpace.cSpaceUserCnt}</span>
                                             </div>
                                             <div class="contents-date">
                                                 채팅방 개설일&nbsp; : &nbsp;${chatSpace.cSpaceDate}

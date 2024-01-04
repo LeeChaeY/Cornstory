@@ -2,12 +2,10 @@ package com.cornstory.controller.product;
 
 import com.cornstory.common.Page;
 import com.cornstory.common.Search;
-import com.cornstory.domain.Episode;
-import com.cornstory.domain.Product;
-import com.cornstory.domain.User;
-import com.cornstory.domain.Work;
+import com.cornstory.domain.*;
 import com.cornstory.service.episode.EpisodeService;
 import com.cornstory.service.product.ProductService;
+import com.cornstory.service.purchase.PurchaseService;
 import com.cornstory.service.work.WorkService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -18,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.text.DecimalFormat;
@@ -34,6 +33,8 @@ public class ProductController {
     @Autowired
     private EpisodeService episodeService;
 
+    @Autowired
+    private PurchaseService purchaseService;
 
 
     //    @Value("${pageUnit}")
@@ -188,6 +189,13 @@ public class ProductController {
         search.setPageSize(pageSize);
 
         Map<String, Object> map = productService.listProduct(search, userId, userStatus);
+
+        Map<String, Object> map01 = new HashMap<String, Object>();
+        map01.put("userId", user.getUserId());
+        for (Product product : (List<Product>)map.get("copyrightList")) {
+            map01.put("prodNo", product.getProdNo());
+            product.setPurchaseCheck(purchaseService.countPurchaseCheck(map01));
+        }
 
         model.addAttribute("totalCountPopcorn", map.get("totalCountPopcorn"));
         model.addAttribute("totalCountCopyright", map.get("totalCountCopyright"));

@@ -26,6 +26,44 @@ form[name="form"] .inputset {
 }
 
 
+/* 모달 스타일 */
+.modal {
+    display: none; /* 초기에는 모달 창을 숨깁니다. */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 300px;
+    text-align: center;
+}
+
+/* 버튼 스타일 */
+#confirmBtn, #cancelBtn {
+    margin-top: 10px;
+    padding: 8px 15px;
+    background-color: #0056b3;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#confirmBtn:hover, #cancelBtn:hover {
+    background-color: #004494;
+}
+
+
 /* thpart-HmlqLtFlNZ [HmlqLtFlNZ] */
 .thpart-HmlqLtFlNZ .contents-container { position: relative; height: 36rem; text-align: center; }
 .thpart-HmlqLtFlNZ .contents-backimg { width: 100%; height: 100%; object-fit: cover; }
@@ -54,10 +92,10 @@ form[name="form"] .inputset {
 
 /* hooms-N36 [iSLqLSg68L] */
 .hooms-N36 .contents-inner { padding: 10rem 2.4rem; }
-.hooms-N36 .textset { margin-top: 0; margin-bottom: 4rem; }
+.hooms-N36 .textset { margin-top: 0; margin-bottom: 5rem; }
 .hooms-N36 .textset-tit { text-align: center; }
 .hooms-N36 .tabset.tabset-brick { margin-bottom: 4rem; }
-.hooms-N36 .contents-search { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4rem; }
+.hooms-N36 .contents-search { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0;}
 .hooms-N36 .contents-result { font-size: 1.8rem; font-weight: 500; }
 .hooms-N36 .contents-result span { color: var(--secondary); }
 .hooms-N36 .contents-form { display: flex; align-items: center; gap: 0.8rem; }
@@ -138,14 +176,13 @@ form[name="form"] .inputset {
 .hooms-N53 .textset { margin-bottom: 4rem; }
 .hooms-N53 .textset-tit { text-align: center; }
 .hooms-N53 .contents-form-top { padding: 1rem 0; border-top: 1.5px solid var(--line-color4); }
-/*.hooms-N53 .contents-form-top .contents-radioset { display: flex; align-items: center; }*/
-/*.hooms-N53 .contents-form-top .contents-radioset .radioset+.radioset { margin-top: 0; margin-left: 4rem; }*/
-/*.hooms-N53 .contents-form-top .radioset .radioset-input+.radioset-label { width: 2.4rem; height: 2.4rem; }*/
-/*.hooms-N53 .contents-form-top .radioset .radioset-input.input-line:checked+.radioset-label::before { font-size: 2.4rem; }*/
-/*.hooms-N53 .radioset .radioset-text { font-size: var(--fs-p1); color: var(--text-color2); }*/
 .hooms-N53 .contents-form-bottom { padding: 4rem 0;  }
 .hooms-N53 .inputset-label { margin-bottom: 3rem; }
+.hooms-N53 th .label  { font-size: 20px; font-weight: 500; text-align: left;}
+.hooms-N53 th .req span { font-size: 20px; font-weight: 500; text-align: left; color: var(--secondary);}
+.hooms-N53 td { font-size: 20px; color: red;}
 .hooms-N53 .inputset > label {  display: flex; align-items: center; }
+
 /*.hooms-N53 .inputset > label::after { content: ""; display: block; height: 100%; !* 세로선의 높이를 부모 요소 높이와 같게 설정 *! width: 1px; !* 세로선의 너비 *! background-color: var(--line-color1); !* 연한 세로선의 색상 *! margin-left: 10px; !* 간격 조절 *!}*/
 /*.hooms-N53 .inputset { align-items: flex-end; }*/
 .hooms-N53 .inputset h6 { display: inline-block; width: 30%; }

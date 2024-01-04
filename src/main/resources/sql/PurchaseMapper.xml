@@ -59,7 +59,7 @@
 		SELECT COUNT(*) AS totalCount
 		FROM (SELECT tran_no, Pu.prod_no, seller_id, buyer_id, tran_category, tran_method, tran_cnt,
 					bf_popcorn_cnt, af_popcorn_cnt, Pu.episode_order, Pu.prod_price, tran_date,
-					W.work_no, work_name, category, nickname
+					W.work_no, work_name, category, U.nickname
 				FROM purchase Pu JOIN product P ON Pu.prod_no = P.prod_no
 				    			JOIN work W ON P.work_no = W.work_no
 								JOIN user U ON W.user_id = U.user_id
@@ -82,7 +82,7 @@
         FROM ( SELECT inner_table.*, @rownum := @rownum + 1 AS row_seq
 				FROM (SELECT tran_no, Pu.prod_no, seller_id, buyer_id, tran_category, tran_method, tran_cnt,
 							bf_popcorn_cnt, af_popcorn_cnt, Pu.episode_order, Pu.prod_price, tran_date,
-							W.work_no, work_name, category, nickname
+							W.work_no, work_name, category, U.nickname
 						FROM purchase Pu JOIN product P ON Pu.prod_no = P.prod_no
 										JOIN work W ON P.work_no = W.work_no
 										JOIN user U ON W.user_id = U.user_id
@@ -104,7 +104,7 @@
     </select>
 
 	<select id="countWorkTotalPopcorn" parameterType="map" resultType="map">
-		SELECT nickname, W.work_no, work_name, category,
+		SELECT U.nickname, W.work_no, work_name, category,
 				P.prod_price as prod_price,
 				COALESCE(SUM(Pu.prod_price), 0) as total_price,
 				COUNT(tran_no) as user_count
@@ -180,6 +180,12 @@
 		<if test="condition == 2">
 			GROUP BY DATE_FORMAT(tran_date, '%Y-%m')
 		</if>
+	</select>
+
+	<select id="countPurchaseCheck" parameterType="map" resultType="int">
+		SELECT count(*)
+		FROM purchase
+		WHERE prod_no = #{prodNo} AND buyer_id = #{userId}
 	</select>
 
 </mapper>
