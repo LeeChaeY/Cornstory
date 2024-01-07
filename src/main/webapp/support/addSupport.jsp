@@ -17,6 +17,7 @@
     <meta property="og:image" content="https://웹사이트/images/opengraph.png">
     <meta property="og:url" content="https://웹사이트">
     <title>cornstory</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <link rel="stylesheet" href="../common/css/setting.css">
     <link rel="stylesheet" href="../common/css/plugin.css">
     <link rel="stylesheet" href="../common/css/template.css">
@@ -81,7 +82,13 @@
                     <div class="contents-form-middle">
                         <div class="inputset inputset-lg inputset-label">
                             <label>
-                                <h6 class="inputset-tit"> 등록자 </h6>  ${sessionScope.user.nickName}
+                                <h6 class="inputset-tit"> 신고자 </h6>  ${sessionScope.user.nickName}
+                            </label>
+                        </div>
+                        <div class="inputset inputset-lg inputset-label">
+                            <label>
+                                <h6 class="inputset-tit"> 피신고자 </h6>
+                                <input type="text" class="inputset-input form-control" placeholder="신고할 회원 아이디." name="sup_id" aria-label="내용" required="">
                             </label>
                         </div>
                         <div class="contents-form-middle">
@@ -89,6 +96,10 @@
                                 <label for="supName">
                                 <c:choose>
                                     <c:when test="${param.category eq '1'}">
+                                    </c:when>
+                                    <c:when test="${param.category eq '2'}">
+                                        <h6 class="inputset-tit"> 신고 URL </h6>
+                                        <input type="text" class="inputset-input form-control" placeholder="URL을 입력해주세요." name="supName" aria-label="내용" required="">
                                     </c:when>
                                     <c:otherwise>
                                         <h6 class="inputset-tit"> 제목 </h6>
@@ -108,16 +119,36 @@
                                             <h6 class="inputset-tit"> 질문내용<span>*</span> </h6>
                                     </c:when>
                                     <c:when test="${param.category eq '2'}">
-                                                <h6 class="inputset-tit"> 신고내용<span>*</span> </h6>
+                                        <h6 class="inputset-tit"> 신고내용<span>*</span> </h6>
                                     </c:when>
                                 </c:choose>
 
-                                    <textarea class="inputset-textarea"  name="supContent" placeholder="공지 내용을 입력해주세요." required=""></textarea>
-                                    <div class="inputset-langth">
-                                        <span class="inputset-count">0</span>
-                                        <span class="inputset-total">/4000</span>
-                                    </div>
-
+                                    <c:choose>
+                                        <c:when test="${param.category eq '0'}">
+                                            <h6 class="inputset-tit"> 공지내용<span>*</span> </h6>
+                                            <textarea class="inputset-textarea"  name="supContent" placeholder="공지 내용을 입력해주세요." required=""></textarea>
+                                            <div class="inputset-langth">
+                                                <span class="inputset-count">0</span>
+                                                <span class="inputset-total">/4000</span>
+                                            </div>
+                                        </c:when>
+                                        <c:when test="${param.category eq '1'}">
+                                            <h6 class="inputset-tit"> 질문내용<span>*</span> </h6>
+                                            <textarea class="inputset-textarea"  name="supContent" placeholder="질문 내용을 입력해주세요." required=""></textarea>
+                                            <div class="inputset-langth">
+                                                <span class="inputset-count">0</span>
+                                                <span class="inputset-total">/4000</span>
+                                            </div>
+                                        </c:when>
+                                        <c:when test="${param.category eq '2'}">
+                                            <select class="selectset-toggle btn"  name="supName" required="">
+                                                <option selected disabled hidden="">선택해주세요</option>
+                                                <option value="불법 활동">불법 활동</option>
+                                                <option value="욕설 및 혐오 발언">욕설 및 혐오 발언</option>
+                                                <option value="스팸 및 광고 활동">스팸 및 광고 활동</option>
+                                            </select>
+                                        </c:when>
+                                    </c:choose>
                                 </label>
                             </div>
                             <div class="fileset fileset-lg fileset-label">
@@ -131,12 +162,6 @@
                                         </h6>
 
                                         <div class="inputset inputset-lg inputset-label"  for="supImage">
-                                            <label>
-                                                <div style="text-align: Left;">
-                                                    <img src="../file/support/support.jpg" width="80" style=" max-width: 100%;" alt=""/>
-                                                    <p class="check-stext">* 기본이미지 입니다.</p>
-                                                </div>
-                                            </label>
                                             <div id="dropArea" class="drop-area">
                                                 <span class="drop-text">JPG 이미지를 올려 주세요</span>
                                                 <input class="check-image" type="file" id="supfile" name="supfile" accept=".jpg"/>
@@ -174,7 +199,29 @@
     </div>
 </main>
 </html>
+<script>
+    $(document).ready(function() {
+        var name = document.getElementById("sup_id");
+        if (name) {
+            name.addEventListener('input', function() {
+                chekeName(name.value); // nickName 값을 전달
+            });
+        }
+    });
 
+    function chekeName(nickName){
+        $.ajax({
+            type: "get",
+            url: "/support/json/checkNickname",
+            data: { nickName : nickName}, // GET 요청 시엔 비워둔다.
+            success: function(response) { // 서버에서 받은 결과
+                console.log(response);
+            }
+        });
+    }
+
+
+</script>
 <script src="../common/js/setting.js"></script>
 <script src="../common/js/plugin.js"></script>
 <script src="../common/js/template.js"></script>

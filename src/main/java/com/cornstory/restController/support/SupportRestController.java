@@ -1,24 +1,26 @@
 package com.cornstory.restController.support;
 
+import com.cornstory.common.Search;
 import com.cornstory.domain.Support;
 import com.cornstory.domain.User;
 import com.cornstory.service.support.SupportService;
-
 import com.cornstory.service.user.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -105,6 +107,22 @@ public class SupportRestController {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return "invalid"; // 삭제 실패를 클라이언트에게 알림
         }
+    }
+
+    @RequestMapping( value="json/checkNickname", method=RequestMethod.GET )
+    public ResponseEntity<String> checkNickname(@RequestParam("nickName") String nickName) throws Exception {
+        Search search = new Search();
+        search.setSearchCondition(null);
+        Map<String, Object> map = userService.listUser(search);
+        List<User> list = (List<User>)map.get("list");
+        String find = "";
+        for (User user : list) {
+            if (user.getNickName().equals(nickName)) {
+                find = user.getUserId();
+            }
+            System.out.println(user);
+        }
+        return new ResponseEntity<>(find, HttpStatus.OK);
     }
 
 }
