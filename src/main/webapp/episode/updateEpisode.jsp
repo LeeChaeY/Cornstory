@@ -53,7 +53,7 @@
                 <div class="tabset tabset-brick">
                 </div>
                 <div class="contents-form">
-                    <form action="../episode/addEpisode" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+                    <form action="../episode/updateEpisode" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
                         <input type="hidden" name="workNo" value="${work.workNo}" />
                         <div class="contents-form-middle">
                             <div class="inputset inputset-lg inputset-label">
@@ -99,7 +99,7 @@
                                                     <input type="file" class="fileset-input" name="episodeFile" id="episodeFile" accept=".txt" required onchange="readTextFilePreview(this);" />
                                                     <button class="fileset-cancel"></button>
                                                     <span class="btnset btnset-line btnset-lg fileset-upload">파일 첨부하기</span>
-                                                    <div id="textPreviewContainer">${episode.directory}${episode.fileName}</div>
+                                                    <div id="textPreviewContainer" style="white-space: pre-wrap; margin: 0 auto; width: 690px; height: 1000px; display: block;">${file}</div>
                                                 </c:when>
                                                 <c:when test="${work.category eq '1'}">
                                                     <input type="file" class="fileset-input" name="episodeFile" id="episodeFile" accept=".jpg" required onchange="setImagePreview(this);" />

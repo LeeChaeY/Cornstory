@@ -12,27 +12,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="format-detection" content="telephone=no">
     <title>cornstory</title>
-    <link rel="stylesheet" href="/khs/css/setting.css">
-    <link rel="stylesheet" href="/khs/css/plugin.css">
-    <link rel="stylesheet" href="/khs/css/template.css">
-    <link rel="stylesheet" href="/khs/css/common.css">
-    <link rel="stylesheet" href="/khs/css/style.css">
+    <link rel="stylesheet" href="../common/css/setting.css">
+    <link rel="stylesheet" href="../common/css/plugin.css">
+    <link rel="stylesheet" href="../common/css/template.css">
+    <link rel="stylesheet" href="../common/css/common.css">
+    <link rel="stylesheet" href="../common/css/style.css">
+    <link rel="stylesheet" href="../common/css/drag.css">
+    <link rel="stylesheet" href="../support/css/setting.css">
+    <link rel="stylesheet" href="../support/css/plugin.css">
+    <link rel="stylesheet" href="../support/css/template.css">
+    <link rel="stylesheet" href="../support/css/common.css">
+    <link rel="stylesheet" href="../support/css/style.css">
+    <meta charset="utf-8">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <style>
+        .textset-tit{text-align: center;}
+    </style>
 </head>
+<%@ include file="../layout/top.jsp" %>
 <body>
 
-<!--top start-->
-<%--<%@ include file="../layout/header.jsp" %>--%>
-<jsp:include page="../layout/header.jsp" flush="true"/>
-<!--top end-->
-
 <main class="th-layout-main ">
+
+    <div class="hooms-N1" data-bid="SAlQg8Ft2x" id="">
+        <div class="contents-container">
+            <div class="contents-swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img class="contents-backimg img-pc" src="../common/images/main.jpg" alt="">
+                        <img class="contents-backimg img-mobile" src="../common/images/main.jpg" alt="">
+                        <div class="contents-slide-group">
+                            <h2 class="contents-title">Create OR New STORY</h2>
+                            <p class="contents-text">​<br>이곳은 당신만의 이야기가 시작 되는 특별한 공간입니다.<br>지금 여기에서, 당신만의 창작을 펼쳐보세요.</p>
+                            <c:if test="${!empty sessionScope.user}">
+                                <a class="contents-link" href="/work/addWork">Create</a>
+                            </c:if>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <img class="contents-backimg img-pc" src="../common/images/one.jpg" alt="">
+                        <img class="contents-backimg img-mobile" src="../common/images/one.jpg" alt="">
+                        <div class="contents-slide-group">
+                            <h2 class="contents-title">Create OR New STORY</h2>
+                            <p class="contents-text">​<br>이곳은 당신만의 이야기가 시작 되는 특별한 공간입니다.<br>지금 여기에서, 당신만의 창작을 펼쳐보세요.</p>
+                            <c:if test="${!empty sessionScope.user}">
+                                <a class="contents-link" href="/work/addWork">Create</a>
+                            </c:if>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <img class="contents-backimg img-pc" src="https://images.unsplash.com/photo-1598237601465-af66b7475e92?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=M3w0OTE2MDd8MHwxfHNlYXJjaHwyM3x8YmxhY2t8a298MHx8fHwxNzAzMjI1ODk3fDA&amp;ixlib=rb-4.0.3&amp;q=80&amp;w=1080" alt="">
+                        <img class="contents-backimg img-mobile" src="https://images.unsplash.com/photo-1598237601465-af66b7475e92?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=M3w0OTE2MDd8MHwxfHNlYXJjaHwyM3x8YmxhY2t8a298MHx8fHwxNzAzMjI1ODk3fDA&amp;ixlib=rb-4.0.3&amp;q=80&amp;w=1080" alt="">
+                        <div class="contents-slide-group">
+                            <h2 class="contents-title">Create OR New STORY</h2>
+                            <p class="contents-text">​<br>이곳은 당신만의 이야기가 시작 되는 특별한 공간입니다.<br>지금 여기에서, 당신만의 창작을 펼쳐보세요.</p>
+                            <c:if test="${!empty sessionScope.user}">
+                                <a class="contents-link" href="/work/addWork">Create</a>
+                            </c:if>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="contents-control">
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-button-pause">
+                        <img src="../common/icons/ico_pause.svg" alt="스와이퍼 멈춤버튼">
+                    </div>
+                    <div class="swiper-button-play">
+                        <img src="../common/icons/ico_play.svg" alt="스와이퍼 재생버튼">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="hooms-N39" data-bid="MzlQkMIezC" >
         <div class="contents-inner">
             <form action="../work/updateWork" method="post" onsubmit="return validateForm()" enctype="multipart/form-data">
                 <div class="contents-container container-md">
                     <div class="textset textset-h2">
-                        <h2 class="textset-tit">작품 추가</h2>
+                        <h2 class="textset-tit">작품 수정</h2>
                     </div>
 
                     <input type="hidden" name="workNo" value="${work.workNo}">
@@ -208,9 +268,6 @@
                             <div id="charCount">글자 수: 0/400</div>
                         </label>
                     </div>
-
-
-
                     <!-- 썸네일 업로드 영역 -->
                     <div class="inputset inputset-lg inputset-group" for="thumbnailFile">
                         <label class="labelset" for="workName">
@@ -225,6 +282,9 @@
                         </div>
                     </div>
                     <div id="thumbnailMessage" style="color: green">JPG 이미지를 추가해주세요</div>
+
+
+
 
                     <!-- 유료/무료 선택 -->
                     <div class="inputset inputset-lg inputset-group">
@@ -241,6 +301,7 @@
                                 <input id="fap1" class="radioset-input input-line" name="fap" type="radio" value="1" ${work.fap == 1 ? 'checked' : ''}>
                                 <label class="radioset-thumb thumb-round" for="fap1">유료</label>
                             </div>
+                            <p id="popcornCountText"></p>
                         </div>
                     </div>
 
@@ -314,6 +375,7 @@
             popcornCountTextElement.style.display = 'none';
         }
     }
+
 
     // 카테고리에 따라 팝콘 개수 업데이트하는 함수
     function updatePopcornCountBasedOnCategory() {
@@ -503,41 +565,29 @@
 
 
     function checkWorkName() {
-        var workName = $('#workName').val();
+        var currentWorkName = $('#workName').val();
         var userId = "${user.userId}";
         var existingWorkName = "${work.workName}";
 
-
-
-        $.get( '/work/json/checkWorkName',
-            {
-                userId: userId,
-                workName: workName
-            }).done(function (response) {
-            console.log(response.toString());
+        $.get('/work/json/checkWorkName', {
+            userId: userId,
+            workName: currentWorkName
+        }).done(function (response) {
             var messageDiv = $('#workNameMessage');
-            if (response === workName) { // 또는 if (parseInt(response) === 0)
-                if (workName === existingWorkName) {
-                    // 현재 작품명과 같으면 중복 검사를 하지 않음
-                    $('#workNameMessage').text('현재 작품명입니다.').css('color', 'green');
-                    messageDiv.show();
-                    return true;
-                }else{
-                    messageDiv.text('등록된 작품이 있습니다. 다른 작품명으로 적어주세요.');
-                    messageDiv.css('color', 'red');
-                    messageDiv.show();
-                    return false;
-                }
-            } else if(response !== workName) {
-                messageDiv.text('등록된 작품이 없습니다.');
-                messageDiv.css('color', 'green');
+
+            if (response === 'No duplication found.') {
+                messageDiv.text('등록된 작품이 없습니다.').css('color', 'green');
                 messageDiv.hide();
-                return true;
+            } else if (currentWorkName === existingWorkName) {
+                messageDiv.text('현재 작품명입니다.').css('color', 'green');
+                messageDiv.show();
+            } else {
+                messageDiv.text('등록된 작품이 있습니다. 다른 작품명으로 적어주세요.').css('color', 'red');
+                messageDiv.show();
             }
-        })
-            .fail(function (){
-                console.error('Ajax 요청 실패');
-            });
+        }).fail(function () {
+            console.error('Ajax 요청 실패');
+        });
     }
 
     $('.drop-area').on('drag dragstart dragend dragover dragenter dragleave drop', function(event) {
@@ -556,3 +606,10 @@
 
 
 </html>
+<script src="../common/js/plugin.js"></script>
+<script src="../common/js/template.js"></script>
+<script src="../common/js/common.js"></script>
+<script src="../common/js/script.js"></script>
+<%--<script src="../support/js/support.js"></script>--%>
+<%--<script src="/common/js/drag.js"></script>--%>
+<%@ include file="../layout/bottom.jsp" %>

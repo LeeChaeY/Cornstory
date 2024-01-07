@@ -8,6 +8,7 @@ import com.cornstory.service.work.WorkService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,13 +29,20 @@ public class WorkRestController {
     }
 
     @GetMapping("json/checkWorkName")
-    public String checkWorkName(@RequestParam String userId, @RequestParam String workName) throws Exception {
+    public ResponseEntity<?> checkWorkName(@RequestParam String userId, @RequestParam String workName) throws Exception {
         System.out.println("checkWorkName()");
         Work work = new Work();
         work.setUserId(userId);
         work.setWorkName(workName);
 
-        return workService.getDuplication(work).getWorkName();
+        Work duplicatedWork = workService.getDuplication(work);
+        if (duplicatedWork != null) {
+            // 중복된 작품이 존재할 경우, 작품명 반환
+            return new ResponseEntity<>(duplicatedWork.getWorkName(), HttpStatus.OK);
+        } else {
+            // 중복된 작품이 없을 경우, 적절한 메시지 또는 상태 코드 반환
+            return new ResponseEntity<>("No duplication found.", HttpStatus.OK);
+        }
     }
 
     @GetMapping("json/listWork")

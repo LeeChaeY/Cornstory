@@ -14,10 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
@@ -147,24 +145,27 @@ public class EpisodeController {
 
         model.addAttribute("work",workService.getWork(episode.getWorkNo()));
         model.addAttribute("user",user);
+        model.addAttribute("file",readTextFile(episode.getDirectory()));
         model.addAttribute("episode",episode);
         return "episode/updateEpisode";
 
     }
     @PostMapping("updateEpisode")
-    public String updateEpisode(@ModelAttribute("episode")Episode episode, @RequestParam("thumbnailFile") MultipartFile thumbnailFile,  @RequestParam("episodeFile") MultipartFile episodeFile, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public String updateEpisode(@ModelAttribute("episode")Episode episode, @RequestParam("thumbnailFile") MultipartFile thumbnailFile,  @RequestParam("episodeFile") MultipartFile episodeFile, @SessionAttribute(name="user", required = false) User user,HttpServletRequest request, HttpServletResponse response) throws Exception {
         System.out.println("[ EpisodeController.updateEpisode() start........]");
         //Work work = workService.getWork(episode.getWorkNo());
 
-
         Episode episodesub = episodeService.getEpisode(episode.getEpisodeNo());
+        Work work =workService.getWork(episode.getWorkNo());
         String fileName;
         String bucketName = "cornstory"; // S3 Bucket Name
         String fileKey;
         String fileUrl;
         if (!thumbnailFile.isEmpty()) {
             try {
-                fileKey = episode.getThumbnail();
+                fileName = work.getUserId() + "_" + episode.getWorkNo() + "_" + episode.getEpisodeOrder();
+                fileName = fileName.replaceAll("[^a-zA-Z0-9가-힣_]", "_") + ".jpg";
+                fileKey = "episode/" + fileName;
 
 
                 fileUrl = storageService.uploadFileToS3(bucketName, fileKey, thumbnailFile);
@@ -175,14 +176,18 @@ public class EpisodeController {
             }
         }
         if (!episodeFile.isEmpty()) {
-            try {
+                fileName = work.getUserId() + "_" + episode.getWorkNo() +"_" +episode.getEpisodeOrder();
+                fileName = fileName.replaceAll("[^a-zA-Z0-9가-힣_]", "_");
+                fileKey="";
+                if(work.getCategory()==0){
+                    fileKey = "episode/webnovel/"+fileName+".txt";
+                }else if(work.getCategory()==1){
+                    fileKey = "episode/webtoon/"+fileName+".jpg";
+                }else if(work.getCategory()==2){
+                    fileKey = "episode/webdrama/"+fileName+".mp4";
+                }
 
-                fileKey = episode.getDirectory();
-
-                fileUrl = storageService.uploadFileToS3(bucketName, fileKey, thumbnailFile);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+                fileUrl = storageService.uploadFileToS3(bucketName, fileKey, episodeFile);
         }
         System.out.println(episode.toString());
 
@@ -208,10 +213,10 @@ public class EpisodeController {
         Episode episode= episodeService.getEpisode(episodeNo);
         Work work =workService.getWork(episode.getWorkNo());
         if (work.getCategory() == 0) {
-            String textContent = readTextFile(episode.getDirectory(), episode.getFileName());
+            String textContent = readTextFile(episode.getDirectory());
             model.addAttribute("textContent", textContent);
         }else{
-            model.addAttribute("files",episode.getDirectory()+ File.separator + episode.getFileName());
+            model.addAttribute("files",episode.getDirectory());
         }
 
 
@@ -223,17 +228,13 @@ public class EpisodeController {
 
     }
     // 추가: 텍스트 파일을 읽어오는 메서드
-    private String readTextFile(String directory, String fileName) throws IOException {
-        // 실제 파일 경로를 만들어줍니다.
-        String filePath = directory + File.separator + fileName;
-
-        // 파일을 읽어오기 위한 BufferedReader를 사용합니다.
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+    private String readTextFile(String fileUrl) throws IOException {
+        URL url = new URL(fileUrl);
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()))) {
             StringBuilder content = new StringBuilder();
             String line;
-            // 한 줄씩 읽어와서 StringBuilder에 추가합니다.
             while ((line = br.readLine()) != null) {
-                content.append(line).append("\n");
+                content.append(line).append(System.lineSeparator()); // 시스템에 맞는 줄바꿈 사용
             }
             return content.toString();
         }

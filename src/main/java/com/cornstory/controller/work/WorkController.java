@@ -118,6 +118,7 @@ public class WorkController {
         //user의 세션을 가져와야함.
         model.addAttribute("work",workService.getWork(workNo));
         model.addAttribute("list",productService.getCopylight(user.getUserId()));
+        model.addAttribute("user",user);
 
         return "work/updateWork";
 

@@ -27,6 +27,16 @@
 <!--top end-->
 <body>
 <main class="th-layout-main ">
+    <div class="thpart-HmlqLtFlNZ" data-bid="HmlqLtFlNZ">
+        <div class="contents-container">
+            <img class="contents-backimg" src="../khs/images/story.jpg" alt="">
+            <div class="contents-body container-md">
+                <h2 class="contents-title"> Story </h2>
+                <h7 class="contents-sub">스토리</h7>
+            </div>
+        </div>
+    </div>
+
     <!-- [S]hooms-N39 -->
     <div class="hooms-N39" data-bid="csLqpM814f" id="">
         <div class="contents-inner">

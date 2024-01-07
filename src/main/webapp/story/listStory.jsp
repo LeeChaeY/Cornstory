@@ -164,9 +164,19 @@
     </div>
 <!-- [E]hooms-N8 -->
 </main>
+<div id="commentModal_sCommentNo" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('commentModal_sCommentNo')">&times;</span>
+        <textarea id="editedContent_sCommentNo"></textarea>
+        <button onclick="updateComment(sCommentNo, storyNo)">Save Changes</button>
+    </div>
+</div>
+
 </body>
 
 <script>
+
+
     function confirmAndSubmit(storyNo) {
         var r = confirm("정말로 삭제하시겠습니까?");
         if (r === true) {

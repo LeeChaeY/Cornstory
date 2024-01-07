@@ -243,7 +243,14 @@
             <c:otherwise>
               <li class="header-gnbitem">
                 <a class="header-gnblink" href="javascript:void(0)">
-                  <span><img src="../file/user/${sessionScope.user.userImage}" width="100" style="border-radius: 100%; max-width: 20%; margin-left:20px" alt=""/></span>
+                  <span>
+                    <c:if test="${sessionScope.user.userImage eq 'user.jpg'}">
+                    <img src="../file/user/${sessionScope.user.userImage}" width="100" style="border-radius: 100%; max-width: 20%; margin-left:20px" alt=""/>
+                    </c:if>
+                    <c:if test="${sessionScope.user.userImage ne 'user.jpg'}">
+                      <img src="${sessionScope.user.userImage}" width="100" style="border-radius: 100%; max-width: 20%; margin-left:20px" alt=""/>
+                    </c:if>
+                  </span>
                     ${sessionScope.user.nickName}
                 </a>
                 <ul class="header-sublist">

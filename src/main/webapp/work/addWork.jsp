@@ -22,7 +22,9 @@
     <link rel="stylesheet" href="../support/css/template.css">
     <link rel="stylesheet" href="../support/css/common.css">
     <link rel="stylesheet" href="../support/css/style.css">
+    <meta charset="utf-8">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
     <style>
         .textset-tit{text-align: center;}
     </style>
@@ -115,11 +117,11 @@
                     </div>
 
                     <!-- 저작권 구매한 작품 선택 -->
-                    <div class="selectset selectset-lg" id="copylight" name="copylight">
-                        <button class="selectset-toggle btn" type="button" id="copylightButton" aria-haspopup="true" aria-expanded="false">
+                    <div class="selectset selectset-lg" id="copyright">
+                        <button class="selectset-toggle btn" type="button" id="copyrightButton" aria-haspopup="true" aria-expanded="false">
                             저작권 구매한 작품 선택
                         </button>
-                        <ul class="selectset-list" aria-labelledby="copylightButton">
+                        <ul class="selectset-list" aria-labelledby="copyrightButton">
                             <!-- 서버에서 불러온 저작권 구매한 작품 목록을 반복적으로 표시 -->
                             <c:forEach var="product" items="${list}">
                                 <li class="selectset-item">
@@ -164,7 +166,7 @@
                         <input type="text" class="inputset-input form-control" id="workName" name="workName" maxlength="30" required>
                         <div id="workNameCount">글자 수: 0/30</div>
                     </div>
-                    <div id="workNameMessage" style="color: red;"></div>
+                    <div id="workNameMessage" style="color: red;">작품명을 입력해주세요.</div>
 
                     <!-- 장르 선택 체크박스 -->
                     <div class="inputset inputset-lg inputset-group">
@@ -297,6 +299,7 @@
                                 <input id="fap1" class="radioset-input input-line" name="fap" type="radio" value="1">
                                 <label class="radioset-thumb thumb-round" for="fap1">유료</label>
                             </div>
+                            <p id="popcornCountText"></p>
                         </div>
                     </div>
 
@@ -339,6 +342,11 @@
 
 </body>
 <script>
+    function addChangeEventListeners(selector, handler) {
+        document.querySelectorAll(selector).forEach(function(element) {
+            element.addEventListener('change', handler);
+        });
+    }
     window.onload = function() {
         toggleSelectBox();
         updatePopcornCount(0);
@@ -350,18 +358,10 @@
         });
 
         // 카테고리 변경 이벤트 리스너 추가
-        var categoryInputs = document.querySelectorAll('input[name="category"]');
-        categoryInputs.forEach(function(input) {
-            input.addEventListener('change', function() {
-                updatePopcornCountBasedOnCategory();
-            });
-        });
+        addChangeEventListeners('input[name="category"]', updatePopcornCountBasedOnCategory);
+
         // 유료/무료 선택 변경 이벤트 리스너 추가
-        document.querySelectorAll('input[name="fap"]').forEach(function(radio) {
-            radio.addEventListener('change', function() {
-                updatePopcornCountBasedOnCategory();
-            });
-        });
+        addChangeEventListeners('input[name="fap"]', updatePopcornCountBasedOnCategory);
     };
 
     function updatePopcornCount(popcornCount) {
@@ -563,9 +563,9 @@
 
     function toggleSelectBox() {
         var status = document.querySelector('input[name="status"]:checked').value;
-        var selectBox = document.getElementById('copylight');
+        var selectBox = document.getElementById('copyright');
         var buttons = selectBox.getElementsByTagName('button');
-
+        var creationMessage=document.getElementById('creationMessage');
         if (status === '1') {
             if (buttons.length <= 1) { // '템플릿을 선택하세요' 버튼을 포함하여 계산
                 document.querySelector('input[name="status"][value="0"]').checked = true;
@@ -594,19 +594,20 @@
             $('#workNameMessage').text('작품명을 입력해주세요.').css('color', 'red');
             return false; // 여기에 return false를 추가
         }
-        $.get( '/work/json/checkWorkName',
-            {
-                userId: userId,
-                workName: workName
-            }).done(function (response) {
+        $.get('/work/json/checkWorkName', {
+            userId: userId,
+            workName: workName
+        }).done(function (response) {
             var messageDiv = $('#workNameMessage');
-            if (response.workName === workName) {
-                messageDiv.text('등록된 작품이 있습니다. 다른 작품명으로 적어주세요.');
-                messageDiv.css('color', 'red');
-            } else {
+
+            // response가 'No duplication found.'이면 중복되지 않은 것으로 간주
+            if (response === 'No duplication found.') {
                 messageDiv.text('등록된 작품이 없습니다.');
                 messageDiv.css('color', 'green');
-                return false;
+            } else {
+                // response가 다른 문자열이면 중복된 작품명으로 간주
+                messageDiv.text('등록된 작품이 있습니다. 다른 작품명으로 적어주세요.');
+                messageDiv.css('color', 'red');
             }
         })
             .fail(function (){
@@ -629,11 +630,10 @@
     });
 </script>
 </html>
-<script src="../common/js/setting.js"></script>
 <script src="../common/js/plugin.js"></script>
 <script src="../common/js/template.js"></script>
 <script src="../common/js/common.js"></script>
 <script src="../common/js/script.js"></script>
-<script src="../support/js/support.js"></script>
-<script src="/common/js/drag.js"></script>
+<%--<script src="../support/js/support.js"></script>--%>
+<%--<script src="/common/js/drag.js"></script>--%>
 <%@ include file="../layout/bottom.jsp" %>

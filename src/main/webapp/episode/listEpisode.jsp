@@ -65,12 +65,55 @@
 <body>
 
 <main class="th-layout-main">
-    <div class="thpart-HmlqLtFlNZ" data-bid="HmlqLtFlNZ">
+    <div class="hooms-N1" data-bid="SAlQg8Ft2x" id="">
         <div class="contents-container">
-            <img class="contents-backimg" src="../khs/images/work.jpg" alt="">
-            <div class="contents-body container-md">
-                <h2 class="contents-title"> Work </h2>
-                <h7 class="contents-sub">작품</h7>
+            <div class="contents-swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img class="contents-backimg img-pc" src="../common/images/main.jpg" alt="">
+                        <img class="contents-backimg img-mobile" src="../common/images/main.jpg" alt="">
+                        <div class="contents-slide-group">
+                            <h2 class="contents-title">Create OR New STORY</h2>
+                            <p class="contents-text">​<br>이곳은 당신만의 이야기가 시작 되는 특별한 공간입니다.<br>지금 여기에서, 당신만의 창작을 펼쳐보세요.</p>
+                            <c:if test="${!empty sessionScope.user}">
+                                <a class="contents-link" href="/work/addWork">Create</a>
+                            </c:if>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <img class="contents-backimg img-pc" src="../common/images/one.jpg" alt="">
+                        <img class="contents-backimg img-mobile" src="../common/images/one.jpg" alt="">
+                        <div class="contents-slide-group">
+                            <h2 class="contents-title">Create OR New STORY</h2>
+                            <p class="contents-text">​<br>이곳은 당신만의 이야기가 시작 되는 특별한 공간입니다.<br>지금 여기에서, 당신만의 창작을 펼쳐보세요.</p>
+                            <c:if test="${!empty sessionScope.user}">
+                                <a class="contents-link" href="/work/addWork">Create</a>
+                            </c:if>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <img class="contents-backimg img-pc" src="https://images.unsplash.com/photo-1598237601465-af66b7475e92?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=M3w0OTE2MDd8MHwxfHNlYXJjaHwyM3x8YmxhY2t8a298MHx8fHwxNzAzMjI1ODk3fDA&amp;ixlib=rb-4.0.3&amp;q=80&amp;w=1080" alt="">
+                        <img class="contents-backimg img-mobile" src="https://images.unsplash.com/photo-1598237601465-af66b7475e92?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=M3w0OTE2MDd8MHwxfHNlYXJjaHwyM3x8YmxhY2t8a298MHx8fHwxNzAzMjI1ODk3fDA&amp;ixlib=rb-4.0.3&amp;q=80&amp;w=1080" alt="">
+                        <div class="contents-slide-group">
+                            <h2 class="contents-title">Create OR New STORY</h2>
+                            <p class="contents-text">​<br>이곳은 당신만의 이야기가 시작 되는 특별한 공간입니다.<br>지금 여기에서, 당신만의 창작을 펼쳐보세요.</p>
+                            <c:if test="${!empty sessionScope.user}">
+                                <a class="contents-link" href="/work/addWork">Create</a>
+                            </c:if>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="contents-control">
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-button-pause">
+                        <img src="../common/icons/ico_pause.svg" alt="스와이퍼 멈춤버튼">
+                    </div>
+                    <div class="swiper-button-play">
+                        <img src="../common/icons/ico_play.svg" alt="스와이퍼 재생버튼">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -96,18 +139,6 @@
                         <h2 class="textset-tit"> ${work.workName}</h2>
                     </div>
                     <p class="contents-desc"> ${work.workDesc} </p>
-<%--                    <div class="selectset selectset-lg">--%>
-<%--                        <button class="selectset-toggle btn" type="button">--%>
-<%--                            <span>[필수] 사이즈를 선택해주세요.</span>--%>
-<%--                        </button>--%>
-<%--                        <ul class="selectset-list">--%>
-<%--                            <li class="selectset-item">--%>
-<%--                                <button class="selectset-link btn" type="button" data-value="슈퍼싱글">--%>
-<%--                                    <span>슈퍼싱글</span>--%>
-<%--                                </button>--%>
-<%--                            </li>--%>
-<%--                        </ul>--%>
-<%--                    </div>--%>
                     <div class="contents-sum"> ${work.fap == 0 ? '무료' : '유료 : '}
                             <c:if test="${work.fap == 1}">
                                 팝콘
@@ -150,18 +181,6 @@
             <div class="contents-container container-md">
                 <div class="contents-search">
                     <p class="contents-result"> 작품 회차수:<span> ${totalCount}</span>개 </p>
-                    <!--            <div class="selectset selectset-lg">-->
-                    <!--              <button class="selectset-toggle btn" type="button">-->
-                    <!--                <span>최근 등록순</span>-->
-                    <!--              </button>-->
-                    <!--              <ul class="selectset-list">-->
-                    <!--                <li class="selectset-item">-->
-                    <!--                  <button class="selectset-link btn" type="button" data-value="최근 등록순">-->
-                    <!--                    <span>최근 등록순</span>-->
-                    <!--                  </button>-->
-                    <!--                </li>-->
-                    <!--              </ul>-->
-                    <!--            </div>-->
                 </div>
                 <c:forEach var="episode" items="${list}">
                     <c:set var="purchased" value="false" />
@@ -172,6 +191,7 @@
                     </c:forEach>
                     <div class="contents-group">
                         <div class="contents-cardlist contents-cardlist-active">
+                            <c:if test="${work.fap == 1}">
                             <a href="javascript:void(0)" onclick="handleEpisodeClick('${work.workName}', '${episode.episodeOrder}', '${episode.episodeName}', '${episode.episodeNo}', ${purchased})" class="cardset cardset-hor">
                                 <figure class="cardset-figure">
                                     <img class="cardset-img" src="${episode.thumbnail}" alt="${episode.episodeOrder}화:${episode.episodeName}">
@@ -213,6 +233,29 @@
                                     </form>
                                 </c:if>
                             </a>
+                            </c:if>
+                            <c:if test="${work.fap == 0}">
+                                <a href="../episode/getEpisode?episodeNo=${episode.episodeNo}" class="cardset cardset-hor">
+                                    <figure class="cardset-figure">
+                                        <img class="cardset-img" src="${episode.thumbnail}" alt="${episode.episodeOrder}화:${episode.episodeName}">
+                                    </figure>
+                                    <div class="cardset-body">
+                                        <div class="contents-info">
+                                            <div class="contents-name"> ${work.workName}&nbsp;${episode.episodeOrder}화 <span class="contents-date"><fmt:formatDate value="${episode.episodeDate}" pattern="yyyy-MM-dd" /></span>
+                                            </div>
+                                        </div>
+                                        <div class="cardset-tit-group">
+                                            <h5 class="cardset-tit"> ${episode.episodeName} </h5>
+                                        </div>
+                                    </div>
+                                    <c:if test="${sessionScope.user.userId eq work.userId}"><a href="../episode/updateEpisode?episodeNo=${episode.episodeNo}" class="btnset btnset-lg">수정</a>
+                                        <form method="post" action="../episode/deleteEpisode">
+                                            <input type="hidden" name="episodeNo" value="${episode.episodeNo}" />
+                                            <button type="submit" class="btnset btnset-lg">삭제</button>
+                                        </form>
+                                    </c:if>
+                                </a>
+                            </c:if>
                         </div>
                     </div>
                 </c:forEach>
@@ -234,9 +277,6 @@
         <button id="cancelBtn">취소하기</button>
     </div>
 </div>
-
-<%@ include file="../layout/bottom.jsp" %>
-
 </body>
 <script>
 

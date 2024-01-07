@@ -186,7 +186,7 @@
 
 	<!--저작권의 이름들 가져오가-->
 	<select id="getCopylight" parameterType="String" resultMap="productSelectMap">
-		SELECT prod_name from product P, purchase Pu where P.prod_no=Pu.prod_no And Pu.buyer_id=#{userId} AND episode_no IS NULL
+		SELECT prod_name from product P, purchase Pu where P.prod_no=Pu.prod_no And Pu.buyer_id=#{userId} AND episode_no IS NULL AND work_no IS NOT NULL
 	</select>
 
 </mapper>

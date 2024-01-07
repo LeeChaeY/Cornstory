@@ -174,14 +174,14 @@
                     <c:when test="${work.category eq '0'}">
                         <div class="contents-cardlist contents-cardlist-active">
                             <div class="cardset-body">
-                                <p class="h5 cardset-desc"> ${textContent}</p>
+                                <p class="h5 cardset-desc" style="white-space: pre-wrap; margin: 0 auto; width: 690px; height: 1000px; display: block;"> ${textContent}</p>
                             </div>
                         </div>
                     </c:when>
                     <c:when test="${work.category eq '1'}">
-                        <div class="contents-cardlist contents-cardlist-active">
-                            <figure class="cardset-figure">
-                                <img class="cardset-img" src=".${files}" alt="이미지" style="max-width: 690px; max-height: 1280px; display: block;">
+                        <div class="contents-cardlist contents-cardlist-active" >
+                            <figure class="cardset-figure" style="height: 1280px;">
+                                <img class="cardset-img" src="${files}" alt="이미지" style="margin: 0 auto; width: 690px; height: 1280px; display: block;">
                             </figure>
                         </div>
                     </c:when>

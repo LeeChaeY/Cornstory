@@ -85,7 +85,7 @@ public class StoryController {
         }
         System.out.println(story.toString());
         storyService.addStory(story);
-        return "story/getStory";
+        return "redirect:/story/getStory";
 
     }
 

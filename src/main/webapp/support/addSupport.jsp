@@ -55,7 +55,8 @@
         <div class="contents-inner">
             <div class="contents-container container-md">
                 <form action="${pageContext.request.contextPath}/support/addSupport" method="post" enctype="multipart/form-data">
-                <div class="textset textset-h2">
+                    <input id="sup_id" type="text"/>
+                    <div class="textset textset-h2">
                     <c:choose>
                         <c:when test="${param.category eq '0'}">
                             <input type="text" id="supCategory" name="supCategory" value="0" style="display: none;">
@@ -174,7 +175,9 @@
     </div>
 </main>
 </html>
+<script>
 
+</script>
 <script src="../common/js/setting.js"></script>
 <script src="../common/js/plugin.js"></script>
 <script src="../common/js/template.js"></script>
