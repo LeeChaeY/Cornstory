@@ -109,20 +109,18 @@ public class SupportRestController {
         }
     }
 
-    @RequestMapping( value="json/checkNickname", method=RequestMethod.GET )
-    public ResponseEntity<String> checkNickname(@RequestParam("nickName") String nickName) throws Exception {
+    @RequestMapping(value = "json/getUserIdByNickname", method = RequestMethod.GET)
+    public ResponseEntity<String> getUserIdByNickname(@RequestParam("nickName") String nickName) throws Exception {
         Search search = new Search();
-        search.setSearchCondition(null);
         Map<String, Object> map = userService.listUser(search);
         List<User> list = (List<User>)map.get("list");
-        String find = "";
+
         for (User user : list) {
             if (user.getNickName().equals(nickName)) {
-                find = user.getUserId();
+                return new ResponseEntity<>(user.getUserId(), HttpStatus.OK);
             }
-            System.out.println(user);
         }
-        return new ResponseEntity<>(find, HttpStatus.OK);
+        return new ResponseEntity<>("", HttpStatus.NOT_FOUND);
     }
 
 }

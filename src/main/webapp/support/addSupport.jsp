@@ -88,12 +88,13 @@
                         <div class="inputset inputset-lg inputset-label">
                             <label>
                                 <h6 class="inputset-tit"> 피신고자 </h6>
-                                <input type="text" class="inputset-input form-control" placeholder="신고할 회원 아이디." name="sup_id" aria-label="내용" required="">
+                                <input type="text" class="inputset-input form-control" placeholder="신고할 회원 아이디." name="sup_id" id="sup_id" aria-label="내용" required="">
                             </label>
+                            <p>사용자 ID: <span id="userIdOutput"></span></p>
                         </div>
                         <div class="contents-form-middle">
                             <div class="inputset inputset-lg inputset-label">
-                                <label for="supName">
+                                <label>
                                 <c:choose>
                                     <c:when test="${param.category eq '1'}">
                                     </c:when>
@@ -110,7 +111,7 @@
                                 </label>
                             </div>
                             <div class="inputset inputset-lg inputset-label">
-                                <label for="supContent">
+                                <label>
                                 <c:choose>
                                     <c:when test="${param.category eq '0'}">
                                         <h6 class="inputset-tit"> 공지내용<span>*</span> </h6>
@@ -201,27 +202,40 @@
 </html>
 <script>
     $(document).ready(function() {
-        var name = document.getElementById("sup_id");
-        if (name) {
-            name.addEventListener('input', function() {
-                chekeName(name.value); // nickName 값을 전달
-            });
-        }
+        $('#sup_id').on('change', function() {
+            var nickName = $(this).val();
+            checkNickName(nickName);
+        });
+
+        // userIdOutput 클릭 이벤트 리스너 추가
+        $('#userIdOutput').on('click', function() {
+            var userId = $(this).text();
+            if(userId && userId !== "해당 닉네임을 가진 사용자가 없습니다." && userId !== "오류가 발생했습니다") {
+                $('#sup_id').val(userId);
+            }
+        });
     });
 
-    function chekeName(nickName){
+    function checkNickName(nickName) {
         $.ajax({
-            type: "get",
-            url: "/support/json/checkNickname",
-            data: { nickName : nickName}, // GET 요청 시엔 비워둔다.
-            success: function(response) { // 서버에서 받은 결과
-                console.log(response);
+            type: "GET",
+            url: "/support/json/getUserIdByNickname",
+            data: { nickName: nickName },
+            success: function(userId) {
+                if(userId) {
+                    $('#userIdOutput').text(userId);
+                } else {
+                    $('#userIdOutput').text("해당 닉네임을 가진 사용자가 없습니다.");
+                }
+            },
+            error: function(xhr, status, error) {
+                $('#userIdOutput').text("오류가 발생했습니다: " + error);
             }
         });
     }
 
-
 </script>
+
 <script src="../common/js/setting.js"></script>
 <script src="../common/js/plugin.js"></script>
 <script src="../common/js/template.js"></script>
