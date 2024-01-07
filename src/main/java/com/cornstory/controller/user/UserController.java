@@ -21,11 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -170,7 +165,7 @@ public class UserController {
 
             String fileUrl = storageService.uploadFileToS3(bucketName, fileKey, file);
 
-            // 파일 경로를 Work 객체에 저장
+            // 파일 경로를 Work 객체에 저장searchCondition
             user.setUserImage(fileUrl);
 
         }else{
